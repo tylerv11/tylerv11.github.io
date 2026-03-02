@@ -3,1068 +3,1475 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tyler Vincent</title>
+    <title>Tyler Vincent — Engineer. Builder. Creator.</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <!-- Calendly -->
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <style>
         /* ============================================
-           FRUTIGER AERO THEME - Tyler Vincent
-           Inspired by Windows Vista/7 Aero Glass
+           PREMIUM BRAND THEME — Tyler Vincent
+           Inspired by Nike, Apple, top-tier portfolios
            ============================================ */
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-card: #161616;
+            --bg-card-hover: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #999999;
+            --text-muted: #555555;
+            --accent: #00ff87;
+            --accent-blue: #4a9eff;
+            --accent-purple: #a855f7;
+            --accent-warm: #ff6b35;
+            --border-subtle: rgba(255,255,255,0.06);
+            --border-hover: rgba(255,255,255,0.12);
+            --glass-bg: rgba(255,255,255,0.03);
+            --glass-border: rgba(255,255,255,0.08);
+            --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             overflow-x: hidden;
-            background: linear-gradient(170deg, #0a1628 0%, #0d2847 20%, #1a4a7a 40%, #2d7ab5 55%, #56b4e9 70%, #89d4f5 82%, #b8e8fc 90%, #e8f7ff 100%);
-            background-attachment: fixed;
-            color: #1a1a2e;
+            -webkit-font-smoothing: antialiased;
+            cursor: default;
         }
 
-        /* Animated sky background with clouds */
-        .sky-bg {
+        /* ===== CUSTOM CURSOR ===== */
+        .cursor-dot {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .cloud {
-            position: absolute;
-            background: radial-gradient(ellipse, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.3) 50%, transparent 70%);
-            border-radius: 50%;
-            animation: drift linear infinite;
-            filter: blur(1px);
-        }
-
-        .cloud-1 { width: 400px; height: 120px; top: 5%; left: -400px; animation-duration: 80s; opacity: 0.5; }
-        .cloud-2 { width: 300px; height: 90px; top: 15%; left: -300px; animation-duration: 100s; animation-delay: -20s; opacity: 0.4; }
-        .cloud-3 { width: 500px; height: 150px; top: 8%; left: -500px; animation-duration: 120s; animation-delay: -40s; opacity: 0.35; }
-        .cloud-4 { width: 250px; height: 80px; top: 20%; left: -250px; animation-duration: 90s; animation-delay: -60s; opacity: 0.45; }
-
-        @keyframes drift {
-            from { transform: translateX(0); }
-            to { transform: translateX(calc(100vw + 600px)); }
-        }
-
-        /* Sun glow */
-        .sun-glow {
-            position: fixed;
-            top: -80px;
-            right: 10%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255,223,130,0.4) 0%, rgba(255,200,80,0.15) 40%, transparent 70%);
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
             border-radius: 50%;
             pointer-events: none;
-            z-index: 0;
+            z-index: 10000;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            mix-blend-mode: difference;
         }
 
-        /* Aurora / Light streaks */
-        .aurora {
+        .cursor-ring {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: linear-gradient(135deg, transparent 30%, rgba(120,200,255,0.06) 50%, transparent 70%);
+            width: 40px;
+            height: 40px;
+            border: 1.5px solid rgba(0,255,135,0.4);
+            border-radius: 50%;
             pointer-events: none;
-            z-index: 0;
+            z-index: 10000;
+            transition: transform 0.3s var(--transition-smooth), width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+            transform: translate(-50%, -50%);
         }
 
-        /* ===== GLASS PANEL MIXIN ===== */
-        .glass {
-            background: linear-gradient(
-                160deg,
-                rgba(255,255,255,0.72) 0%,
-                rgba(255,255,255,0.45) 40%,
-                rgba(230,240,255,0.35) 100%
-            );
-            backdrop-filter: blur(20px) saturate(1.4);
-            -webkit-backdrop-filter: blur(20px) saturate(1.4);
-            border: 1px solid rgba(255,255,255,0.65);
-            border-top: 1px solid rgba(255,255,255,0.85);
-            border-left: 1px solid rgba(255,255,255,0.7);
-            box-shadow:
-                0 8px 32px rgba(0,40,100,0.18),
-                inset 0 1px 0 rgba(255,255,255,0.6),
-                0 1px 3px rgba(0,0,0,0.08);
-            border-radius: 12px;
+        .cursor-ring.hover {
+            width: 60px;
+            height: 60px;
+            border-color: var(--accent);
         }
 
-        .glass-dark {
-            background: linear-gradient(
-                160deg,
-                rgba(10,20,40,0.75) 0%,
-                rgba(15,30,60,0.6) 50%,
-                rgba(20,40,80,0.5) 100%
-            );
-            backdrop-filter: blur(20px) saturate(1.4);
-            -webkit-backdrop-filter: blur(20px) saturate(1.4);
-            border: 1px solid rgba(100,160,255,0.25);
-            border-top: 1px solid rgba(140,200,255,0.35);
-            box-shadow:
-                0 8px 32px rgba(0,10,30,0.4),
-                inset 0 1px 0 rgba(100,180,255,0.15);
-            border-radius: 12px;
-            color: #e0eeff;
-        }
-
-        /* ===== AERO BUTTON ===== */
-        .aero-btn {
-            display: inline-block;
-            padding: 10px 24px;
-            background: linear-gradient(180deg, #e8f4ff 0%, #b8d8f8 40%, #8ec0e8 60%, #a8d4f4 100%);
-            border: 1px solid rgba(80,130,180,0.5);
-            border-radius: 6px;
-            color: #1a3a5c;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-            box-shadow:
-                inset 0 1px 0 rgba(255,255,255,0.8),
-                0 2px 6px rgba(0,40,100,0.15);
-            transition: all 0.2s ease;
-            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-        }
-
-        .aero-btn:hover {
-            background: linear-gradient(180deg, #f0f8ff 0%, #c8e4fc 40%, #9cd0f0 60%, #b4dcf8 100%);
-            box-shadow:
-                inset 0 1px 0 rgba(255,255,255,0.9),
-                0 4px 12px rgba(0,80,180,0.2);
-            transform: translateY(-1px);
-        }
-
-        .aero-btn:active {
-            background: linear-gradient(180deg, #a8c8e8 0%, #88b0d8 40%, #78a8d0 60%, #90bce0 100%);
-            transform: translateY(0px);
-            box-shadow: inset 0 2px 4px rgba(0,40,100,0.2);
-        }
-
-        .aero-btn-green {
-            background: linear-gradient(180deg, #e8ffe8 0%, #a8e8a8 40%, #78c878 60%, #90d890 100%);
-            border-color: rgba(60,130,60,0.5);
-            color: #1a3c1a;
-        }
-        .aero-btn-green:hover {
-            background: linear-gradient(180deg, #f0fff0 0%, #b8f0b8 40%, #88d488 60%, #a0e0a0 100%);
-        }
-
-        /* ===== LAYOUT ===== */
-        .page-container {
-            position: relative;
-            z-index: 1;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-            padding-bottom: 80px;
-        }
-
-        /* ===== TASKBAR ===== */
-        .taskbar {
+        /* ===== GRAIN OVERLAY ===== */
+        .grain {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 52px;
-            background: linear-gradient(
-                180deg,
-                rgba(20,40,80,0.8) 0%,
-                rgba(10,25,55,0.92) 30%,
-                rgba(5,15,40,0.95) 100%
-            );
-            backdrop-filter: blur(30px) saturate(1.5);
-            -webkit-backdrop-filter: blur(30px) saturate(1.5);
-            border-top: 1px solid rgba(100,180,255,0.3);
-            box-shadow: 0 -4px 20px rgba(0,10,40,0.4), inset 0 1px 0 rgba(120,180,255,0.2);
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.5;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
             z-index: 1000;
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
-            gap: 4px;
-        }
-
-        .start-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 16px;
-            background: linear-gradient(180deg, rgba(80,160,80,0.9) 0%, rgba(50,120,50,0.95) 50%, rgba(40,100,40,0.95) 100%);
-            border: 1px solid rgba(100,200,100,0.4);
-            border-radius: 20px;
-            color: white;
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            box-shadow: inset 0 1px 0 rgba(180,255,180,0.3), 0 2px 8px rgba(0,0,0,0.3);
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-        .start-btn:hover {
-            background: linear-gradient(180deg, rgba(100,180,100,0.95) 0%, rgba(60,140,60,0.95) 50%, rgba(50,120,50,0.95) 100%);
-            box-shadow: inset 0 1px 0 rgba(200,255,200,0.4), 0 2px 12px rgba(60,180,60,0.3);
-        }
-        .start-btn i { font-size: 1rem; }
-
-        .taskbar-items {
-            display: flex;
-            align-items: center;
-            gap: 2px;
-            flex: 1;
-        }
-
-        .taskbar-item {
-            padding: 6px 14px;
-            background: linear-gradient(180deg, rgba(60,100,160,0.5) 0%, rgba(40,70,120,0.6) 100%);
-            border: 1px solid rgba(80,140,220,0.25);
-            border-radius: 4px;
-            color: #c0d8f0;
-            font-size: 0.78rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            white-space: nowrap;
-        }
-        .taskbar-item:hover {
-            background: linear-gradient(180deg, rgba(80,130,200,0.6) 0%, rgba(50,90,150,0.7) 100%);
-            color: #fff;
-        }
-        .taskbar-item.active {
-            background: linear-gradient(180deg, rgba(100,160,240,0.6) 0%, rgba(60,110,180,0.7) 100%);
-            border-color: rgba(120,180,255,0.4);
-            color: #fff;
-        }
-
-        .taskbar-clock {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            padding: 4px 12px;
-            color: #c0d8f0;
-            font-size: 0.78rem;
-            line-height: 1.3;
-            border-left: 1px solid rgba(100,160,255,0.15);
-        }
-
-        /* ===== TOP NAV BAR ===== */
-        .top-nav {
+            padding: 0 48px;
+            height: 72px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 24px;
-            margin-bottom: 20px;
+            background: rgba(10,10,10,0.8);
+            backdrop-filter: blur(20px) saturate(1.2);
+            -webkit-backdrop-filter: blur(20px) saturate(1.2);
+            border-bottom: 1px solid var(--border-subtle);
+            transition: all 0.4s ease;
         }
 
-        .nav-logo {
-            font-size: 1.5rem;
+        .navbar.scrolled {
+            background: rgba(10,10,10,0.95);
+            box-shadow: 0 1px 40px rgba(0,0,0,0.4);
+        }
+
+        .nav-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
             font-weight: 700;
-            color: #fff;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            color: var(--text-primary);
             text-decoration: none;
+            letter-spacing: -0.5px;
         }
 
-        .nav-links {
+        .nav-brand span {
+            color: var(--accent);
+        }
+
+        .nav-menu {
             display: flex;
-            gap: 4px;
+            align-items: center;
+            gap: 8px;
         }
 
-        .nav-links a {
-            padding: 8px 18px;
-            color: #fff;
+        .nav-link {
+            padding: 8px 20px;
+            color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
-            border-radius: 8px;
-            transition: all 0.2s;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            letter-spacing: 0.3px;
+            border-radius: 100px;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .nav-links a:hover,
-        .nav-links a.active {
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.06);
         }
 
-        .nav-social {
-            display: flex;
-            gap: 10px;
-        }
-
-        .nav-social a {
-            color: #fff;
-            font-size: 1.1rem;
-            opacity: 0.8;
-            transition: opacity 0.2s;
+        .nav-cta {
+            padding: 10px 24px;
+            background: var(--text-primary);
+            color: var(--bg-primary);
             text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 100px;
+            transition: all 0.3s var(--transition-smooth);
+            margin-left: 12px;
         }
-        .nav-social a:hover { opacity: 1; }
 
-        /* ===== HERO / INTRO WINDOW ===== */
-        .hero-window {
-            padding: 40px;
-            margin-bottom: 24px;
+        .nav-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(255,255,255,0.15);
+        }
+
+        /* Mobile menu */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 120px 48px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg-gradient {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .hero-bg-1 {
+            top: -200px; right: -200px;
+            background: var(--accent);
+        }
+
+        .hero-bg-2 {
+            bottom: -300px; left: -200px;
+            background: var(--accent-purple);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(0,255,135,0.08);
+            border: 1px solid rgba(0,255,135,0.2);
+            border-radius: 100px;
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+            animation: fadeInUp 0.8s var(--transition-smooth) forwards;
+        }
+
+        .hero-badge .dot {
+            width: 6px; height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 800;
+            line-height: 0.95;
             text-align: center;
+            letter-spacing: -3px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.8s 0.1s var(--transition-smooth) both;
         }
 
-        .hero-window h1 {
-            font-size: 2.4rem;
-            font-weight: 300;
-            color: #1a2a4a;
-            margin-bottom: 8px;
+        .hero-title .line {
+            display: block;
         }
 
-        .hero-window h1 strong {
-            font-weight: 700;
-            background: linear-gradient(135deg, #1a5a9a, #2878c0);
+        .hero-title .outline {
+            -webkit-text-stroke: 1.5px var(--text-primary);
+            color: transparent;
+        }
+
+        .hero-title .gradient {
+            background: linear-gradient(135deg, var(--accent), var(--accent-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .hero-window p {
-            font-size: 1.1rem;
-            color: #3a5070;
-            max-width: 700px;
-            margin: 0 auto 20px;
-            line-height: 1.6;
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 600px;
+            line-height: 1.7;
+            font-weight: 400;
+            margin-bottom: 48px;
+            animation: fadeInUp 0.8s 0.2s var(--transition-smooth) both;
         }
 
-        .hero-cta {
+        .hero-actions {
             display: flex;
-            gap: 12px;
-            justify-content: center;
+            gap: 16px;
             flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 0.8s 0.3s var(--transition-smooth) both;
         }
 
-        /* ===== WIDGET GRID ===== */
-        .widget-grid {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 20px;
-            margin-bottom: 24px;
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            background: var(--accent);
+            color: #000;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 100px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s var(--transition-smooth);
+            letter-spacing: 0.3px;
         }
 
-        .widget-sidebar {
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(0,255,135,0.25);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            background: transparent;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 100px;
+            border: 1px solid var(--border-hover);
+            cursor: pointer;
+            transition: all 0.4s var(--transition-smooth);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 40px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: fadeInUp 0.8s 0.5s var(--transition-smooth) both;
         }
 
-        /* ===== WINDOW CHROME (Title bar) ===== */
-        .window-titlebar {
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--text-muted), transparent);
+            animation: scroll-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scroll-pulse {
+            0%, 100% { opacity: 1; height: 40px; }
+            50% { opacity: 0.3; height: 20px; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== MARQUEE ===== */
+        .marquee-section {
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 20px 0;
+            overflow: hidden;
+            background: var(--bg-secondary);
+        }
+
+        .marquee-track {
+            display: flex;
+            animation: marquee 30s linear infinite;
+            width: max-content;
+        }
+
+        .marquee-item {
             display: flex;
             align-items: center;
-            padding: 8px 12px;
-            background: linear-gradient(180deg, rgba(200,220,245,0.6) 0%, rgba(170,200,235,0.4) 100%);
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-            border-radius: 12px 12px 0 0;
+            gap: 16px;
+            padding: 0 48px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .marquee-item .sep {
+            width: 6px; height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            padding: 120px 48px;
+            position: relative;
+        }
+
+        .section-header {
+            margin-bottom: 64px;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 32px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .section-heading {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            max-width: 700px;
+        }
+
+        .section-heading .muted {
+            color: var(--text-muted);
+        }
+
+        /* ===== WINDOW COMPONENT ===== */
+        .window {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.5s var(--transition-smooth);
+        }
+
+        .window:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .window-bar {
+            display: flex;
+            align-items: center;
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.02);
+            border-bottom: 1px solid var(--border-subtle);
             gap: 10px;
         }
 
         .window-dots {
             display: flex;
-            gap: 6px;
+            gap: 7px;
         }
 
         .window-dot {
-            width: 12px; height: 12px;
+            width: 13px; height: 13px;
             border-radius: 50%;
-            border: 1px solid rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .window-dot.red { background: linear-gradient(180deg, #ff6b6b, #d63030); }
-        .window-dot.yellow { background: linear-gradient(180deg, #ffd93d, #d4a800); }
-        .window-dot.green { background: linear-gradient(180deg, #6bcb77, #38a83c); }
 
-        .window-title {
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: #2a4060;
+        .window-dot i {
+            font-size: 7px;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+            color: rgba(0,0,0,0.6);
+        }
+
+        .window-bar:hover .window-dot i {
+            opacity: 1;
+        }
+
+        .window-dot.red {
+            background: #ff5f57;
+        }
+        .window-dot.red:hover {
+            background: #ff3b30;
+            transform: scale(1.15);
+        }
+
+        .window-dot.yellow {
+            background: #ffbd2e;
+        }
+        .window-dot.yellow:hover {
+            background: #ffb800;
+            transform: scale(1.15);
+        }
+
+        .window-dot.green {
+            background: #28c840;
+        }
+        .window-dot.green:hover {
+            background: #20b836;
+            transform: scale(1.15);
+        }
+
+        .window-bar-title {
             flex: 1;
             text-align: center;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: 0.3px;
         }
 
-        .window-body {
-            padding: 20px;
-            border-radius: 0 0 12px 12px;
+        .window-content {
+            padding: 24px;
+            transition: all 0.4s var(--transition-smooth);
         }
 
-        /* ===== PROJECTS GRID ===== */
+        .window.minimized .window-content {
+            max-height: 0;
+            padding: 0 24px;
+            overflow: hidden;
+            opacity: 0;
+        }
+
+        .window.closed {
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
+            max-height: 0;
+            margin: 0;
+            padding: 0;
+            border: none;
+            overflow: hidden;
+        }
+
+        .window.maximized {
+            position: fixed;
+            top: 72px; left: 0; right: 0; bottom: 0;
+            z-index: 999;
+            border-radius: 0;
+            margin: 0;
+            overflow-y: auto;
+        }
+
+        /* Restore button appears when window is closed */
+        .window-restore-btn {
+            display: none;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+        }
+
+        .window-restore-btn:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-primary);
+        }
+
+        .window-restore-btn.visible {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ===== PROJECTS / WORK GRID ===== */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
         }
 
         .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
             overflow: hidden;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.5s var(--transition-smooth);
+            position: relative;
+            group: true;
         }
 
         .project-card:hover {
-            transform: translateY(-4px);
-            box-shadow:
-                0 12px 40px rgba(0,40,100,0.25),
-                inset 0 1px 0 rgba(255,255,255,0.6);
+            transform: translateY(-8px);
+            border-color: var(--border-hover);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
         }
 
-        .project-card .card-header {
-            padding: 6px 12px;
-            background: linear-gradient(180deg, rgba(180,210,240,0.6) 0%, rgba(150,190,230,0.4) 100%);
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-            border-radius: 12px 12px 0 0;
-            display: flex;
+        .project-card.featured {
+            grid-column: span 2;
+        }
+
+        .project-card .card-media {
+            position: relative;
+            height: 240px;
+            overflow: hidden;
+            background: var(--bg-secondary);
+        }
+
+        .project-card.featured .card-media {
+            height: 360px;
+        }
+
+        .project-card .card-media img,
+        .project-card .card-media iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+            transition: transform 0.6s var(--transition-smooth);
+        }
+
+        .project-card:hover .card-media img,
+        .project-card:hover .card-media iframe {
+            transform: scale(1.05);
+        }
+
+        .card-overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 24px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .project-card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        .card-overlay .card-cta {
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
-        }
-
-        .card-icon {
-            width: 16px; height: 16px;
-            background: linear-gradient(135deg, #4a9eff, #2070c0);
-            border-radius: 3px;
-        }
-
-        .card-title {
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: #2a4060;
-        }
-
-        .project-card .card-body {
-            padding: 20px;
-        }
-
-        .project-card h3 {
-            font-size: 1.1rem;
+            gap: 6px;
+            padding: 10px 20px;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            text-decoration: none;
+            font-size: 0.8rem;
             font-weight: 700;
-            color: #1a3050;
-            margin-bottom: 4px;
+            border-radius: 100px;
+            transition: transform 0.3s ease;
         }
 
-        .project-card .subtitle {
-            font-size: 0.85rem;
-            color: #5080a8;
+        .card-overlay .card-cta:hover {
+            transform: scale(1.05);
+        }
+
+        .card-info {
+            padding: 24px;
+        }
+
+        .card-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(0,255,135,0.08);
+            border: 1px solid rgba(0,255,135,0.15);
+            border-radius: 100px;
+            color: var(--accent);
+            font-size: 0.7rem;
             font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
             margin-bottom: 12px;
         }
 
-        .project-card p {
-            font-size: 0.88rem;
-            color: #3a5070;
-            line-height: 1.55;
+        .card-tag.purple {
+            background: rgba(168,85,247,0.08);
+            border-color: rgba(168,85,247,0.15);
+            color: var(--accent-purple);
+        }
+
+        .card-tag.blue {
+            background: rgba(74,158,255,0.08);
+            border-color: rgba(74,158,255,0.15);
+            color: var(--accent-blue);
+        }
+
+        .card-tag.warm {
+            background: rgba(255,107,53,0.08);
+            border-color: rgba(255,107,53,0.15);
+            color: var(--accent-warm);
+        }
+
+        .card-info h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .card-info .card-company {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .card-info p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 16px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: gap 0.3s ease;
+        }
+
+        .card-link:hover {
+            gap: 10px;
+        }
+
+        /* ===== STATS / METRICS BAR ===== */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--border-subtle);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 80px 0;
+        }
+
+        .stat-item {
+            padding: 40px;
+            background: var(--bg-card);
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+
+        .stat-item:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .stat-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 4px;
+        }
+
+        /* ===== EXPERIMENTS SECTION ===== */
+        .experiments-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        /* Weather */
+        .weather-content {
+            text-align: center;
+            padding: 12px 0;
+        }
+
+        .weather-icon-large {
+            font-size: 3.5rem;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .weather-location {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .weather-temp {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 4px;
+        }
+
+        .weather-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
             margin-bottom: 16px;
         }
 
-        .project-card .video-wrap {
+        .weather-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .weather-stat {
+            padding: 10px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            border: 1px solid var(--border-subtle);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .weather-stat i {
+            color: var(--accent-blue);
+            margin-right: 6px;
+        }
+
+        /* Painting */
+        .painting-frame {
+            margin: 0 0 12px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .painting-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.4s ease, transform 0.6s var(--transition-smooth);
+        }
+
+        .painting-frame:hover .painting-img {
+            transform: scale(1.03);
+        }
+
+        .painting-caption {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .painting-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .painting-btn:hover {
+            background: rgba(255,255,255,0.08);
+            color: var(--text-primary);
+            border-color: var(--border-hover);
+        }
+
+        /* Clock */
+        .clock-display {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .clock-time-large {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, var(--text-primary), var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .clock-date-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .clock-la-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(0,255,135,0.06);
+            border-radius: 100px;
+            color: var(--accent);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 12px;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 80px 48px 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .footer-brand span {
+            color: var(--accent);
+        }
+
+        .footer-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 360px;
+        }
+
+        .footer-col h4 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .footer-col a {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 4px 0;
+            transition: color 0.2s ease;
+        }
+
+        .footer-col a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer-copyright {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-socials a {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .footer-socials a:hover {
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* ===== SCROLL REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s var(--transition-smooth);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .section { padding: 80px 32px; }
+            .navbar { padding: 0 24px; }
+            .footer { padding: 60px 32px 30px; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .project-card.featured { grid-column: span 1; }
+            .project-card.featured .card-media { height: 240px; }
+            .experiments-grid { grid-template-columns: 1fr 1fr; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .nav-menu.open {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 72px; left: 0; right: 0; bottom: 0;
+                background: rgba(10,10,10,0.98);
+                padding: 32px;
+                gap: 4px;
+                z-index: 999;
+            }
+            .nav-menu.open .nav-link {
+                font-size: 1.2rem;
+                padding: 16px;
+            }
+            .nav-menu.open .nav-cta {
+                margin-left: 0;
+                margin-top: 16px;
+                text-align: center;
+                padding: 16px;
+            }
+            .nav-toggle { display: block; }
+
+            .hero { padding: 100px 24px 60px; }
+            .hero-title { letter-spacing: -1.5px; }
+            .section { padding: 60px 20px; }
+            .navbar { padding: 0 20px; }
+            .experiments-grid { grid-template-columns: 1fr; }
+            .stats-bar { grid-template-columns: 1fr 1fr; }
+            .footer { padding: 40px 20px 24px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+            .cursor-dot, .cursor-ring { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-bar { grid-template-columns: 1fr; }
+            .hero-actions { flex-direction: column; align-items: center; }
+            .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+        }
+
+        /* ===== SMOOTH VISIBILITY TRANSITIONS ===== */
+        .window-content {
+            max-height: 2000px;
+            transition: max-height 0.5s var(--transition-smooth), padding 0.5s var(--transition-smooth), opacity 0.3s ease;
+        }
+
+        /* ===== VIDEO RESPONSIVE ===== */
+        .video-wrap {
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
-            margin-bottom: 14px;
-            border-radius: 6px;
             overflow: hidden;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
         }
 
-        .project-card .video-wrap iframe {
+        .video-wrap iframe {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
             border: none;
         }
 
-        .project-card .card-img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 6px;
-            margin-bottom: 14px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        /* ===== WEATHER WIDGET ===== */
-        .weather-widget {
-            overflow: hidden;
-        }
-
-        .weather-body {
-            padding: 20px;
-            text-align: center;
-        }
-
-        .weather-icon {
-            font-size: 3rem;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #ffd700, #ff8c00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 2px 4px rgba(255,180,0,0.3));
-        }
-
-        .weather-temp {
-            font-size: 2.2rem;
-            font-weight: 300;
-            color: #1a3050;
-        }
-
-        .weather-desc {
-            font-size: 0.95rem;
-            color: #5080a8;
-            margin-bottom: 12px;
-        }
-
-        .weather-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            font-size: 0.8rem;
-            color: #4a6a8a;
-        }
-
-        .weather-detail {
-            padding: 6px;
-            background: rgba(255,255,255,0.4);
-            border-radius: 6px;
-        }
-
-        .weather-detail i { margin-right: 4px; color: #4a9eff; }
-
-        .weather-location {
-            font-size: 0.85rem;
-            color: #3a5a7a;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        /* ===== PAINTING WIDGET ===== */
-        .painting-widget {
-            overflow: hidden;
-        }
-
-        .painting-frame {
-            margin: 16px;
-            padding: 8px;
-            background: linear-gradient(145deg, #c8a86e, #a08040, #c8a86e, #dcc080);
-            border-radius: 4px;
-            box-shadow:
-                inset 0 0 10px rgba(0,0,0,0.3),
-                0 4px 16px rgba(0,0,0,0.15);
-        }
-
-        .painting-inner {
-            border: 2px solid #8a6820;
-            overflow: hidden;
-        }
-
-        .painting-img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .painting-caption {
-            padding: 10px 16px;
-            text-align: center;
-            font-size: 0.8rem;
-            color: #5a7090;
-            font-style: italic;
-        }
-
-        /* ===== CLOCK WIDGET ===== */
-        .clock-widget {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .clock-time {
-            font-size: 2.4rem;
-            font-weight: 200;
-            color: #1a3050;
-            letter-spacing: 2px;
-        }
-
-        .clock-date {
-            font-size: 0.9rem;
-            color: #5080a8;
-            margin-top: 4px;
-        }
-
-        /* ===== FOOTER ===== */
-        .footer-section {
-            padding: 30px 40px;
-            margin-bottom: 24px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 24px;
-        }
-
-        .footer-col h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #1a3050;
-            margin-bottom: 10px;
-        }
-
-        .footer-col p,
-        .footer-col a {
-            font-size: 0.9rem;
-            color: #4a6a8a;
-            text-decoration: none;
-            line-height: 1.8;
-        }
-
-        .footer-col a:hover {
-            color: #2070c0;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 12px;
-            margin-top: 8px;
-        }
-
-        .footer-social a {
-            width: 36px; height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(180deg, #e8f4ff 0%, #b8d8f8 100%);
-            border: 1px solid rgba(80,130,180,0.3);
-            border-radius: 50%;
-            color: #2070c0;
-            font-size: 1rem;
-            transition: all 0.2s;
-        }
-
-        .footer-social a:hover {
-            background: linear-gradient(180deg, #c8e4fc 0%, #9cd0f0 100%);
-            transform: translateY(-2px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 16px;
-            border-top: 1px solid rgba(100,150,200,0.2);
-            margin-top: 20px;
-            font-size: 0.8rem;
-            color: #7a9aba;
-        }
-
-        /* ===== SECTION TITLES ===== */
-        .section-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 16px;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-title i {
-            font-size: 1.1rem;
-            opacity: 0.8;
-        }
-
-        /* ===== ORBS (decorative) ===== */
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .orb-1 {
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(100,180,255,0.08) 0%, transparent 70%);
-            bottom: -200px; left: -100px;
-        }
-
-        .orb-2 {
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(130,200,100,0.06) 0%, transparent 70%);
-            top: 200px; right: -100px;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 900px) {
-            .widget-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .widget-sidebar {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 16px;
-            }
-
-            .hero-window h1 { font-size: 1.8rem; }
-            .projects-grid { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 600px) {
-            .page-container { padding: 10px; padding-bottom: 70px; }
-            .top-nav { flex-direction: column; gap: 10px; }
-            .widget-sidebar { grid-template-columns: 1fr; }
-            .hero-window { padding: 24px 16px; }
-            .footer-section { padding: 20px; }
-            .taskbar { height: 44px; }
-            .nav-links { flex-wrap: wrap; justify-content: center; }
-        }
-
-        /* ===== SHIMMER / GLOSS EFFECT ===== */
-        .glass::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 50%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%);
-            border-radius: 12px 12px 0 0;
-            pointer-events: none;
-        }
-
-        .glass, .glass-dark {
+        /* Tooltip for window dots */
+        .window-dot[title] {
             position: relative;
-        }
-
-        /* Bubble decorations */
-        .bubble {
-            position: fixed;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5), rgba(200,230,255,0.1) 60%, transparent);
-            border: 1px solid rgba(255,255,255,0.2);
-            pointer-events: none;
-            z-index: 0;
-            animation: float 20s ease-in-out infinite;
-        }
-
-        .bubble-1 { width: 60px; height: 60px; bottom: 15%; left: 5%; animation-delay: 0s; }
-        .bubble-2 { width: 40px; height: 40px; bottom: 30%; right: 8%; animation-delay: -5s; }
-        .bubble-3 { width: 25px; height: 25px; bottom: 45%; left: 15%; animation-delay: -10s; }
-        .bubble-4 { width: 50px; height: 50px; bottom: 20%; right: 20%; animation-delay: -15s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(5deg); }
-            66% { transform: translateY(10px) rotate(-3deg); }
-        }
-
-        /* ===== NOTE WIDGET ===== */
-        .note-widget {
-            padding: 16px 20px;
-            font-size: 0.85rem;
-            color: #3a5070;
-            line-height: 1.6;
-        }
-        .note-widget strong {
-            color: #1a3050;
         }
     </style>
 </head>
 <body>
 
-    <!-- Background Effects -->
-    <div class="sky-bg">
-        <div class="cloud cloud-1"></div>
-        <div class="cloud cloud-2"></div>
-        <div class="cloud cloud-3"></div>
-        <div class="cloud cloud-4"></div>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
+
+    <!-- Grain Overlay -->
+    <div class="grain"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="nav-brand">Tyler<span>.</span></a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+            <i class="fas fa-bars" id="nav-toggle-icon"></i>
+        </button>
+        <div class="nav-menu" id="nav-menu">
+            <a href="index.html" class="nav-link active">Work</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="education.html" class="nav-link">Education</a>
+            <a href="#experiments" class="nav-link">Experiments</a>
+            <a href="https://www.linkedin.com/in/tyler-vincent11/" class="nav-cta" target="_blank">Let's Connect <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></a>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="hero-bg-gradient hero-bg-1"></div>
+        <div class="hero-bg-gradient hero-bg-2"></div>
+        <div class="hero-badge">
+            <span class="dot"></span>
+            Open to opportunities
+        </div>
+        <h1 class="hero-title">
+            <span class="line">Engineer.</span>
+            <span class="line outline">Builder.</span>
+            <span class="line gradient">Creator.</span>
+        </h1>
+        <p class="hero-subtitle">
+            I'm Tyler Vincent — a Process Engineer who reshapes products, processes, and the way teams work together. From nuclear submarines to AI deployments, I build things that matter.
+        </p>
+        <div class="hero-actions">
+            <a href="files/DualMonitor.pdf" class="btn-primary" target="_blank">
+                <i class="fas fa-file-pdf"></i> Dual Monitor Study
+            </a>
+            <a href="about.html" class="btn-secondary">
+                About Me <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        <div class="hero-scroll">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ===== MARQUEE ===== -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <div class="marquee-item">Process Engineering <span class="sep"></span></div>
+            <div class="marquee-item">Six Sigma Black Belt <span class="sep"></span></div>
+            <div class="marquee-item">AI / ML Programs <span class="sep"></span></div>
+            <div class="marquee-item">Computer Vision <span class="sep"></span></div>
+            <div class="marquee-item">Product Management <span class="sep"></span></div>
+            <div class="marquee-item">USC Alum <span class="sep"></span></div>
+            <div class="marquee-item">Los Angeles, CA <span class="sep"></span></div>
+            <div class="marquee-item">Process Engineering <span class="sep"></span></div>
+            <div class="marquee-item">Six Sigma Black Belt <span class="sep"></span></div>
+            <div class="marquee-item">AI / ML Programs <span class="sep"></span></div>
+            <div class="marquee-item">Computer Vision <span class="sep"></span></div>
+            <div class="marquee-item">Product Management <span class="sep"></span></div>
+            <div class="marquee-item">USC Alum <span class="sep"></span></div>
+            <div class="marquee-item">Los Angeles, CA <span class="sep"></span></div>
+        </div>
     </div>
-    <div class="sun-glow"></div>
-    <div class="aurora"></div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="bubble bubble-1"></div>
-    <div class="bubble bubble-2"></div>
-    <div class="bubble bubble-3"></div>
-    <div class="bubble bubble-4"></div>
 
-    <!-- Page Content -->
-    <div class="page-container">
-
-        <!-- Nav -->
-        <nav class="top-nav">
-            <a href="index.html" class="nav-logo">Tyler Vincent</a>
-            <div class="nav-links">
-                <a href="index.html" class="active">Main Page</a>
-                <a href="about.html">About Me</a>
-                <a href="education.html">My Education</a>
-            </div>
-            <div class="nav-social">
-                <a href="https://www.linkedin.com/in/tyler-vincent11/" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <a href="https://tylerv11.github.io/" title="GitHub"><i class="fab fa-github"></i></a>
-            </div>
-        </nav>
-
-        <!-- Hero Window -->
-        <div class="hero-window glass">
-            <h1>Hey there! I'm <strong>Tyler</strong>.</h1>
-            <p>I'm a Process Engineer with a passion for technology and cooking.
-                I love rebuilding and reshaping products, processes, and the way teams (or ingredients) work collaboratively.
-                Check out some of my work below!</p>
-            <div class="hero-cta">
-                <a href="files/DualMonitor.pdf" class="aero-btn"><i class="fas fa-file-pdf" style="margin-right:6px;"></i> My Dual Monitor Study</a>
-                <a href="about.html" class="aero-btn aero-btn-green"><i class="fas fa-user" style="margin-right:6px;"></i> About Me</a>
-            </div>
+    <!-- ===== WORK / PROJECTS ===== -->
+    <section class="section" id="work">
+        <div class="section-header reveal">
+            <div class="section-label">Selected Work</div>
+            <h2 class="section-heading">Projects that pushed <br><span class="muted">boundaries forward.</span></h2>
         </div>
 
-        <!-- Main Grid: Content + Sidebar Widgets -->
-        <div class="widget-grid">
+        <div class="projects-grid">
 
-            <!-- Main Content Column -->
-            <div>
-                <h2 class="section-title"><i class="fas fa-folder-open"></i> My Work</h2>
-                <div class="projects-grid">
-
-                    <!-- Electric Boat -->
-                    <div class="project-card glass">
-                        <div class="card-header">
-                            <div class="card-icon"></div>
-                            <span class="card-title">electric_boat.exe</span>
-                        </div>
-                        <div class="card-body">
-                            <h3>Process Engineer II</h3>
-                            <div class="subtitle">Electric Boat</div>
-                            <div class="video-wrap">
-                                <iframe src="https://www.youtube.com/embed/n--isQ2pwJc" title="Electric Boat" allowfullscreen></iframe>
-                            </div>
-                            <p>Built work center layouts and a knowledge base for nuclear submarine industrial sites with a security clearance. Six Sigma Black Belt. Bridged the gap between theory and practice, working with welders and machinists to develop solutions.</p>
-                            <a href="https://youtu.be/n--isQ2pwJc" class="aero-btn" target="_blank">See the work I did</a>
-                        </div>
+            <!-- Electric Boat — Featured -->
+            <div class="project-card featured reveal reveal-delay-1">
+                <div class="card-media">
+                    <iframe src="https://www.youtube.com/embed/n--isQ2pwJc" title="Electric Boat" allowfullscreen loading="lazy"></iframe>
+                    <div class="card-overlay">
+                        <a href="https://youtu.be/n--isQ2pwJc" class="card-cta" target="_blank">Watch Video <i class="fas fa-play"></i></a>
                     </div>
-
-                    <!-- AI Program Manager -->
-                    <div class="project-card glass">
-                        <div class="card-header">
-                            <div class="card-icon" style="background: linear-gradient(135deg, #9b59b6, #6c3483);"></div>
-                            <span class="card-title">ai_program.exe</span>
-                        </div>
-                        <div class="card-body">
-                            <h3>AI Program Manager</h3>
-                            <div class="subtitle">Singaporean SaaS Startup</div>
-                            <div class="video-wrap">
-                                <iframe src="https://www.youtube.com/embed/K_zY6VuuR1I?start=2" title="AI Program Manager" allowfullscreen></iframe>
-                            </div>
-                            <p>AI ML Program Manager for Computer Vision projects using object recognition in CCTV footage for real-time analytics. Led 8 international deployments for commercial and government groups worldwide.</p>
-                            <a href="https://youtu.be/K_zY6VuuR1I?t=2" class="aero-btn" target="_blank">Watch Overview</a>
-                        </div>
-                    </div>
-
-                    <!-- Aerospace -->
-                    <div class="project-card glass">
-                        <div class="card-header">
-                            <div class="card-icon" style="background: linear-gradient(135deg, #e67e22, #d35400);"></div>
-                            <span class="card-title">satellite_algo.py</span>
-                        </div>
-                        <div class="card-body">
-                            <h3>Senior Thesis</h3>
-                            <div class="subtitle">Aerospace Corporation</div>
-                            <img src="images/satellite.jpg" alt="Satellite" class="card-img" />
-                            <p>Developed a Python algorithm scheduling military antenna dishes worldwide to 100+ satellites and deep space objects. A multi-step optimization algorithm running on a Raspberry Pi, similar to the Traveling Salesman problem.</p>
-                            <a href="files/Genetic Algorithm.pdf" class="aero-btn" target="_blank">View Writeup</a>
-                        </div>
-                    </div>
-
-                    <!-- SPOT -->
-                    <div class="project-card glass">
-                        <div class="card-header">
-                            <div class="card-icon" style="background: linear-gradient(135deg, #27ae60, #1e8449);"></div>
-                            <span class="card-title">spot_app.sketch</span>
-                        </div>
-                        <div class="card-body">
-                            <h3>SPOT iOS Fitness Tracker</h3>
-                            <div class="subtitle">University Product Team</div>
-                            <img src="images/SPOT.png" alt="SPOT App" class="card-img" />
-                            <p>Led university product team to help gym-goers track workouts more effectively. Developed feature ideas into detailed specs and wireframes with a custom Hierarchical Task Analysis for GUI construction.</p>
-                            <a href="files/SPOTapp.pdf" class="aero-btn" target="_blank">Wireframe</a>
-                        </div>
-                    </div>
-
-                    <!-- Economic Analysis -->
-                    <div class="project-card glass">
-                        <div class="card-header">
-                            <div class="card-icon" style="background: linear-gradient(135deg, #2980b9, #1a5276);"></div>
-                            <span class="card-title">econ_analysis.xlsx</span>
-                        </div>
-                        <div class="card-body">
-                            <h3>Business Case Analysis</h3>
-                            <div class="subtitle">University Project</div>
-                            <img src="images/EconomicAnalysis.jpg" alt="Economic Analysis" class="card-img" />
-                            <p>Economic evaluation with cash flow analysis, choice among economic alternatives, effects of depreciation and taxation, replacement analysis, and dealing with risk and uncertainty.</p>
-                            <a href="files/EconomicAnalysisReport.pdf" class="aero-btn" target="_blank">Full Report</a>
-                        </div>
-                    </div>
-
-                    <!-- Senior Guide -->
-                    <div class="project-card glass">
-                        <div class="card-header">
-                            <div class="card-icon" style="background: linear-gradient(135deg, #16a085, #0e6655);"></div>
-                            <span class="card-title">expedition_sr.mov</span>
-                        </div>
-                        <div class="card-body">
-                            <h3>Senior Expedition Guide</h3>
-                            <div class="subtitle">Canadian Wilderness</div>
-                            <div class="video-wrap">
-                                <iframe src="https://www.youtube.com/embed/Ee7PgJgc0hA" title="Senior Expedition Guide" allowfullscreen></iframe>
-                            </div>
-                            <p>Guided 9-12 day canoe treks into remote Canadian wilderness across international waters. Outdoor educator in history, fishing, and ecology. Trained 15 employees in team development and crisis management.</p>
-                            <a href="https://youtu.be/Ee7PgJgc0hA" class="aero-btn" target="_blank">A Typical Expedition</a>
-                        </div>
-                    </div>
-
-                    <!-- Junior Guide -->
-                    <div class="project-card glass">
-                        <div class="card-header">
-                            <div class="card-icon" style="background: linear-gradient(135deg, #16a085, #0e6655);"></div>
-                            <span class="card-title">expedition_jr.mov</span>
-                        </div>
-                        <div class="card-body">
-                            <h3>Junior Expedition Guide</h3>
-                            <div class="subtitle">Canadian Wilderness</div>
-                            <div class="video-wrap">
-                                <iframe src="https://www.youtube.com/embed/ZxaGePjpJwk" title="Junior Expedition Guide" allowfullscreen></iframe>
-                            </div>
-                            <p>Measured inventory levels and repaired fishing equipment, kevlar and aluminum canoes to increase service life and reduce operational expenses by $15k+. Guided 9-12 day canoe treks.</p>
-                            <a href="https://youtu.be/ZxaGePjpJwk" class="aero-btn" target="_blank">Expedition Photos</a>
-                        </div>
-                    </div>
-
-                    <!-- Industrial Design -->
-                    <div class="project-card glass">
-                        <div class="card-header">
-                            <div class="card-icon" style="background: linear-gradient(135deg, #8e44ad, #6c3483);"></div>
-                            <span class="card-title">cad_models.sldprt</span>
-                        </div>
-                        <div class="card-body">
-                            <h3>Industrial Design Projects</h3>
-                            <div class="subtitle">AutoCAD &amp; SolidWorks</div>
-                            <img src="images/frenchpress.jpg" alt="French Press 3D Model" class="card-img" />
-                            <p>Designed high detail, 3D part and assembly models with AutoCAD and SolidWorks for rapid, conceptual product development.</p>
-                            <a href="images/frenchpress.jpg" class="aero-btn" target="_blank">3D Drawings</a>
-                        </div>
-                    </div>
-
+                </div>
+                <div class="card-info">
+                    <span class="card-tag">Engineering</span>
+                    <h3>Process Engineer II</h3>
+                    <div class="card-company">Electric Boat — General Dynamics</div>
+                    <p>Built work center layouts and a knowledge base for nuclear submarine industrial sites with a security clearance. Six Sigma Black Belt. Bridged theory and practice, working with welders and machinists.</p>
+                    <a href="https://youtu.be/n--isQ2pwJc" class="card-link" target="_blank">See the work <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
-            <!-- Sidebar Widgets -->
-            <div class="widget-sidebar">
-
-                <!-- Clock Widget -->
-                <div class="clock-widget glass">
-                    <div class="clock-time" id="clock-time">--:--:--</div>
-                    <div class="clock-date" id="clock-date">Loading...</div>
-                </div>
-
-                <!-- Weather Widget -->
-                <div class="weather-widget glass">
-                    <div class="window-titlebar">
-                        <div class="window-dots">
-                            <span class="window-dot red"></span>
-                            <span class="window-dot yellow"></span>
-                            <span class="window-dot green"></span>
-                        </div>
-                        <span class="window-title">Weather</span>
+            <!-- AI Program Manager -->
+            <div class="project-card reveal reveal-delay-2">
+                <div class="card-media">
+                    <iframe src="https://www.youtube.com/embed/K_zY6VuuR1I?start=2" title="AI Program Manager" allowfullscreen loading="lazy"></iframe>
+                    <div class="card-overlay">
+                        <a href="https://youtu.be/K_zY6VuuR1I?t=2" class="card-cta" target="_blank">Watch Overview <i class="fas fa-play"></i></a>
                     </div>
-                    <div class="weather-body" id="weather-body">
-                        <div class="weather-icon"><i class="fas fa-sun"></i></div>
-                        <div class="weather-location">Boston, MA</div>
+                </div>
+                <div class="card-info">
+                    <span class="card-tag purple">AI / ML</span>
+                    <h3>AI Program Manager</h3>
+                    <div class="card-company">Singaporean SaaS Startup</div>
+                    <p>Led Computer Vision projects using object recognition in CCTV footage for real-time analytics. Managed 8 international deployments for commercial and government clients worldwide.</p>
+                    <a href="https://youtu.be/K_zY6VuuR1I?t=2" class="card-link" target="_blank">Watch overview <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Aerospace -->
+            <div class="project-card reveal reveal-delay-3">
+                <div class="card-media">
+                    <img src="images/satellite.jpg" alt="Satellite Algorithm" loading="lazy" />
+                    <div class="card-overlay">
+                        <a href="files/Genetic Algorithm.pdf" class="card-cta" target="_blank">View Writeup <i class="fas fa-file-pdf"></i></a>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <span class="card-tag blue">Aerospace</span>
+                    <h3>Senior Thesis — Algorithm Optimization</h3>
+                    <div class="card-company">Aerospace Corporation</div>
+                    <p>Developed a Python algorithm scheduling military antenna dishes worldwide to 100+ satellites. A multi-step optimization running on a Raspberry Pi, similar to the Traveling Salesman problem.</p>
+                    <a href="files/Genetic Algorithm.pdf" class="card-link" target="_blank">Read the paper <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- SPOT -->
+            <div class="project-card reveal reveal-delay-1">
+                <div class="card-media">
+                    <img src="images/SPOT.png" alt="SPOT App" loading="lazy" />
+                    <div class="card-overlay">
+                        <a href="files/SPOTapp.pdf" class="card-cta" target="_blank">View Wireframe <i class="fas fa-mobile-screen"></i></a>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <span class="card-tag warm">Product</span>
+                    <h3>SPOT iOS Fitness Tracker</h3>
+                    <div class="card-company">University Product Team</div>
+                    <p>Led a product team to help gym-goers track workouts more effectively. Developed feature ideas into specs and wireframes with a custom Hierarchical Task Analysis.</p>
+                    <a href="files/SPOTapp.pdf" class="card-link" target="_blank">View wireframe <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Senior Guide -->
+            <div class="project-card reveal reveal-delay-2">
+                <div class="card-media">
+                    <iframe src="https://www.youtube.com/embed/Ee7PgJgc0hA" title="Senior Expedition Guide" allowfullscreen loading="lazy"></iframe>
+                    <div class="card-overlay">
+                        <a href="https://youtu.be/Ee7PgJgc0hA" class="card-cta" target="_blank">Watch Expedition <i class="fas fa-play"></i></a>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <span class="card-tag">Leadership</span>
+                    <h3>Senior Expedition Guide</h3>
+                    <div class="card-company">Canadian Wilderness</div>
+                    <p>Guided 9-12 day canoe treks into remote Canadian wilderness. Outdoor educator in history, fishing, and ecology. Trained 15 employees in team development and crisis management.</p>
+                    <a href="https://youtu.be/Ee7PgJgc0hA" class="card-link" target="_blank">Watch expedition <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Economic Analysis -->
+            <div class="project-card reveal reveal-delay-3">
+                <div class="card-media">
+                    <img src="images/EconomicAnalysis.jpg" alt="Economic Analysis" loading="lazy" />
+                    <div class="card-overlay">
+                        <a href="files/EconomicAnalysisReport.pdf" class="card-cta" target="_blank">Full Report <i class="fas fa-file-pdf"></i></a>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <span class="card-tag blue">Analysis</span>
+                    <h3>Business Case Analysis</h3>
+                    <div class="card-company">University Project</div>
+                    <p>Economic evaluation with cash flow analysis, choice among economic alternatives, effects of depreciation and taxation, replacement analysis, and dealing with risk and uncertainty.</p>
+                    <a href="files/EconomicAnalysisReport.pdf" class="card-link" target="_blank">Full report <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Industrial Design -->
+            <div class="project-card reveal reveal-delay-1">
+                <div class="card-media">
+                    <img src="images/frenchpress.jpg" alt="French Press 3D Model" loading="lazy" />
+                    <div class="card-overlay">
+                        <a href="images/frenchpress.jpg" class="card-cta" target="_blank">View 3D Drawings <i class="fas fa-cube"></i></a>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <span class="card-tag purple">Design</span>
+                    <h3>Industrial Design Projects</h3>
+                    <div class="card-company">AutoCAD &amp; SolidWorks</div>
+                    <p>Designed high detail, 3D part and assembly models with AutoCAD and SolidWorks for rapid, conceptual product development.</p>
+                    <a href="images/frenchpress.jpg" class="card-link" target="_blank">View drawings <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Junior Guide -->
+            <div class="project-card reveal reveal-delay-2">
+                <div class="card-media">
+                    <iframe src="https://www.youtube.com/embed/ZxaGePjpJwk" title="Junior Expedition Guide" allowfullscreen loading="lazy"></iframe>
+                    <div class="card-overlay">
+                        <a href="https://youtu.be/ZxaGePjpJwk" class="card-cta" target="_blank">Watch Video <i class="fas fa-play"></i></a>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <span class="card-tag">Leadership</span>
+                    <h3>Junior Expedition Guide</h3>
+                    <div class="card-company">Canadian Wilderness</div>
+                    <p>Measured inventory levels and repaired fishing equipment, kevlar and aluminum canoes to increase service life and reduce operational expenses by $15k+.</p>
+                    <a href="https://youtu.be/ZxaGePjpJwk" class="card-link" target="_blank">View photos <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== STATS BAR ===== -->
+    <div style="padding: 0 48px;">
+        <div class="stats-bar reveal">
+            <div class="stat-item">
+                <div class="stat-number">8+</div>
+                <div class="stat-label">International Deployments</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Satellites Scheduled</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">15</div>
+                <div class="stat-label">Team Members Trained</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">$15k+</div>
+                <div class="stat-label">Costs Reduced</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== EXPERIMENTS SECTION ===== -->
+    <section class="section" id="experiments">
+        <div class="section-header reveal">
+            <div class="section-label">Experiments</div>
+            <h2 class="section-heading">Playing with code, <br><span class="muted">because why not.</span></h2>
+        </div>
+
+        <div class="experiments-grid">
+
+            <!-- Weather Widget -->
+            <div class="window reveal reveal-delay-1" id="weather-window">
+                <div class="window-bar">
+                    <div class="window-dots">
+                        <span class="window-dot red" title="Close" onclick="windowAction(this, 'close')"><i class="fas fa-times"></i></span>
+                        <span class="window-dot yellow" title="Minimize" onclick="windowAction(this, 'minimize')"><i class="fas fa-minus"></i></span>
+                        <span class="window-dot green" title="Maximize" onclick="windowAction(this, 'maximize')"><i class="fas fa-expand"></i></span>
+                    </div>
+                    <span class="window-bar-title">weather.app — Los Angeles, CA</span>
+                </div>
+                <div class="window-content">
+                    <div class="weather-content">
+                        <div class="weather-icon-large"><i class="fas fa-sun"></i></div>
+                        <div class="weather-location">Los Angeles, CA</div>
                         <div class="weather-temp" id="weather-temp">--&deg;F</div>
                         <div class="weather-desc" id="weather-desc">Loading weather...</div>
-                        <div class="weather-details">
-                            <div class="weather-detail"><i class="fas fa-wind"></i> <span id="weather-wind">--</span></div>
-                            <div class="weather-detail"><i class="fas fa-droplet"></i> <span id="weather-humidity">--</span></div>
-                            <div class="weather-detail"><i class="fas fa-temperature-arrow-up"></i> <span id="weather-high">--</span></div>
-                            <div class="weather-detail"><i class="fas fa-temperature-arrow-down"></i> <span id="weather-low">--</span></div>
+                        <div class="weather-grid">
+                            <div class="weather-stat"><i class="fas fa-wind"></i> <span id="weather-wind">--</span></div>
+                            <div class="weather-stat"><i class="fas fa-droplet"></i> <span id="weather-humidity">--</span></div>
+                            <div class="weather-stat"><i class="fas fa-temperature-arrow-up"></i> <span id="weather-high">--</span></div>
+                            <div class="weather-stat"><i class="fas fa-temperature-arrow-down"></i> <span id="weather-low">--</span></div>
                         </div>
                     </div>
                 </div>
+                <button class="window-restore-btn" id="weather-restore" onclick="windowRestore('weather-window')"><i class="fas fa-undo"></i> Restore Weather</button>
+            </div>
 
-                <!-- Painting Widget -->
-                <div class="painting-widget glass">
-                    <div class="window-titlebar">
-                        <div class="window-dots">
-                            <span class="window-dot red"></span>
-                            <span class="window-dot yellow"></span>
-                            <span class="window-dot green"></span>
-                        </div>
-                        <span class="window-title">Gallery</span>
+            <!-- Gallery Widget -->
+            <div class="window reveal reveal-delay-2" id="gallery-window">
+                <div class="window-bar">
+                    <div class="window-dots">
+                        <span class="window-dot red" title="Close" onclick="windowAction(this, 'close')"><i class="fas fa-times"></i></span>
+                        <span class="window-dot yellow" title="Minimize" onclick="windowAction(this, 'minimize')"><i class="fas fa-minus"></i></span>
+                        <span class="window-dot green" title="Maximize" onclick="windowAction(this, 'maximize')"><i class="fas fa-expand"></i></span>
                     </div>
+                    <span class="window-bar-title">gallery.app</span>
+                </div>
+                <div class="window-content">
                     <div class="painting-frame">
-                        <div class="painting-inner">
-                            <img id="painting-img" class="painting-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" alt="The Starry Night" />
-                        </div>
+                        <img id="painting-img" class="painting-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" alt="The Starry Night" />
                     </div>
                     <div class="painting-caption" id="painting-caption">"The Starry Night" &mdash; Vincent van Gogh, 1889</div>
-                    <div style="text-align:center; padding-bottom:14px;">
-                        <button class="aero-btn" onclick="nextPainting()" style="font-size:0.78rem; padding:6px 14px;">
-                            <i class="fas fa-shuffle"></i> Next Painting
-                        </button>
+                    <button class="painting-btn" onclick="nextPainting()">
+                        <i class="fas fa-shuffle"></i> Next Masterpiece
+                    </button>
+                </div>
+                <button class="window-restore-btn" id="gallery-restore" onclick="windowRestore('gallery-window')"><i class="fas fa-undo"></i> Restore Gallery</button>
+            </div>
+
+            <!-- Clock Widget -->
+            <div class="window reveal reveal-delay-3" id="clock-window">
+                <div class="window-bar">
+                    <div class="window-dots">
+                        <span class="window-dot red" title="Close" onclick="windowAction(this, 'close')"><i class="fas fa-times"></i></span>
+                        <span class="window-dot yellow" title="Minimize" onclick="windowAction(this, 'minimize')"><i class="fas fa-minus"></i></span>
+                        <span class="window-dot green" title="Maximize" onclick="windowAction(this, 'maximize')"><i class="fas fa-expand"></i></span>
+                    </div>
+                    <span class="window-bar-title">clock.app</span>
+                </div>
+                <div class="window-content">
+                    <div class="clock-display">
+                        <div class="clock-time-large" id="clock-time">--:--:--</div>
+                        <div class="clock-date-text" id="clock-date">Loading...</div>
+                        <div class="clock-la-label"><i class="fas fa-location-dot"></i> Los Angeles, CA</div>
                     </div>
                 </div>
+                <button class="window-restore-btn" id="clock-restore" onclick="windowRestore('clock-window')"><i class="fas fa-undo"></i> Restore Clock</button>
+            </div>
 
-                <!-- Quick Note -->
-                <div class="note-widget glass">
-                    <strong><i class="fas fa-sticky-note"></i> Quick Note</strong><br /><br />
-                    Process Engineer &bull; Six Sigma Black Belt &bull; USC Alum &bull; Outdoor Educator &bull; Based in Boston, MA
-                </div>
+        </div>
+    </section>
 
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">Tyler<span>.</span></div>
+                <p class="footer-desc">Process Engineer with a passion for technology and building. Turning complex problems into elegant solutions, from submarines to satellites.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navigate</h4>
+                <a href="index.html">Work</a>
+                <a href="about.html">About</a>
+                <a href="education.html">Education</a>
+                <a href="#experiments">Experiments</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a href="mailto:tylervincent@alumni.usc.edu">tylervincent@alumni.usc.edu</a>
+                <a href="tel:4692430073">(469) 243-0073</a>
+                <a>Los Angeles, California</a>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank">LinkedIn</a>
+                <a href="https://tylerv11.github.io/" target="_blank">GitHub</a>
             </div>
         </div>
-
-        <!-- Footer -->
-        <div class="footer-section glass">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h3>Connect with me!</h3>
-                    <div class="footer-social">
-                        <a href="https://www.linkedin.com/in/tyler-vincent11/" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://tylerv11.github.io/" title="GitHub"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-                <div class="footer-col">
-                    <h3>Home</h3>
-                    <p>Boston, Massachusetts</p>
-                </div>
-                <div class="footer-col">
-                    <h3>Phone</h3>
-                    <p><a href="tel:4692430073">(469) 243-0073</a></p>
-                </div>
-                <div class="footer-col">
-                    <h3>Email</h3>
-                    <p><a href="mailto:tylervincent@alumni.usc.edu">tylervincent@alumni.usc.edu</a></p>
-                </div>
+        <div class="footer-bottom">
+            <span class="footer-copyright">&copy; Tyler Vincent. All rights reserved.</span>
+            <div class="footer-socials">
+                <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://tylerv11.github.io/" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
             </div>
-            <div class="copyright">&copy; Tyler Vincent</div>
         </div>
-
-    </div>
-
-    <!-- Taskbar -->
-    <div class="taskbar">
-        <a href="index.html" class="start-btn"><i class="fab fa-windows"></i> Start</a>
-        <div class="taskbar-items">
-            <a href="index.html" class="taskbar-item active">Main Page</a>
-            <a href="about.html" class="taskbar-item">About Me</a>
-            <a href="education.html" class="taskbar-item">Education</a>
-            <a href="https://www.linkedin.com/in/tyler-vincent11/" class="taskbar-item" target="_blank">LinkedIn</a>
-        </div>
-        <div class="taskbar-clock">
-            <span id="taskbar-time">--:--</span>
-            <span id="taskbar-date">--/--/----</span>
-        </div>
-    </div>
+    </footer>
 
     <!-- Calendly badge widget -->
     <script type="text/javascript">
@@ -1073,36 +1480,130 @@
                 Calendly.initBadgeWidget({
                     url: 'https://calendly.com/tylervincent/30min?hide_event_type_details=1&hide_gdpr_banner=1&background_color=1a1a1a&text_color=ffffff&primary_color=7f7f7e',
                     text: 'Schedule time with me',
-                    color: '#98AD81',
-                    textColor: '#ffffff',
+                    color: '#00ff87',
+                    textColor: '#000000',
                     branding: true
                 });
             }
         });
     </script>
 
-    <!-- Scripts -->
     <script>
+        // ===== CUSTOM CURSOR =====
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        let mouseX = 0, mouseY = 0;
+        let ringX = 0, ringY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            dot.style.left = mouseX - 4 + 'px';
+            dot.style.top = mouseY - 4 + 'px';
+        });
+
+        function animateRing() {
+            ringX += (mouseX - ringX) * 0.15;
+            ringY += (mouseY - ringY) * 0.15;
+            ring.style.left = ringX + 'px';
+            ring.style.top = ringY + 'px';
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+
+        // Hover effect on interactive elements
+        document.querySelectorAll('a, button, .project-card, .window-dot').forEach(el => {
+            el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+            el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+        });
+
+        // ===== NAVBAR SCROLL =====
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ===== MOBILE MENU =====
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const navIcon = document.getElementById('nav-toggle-icon');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('open');
+            navIcon.className = navMenu.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+        });
+
+        // Close on link click
+        navMenu.querySelectorAll('.nav-link, .nav-cta').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('open');
+                navIcon.className = 'fas fa-bars';
+            });
+        });
+
+        // ===== SCROLL REVEAL =====
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // ===== WINDOW BUTTONS — INTERACTIVE =====
+        function windowAction(dotEl, action) {
+            const win = dotEl.closest('.window');
+            const winId = win.id;
+            const restoreBtn = document.getElementById(winId.replace('-window', '-restore'));
+
+            if (action === 'close') {
+                win.classList.add('closed');
+                win.classList.remove('minimized', 'maximized');
+                if (restoreBtn) restoreBtn.classList.add('visible');
+            } else if (action === 'minimize') {
+                if (win.classList.contains('minimized')) {
+                    win.classList.remove('minimized');
+                } else {
+                    win.classList.add('minimized');
+                    win.classList.remove('maximized');
+                }
+            } else if (action === 'maximize') {
+                if (win.classList.contains('maximized')) {
+                    win.classList.remove('maximized');
+                } else {
+                    win.classList.add('maximized');
+                    win.classList.remove('minimized');
+                }
+            }
+        }
+
+        function windowRestore(winId) {
+            const win = document.getElementById(winId);
+            const restoreBtn = document.getElementById(winId.replace('-window', '-restore'));
+            win.classList.remove('closed', 'minimized', 'maximized');
+            if (restoreBtn) restoreBtn.classList.remove('visible');
+        }
+
         // ===== CLOCK =====
         function updateClock() {
             const now = new Date();
-            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-            const shortTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-            const shortDate = now.toLocaleDateString('en-US');
+            // Show LA time
+            const laOptions = { timeZone: 'America/Los_Angeles' };
+            const timeStr = now.toLocaleTimeString('en-US', { ...laOptions, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const dateStr = now.toLocaleDateString('en-US', { ...laOptions, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
             document.getElementById('clock-time').textContent = timeStr;
             document.getElementById('clock-date').textContent = dateStr;
-            document.getElementById('taskbar-time').textContent = shortTime;
-            document.getElementById('taskbar-date').textContent = shortDate;
         }
         updateClock();
         setInterval(updateClock, 1000);
 
-        // ===== WEATHER (Open-Meteo free API, no key needed) =====
+        // ===== WEATHER — Los Angeles (Open-Meteo free API) =====
         async function fetchWeather() {
             try {
-                const resp = await fetch('https://api.open-meteo.com/v1/forecast?latitude=42.3601&longitude=-71.0589&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FNew_York');
+                const resp = await fetch('https://api.open-meteo.com/v1/forecast?latitude=34.0522&longitude=-118.2437&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FLos_Angeles');
                 const data = await resp.json();
                 const current = data.current;
                 const daily = data.daily;
@@ -1113,7 +1614,6 @@
                 document.getElementById('weather-high').textContent = 'H: ' + Math.round(daily.temperature_2m_max[0]) + '\u00B0';
                 document.getElementById('weather-low').textContent = 'L: ' + Math.round(daily.temperature_2m_min[0]) + '\u00B0';
 
-                // Weather code to description & icon
                 const code = current.weather_code;
                 const weatherMap = {
                     0: ['Clear Sky', 'fa-sun'],
@@ -1143,7 +1643,7 @@
                 };
                 const match = weatherMap[code] || ['Unknown', 'fa-question'];
                 document.getElementById('weather-desc').textContent = match[0];
-                document.querySelector('.weather-icon i').className = 'fas ' + match[1];
+                document.querySelector('.weather-icon-large i').className = 'fas ' + match[1];
             } catch (e) {
                 document.getElementById('weather-desc').textContent = 'Weather unavailable';
             }
@@ -1154,27 +1654,27 @@
         const paintings = [
             {
                 src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg',
-                caption: '"The Starry Night" — Vincent van Gogh, 1889'
+                caption: '"The Starry Night" \u2014 Vincent van Gogh, 1889'
             },
             {
                 src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/VanGogh-starry_night_ballance1.jpg/1280px-VanGogh-starry_night_ballance1.jpg',
-                caption: '"Starry Night Over the Rh\u00F4ne" — Vincent van Gogh, 1888'
+                caption: '"Starry Night Over the Rh\u00F4ne" \u2014 Vincent van Gogh, 1888'
             },
             {
                 src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg/1280px-A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg',
-                caption: '"A Sunday on La Grande Jatte" — Georges Seurat, 1886'
+                caption: '"A Sunday on La Grande Jatte" \u2014 Georges Seurat, 1886'
             },
             {
                 src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Tsunami_by_hokusai_19th_century.jpg/1280px-Tsunami_by_hokusai_19th_century.jpg',
-                caption: '"The Great Wave off Kanagawa" — Hokusai, 1831'
+                caption: '"The Great Wave off Kanagawa" \u2014 Hokusai, 1831'
             },
             {
                 src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg/1280px-Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg',
-                caption: '"The Birth of Venus" — Sandro Botticelli, 1485'
+                caption: '"The Birth of Venus" \u2014 Sandro Botticelli, 1485'
             },
             {
                 src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Starry_Night_Over_the_Rhone.jpg/1280px-Starry_Night_Over_the_Rhone.jpg',
-                caption: '"Caf\u00E9 Terrace at Night" — Vincent van Gogh, 1888'
+                caption: '"Caf\u00E9 Terrace at Night" \u2014 Vincent van Gogh, 1888'
             }
         ];
 
@@ -1189,11 +1689,8 @@
                 img.src = paintings[currentPainting].src;
                 caption.textContent = paintings[currentPainting].caption;
                 img.style.opacity = 1;
-            }, 300);
+            }, 400);
         }
-
-        // Add transition to painting image
-        document.getElementById('painting-img').style.transition = 'opacity 0.3s ease';
     </script>
 
 </body>
