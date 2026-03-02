@@ -176,6 +176,23 @@
             cursor: pointer;
         }
 
+        /* ===== HERO PHOTO ===== */
+        .hero-photo-wrapper {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid rgba(0,255,135,0.3);
+            box-shadow: 0 0 40px rgba(0,255,135,0.1);
+            margin-bottom: 24px;
+        }
+
+        .hero-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         /* ===== HERO SECTION ===== */
         .hero {
             min-height: 100vh;
@@ -784,6 +801,13 @@
             gap: 24px;
         }
 
+        .experiments-grid-row2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+
         /* Weather */
         .weather-content {
             text-align: center;
@@ -1031,6 +1055,128 @@
         .reveal-delay-3 { transition-delay: 0.3s; }
         .reveal-delay-4 { transition-delay: 0.4s; }
 
+        /* ===== PONG GAME ===== */
+        .pong-canvas {
+            display: block;
+            margin: 0 auto;
+            background: #000;
+            border-radius: 8px;
+            border: 1px solid var(--border-subtle);
+            max-width: 100%;
+        }
+
+        .game-controls {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .game-btn {
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .game-btn:hover {
+            background: rgba(0,255,135,0.1);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .game-score {
+            text-align: center;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        /* ===== BLACKJACK GAME ===== */
+        .bj-table {
+            text-align: center;
+        }
+
+        .bj-hand {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            min-height: 80px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 8px 0;
+        }
+
+        .bj-card {
+            width: 52px;
+            height: 74px;
+            background: #fff;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            animation: dealCard 0.3s var(--transition-smooth);
+            color: #000;
+        }
+
+        .bj-card.red { color: #dc2626; }
+        .bj-card.hidden-card {
+            background: linear-gradient(135deg, #1a1a6e, #2d2d9e);
+            color: transparent;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.05) 5px, rgba(255,255,255,0.05) 10px);
+        }
+
+        @keyframes dealCard {
+            from { transform: translateY(-20px) rotate(-5deg); opacity: 0; }
+            to { transform: translateY(0) rotate(0deg); opacity: 1; }
+        }
+
+        .bj-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        .bj-score {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 4px 0;
+        }
+
+        .bj-result {
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 8px;
+            margin: 12px 0;
+            display: inline-block;
+        }
+
+        .bj-result.win { background: rgba(0,255,135,0.1); color: var(--accent); }
+        .bj-result.lose { background: rgba(255,50,50,0.1); color: #ff5f57; }
+        .bj-result.push { background: rgba(255,191,46,0.1); color: #ffbd2e; }
+
+        .bj-divider {
+            border: none;
+            border-top: 1px solid var(--border-subtle);
+            margin: 16px 0;
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
             .section { padding: 80px 32px; }
@@ -1040,6 +1186,7 @@
             .project-card.featured { grid-column: span 1; }
             .project-card.featured .card-media { height: 240px; }
             .experiments-grid { grid-template-columns: 1fr 1fr; }
+            .experiments-grid-row2 { grid-template-columns: 1fr; }
             .stats-bar { grid-template-columns: repeat(2, 1fr); }
             .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
         }
@@ -1073,6 +1220,7 @@
             .section { padding: 60px 20px; }
             .navbar { padding: 0 20px; }
             .experiments-grid { grid-template-columns: 1fr; }
+            .experiments-grid-row2 { grid-template-columns: 1fr; }
             .stats-bar { grid-template-columns: 1fr 1fr; }
             .footer { padding: 40px 20px 24px; }
             .footer-grid { grid-template-columns: 1fr; gap: 24px; }
@@ -1124,7 +1272,7 @@
 
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
-        <a href="index.html" class="nav-brand">Tyler<span>.</span></a>
+        <a href="index.html" class="nav-brand">Tyler Vincent<span>.</span></a>
         <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
             <i class="fas fa-bars" id="nav-toggle-icon"></i>
         </button>
@@ -1141,6 +1289,9 @@
     <section class="hero">
         <div class="hero-bg-gradient hero-bg-1"></div>
         <div class="hero-bg-gradient hero-bg-2"></div>
+        <div class="hero-photo-wrapper" style="animation: fadeInUp 0.6s var(--transition-smooth) both;">
+            <img src="images/ABOUTME.jpg" alt="Tyler Vincent" class="hero-photo" />
+        </div>
         <div class="hero-badge">
             <span class="dot"></span>
             Open to opportunities
@@ -1436,13 +1587,69 @@
             </div>
 
         </div>
+
+        <div class="experiments-grid-row2">
+
+            <!-- Pong Game -->
+            <div class="window reveal reveal-delay-1" id="pong-window">
+                <div class="window-bar">
+                    <div class="window-dots">
+                        <span class="window-dot red" title="Close" onclick="windowAction(this, 'close')"><i class="fas fa-times"></i></span>
+                        <span class="window-dot yellow" title="Minimize" onclick="windowAction(this, 'minimize')"><i class="fas fa-minus"></i></span>
+                        <span class="window-dot green" title="Maximize" onclick="windowAction(this, 'maximize')"><i class="fas fa-expand"></i></span>
+                    </div>
+                    <span class="window-bar-title">pong.exe</span>
+                </div>
+                <div class="window-content">
+                    <div class="game-score" id="pong-score">You: 0 &nbsp;&bull;&nbsp; CPU: 0</div>
+                    <canvas id="pong-canvas" class="pong-canvas" width="400" height="260"></canvas>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="pongReset()"><i class="fas fa-redo"></i> Reset</button>
+                        <span style="font-size:0.75rem; color:var(--text-muted); align-self:center;">Use mouse or touch to move paddle</span>
+                    </div>
+                </div>
+                <button class="window-restore-btn" id="pong-restore" onclick="windowRestore('pong-window')"><i class="fas fa-undo"></i> Restore Pong</button>
+            </div>
+
+            <!-- Blackjack Game -->
+            <div class="window reveal reveal-delay-2" id="blackjack-window">
+                <div class="window-bar">
+                    <div class="window-dots">
+                        <span class="window-dot red" title="Close" onclick="windowAction(this, 'close')"><i class="fas fa-times"></i></span>
+                        <span class="window-dot yellow" title="Minimize" onclick="windowAction(this, 'minimize')"><i class="fas fa-minus"></i></span>
+                        <span class="window-dot green" title="Maximize" onclick="windowAction(this, 'maximize')"><i class="fas fa-expand"></i></span>
+                    </div>
+                    <span class="window-bar-title">blackjack.app</span>
+                </div>
+                <div class="window-content">
+                    <div class="bj-table" id="bj-table">
+                        <div class="bj-label">Dealer</div>
+                        <div class="bj-hand" id="dealer-hand"></div>
+                        <div class="bj-score" id="dealer-score"></div>
+                        <hr class="bj-divider">
+                        <div class="bj-label">Your Hand</div>
+                        <div class="bj-hand" id="player-hand"></div>
+                        <div class="bj-score" id="player-score"></div>
+                        <div id="bj-result"></div>
+                        <div class="game-controls" id="bj-controls">
+                            <button class="game-btn" id="bj-deal" onclick="bjDeal()"><i class="fas fa-play"></i> Deal</button>
+                            <button class="game-btn" id="bj-hit" onclick="bjHit()" style="display:none;"><i class="fas fa-plus"></i> Hit</button>
+                            <button class="game-btn" id="bj-stand" onclick="bjStand()" style="display:none;"><i class="fas fa-hand"></i> Stand</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="window-restore-btn" id="blackjack-restore" onclick="windowRestore('blackjack-window')"><i class="fas fa-undo"></i> Restore Blackjack</button>
+            </div>
+
+        </div>
+
     </section>
 
     <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <div class="footer-grid">
             <div>
-                <div class="footer-brand">Tyler<span>.</span></div>
+                <div class="footer-brand">Tyler Vincent<span>.</span></div>
                 <p class="footer-desc">Process Engineer with a passion for technology and building. Turning complex problems into elegant solutions, from submarines to satellites.</p>
             </div>
             <div class="footer-col">
@@ -1691,6 +1898,233 @@
                 img.style.opacity = 1;
             }, 400);
         }
+
+        // ===== PONG GAME =====
+        (function() {
+            const canvas = document.getElementById('pong-canvas');
+            const ctx = canvas.getContext('2d');
+            let playerScore = 0, cpuScore = 0;
+            const paddleH = 60, paddleW = 8, ballSize = 8;
+            let playerY = 100, cpuY = 100;
+            let ballX = 200, ballY = 130, ballVX = 3, ballVY = 2;
+            let animId;
+
+            function drawRect(x, y, w, h, color) {
+                ctx.fillStyle = color;
+                ctx.fillRect(x, y, w, h);
+            }
+
+            function drawBall(x, y, r, color) {
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            function drawNet() {
+                ctx.setLineDash([4, 6]);
+                ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+                ctx.beginPath();
+                ctx.moveTo(200, 0);
+                ctx.lineTo(200, 260);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+
+            function updateScore() {
+                document.getElementById('pong-score').innerHTML = 'You: ' + playerScore + ' &nbsp;&bull;&nbsp; CPU: ' + cpuScore;
+            }
+
+            function resetBall() {
+                ballX = 200;
+                ballY = 130;
+                ballVX = (Math.random() > 0.5 ? 1 : -1) * 3;
+                ballVY = (Math.random() - 0.5) * 4;
+            }
+
+            function update() {
+                ballX += ballVX;
+                ballY += ballVY;
+
+                // Top/bottom bounce
+                if (ballY - ballSize < 0 || ballY + ballSize > 260) ballVY *= -1;
+
+                // Player paddle (left)
+                if (ballX - ballSize < paddleW + 10 && ballY > playerY && ballY < playerY + paddleH) {
+                    ballVX = Math.abs(ballVX) * 1.05;
+                    ballVY += (ballY - (playerY + paddleH / 2)) * 0.15;
+                }
+
+                // CPU paddle (right)
+                if (ballX + ballSize > 400 - paddleW - 10 && ballY > cpuY && ballY < cpuY + paddleH) {
+                    ballVX = -Math.abs(ballVX) * 1.05;
+                    ballVY += (ballY - (cpuY + paddleH / 2)) * 0.15;
+                }
+
+                // Cap speed
+                if (Math.abs(ballVX) > 8) ballVX = 8 * Math.sign(ballVX);
+
+                // Score
+                if (ballX < 0) { cpuScore++; updateScore(); resetBall(); }
+                if (ballX > 400) { playerScore++; updateScore(); resetBall(); }
+
+                // CPU AI
+                const cpuCenter = cpuY + paddleH / 2;
+                if (cpuCenter < ballY - 10) cpuY += 2.5;
+                else if (cpuCenter > ballY + 10) cpuY -= 2.5;
+            }
+
+            function draw() {
+                drawRect(0, 0, 400, 260, '#000');
+                drawNet();
+                drawRect(10, playerY, paddleW, paddleH, '#00ff87');
+                drawRect(400 - paddleW - 10, cpuY, paddleW, paddleH, '#4a9eff');
+                drawBall(ballX, ballY, ballSize, '#fff');
+            }
+
+            function gameLoop() {
+                update();
+                draw();
+                animId = requestAnimationFrame(gameLoop);
+            }
+
+            // Mouse / touch control
+            canvas.addEventListener('mousemove', function(e) {
+                const rect = canvas.getBoundingClientRect();
+                const scaleY = 260 / rect.height;
+                playerY = (e.clientY - rect.top) * scaleY - paddleH / 2;
+                playerY = Math.max(0, Math.min(260 - paddleH, playerY));
+            });
+            canvas.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+                const rect = canvas.getBoundingClientRect();
+                const scaleY = 260 / rect.height;
+                playerY = (e.touches[0].clientY - rect.top) * scaleY - paddleH / 2;
+                playerY = Math.max(0, Math.min(260 - paddleH, playerY));
+            }, { passive: false });
+
+            window.pongReset = function() {
+                playerScore = 0;
+                cpuScore = 0;
+                updateScore();
+                resetBall();
+            };
+
+            gameLoop();
+        })();
+
+        // ===== BLACKJACK GAME =====
+        (function() {
+            const suits = ['\u2665', '\u2666', '\u2663', '\u2660'];
+            const ranks = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+            let deck = [], playerHand = [], dealerHand = [], gameOver = false;
+
+            function createDeck() {
+                deck = [];
+                for (const s of suits) {
+                    for (const r of ranks) {
+                        deck.push({ suit: s, rank: r });
+                    }
+                }
+                // Shuffle
+                for (let i = deck.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [deck[i], deck[j]] = [deck[j], deck[i]];
+                }
+            }
+
+            function cardValue(hand) {
+                let sum = 0, aces = 0;
+                for (const c of hand) {
+                    if (c.rank === 'A') { sum += 11; aces++; }
+                    else if (['K','Q','J'].includes(c.rank)) sum += 10;
+                    else sum += parseInt(c.rank);
+                }
+                while (sum > 21 && aces > 0) { sum -= 10; aces--; }
+                return sum;
+            }
+
+            function renderCard(card, hidden) {
+                if (hidden) return '<div class="bj-card hidden-card">?</div>';
+                const isRed = card.suit === '\u2665' || card.suit === '\u2666';
+                return '<div class="bj-card' + (isRed ? ' red' : '') + '">' + card.rank + card.suit + '</div>';
+            }
+
+            function render(showDealer) {
+                const dh = document.getElementById('dealer-hand');
+                const ph = document.getElementById('player-hand');
+                const ds = document.getElementById('dealer-score');
+                const ps = document.getElementById('player-score');
+
+                dh.innerHTML = dealerHand.map((c, i) => renderCard(c, !showDealer && i === 1)).join('');
+                ph.innerHTML = playerHand.map(c => renderCard(c, false)).join('');
+
+                if (showDealer) {
+                    ds.textContent = cardValue(dealerHand);
+                } else {
+                    ds.textContent = dealerHand.length > 0 ? cardValue([dealerHand[0]]) + ' + ?' : '';
+                }
+                ps.textContent = playerHand.length > 0 ? cardValue(playerHand) : '';
+            }
+
+            function showResult(msg, cls) {
+                document.getElementById('bj-result').innerHTML = '<div class="bj-result ' + cls + '">' + msg + '</div>';
+            }
+
+            function endGame() {
+                gameOver = true;
+                document.getElementById('bj-hit').style.display = 'none';
+                document.getElementById('bj-stand').style.display = 'none';
+                document.getElementById('bj-deal').style.display = '';
+            }
+
+            window.bjDeal = function() {
+                createDeck();
+                playerHand = [deck.pop(), deck.pop()];
+                dealerHand = [deck.pop(), deck.pop()];
+                gameOver = false;
+                document.getElementById('bj-result').innerHTML = '';
+                document.getElementById('bj-deal').style.display = 'none';
+                document.getElementById('bj-hit').style.display = '';
+                document.getElementById('bj-stand').style.display = '';
+                render(false);
+
+                if (cardValue(playerHand) === 21) {
+                    render(true);
+                    showResult('Blackjack! You win!', 'win');
+                    endGame();
+                }
+            };
+
+            window.bjHit = function() {
+                if (gameOver) return;
+                playerHand.push(deck.pop());
+                render(false);
+                if (cardValue(playerHand) > 21) {
+                    render(true);
+                    showResult('Bust! You lose.', 'lose');
+                    endGame();
+                }
+            };
+
+            window.bjStand = function() {
+                if (gameOver) return;
+                while (cardValue(dealerHand) < 17) {
+                    dealerHand.push(deck.pop());
+                }
+                render(true);
+                const pv = cardValue(playerHand);
+                const dv = cardValue(dealerHand);
+                if (dv > 21) showResult('Dealer busts! You win!', 'win');
+                else if (pv > dv) showResult('You win!', 'win');
+                else if (pv < dv) showResult('Dealer wins.', 'lose');
+                else showResult('Push — tie game.', 'push');
+                endGame();
+            };
+
+            // Initial state
+            render(false);
+        })();
     </script>
 
 </body>
