@@ -46,11 +46,11 @@
             color: var(--text-primary);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext x='2' y='18' font-family='monospace' font-size='18' fill='%2300ff87'%3E%3E%3C/text%3E%3C/svg%3E") 2 12, crosshair;
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='2.2' fill='%2300ff87' fill-opacity='0.92'/%3E%3Cline x1='10' y1='1' x2='10' y2='7' stroke='%2300ff87' stroke-width='1.3' stroke-opacity='0.55'/%3E%3Cline x1='10' y1='13' x2='10' y2='19' stroke='%2300ff87' stroke-width='1.3' stroke-opacity='0.55'/%3E%3Cline x1='1' y1='10' x2='7' y2='10' stroke='%2300ff87' stroke-width='1.3' stroke-opacity='0.55'/%3E%3Cline x1='13' y1='10' x2='19' y2='10' stroke='%2300ff87' stroke-width='1.3' stroke-opacity='0.55'/%3E%3C/svg%3E") 10 10, crosshair;
         }
 
-        a, button, .project-card, input, select, textarea, [role="button"] {
-            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext x='2' y='18' font-family='monospace' font-size='18' fill='%2300ff87'%3E%3E_%3C/text%3E%3C/svg%3E") 2 12, pointer;
+        a, button, .project-card, input, select, textarea, [role="button"], [onclick], label {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='11' stroke='%2300ff87' stroke-width='1.5' fill='none' stroke-opacity='0.85'/%3E%3Ccircle cx='14' cy='14' r='2' fill='%2300ff87' fill-opacity='0.9'/%3E%3C/svg%3E") 14 14, pointer;
         }
 
         /* ===== MATRIX CURSOR CANVAS ===== */
@@ -60,6 +60,9 @@
             pointer-events: none;
             z-index: 9998;
         }
+
+        /* ===== HEADING MATRIX BG ===== */
+        .heading-matrix-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 
         /* ===== GRAIN OVERLAY ===== */
         .grain {
@@ -1282,6 +1285,7 @@
 
     <!-- ===== HERO ===== -->
     <section class="hero">
+        <canvas class="heading-matrix-bg" id="hero-matrix-bg"></canvas>
         <div class="hero-bg-gradient hero-bg-1"></div>
         <div class="hero-bg-gradient hero-bg-2"></div>
         <div class="hero-photo-wrapper" style="animation: fadeInUp 0.6s var(--transition-smooth) both;">
@@ -1591,7 +1595,7 @@
                 <button class="window-restore-btn" id="weather-restore" onclick="windowRestore('weather-window')"><i class="fas fa-undo"></i> Restore Weather</button>
             </div>
 
-            <!-- Frogger Game -->
+            <!-- Mario Runner Game -->
             <div class="window reveal reveal-delay-2" id="frogger-window">
                 <div class="window-bar">
                     <div class="window-dots">
@@ -1599,26 +1603,20 @@
                         <span class="window-dot yellow" title="Minimize" onclick="windowAction(this, 'minimize')"><i class="fas fa-minus"></i></span>
                         <span class="window-dot green" title="Maximize" onclick="windowAction(this, 'maximize')"><i class="fas fa-expand"></i></span>
                     </div>
-                    <span class="window-bar-title">frogger.exe</span>
+                    <span class="window-bar-title">mario-runner.exe</span>
                 </div>
                 <div class="window-content">
                     <div class="frogger-hud">
                         <span>SCORE: <span id="frog-score">0</span></span>
-                        <span>LIVES: <span id="frog-lives">3</span></span>
                         <span>BEST: <span id="frog-best">0</span></span>
                     </div>
-                    <canvas id="frogger-canvas" class="frogger-canvas" width="360" height="280"></canvas>
+                    <canvas id="frogger-canvas" class="frogger-canvas" width="360" height="260"></canvas>
                     <div class="frogger-controls">
-                        <button class="frog-btn" onclick="frogMove(0,-1)" aria-label="Up">▲</button>
-                        <div style="display:flex;gap:6px;">
-                            <button class="frog-btn" onclick="frogMove(-1,0)" aria-label="Left">◀</button>
-                            <button class="frog-btn" onclick="frogMove(0,1)" aria-label="Down">▼</button>
-                            <button class="frog-btn" onclick="frogMove(1,0)" aria-label="Right">▶</button>
-                        </div>
+                        <button class="frog-btn" id="mario-jump-btn" aria-label="Jump">⬆ JUMP</button>
                     </div>
-                    <div class="frogger-hint">Arrow keys or buttons · reach the top to score</div>
+                    <div class="frogger-hint">Space / ↑ / W or button to jump · don't fall!</div>
                 </div>
-                <button class="window-restore-btn" id="frogger-restore" onclick="windowRestore('frogger-window')"><i class="fas fa-undo"></i> Restore Frogger</button>
+                <button class="window-restore-btn" id="frogger-restore" onclick="windowRestore('frogger-window')"><i class="fas fa-undo"></i> Restore Mario</button>
             </div>
 
             <!-- Clock Widget -->
@@ -2157,214 +2155,253 @@
             render(false);
         })();
 
-        // ===== FROGGER GAME =====
+        // ===== MARIO ENDLESS RUNNER =====
         (function() {
             const canvas = document.getElementById('frogger-canvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
-            const W = 360, H = 280;
-            const COLS = 9, ROWS = 7;
-            const CW = W / COLS, CH = H / ROWS; // 40 x 40
+            const W = 360, H = 260;
+            const GROUND = H - 40;
+            const MARIO_X = 80;
+            const GRAVITY = 0.52;
+            const JUMP_VY = -10.5;
+            const SCROLL_SPEED = 2.6;
 
-            // Row types (top to bottom): goal, safe, lane×4, safe/start
-            // Row 0 = goal (top), Row 6 = start (bottom)
-            const LANE_ROWS = [1, 2, 3, 4]; // traffic rows (0-indexed from top)
-            const LANE_DIRS = [1, -1, 1, -1]; // direction per lane
-            const LANE_SPEEDS = [1.2, 1.6, 1.0, 1.8]; // pixels per frame
-            const CAR_COUNTS = [2, 3, 2, 3];
+            let score = 0, best = 0;
+            let worldX = 0;
+            let vy = 0, playerY = GROUND - 28;
+            let onGround = false;
+            let dead = false, started = false;
+            let deathTimer = 0;
 
-            let frog = { col: 4, row: 6 };
-            let score = 0, lives = 3, best = 0, gameOver = false, won = false;
-            let flash = 0;
+            // Platforms: each { wx, y, w } in world coords
+            // Start platform: long safe zone
+            let platforms = [{ wx: -200, y: GROUND, w: 700 }];
 
-            // Build cars per lane
-            let cars = [];
-            function initCars() {
-                cars = [];
-                LANE_ROWS.forEach((row, li) => {
-                    const n = CAR_COUNTS[li];
-                    for (let i = 0; i < n; i++) {
-                        cars.push({
-                            row,
-                            x: (W / n) * i + Math.random() * (W / n / 2),
-                            w: CW * (1.2 + Math.random() * 0.8),
-                            speed: LANE_SPEEDS[li] * LANE_DIRS[li],
-                            color: ['#ff5f57','#ffbd2e','#4a9eff','#a855f7','#ff6b35'][Math.floor(Math.random()*5)]
-                        });
-                    }
-                });
-            }
-            initCars();
-
-            function resetFrog() {
-                frog = { col: 4, row: 6 };
-                flash = 0;
-                won = false;
+            function genPlatforms() {
+                // Generate enough platforms ahead of camera
+                const ahead = worldX + W + 400;
+                let last = platforms[platforms.length - 1];
+                while (last.wx + last.w < ahead) {
+                    const gap = 44 + Math.random() * 52;
+                    const pw = 88 + Math.random() * 100;
+                    const py = GROUND - Math.random() * 80; // vary height
+                    platforms.push({ wx: last.wx + last.w + gap, y: py, w: pw });
+                    last = platforms[platforms.length - 1];
+                }
+                // Prune old platforms behind camera
+                platforms = platforms.filter(p => p.wx + p.w > worldX - 100);
             }
 
-            function draw() {
-                ctx.clearRect(0, 0, W, H);
+            function reset() {
+                worldX = 0;
+                playerY = GROUND - 28;
+                vy = 0;
+                onGround = false;
+                dead = false;
+                score = 0;
+                deathTimer = 0;
+                platforms = [{ wx: -200, y: GROUND, w: 700 }];
+                genPlatforms();
+                document.getElementById('frog-score').textContent = 0;
+            }
 
-                // Background rows
-                for (let r = 0; r < ROWS; r++) {
-                    if (r === 0) ctx.fillStyle = '#0a2a0a'; // goal
-                    else if (r === 6) ctx.fillStyle = '#0d1a0d'; // start safe
-                    else if (LANE_ROWS.includes(r)) ctx.fillStyle = '#111'; // road
-                    else ctx.fillStyle = '#0a1a0a'; // median
-                    ctx.fillRect(0, r * CH, W, CH);
+            function jump() {
+                if (!started) { started = true; reset(); return; }
+                if (dead) { dead = false; reset(); return; }
+                if (onGround) { vy = JUMP_VY; onGround = false; }
+            }
+
+            // Controls
+            document.addEventListener('keydown', (e) => {
+                if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+                    e.preventDefault();
+                    jump();
                 }
-
-                // Lane lines
-                ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-                ctx.setLineDash([8, 8]);
-                ctx.lineWidth = 1;
-                LANE_ROWS.forEach(r => {
-                    ctx.beginPath();
-                    ctx.moveTo(0, r * CH + CH / 2);
-                    ctx.lineTo(W, r * CH + CH / 2);
-                    ctx.stroke();
-                });
-                ctx.setLineDash([]);
-
-                // Goal zone label
-                ctx.fillStyle = 'rgba(0,255,135,0.25)';
-                ctx.fillRect(0, 0, W, CH);
-                ctx.fillStyle = '#00ff87';
-                ctx.font = 'bold 11px monospace';
-                ctx.textAlign = 'center';
-                ctx.fillText('[ GOAL ]', W / 2, CH / 2 + 4);
-
-                // Cars
-                cars.forEach(car => {
-                    const y = car.row * CH + 5;
-                    const h = CH - 10;
-                    ctx.fillStyle = car.color;
-                    ctx.beginPath();
-                    ctx.roundRect(car.x, y, car.w, h, 4);
-                    ctx.fill();
-                    // windshield
-                    ctx.fillStyle = 'rgba(0,0,0,0.3)';
-                    ctx.fillRect(car.x + car.w * 0.2, y + 3, car.w * 0.6, h * 0.4);
-                });
-
-                // Frog (flash white on death)
-                if (flash > 0 && flash % 4 < 2) {
-                    // skip draw for flash effect
-                } else if (!gameOver) {
-                    const fx = frog.col * CW + CW / 2;
-                    const fy = frog.row * CH + CH / 2;
-                    // Body
-                    ctx.fillStyle = '#00ff87';
-                    ctx.beginPath();
-                    ctx.ellipse(fx, fy, CW * 0.35, CH * 0.3, 0, 0, Math.PI * 2);
-                    ctx.fill();
-                    // Eyes
-                    ctx.fillStyle = '#000';
-                    ctx.beginPath();
-                    ctx.arc(fx - 6, fy - 5, 3, 0, Math.PI * 2);
-                    ctx.arc(fx + 6, fy - 5, 3, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.fillStyle = '#00ff87';
-                    ctx.beginPath();
-                    ctx.arc(fx - 5, fy - 5, 1.5, 0, Math.PI * 2);
-                    ctx.arc(fx + 5, fy - 5, 1.5, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-
-                // Game over / win overlay
-                if (gameOver) {
-                    ctx.fillStyle = 'rgba(0,0,0,0.75)';
-                    ctx.fillRect(0, 0, W, H);
-                    ctx.fillStyle = '#ff5f57';
-                    ctx.font = 'bold 22px monospace';
-                    ctx.textAlign = 'center';
-                    ctx.fillText('GAME OVER', W / 2, H / 2 - 16);
-                    ctx.fillStyle = '#999';
-                    ctx.font = '13px monospace';
-                    ctx.fillText('Press any arrow to restart', W / 2, H / 2 + 12);
-                }
-
-                if (flash > 0 && won) {
-                    ctx.fillStyle = 'rgba(0,255,135,0.12)';
-                    ctx.fillRect(0, 0, W, H);
-                }
+            });
+            const jumpBtn = document.getElementById('mario-jump-btn');
+            if (jumpBtn) {
+                jumpBtn.addEventListener('click', jump);
+                jumpBtn.addEventListener('touchstart', (e) => { e.preventDefault(); jump(); }, { passive: false });
             }
 
             function update() {
-                if (gameOver) return;
+                if (!started || dead) return;
 
-                // Move cars + wrap
-                cars.forEach(car => {
-                    car.x += car.speed;
-                    if (car.speed > 0 && car.x > W) car.x = -car.w;
-                    if (car.speed < 0 && car.x + car.w < 0) car.x = W;
-                });
+                worldX += SCROLL_SPEED;
+                score = Math.floor(worldX / 10);
+                if (score > best) best = score;
+                document.getElementById('frog-score').textContent = score;
+                document.getElementById('frog-best').textContent = best;
 
-                if (flash > 0) { flash--; if (flash === 0 && !won) resetFrog(); return; }
+                vy += GRAVITY;
+                playerY += vy;
 
-                // Collision check — frog in a lane row?
-                if (LANE_ROWS.includes(frog.row)) {
-                    const fx = frog.col * CW + CW / 2;
-                    const fy = frog.row * CH + CH / 2;
-                    for (const car of cars) {
-                        if (car.row === frog.row &&
-                            fx > car.x + 4 && fx < car.x + car.w - 4 &&
-                            fy > car.row * CH + 5 && fy < car.row * CH + CH - 5) {
-                            loseLife(); return;
-                        }
+                genPlatforms();
+
+                // Platform collision
+                onGround = false;
+                for (const p of platforms) {
+                    const sx = p.wx - worldX; // screen x of platform
+                    const mLeft = MARIO_X - 10;
+                    const mRight = MARIO_X + 10;
+                    const mBottom = playerY + 28;
+                    // Only snap if falling onto platform
+                    if (vy >= 0 && mRight > sx && mLeft < sx + p.w &&
+                        mBottom >= p.y && mBottom <= p.y + 16) {
+                        playerY = p.y - 28;
+                        vy = 0;
+                        onGround = true;
+                        break;
                     }
                 }
 
-                // Reached goal
-                if (frog.row === 0) {
-                    score++;
-                    if (score > best) best = score;
-                    document.getElementById('frog-score').textContent = score;
-                    document.getElementById('frog-best').textContent = best;
-                    won = true;
-                    flash = 16;
-                    setTimeout(resetFrog, 400);
+                // Fell off screen
+                if (playerY > H + 30) {
+                    dead = true;
+                    deathTimer = 80;
                 }
             }
 
-            function loseLife() {
-                lives--;
-                document.getElementById('frog-lives').textContent = lives > 0 ? lives : 0;
-                if (lives <= 0) { gameOver = true; return; }
-                flash = 20;
-                won = false;
+            function draw() {
+                // Sky
+                ctx.fillStyle = '#0a0a0a';
+                ctx.fillRect(0, 0, W, H);
+
+                // Stars background (static)
+                ctx.fillStyle = 'rgba(255,255,255,0.12)';
+                for (let i = 0; i < 30; i++) {
+                    const sx = ((i * 137 + worldX * 0.05) % W + W) % W;
+                    const sy = (i * 53) % (GROUND - 20);
+                    ctx.fillRect(sx, sy, 1.5, 1.5);
+                }
+
+                // Draw platforms
+                platforms.forEach(p => {
+                    const sx = p.wx - worldX;
+                    if (sx + p.w < -10 || sx > W + 10) return;
+                    // Platform top
+                    ctx.fillStyle = '#3a7a3a';
+                    ctx.fillRect(sx, p.y, p.w, 10);
+                    // Platform body
+                    ctx.fillStyle = '#1a3a1a';
+                    ctx.fillRect(sx, p.y + 10, p.w, 12);
+                    // Pixel border
+                    ctx.fillStyle = 'rgba(0,255,135,0.15)';
+                    ctx.fillRect(sx, p.y, p.w, 2);
+                });
+
+                if (!started) {
+                    // Start screen
+                    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+                    ctx.fillRect(0, 0, W, H);
+                    ctx.fillStyle = '#00ff87';
+                    ctx.font = 'bold 18px monospace';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('MARIO RUNNER', W / 2, H / 2 - 20);
+                    ctx.fillStyle = '#999';
+                    ctx.font = '12px monospace';
+                    ctx.fillText('Press SPACE / ↑ / Button to start', W / 2, H / 2 + 8);
+                    return;
+                }
+
+                // Draw Mario
+                const mx = MARIO_X;
+                const my = playerY;
+
+                if (dead && deathTimer > 0) {
+                    // Death: spin upward
+                    deathTimer--;
+                    const spin = (80 - deathTimer) / 80;
+                    ctx.save();
+                    ctx.translate(mx, my + 14);
+                    ctx.rotate(spin * Math.PI * 4);
+                    ctx.translate(-mx, -(my + 14));
+                }
+
+                // Hat (red)
+                ctx.fillStyle = '#ff2222';
+                ctx.fillRect(mx - 10, my, 20, 8);
+                ctx.fillRect(mx - 7, my - 6, 14, 7);
+                // Face
+                ctx.fillStyle = '#f4a460';
+                ctx.fillRect(mx - 8, my + 8, 16, 12);
+                // Eyes
+                ctx.fillStyle = '#000';
+                ctx.fillRect(mx - 4, my + 9, 3, 3);
+                ctx.fillRect(mx + 2, my + 9, 3, 3);
+                // Mustache
+                ctx.fillStyle = '#333';
+                ctx.fillRect(mx - 6, my + 14, 12, 3);
+                // Body (blue overalls)
+                ctx.fillStyle = '#2255cc';
+                ctx.fillRect(mx - 9, my + 20, 18, 10);
+                // Legs
+                ctx.fillStyle = '#aa3300';
+                ctx.fillRect(mx - 9, my + 30, 7, 6);
+                ctx.fillRect(mx + 2, my + 30, 7, 6);
+
+                if (dead) ctx.restore();
+
+                // Death overlay
+                if (dead && deathTimer <= 0) {
+                    ctx.fillStyle = 'rgba(0,0,0,0.75)';
+                    ctx.fillRect(0, 0, W, H);
+                    ctx.fillStyle = '#ff5f57';
+                    ctx.font = 'bold 20px monospace';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('YOU DIED', W / 2, H / 2 - 14);
+                    ctx.fillStyle = '#999';
+                    ctx.font = '12px monospace';
+                    ctx.fillText('Score: ' + score + '  |  Space / ↑ to retry', W / 2, H / 2 + 10);
+                }
+
+                // Score HUD
+                ctx.fillStyle = 'rgba(0,255,135,0.7)';
+                ctx.font = '10px monospace';
+                ctx.textAlign = 'left';
+                ctx.fillText('SCORE ' + score, 10, 16);
             }
 
-            window.frogMove = function(dc, dr) {
-                if (gameOver) {
-                    gameOver = false; lives = 3; score = 0;
-                    document.getElementById('frog-score').textContent = 0;
-                    document.getElementById('frog-lives').textContent = 3;
-                    initCars(); resetFrog(); return;
-                }
-                if (flash > 0) return;
-                const nc = frog.col + dc;
-                const nr = frog.row + dr;
-                if (nc >= 0 && nc < COLS && nr >= 0 && nr < ROWS) {
-                    frog.col = nc; frog.row = nr;
-                }
-            };
+            function loop() {
+                update();
+                draw();
+                requestAnimationFrame(loop);
+            }
 
-            // Keyboard
-            document.addEventListener('keydown', (e) => {
-                if (!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) return;
-                e.preventDefault();
-                if (e.key === 'ArrowUp')    window.frogMove(0, -1);
-                if (e.key === 'ArrowDown')  window.frogMove(0,  1);
-                if (e.key === 'ArrowLeft')  window.frogMove(-1, 0);
-                if (e.key === 'ArrowRight') window.frogMove(1,  0);
-            });
-
-            function loop() { update(); draw(); requestAnimationFrame(loop); }
+            reset();
             loop();
+        })();
 
-            // placeholder to avoid error if old covReset called anywhere
-            window.covReset = function() {};
+        // ===== HEADING MATRIX BACKGROUNDS =====
+        (function() {
+            const chars = '01アイウカキサシタチナ';
+            document.querySelectorAll('.heading-matrix-bg').forEach(function(canvas) {
+                if (!canvas || !canvas.parentElement) return;
+                const ctx = canvas.getContext('2d');
+                let cols, drops;
+                function resize() {
+                    canvas.width = canvas.parentElement.offsetWidth || 400;
+                    canvas.height = canvas.parentElement.offsetHeight || 120;
+                    cols = Math.floor(canvas.width / 14);
+                    drops = Array(cols).fill(0).map(function() { return Math.floor(Math.random() * canvas.height / 14); });
+                }
+                function draw() {
+                    ctx.fillStyle = 'rgba(10,10,10,0.2)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.font = '11px monospace';
+                    for (var i = 0; i < drops.length; i++) {
+                        var ch = chars[Math.floor(Math.random() * chars.length)];
+                        ctx.fillStyle = 'rgba(0,255,135,' + (0.05 + Math.random() * 0.09) + ')';
+                        ctx.fillText(ch, i * 14, drops[i] * 14);
+                        if (drops[i] * 14 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                        drops[i]++;
+                    }
+                }
+                resize();
+                window.addEventListener('resize', resize);
+                setInterval(draw, 140);
+            });
         })();
 
     </script>
