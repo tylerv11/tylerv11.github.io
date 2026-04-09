@@ -178,12 +178,12 @@
 
         /* ===== HERO PHOTO ===== */
         .hero-photo-wrapper {
-            width: 140px;
-            height: 140px;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
             overflow: hidden;
             border: 3px solid rgba(0,255,135,0.3);
-            box-shadow: 0 0 40px rgba(0,255,135,0.1);
+            box-shadow: 0 0 60px rgba(0,255,135,0.15);
             margin-bottom: 24px;
         }
 
@@ -256,11 +256,11 @@
 
         .hero-title {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(3rem, 8vw, 7rem);
+            font-size: clamp(2.2rem, 5vw, 4.5rem);
             font-weight: 800;
             line-height: 0.95;
             text-align: center;
-            letter-spacing: -3px;
+            letter-spacing: -2px;
             margin-bottom: 24px;
             animation: fadeInUp 0.8s 0.1s var(--transition-smooth) both;
         }
@@ -866,57 +866,6 @@
             margin-right: 6px;
         }
 
-        /* Painting */
-        .painting-frame {
-            margin: 0 0 12px 0;
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .painting-img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            display: block;
-            transition: opacity 0.4s ease, transform 0.6s var(--transition-smooth);
-        }
-
-        .painting-frame:hover .painting-img {
-            transform: scale(1.03);
-        }
-
-        .painting-caption {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-style: italic;
-            margin-bottom: 16px;
-            text-align: center;
-        }
-
-        .painting-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 12px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border-subtle);
-            border-radius: 10px;
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .painting-btn:hover {
-            background: rgba(255,255,255,0.08);
-            color: var(--text-primary);
-            border-color: var(--border-hover);
-        }
-
         /* Clock */
         .clock-display {
             text-align: center;
@@ -1259,6 +1208,22 @@
         .window-dot[title] {
             position: relative;
         }
+
+        /* ===== SHIFT COVERAGE WIDGET ===== */
+        .cov-title { font-size: 0.85rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+        .cov-desc { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.5; }
+        .cov-days { display: grid; grid-template-columns: 64px repeat(5, 1fr); gap: 4px; margin-bottom: 4px; }
+        .cov-day-label { text-align: center; font-size: 0.65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); padding: 4px 0; }
+        .cov-grid { display: grid; grid-template-columns: 64px repeat(5, 1fr); gap: 4px; }
+        .cov-row-label { font-size: 0.62rem; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; padding-right: 4px; }
+        .cov-cell { height: 34px; border-radius: 6px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); cursor: pointer; transition: all 0.2s ease; }
+        .cov-cell:hover { border-color: rgba(0,255,135,0.3); background: rgba(0,255,135,0.04); }
+        .cov-cell.on { background: rgba(0,255,135,0.14); border-color: rgba(0,255,135,0.35); }
+        .cov-cell.gap { background: rgba(255,95,87,0.06); border-color: rgba(255,95,87,0.2); }
+        .cov-footer { margin-top: 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .cov-stat { font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; min-width: 140px; }
+        .cov-pct-bar { flex: 1; height: 4px; background: var(--border-subtle); border-radius: 2px; overflow: hidden; min-width: 60px; }
+        .cov-pct-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
     </style>
 </head>
 <body>
@@ -1302,7 +1267,7 @@
             <span class="line gradient">Creator.</span>
         </h1>
         <p class="hero-subtitle">
-            I'm Tyler Vincent — a Process Engineer who reshapes products, processes, and the way teams work together. From nuclear submarines to AI deployments, I build things that matter.
+            I'm Tyler Vincent — a Data and Visualization Engineer who has built data products and technology solutions across SaaS, AI, e-commerce, defense, and pharmaceuticals. Helping teams move faster and improve operational performance.
         </p>
         <div class="hero-actions">
             <a href="files/DualMonitor.pdf" class="btn-primary" target="_blank">
@@ -1321,14 +1286,14 @@
     <!-- ===== MARQUEE ===== -->
     <div class="marquee-section">
         <div class="marquee-track">
-            <div class="marquee-item">Process Engineering <span class="sep"></span></div>
+            <div class="marquee-item">Data Visualization <span class="sep"></span></div>
             <div class="marquee-item">Six Sigma Black Belt <span class="sep"></span></div>
             <div class="marquee-item">AI / ML Programs <span class="sep"></span></div>
             <div class="marquee-item">Computer Vision <span class="sep"></span></div>
             <div class="marquee-item">Product Management <span class="sep"></span></div>
             <div class="marquee-item">USC Alum <span class="sep"></span></div>
             <div class="marquee-item">Los Angeles, CA <span class="sep"></span></div>
-            <div class="marquee-item">Process Engineering <span class="sep"></span></div>
+            <div class="marquee-item">Data Visualization <span class="sep"></span></div>
             <div class="marquee-item">Six Sigma Black Belt <span class="sep"></span></div>
             <div class="marquee-item">AI / ML Programs <span class="sep"></span></div>
             <div class="marquee-item">Computer Vision <span class="sep"></span></div>
@@ -1347,16 +1312,19 @@
 
         <div class="projects-grid">
 
-            <!-- Takeda — Current / Featured -->
-            <div class="project-card featured reveal reveal-delay-1">
-                <div class="card-media" style="background:linear-gradient(135deg,#0d1520 0%,#162030 40%,#0d1a28 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-                    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,135,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,135,0.03) 1px,transparent 1px);background-size:48px 48px;"></div>
-                    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%,rgba(0,255,135,0.08) 0%,transparent 55%),radial-gradient(ellipse at 20% 70%,rgba(74,158,255,0.07) 0%,transparent 50%);"></div>
+            <!-- Takeda — Current -->
+            <div class="project-card reveal reveal-delay-1">
+                <div class="card-media" style="background:linear-gradient(145deg,#0a1628 0%,#0f2040 35%,#0a1a30 70%,#061020 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+                    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,135,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,135,0.025) 1px,transparent 1px);background-size:36px 36px;"></div>
+                    <div style="position:absolute;top:20%;right:15%;width:120px;height:120px;border-radius:50%;background:rgba(0,180,100,0.06);border:1px solid rgba(0,255,135,0.08);"></div>
+                    <div style="position:absolute;top:35%;right:25%;width:80px;height:80px;border-radius:50%;background:rgba(0,180,100,0.04);border:1px solid rgba(0,255,135,0.06);"></div>
+                    <div style="position:absolute;bottom:20%;left:15%;width:100px;height:100px;border-radius:50%;background:rgba(74,158,255,0.05);border:1px solid rgba(74,158,255,0.08);"></div>
+                    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(0,255,135,0.07) 0%,transparent 50%);"></div>
                     <div style="position:relative;z-index:2;text-align:center;">
-                        <div style="width:72px;height:72px;margin:0 auto 16px;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:var(--accent);">
-                            <i class="fas fa-chart-line"></i>
+                        <div style="width:64px;height:64px;margin:0 auto 12px;background:rgba(0,255,135,0.07);border:1px solid rgba(0,255,135,0.2);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:var(--accent);">
+                            <i class="fas fa-flask"></i>
                         </div>
-                        <div style="font-size:0.7rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);">Biopharma · Analytics</div>
+                        <div style="font-size:0.65rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.22);">Biopharma · Manufacturing Analytics</div>
                     </div>
                     <div class="card-overlay">
                         <span class="card-cta" style="cursor:default;">Los Angeles, CA &nbsp;<i class="fas fa-location-dot"></i></span>
@@ -1367,9 +1335,9 @@
                         <span class="card-tag">Analytics</span>
                         <span style="display:inline-block;padding:3px 10px;background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.25);border-radius:100px;font-size:0.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);">Current</span>
                     </div>
-                    <h3>Data Visualization &amp; Analytics Engineer</h3>
+                    <h3>Data Visualization Analytics Engineer 3</h3>
                     <div class="card-company">Takeda Pharmaceuticals — Los Angeles, CA</div>
-                    <p>Building enterprise data products for manufacturing and operations. Designing Power BI dashboards and data pipelines (Databricks / SQL). Driving performance insights across teams and standardizing data for cross-functional decision-making.</p>
+                    <p>Building enterprise data products for manufacturing and operations. Designing Power BI dashboards and data pipelines across Databricks and SQL. Driving performance insights and standardizing data for cross-functional decision-making.</p>
                 </div>
             </div>
 
@@ -1396,8 +1364,8 @@
                 </div>
             </div>
 
-            <!-- Electric Boat — Featured -->
-            <div class="project-card featured reveal reveal-delay-1">
+            <!-- Electric Boat -->
+            <div class="project-card reveal reveal-delay-2">
                 <div class="card-media">
                     <iframe src="https://www.youtube.com/embed/n--isQ2pwJc" title="Electric Boat" allowfullscreen loading="lazy"></iframe>
                     <div class="card-overlay">
@@ -1593,26 +1561,35 @@
                 <button class="window-restore-btn" id="weather-restore" onclick="windowRestore('weather-window')"><i class="fas fa-undo"></i> Restore Weather</button>
             </div>
 
-            <!-- Gallery Widget -->
-            <div class="window reveal reveal-delay-2" id="gallery-window">
+            <!-- Shift Coverage Widget -->
+            <div class="window reveal reveal-delay-2" id="coverage-window">
                 <div class="window-bar">
                     <div class="window-dots">
                         <span class="window-dot red" title="Close" onclick="windowAction(this, 'close')"><i class="fas fa-times"></i></span>
                         <span class="window-dot yellow" title="Minimize" onclick="windowAction(this, 'minimize')"><i class="fas fa-minus"></i></span>
                         <span class="window-dot green" title="Maximize" onclick="windowAction(this, 'maximize')"><i class="fas fa-expand"></i></span>
                     </div>
-                    <span class="window-bar-title">gallery.app</span>
+                    <span class="window-bar-title">coverage.app — Shift Planner</span>
                 </div>
                 <div class="window-content">
-                    <div class="painting-frame">
-                        <img id="painting-img" class="painting-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" alt="The Starry Night" />
+                    <div class="cov-title">Workforce Presence Explorer</div>
+                    <div class="cov-desc">Click shifts to mark coverage. Spot gaps at a glance.</div>
+                    <div class="cov-days">
+                        <div class="cov-day-label"></div>
+                        <div class="cov-day-label">Mon</div>
+                        <div class="cov-day-label">Tue</div>
+                        <div class="cov-day-label">Wed</div>
+                        <div class="cov-day-label">Thu</div>
+                        <div class="cov-day-label">Fri</div>
                     </div>
-                    <div class="painting-caption" id="painting-caption">"The Starry Night" &mdash; Vincent van Gogh, 1889</div>
-                    <button class="painting-btn" onclick="nextPainting()">
-                        <i class="fas fa-shuffle"></i> Next Masterpiece
-                    </button>
+                    <div class="cov-grid" id="cov-grid"></div>
+                    <div class="cov-footer">
+                        <div class="cov-stat" id="cov-count">Coverage: 0 / 20 shifts</div>
+                        <div class="cov-pct-bar"><div class="cov-pct-fill" id="cov-fill"></div></div>
+                        <button class="game-btn" onclick="covReset()"><i class="fas fa-redo"></i> Reset</button>
+                    </div>
                 </div>
-                <button class="window-restore-btn" id="gallery-restore" onclick="windowRestore('gallery-window')"><i class="fas fa-undo"></i> Restore Gallery</button>
+                <button class="window-restore-btn" id="coverage-restore" onclick="windowRestore('coverage-window')"><i class="fas fa-undo"></i> Restore Coverage</button>
             </div>
 
             <!-- Clock Widget -->
@@ -1699,7 +1676,7 @@
         <div class="footer-grid">
             <div>
                 <div class="footer-brand">Tyler Vincent<span>.</span></div>
-                <p class="footer-desc">Process Engineer with a passion for technology and building. Turning complex problems into elegant solutions, from submarines to satellites.</p>
+                <p class="footer-desc">Data and Visualization Engineer with a passion for technology, building things, teaching others, solving complex problems, and developing solutions across industries from submarines to satellites.</p>
             </div>
             <div class="footer-col">
                 <h4>Navigate</h4>
@@ -1905,48 +1882,6 @@
             }
         }
         fetchWeather();
-
-        // ===== PAINTING ROTATION =====
-        const paintings = [
-            {
-                src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg',
-                caption: '"The Starry Night" \u2014 Vincent van Gogh, 1889'
-            },
-            {
-                src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/VanGogh-starry_night_ballance1.jpg/1280px-VanGogh-starry_night_ballance1.jpg',
-                caption: '"Starry Night Over the Rh\u00F4ne" \u2014 Vincent van Gogh, 1888'
-            },
-            {
-                src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg/1280px-A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg',
-                caption: '"A Sunday on La Grande Jatte" \u2014 Georges Seurat, 1886'
-            },
-            {
-                src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Tsunami_by_hokusai_19th_century.jpg/1280px-Tsunami_by_hokusai_19th_century.jpg',
-                caption: '"The Great Wave off Kanagawa" \u2014 Hokusai, 1831'
-            },
-            {
-                src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg/1280px-Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg',
-                caption: '"The Birth of Venus" \u2014 Sandro Botticelli, 1485'
-            },
-            {
-                src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Starry_Night_Over_the_Rhone.jpg/1280px-Starry_Night_Over_the_Rhone.jpg',
-                caption: '"Caf\u00E9 Terrace at Night" \u2014 Vincent van Gogh, 1888'
-            }
-        ];
-
-        let currentPainting = 0;
-
-        function nextPainting() {
-            currentPainting = (currentPainting + 1) % paintings.length;
-            const img = document.getElementById('painting-img');
-            const caption = document.getElementById('painting-caption');
-            img.style.opacity = 0;
-            setTimeout(() => {
-                img.src = paintings[currentPainting].src;
-                caption.textContent = paintings[currentPainting].caption;
-                img.style.opacity = 1;
-            }, 400);
-        }
 
         // ===== PONG GAME =====
         (function() {
@@ -2173,6 +2108,55 @@
 
             // Initial state
             render(false);
+        })();
+
+        // ===== SHIFT COVERAGE APP =====
+        (function() {
+            const shifts = ['Morning', 'Midday', 'Afternoon', 'Evening'];
+            const days = 5;
+            const state = {};
+
+            function init() {
+                const grid = document.getElementById('cov-grid');
+                if (!grid) return;
+                grid.innerHTML = '';
+                shifts.forEach((shift, si) => {
+                    const lbl = document.createElement('div');
+                    lbl.className = 'cov-row-label';
+                    lbl.textContent = shift;
+                    grid.appendChild(lbl);
+                    for (let d = 0; d < days; d++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'cov-cell';
+                        const key = si + '-' + d;
+                        if (state[key]) cell.classList.add('on');
+                        cell.addEventListener('click', () => {
+                            state[key] = !state[key];
+                            cell.classList.toggle('on', state[key]);
+                            updateStats();
+                        });
+                        grid.appendChild(cell);
+                    }
+                });
+                updateStats();
+            }
+
+            function updateStats() {
+                const total = shifts.length * days;
+                const filled = Object.values(state).filter(Boolean).length;
+                const pct = total > 0 ? Math.round(filled / total * 100) : 0;
+                const el = document.getElementById('cov-count');
+                const fill = document.getElementById('cov-fill');
+                if (el) el.textContent = 'Coverage: ' + filled + ' / ' + total + ' shifts (' + pct + '%)';
+                if (fill) fill.style.width = pct + '%';
+            }
+
+            window.covReset = function() {
+                Object.keys(state).forEach(k => delete state[k]);
+                init();
+            };
+
+            init();
         })();
     </script>
 
