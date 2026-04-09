@@ -46,38 +46,19 @@
             color: var(--text-primary);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-            cursor: default;
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext x='2' y='18' font-family='monospace' font-size='18' fill='%2300ff87'%3E%3E%3C/text%3E%3C/svg%3E") 2 12, crosshair;
         }
 
-        /* ===== CUSTOM CURSOR ===== */
-        .cursor-dot {
+        a, button, .project-card, input, select, textarea, [role="button"] {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext x='2' y='18' font-family='monospace' font-size='18' fill='%2300ff87'%3E%3E_%3C/text%3E%3C/svg%3E") 2 12, pointer;
+        }
+
+        /* ===== MATRIX CURSOR CANVAS ===== */
+        #matrix-cursor-canvas {
             position: fixed;
-            width: 8px;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 50%;
+            top: 0; left: 0;
             pointer-events: none;
-            z-index: 10000;
-            transition: transform 0.15s ease, opacity 0.15s ease;
-            mix-blend-mode: difference;
-        }
-
-        .cursor-ring {
-            position: fixed;
-            width: 40px;
-            height: 40px;
-            border: 1.5px solid rgba(0,255,135,0.4);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-            transition: transform 0.3s var(--transition-smooth), width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
-            transform: translate(-50%, -50%);
-        }
-
-        .cursor-ring.hover {
-            width: 60px;
-            height: 60px;
-            border-color: var(--accent);
+            z-index: 9998;
         }
 
         /* ===== GRAIN OVERLAY ===== */
@@ -178,13 +159,13 @@
 
         /* ===== HERO PHOTO ===== */
         .hero-photo-wrapper {
-            width: 200px;
-            height: 200px;
+            width: 220px;
+            height: 220px;
             border-radius: 50%;
             overflow: hidden;
-            border: 3px solid rgba(0,255,135,0.3);
-            box-shadow: 0 0 60px rgba(0,255,135,0.15);
-            margin-bottom: 24px;
+            border: 3px solid rgba(0,255,135,0.35);
+            box-shadow: 0 0 80px rgba(0,255,135,0.18), 0 0 0 8px rgba(0,255,135,0.04);
+            margin-bottom: 28px;
         }
 
         .hero-photo {
@@ -254,23 +235,42 @@
             50% { opacity: 0.3; }
         }
 
-        .hero-title {
+        /* Main greeting */
+        .hero-name {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(2.2rem, 5vw, 4.5rem);
+            font-size: clamp(1.9rem, 4.5vw, 3.2rem);
             font-weight: 800;
-            line-height: 0.95;
             text-align: center;
-            letter-spacing: -2px;
-            margin-bottom: 24px;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 14px;
             animation: fadeInUp 0.8s 0.1s var(--transition-smooth) both;
         }
 
-        .hero-title .line {
-            display: block;
+        /* Small inline tagline */
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(0.72rem, 1.1vw, 0.9rem);
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            text-align: center;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 28px;
+            opacity: 0.7;
+            animation: fadeInUp 0.8s 0.18s var(--transition-smooth) both;
+        }
+
+        .hero-title .sep {
+            color: var(--text-muted);
+            font-weight: 300;
         }
 
         .hero-title .outline {
-            -webkit-text-stroke: 1.5px var(--text-primary);
+            -webkit-text-stroke: 1px var(--text-secondary);
             color: transparent;
         }
 
@@ -279,17 +279,18 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            opacity: 1;
         }
 
         .hero-subtitle {
-            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-size: clamp(0.95rem, 1.8vw, 1.15rem);
             color: var(--text-secondary);
             text-align: center;
-            max-width: 600px;
-            line-height: 1.7;
+            max-width: 580px;
+            line-height: 1.75;
             font-weight: 400;
-            margin-bottom: 48px;
-            animation: fadeInUp 0.8s 0.2s var(--transition-smooth) both;
+            margin-bottom: 44px;
+            animation: fadeInUp 0.8s 0.25s var(--transition-smooth) both;
         }
 
         .hero-actions {
@@ -615,9 +616,9 @@
         }
 
         .project-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--border-hover);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            transform: translateY(-10px) scale(1.005);
+            border-color: rgba(0,255,135,0.18);
+            box-shadow: 0 28px 70px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,135,0.06), inset 0 1px 0 rgba(0,255,135,0.06);
         }
 
         .project-card.featured {
@@ -1147,7 +1148,8 @@
                 flex-direction: column;
                 position: fixed;
                 top: 72px; left: 0; right: 0; bottom: 0;
-                background: rgba(10,10,10,0.98);
+                background: #0a0a0a;
+                border-top: 1px solid var(--border-subtle);
                 padding: 32px;
                 gap: 4px;
                 z-index: 999;
@@ -1165,7 +1167,8 @@
             .nav-toggle { display: block; }
 
             .hero { padding: 100px 24px 60px; }
-            .hero-title { letter-spacing: -1.5px; }
+            .hero-photo-wrapper { width: 180px; height: 180px; }
+            .hero-name { font-size: clamp(1.6rem, 6vw, 2.4rem); }
             .section { padding: 60px 20px; }
             .navbar { padding: 0 20px; }
             .experiments-grid { grid-template-columns: 1fr; }
@@ -1174,7 +1177,7 @@
             .footer { padding: 40px 20px 24px; }
             .footer-grid { grid-template-columns: 1fr; gap: 24px; }
             .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
-            .cursor-dot, .cursor-ring { display: none; }
+            #matrix-cursor-canvas { display: none; }
         }
 
         @media (max-width: 480px) {
@@ -1209,28 +1212,55 @@
             position: relative;
         }
 
-        /* ===== SHIFT COVERAGE WIDGET ===== */
-        .cov-title { font-size: 0.85rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
-        .cov-desc { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.5; }
-        .cov-days { display: grid; grid-template-columns: 64px repeat(5, 1fr); gap: 4px; margin-bottom: 4px; }
-        .cov-day-label { text-align: center; font-size: 0.65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); padding: 4px 0; }
-        .cov-grid { display: grid; grid-template-columns: 64px repeat(5, 1fr); gap: 4px; }
-        .cov-row-label { font-size: 0.62rem; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; padding-right: 4px; }
-        .cov-cell { height: 34px; border-radius: 6px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); cursor: pointer; transition: all 0.2s ease; }
-        .cov-cell:hover { border-color: rgba(0,255,135,0.3); background: rgba(0,255,135,0.04); }
-        .cov-cell.on { background: rgba(0,255,135,0.14); border-color: rgba(0,255,135,0.35); }
-        .cov-cell.gap { background: rgba(255,95,87,0.06); border-color: rgba(255,95,87,0.2); }
-        .cov-footer { margin-top: 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-        .cov-stat { font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; min-width: 140px; }
-        .cov-pct-bar { flex: 1; height: 4px; background: var(--border-subtle); border-radius: 2px; overflow: hidden; min-width: 60px; }
-        .cov-pct-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+        /* ===== FROGGER GAME ===== */
+        .frogger-canvas {
+            display: block;
+            width: 100%;
+            max-width: 360px;
+            border-radius: 6px;
+            image-rendering: pixelated;
+            background: #0a1a0a;
+        }
+        .frogger-hud {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+        .frogger-controls {
+            margin-top: 10px;
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .frog-btn {
+            width: 38px; height: 38px;
+            background: rgba(0,255,135,0.07);
+            border: 1px solid rgba(0,255,135,0.2);
+            border-radius: 8px;
+            color: var(--accent);
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        .frog-btn:hover, .frog-btn:active { background: rgba(0,255,135,0.18); border-color: rgba(0,255,135,0.5); transform: scale(0.92); }
+        .frogger-hint { font-size: 0.68rem; color: var(--text-muted); text-align: center; margin-top: 6px; }
     </style>
 </head>
 <body>
 
-    <!-- Custom Cursor -->
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-ring" id="cursor-ring"></div>
+    <!-- Matrix cursor canvas -->
+    <canvas id="matrix-cursor-canvas"></canvas>
 
     <!-- Grain Overlay -->
     <div class="grain"></div>
@@ -1261,19 +1291,19 @@
             <span class="dot"></span>
             Open to opportunities
         </div>
-        <h1 class="hero-title">
+        <h1 class="hero-name">Hi, I'm Tyler Vincent.</h1>
+        <p class="hero-title">
             <span class="line">Engineer.</span>
+            <span class="sep">/</span>
             <span class="line outline">Builder.</span>
+            <span class="sep">/</span>
             <span class="line gradient">Creator.</span>
-        </h1>
+        </p>
         <p class="hero-subtitle">
-            I'm Tyler Vincent — a Data and Visualization Engineer who has built data products and technology solutions across SaaS, AI, e-commerce, defense, and pharmaceuticals. Helping teams move faster and improve operational performance.
+            Data Visualization &amp; Analytics Engineer — I've built data products, dashboards, and tools across SaaS, AI, e-commerce, defense, and pharmaceuticals. I help teams work better and make better decisions.
         </p>
         <div class="hero-actions">
-            <a href="files/DualMonitor.pdf" class="btn-primary" target="_blank">
-                <i class="fas fa-file-pdf"></i> Dual Monitor Study
-            </a>
-            <a href="about.html" class="btn-secondary">
+            <a href="about.html" class="btn-primary">
                 About Me <i class="fas fa-arrow-right"></i>
             </a>
         </div>
@@ -1561,35 +1591,34 @@
                 <button class="window-restore-btn" id="weather-restore" onclick="windowRestore('weather-window')"><i class="fas fa-undo"></i> Restore Weather</button>
             </div>
 
-            <!-- Shift Coverage Widget -->
-            <div class="window reveal reveal-delay-2" id="coverage-window">
+            <!-- Frogger Game -->
+            <div class="window reveal reveal-delay-2" id="frogger-window">
                 <div class="window-bar">
                     <div class="window-dots">
                         <span class="window-dot red" title="Close" onclick="windowAction(this, 'close')"><i class="fas fa-times"></i></span>
                         <span class="window-dot yellow" title="Minimize" onclick="windowAction(this, 'minimize')"><i class="fas fa-minus"></i></span>
                         <span class="window-dot green" title="Maximize" onclick="windowAction(this, 'maximize')"><i class="fas fa-expand"></i></span>
                     </div>
-                    <span class="window-bar-title">coverage.app — Shift Planner</span>
+                    <span class="window-bar-title">frogger.exe</span>
                 </div>
                 <div class="window-content">
-                    <div class="cov-title">Workforce Presence Explorer</div>
-                    <div class="cov-desc">Click shifts to mark coverage. Spot gaps at a glance.</div>
-                    <div class="cov-days">
-                        <div class="cov-day-label"></div>
-                        <div class="cov-day-label">Mon</div>
-                        <div class="cov-day-label">Tue</div>
-                        <div class="cov-day-label">Wed</div>
-                        <div class="cov-day-label">Thu</div>
-                        <div class="cov-day-label">Fri</div>
+                    <div class="frogger-hud">
+                        <span>SCORE: <span id="frog-score">0</span></span>
+                        <span>LIVES: <span id="frog-lives">3</span></span>
+                        <span>BEST: <span id="frog-best">0</span></span>
                     </div>
-                    <div class="cov-grid" id="cov-grid"></div>
-                    <div class="cov-footer">
-                        <div class="cov-stat" id="cov-count">Coverage: 0 / 20 shifts</div>
-                        <div class="cov-pct-bar"><div class="cov-pct-fill" id="cov-fill"></div></div>
-                        <button class="game-btn" onclick="covReset()"><i class="fas fa-redo"></i> Reset</button>
+                    <canvas id="frogger-canvas" class="frogger-canvas" width="360" height="280"></canvas>
+                    <div class="frogger-controls">
+                        <button class="frog-btn" onclick="frogMove(0,-1)" aria-label="Up">▲</button>
+                        <div style="display:flex;gap:6px;">
+                            <button class="frog-btn" onclick="frogMove(-1,0)" aria-label="Left">◀</button>
+                            <button class="frog-btn" onclick="frogMove(0,1)" aria-label="Down">▼</button>
+                            <button class="frog-btn" onclick="frogMove(1,0)" aria-label="Right">▶</button>
+                        </div>
                     </div>
+                    <div class="frogger-hint">Arrow keys or buttons · reach the top to score</div>
                 </div>
-                <button class="window-restore-btn" id="coverage-restore" onclick="windowRestore('coverage-window')"><i class="fas fa-undo"></i> Restore Coverage</button>
+                <button class="window-restore-btn" id="frogger-restore" onclick="windowRestore('frogger-window')"><i class="fas fa-undo"></i> Restore Frogger</button>
             </div>
 
             <!-- Clock Widget -->
@@ -1722,33 +1751,51 @@
     </script>
 
     <script>
-        // ===== CUSTOM CURSOR =====
-        const dot = document.getElementById('cursor-dot');
-        const ring = document.getElementById('cursor-ring');
-        let mouseX = 0, mouseY = 0;
-        let ringX = 0, ringY = 0;
+        // ===== MATRIX CURSOR TRAIL =====
+        (function() {
+            const mc = document.getElementById('matrix-cursor-canvas');
+            if (!mc) return;
+            const ctx = mc.getContext('2d');
+            const chars = '01アイウエカキクサシスタチツナニネノ';
+            let trails = [];
+            let mx = -200, my = -200;
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            dot.style.left = mouseX - 4 + 'px';
-            dot.style.top = mouseY - 4 + 'px';
-        });
+            function resize() { mc.width = window.innerWidth; mc.height = window.innerHeight; }
+            resize();
+            window.addEventListener('resize', resize);
 
-        function animateRing() {
-            ringX += (mouseX - ringX) * 0.15;
-            ringY += (mouseY - ringY) * 0.15;
-            ring.style.left = ringX + 'px';
-            ring.style.top = ringY + 'px';
-            requestAnimationFrame(animateRing);
-        }
-        animateRing();
+            document.addEventListener('mousemove', (e) => {
+                mx = e.clientX; my = e.clientY;
+                if (Math.random() > 0.45) {
+                    trails.push({
+                        x: mx + (Math.random() - 0.5) * 18,
+                        y: my,
+                        ch: chars[Math.floor(Math.random() * chars.length)],
+                        op: 0.9 + Math.random() * 0.1,
+                        vy: 0.8 + Math.random() * 1.8,
+                        sz: 9 + Math.floor(Math.random() * 5)
+                    });
+                }
+                if (trails.length > 50) trails.shift();
+            });
 
-        // Hover effect on interactive elements
-        document.querySelectorAll('a, button, .project-card, .window-dot').forEach(el => {
-            el.addEventListener('mouseenter', () => ring.classList.add('hover'));
-            el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
-        });
+            function draw() {
+                ctx.clearRect(0, 0, mc.width, mc.height);
+                ctx.textBaseline = 'top';
+                trails = trails.filter(t => t.op > 0.02);
+                trails.forEach(t => {
+                    ctx.globalAlpha = t.op;
+                    ctx.fillStyle = '#00ff87';
+                    ctx.font = t.sz + 'px monospace';
+                    ctx.fillText(t.ch, t.x, t.y);
+                    t.y += t.vy;
+                    t.op *= 0.92;
+                });
+                ctx.globalAlpha = 1;
+                requestAnimationFrame(draw);
+            }
+            draw();
+        })();
 
         // ===== NAVBAR SCROLL =====
         const navbar = document.getElementById('navbar');
@@ -2110,54 +2157,216 @@
             render(false);
         })();
 
-        // ===== SHIFT COVERAGE APP =====
+        // ===== FROGGER GAME =====
         (function() {
-            const shifts = ['Morning', 'Midday', 'Afternoon', 'Evening'];
-            const days = 5;
-            const state = {};
+            const canvas = document.getElementById('frogger-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const W = 360, H = 280;
+            const COLS = 9, ROWS = 7;
+            const CW = W / COLS, CH = H / ROWS; // 40 x 40
 
-            function init() {
-                const grid = document.getElementById('cov-grid');
-                if (!grid) return;
-                grid.innerHTML = '';
-                shifts.forEach((shift, si) => {
-                    const lbl = document.createElement('div');
-                    lbl.className = 'cov-row-label';
-                    lbl.textContent = shift;
-                    grid.appendChild(lbl);
-                    for (let d = 0; d < days; d++) {
-                        const cell = document.createElement('div');
-                        cell.className = 'cov-cell';
-                        const key = si + '-' + d;
-                        if (state[key]) cell.classList.add('on');
-                        cell.addEventListener('click', () => {
-                            state[key] = !state[key];
-                            cell.classList.toggle('on', state[key]);
-                            updateStats();
+            // Row types (top to bottom): goal, safe, lane×4, safe/start
+            // Row 0 = goal (top), Row 6 = start (bottom)
+            const LANE_ROWS = [1, 2, 3, 4]; // traffic rows (0-indexed from top)
+            const LANE_DIRS = [1, -1, 1, -1]; // direction per lane
+            const LANE_SPEEDS = [1.2, 1.6, 1.0, 1.8]; // pixels per frame
+            const CAR_COUNTS = [2, 3, 2, 3];
+
+            let frog = { col: 4, row: 6 };
+            let score = 0, lives = 3, best = 0, gameOver = false, won = false;
+            let flash = 0;
+
+            // Build cars per lane
+            let cars = [];
+            function initCars() {
+                cars = [];
+                LANE_ROWS.forEach((row, li) => {
+                    const n = CAR_COUNTS[li];
+                    for (let i = 0; i < n; i++) {
+                        cars.push({
+                            row,
+                            x: (W / n) * i + Math.random() * (W / n / 2),
+                            w: CW * (1.2 + Math.random() * 0.8),
+                            speed: LANE_SPEEDS[li] * LANE_DIRS[li],
+                            color: ['#ff5f57','#ffbd2e','#4a9eff','#a855f7','#ff6b35'][Math.floor(Math.random()*5)]
                         });
-                        grid.appendChild(cell);
                     }
                 });
-                updateStats();
+            }
+            initCars();
+
+            function resetFrog() {
+                frog = { col: 4, row: 6 };
+                flash = 0;
+                won = false;
             }
 
-            function updateStats() {
-                const total = shifts.length * days;
-                const filled = Object.values(state).filter(Boolean).length;
-                const pct = total > 0 ? Math.round(filled / total * 100) : 0;
-                const el = document.getElementById('cov-count');
-                const fill = document.getElementById('cov-fill');
-                if (el) el.textContent = 'Coverage: ' + filled + ' / ' + total + ' shifts (' + pct + '%)';
-                if (fill) fill.style.width = pct + '%';
+            function draw() {
+                ctx.clearRect(0, 0, W, H);
+
+                // Background rows
+                for (let r = 0; r < ROWS; r++) {
+                    if (r === 0) ctx.fillStyle = '#0a2a0a'; // goal
+                    else if (r === 6) ctx.fillStyle = '#0d1a0d'; // start safe
+                    else if (LANE_ROWS.includes(r)) ctx.fillStyle = '#111'; // road
+                    else ctx.fillStyle = '#0a1a0a'; // median
+                    ctx.fillRect(0, r * CH, W, CH);
+                }
+
+                // Lane lines
+                ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+                ctx.setLineDash([8, 8]);
+                ctx.lineWidth = 1;
+                LANE_ROWS.forEach(r => {
+                    ctx.beginPath();
+                    ctx.moveTo(0, r * CH + CH / 2);
+                    ctx.lineTo(W, r * CH + CH / 2);
+                    ctx.stroke();
+                });
+                ctx.setLineDash([]);
+
+                // Goal zone label
+                ctx.fillStyle = 'rgba(0,255,135,0.25)';
+                ctx.fillRect(0, 0, W, CH);
+                ctx.fillStyle = '#00ff87';
+                ctx.font = 'bold 11px monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText('[ GOAL ]', W / 2, CH / 2 + 4);
+
+                // Cars
+                cars.forEach(car => {
+                    const y = car.row * CH + 5;
+                    const h = CH - 10;
+                    ctx.fillStyle = car.color;
+                    ctx.beginPath();
+                    ctx.roundRect(car.x, y, car.w, h, 4);
+                    ctx.fill();
+                    // windshield
+                    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+                    ctx.fillRect(car.x + car.w * 0.2, y + 3, car.w * 0.6, h * 0.4);
+                });
+
+                // Frog (flash white on death)
+                if (flash > 0 && flash % 4 < 2) {
+                    // skip draw for flash effect
+                } else if (!gameOver) {
+                    const fx = frog.col * CW + CW / 2;
+                    const fy = frog.row * CH + CH / 2;
+                    // Body
+                    ctx.fillStyle = '#00ff87';
+                    ctx.beginPath();
+                    ctx.ellipse(fx, fy, CW * 0.35, CH * 0.3, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Eyes
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath();
+                    ctx.arc(fx - 6, fy - 5, 3, 0, Math.PI * 2);
+                    ctx.arc(fx + 6, fy - 5, 3, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#00ff87';
+                    ctx.beginPath();
+                    ctx.arc(fx - 5, fy - 5, 1.5, 0, Math.PI * 2);
+                    ctx.arc(fx + 5, fy - 5, 1.5, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Game over / win overlay
+                if (gameOver) {
+                    ctx.fillStyle = 'rgba(0,0,0,0.75)';
+                    ctx.fillRect(0, 0, W, H);
+                    ctx.fillStyle = '#ff5f57';
+                    ctx.font = 'bold 22px monospace';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('GAME OVER', W / 2, H / 2 - 16);
+                    ctx.fillStyle = '#999';
+                    ctx.font = '13px monospace';
+                    ctx.fillText('Press any arrow to restart', W / 2, H / 2 + 12);
+                }
+
+                if (flash > 0 && won) {
+                    ctx.fillStyle = 'rgba(0,255,135,0.12)';
+                    ctx.fillRect(0, 0, W, H);
+                }
             }
 
-            window.covReset = function() {
-                Object.keys(state).forEach(k => delete state[k]);
-                init();
+            function update() {
+                if (gameOver) return;
+
+                // Move cars + wrap
+                cars.forEach(car => {
+                    car.x += car.speed;
+                    if (car.speed > 0 && car.x > W) car.x = -car.w;
+                    if (car.speed < 0 && car.x + car.w < 0) car.x = W;
+                });
+
+                if (flash > 0) { flash--; if (flash === 0 && !won) resetFrog(); return; }
+
+                // Collision check — frog in a lane row?
+                if (LANE_ROWS.includes(frog.row)) {
+                    const fx = frog.col * CW + CW / 2;
+                    const fy = frog.row * CH + CH / 2;
+                    for (const car of cars) {
+                        if (car.row === frog.row &&
+                            fx > car.x + 4 && fx < car.x + car.w - 4 &&
+                            fy > car.row * CH + 5 && fy < car.row * CH + CH - 5) {
+                            loseLife(); return;
+                        }
+                    }
+                }
+
+                // Reached goal
+                if (frog.row === 0) {
+                    score++;
+                    if (score > best) best = score;
+                    document.getElementById('frog-score').textContent = score;
+                    document.getElementById('frog-best').textContent = best;
+                    won = true;
+                    flash = 16;
+                    setTimeout(resetFrog, 400);
+                }
+            }
+
+            function loseLife() {
+                lives--;
+                document.getElementById('frog-lives').textContent = lives > 0 ? lives : 0;
+                if (lives <= 0) { gameOver = true; return; }
+                flash = 20;
+                won = false;
+            }
+
+            window.frogMove = function(dc, dr) {
+                if (gameOver) {
+                    gameOver = false; lives = 3; score = 0;
+                    document.getElementById('frog-score').textContent = 0;
+                    document.getElementById('frog-lives').textContent = 3;
+                    initCars(); resetFrog(); return;
+                }
+                if (flash > 0) return;
+                const nc = frog.col + dc;
+                const nr = frog.row + dr;
+                if (nc >= 0 && nc < COLS && nr >= 0 && nr < ROWS) {
+                    frog.col = nc; frog.row = nr;
+                }
             };
 
-            init();
+            // Keyboard
+            document.addEventListener('keydown', (e) => {
+                if (!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) return;
+                e.preventDefault();
+                if (e.key === 'ArrowUp')    window.frogMove(0, -1);
+                if (e.key === 'ArrowDown')  window.frogMove(0,  1);
+                if (e.key === 'ArrowLeft')  window.frogMove(-1, 0);
+                if (e.key === 'ArrowRight') window.frogMove(1,  0);
+            });
+
+            function loop() { update(); draw(); requestAnimationFrame(loop); }
+            loop();
+
+            // placeholder to avoid error if old covReset called anywhere
+            window.covReset = function() {};
         })();
+
     </script>
 
 </body>
