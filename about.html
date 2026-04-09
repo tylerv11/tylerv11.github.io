@@ -248,6 +248,112 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* ===== RETRO / DIGITAL ART SECTION ===== */
+        .digital-art-section {
+            padding: 0 48px 80px;
+            position: relative;
+        }
+
+        .binary-canvas-wrap {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+            position: relative;
+            background: #080808;
+            height: 200px;
+        }
+
+        #binary-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            opacity: 0.85;
+        }
+
+        .binary-overlay-text {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .binary-overlay-text span {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.4rem, 3vw, 2.2rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 0 0 30px rgba(0,255,135,0.6);
+        }
+
+        .binary-overlay-text small {
+            font-family: monospace;
+            font-size: 0.72rem;
+            color: rgba(0,255,135,0.6);
+            letter-spacing: 2px;
+            margin-top: 6px;
+        }
+
+        /* ===== ABOUT THIS SITE TERMINAL ===== */
+        .site-terminal {
+            margin-top: 48px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #0a0a0a;
+        }
+
+        .site-terminal-bar {
+            background: #1a1a1a;
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .site-terminal-bar .t-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+        }
+        .t-dot.r { background: #ff5f57; }
+        .t-dot.y { background: #ffbd2e; }
+        .t-dot.g { background: #28c840; }
+
+        .site-terminal-bar span {
+            margin-left: 8px;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        .site-terminal-body {
+            padding: 24px 28px;
+            font-family: monospace;
+            font-size: 0.82rem;
+            line-height: 1.9;
+            color: var(--text-secondary);
+        }
+
+        .site-terminal-body .prompt {
+            color: var(--accent);
+            margin-right: 8px;
+            user-select: none;
+        }
+
+        .site-terminal-body .t-label {
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        .site-terminal-body .t-muted {
+            color: var(--text-muted);
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .section { padding: 80px 32px; }
@@ -256,7 +362,12 @@
             .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
         }
 
+        @media (max-width: 1024px) {
+            .digital-art-section { padding: 0 32px 60px; }
+        }
+
         @media (max-width: 768px) {
+            .digital-art-section { padding: 0 20px 48px; }
             .nav-menu { display: none; }
             .nav-menu.open {
                 display: flex; flex-direction: column; position: fixed;
@@ -337,6 +448,49 @@
         </div>
     </section>
 
+    <!-- Digital Art + About This Site -->
+    <div class="digital-art-section">
+
+        <!-- Binary / Matrix art banner -->
+        <div class="binary-canvas-wrap">
+            <canvas id="binary-canvas"></canvas>
+            <div class="binary-overlay-text">
+                <span>Tyler Vincent.</span>
+                <small>// engineer · builder · creator</small>
+            </div>
+        </div>
+
+        <!-- About this site terminal -->
+        <div class="site-terminal reveal">
+            <div class="site-terminal-bar">
+                <div class="t-dot r"></div>
+                <div class="t-dot y"></div>
+                <div class="t-dot g"></div>
+                <span>about-this-site.md</span>
+            </div>
+            <div class="site-terminal-body">
+                <div><span class="prompt">$</span><span class="t-label">cat</span> about-this-site.md</div>
+                <div>&nbsp;</div>
+                <div><span class="t-muted"># About This Site</span></div>
+                <div>&nbsp;</div>
+                <div>Built from scratch — started by reverse-engineering an open-source</div>
+                <div>template and evolved into something entirely my own over time.</div>
+                <div>&nbsp;</div>
+                <div><span class="t-label">Stack:</span> vanilla HTML, CSS, JavaScript. No frameworks.</div>
+                <div><span class="t-label">Hosted:</span> GitHub Pages. Deployed on every push to main.</div>
+                <div><span class="t-label">Design:</span> dark theme, monospace accents, interactive experiments.</div>
+                <div>&nbsp;</div>
+                <div>The site is intentionally evolving — it reflects both technical work</div>
+                <div>and personality, and will keep growing as projects and ideas do.</div>
+                <div>&nbsp;</div>
+                <div><span class="t-muted">// last updated: 2025 &nbsp;·&nbsp; always a work in progress</span></div>
+                <div>&nbsp;</div>
+                <div><span class="prompt">$</span><span style="animation: blink 1s step-end infinite; color: var(--accent);">▌</span></div>
+            </div>
+        </div>
+
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-grid">
@@ -416,6 +570,45 @@
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // ===== BINARY CANVAS ART =====
+        (function() {
+            const canvas = document.getElementById('binary-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const chars = '01';
+            let cols, drops;
+
+            function resize() {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+                cols = Math.floor(canvas.width / 14);
+                drops = Array(cols).fill(0).map(() => Math.floor(Math.random() * canvas.height / 14));
+            }
+
+            function draw() {
+                ctx.fillStyle = 'rgba(8,8,8,0.18)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = '12px monospace';
+                for (let i = 0; i < drops.length; i++) {
+                    const ch = chars[Math.floor(Math.random() * chars.length)];
+                    const alpha = 0.15 + Math.random() * 0.35;
+                    ctx.fillStyle = `rgba(0,255,135,${alpha})`;
+                    ctx.fillText(ch, i * 14, drops[i] * 14);
+                    if (drops[i] * 14 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                    drops[i]++;
+                }
+            }
+
+            resize();
+            window.addEventListener('resize', resize);
+            setInterval(draw, 80);
+        })();
+
+        // Blink cursor animation
+        const style = document.createElement('style');
+        style.textContent = '@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }';
+        document.head.appendChild(style);
     </script>
 
 </body>
