@@ -2406,40 +2406,49 @@
 
         // ===== MATRIX CAT GLITCH =====
         (function() {
-            // Two walking frames — 18 cols × 11 rows
-            // Head faces left, tail curves up-right, legs alternate
-            var FRAMES = [
-              // Frame 1: front-left / back-right legs forward
-              [
-                [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],  // ear tip + tail tip
-                [0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0],  // ear + tail
-                [1,1,1,1,1,1,1,1,1,0,0,0,1,1,0,0,0,0],  // full head + tail
-                [1,0,1,1,1,0,1,1,1,0,1,1,0,0,0,0,0,0],  // face (2 eye gaps) + tail
-                [1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0],  // head-base / body / tail join
-                [0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0],  // body
-                [0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0],  // body
-                [0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0],  // belly
-                [0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],  // legs
-                [0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],  // legs
-                [0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0],  // paws
-              ],
-              // Frame 2: opposite legs
-              [
-                [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
-                [0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0],
-                [1,1,1,1,1,1,1,1,1,0,0,0,1,1,0,0,0,0],
-                [1,0,1,1,1,0,1,1,1,0,1,1,0,0,0,0,0,0],
-                [1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0],
-                [0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0],
-                [0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0],
-                [0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0],
-                [0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0],  // legs swapped
-                [0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0],
-                [0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0],  // paws swapped
-              ],
+            // 22 cols × 12 rows — long-bodied cat, head faces left, tail curves up-right
+            // 3-frame walk cycle: stride-A → mid → stride-B → mid → stride-A ...
+            var BODY = [
+                [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],  // r0  ear tip + tail tip
+                [0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0],  // r1  ear + tail
+                [1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0],  // r2  head + tail
+                [1,0,1,1,1,0,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0],  // r3  face (2 eyes) + tail
+                [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0],  // r4  full body span
+                [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0],  // r5  body
+                [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0],  // r6  body
+                [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0],  // r7  body
+                [0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0],  // r8  belly
             ];
+            // Leg rows per frame (3 rows each: top, mid, paw)
+            // Front legs near col 2-3, back legs near col 12-14
+            var LEGS = [
+                // Frame 0 — stride A: front angled left (fwd), back angled right (bwd)
+                [
+                    [0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+                    [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0],
+                    [0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0],
+                ],
+                // Frame 1 — mid stride: legs straight down (gathered)
+                [
+                    [0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0],
+                ],
+                // Frame 2 — stride B: front angled right (bwd), back angled left (fwd)
+                [
+                    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0],
+                ],
+            ];
+            // Build full frame arrays: body + legs
+            var FRAMES = LEGS.map(function(leg) { return BODY.concat(leg); });
             var ROWS = FRAMES[0].length, COLS = FRAMES[0][0].length;
-            var frame = 0, tickCount = 0;
+            // Pingpong walk sequence: A → mid → B → mid → A ...
+            var SEQ = [0, 1, 2, 1];
+            var seqIdx = 0;
+            // Subtle body bob: mid-frame dips 1px so cat "steps down" naturally
+            var BOB = [0, 1, 0, 1];
 
             function cell() { return window.innerWidth < 600 ? 3 : 5; }
 
@@ -2448,18 +2457,19 @@
             document.body.appendChild(cv);
             var ctx = cv.getContext('2d');
 
-            var posX = 0, raf = null, lastRender = 0;
+            var posX = 0, raf = null, lastRender = 0, baseTop = 6, tickCount = 0;
 
             function resize() {
                 var c = cell();
                 cv.width = COLS * c;
                 cv.height = ROWS * c;
-                cv.style.top = Math.max(2, Math.floor((72 - cv.height) / 2)) + 'px';
+                baseTop = Math.max(2, Math.floor((72 - cv.height) / 2));
+                cv.style.top = baseTop + 'px';
             }
 
             function render() {
                 var c = cell();
-                var CAT = FRAMES[frame];
+                var CAT = FRAMES[SEQ[seqIdx]];
                 ctx.clearRect(0, 0, cv.width, cv.height);
                 ctx.imageSmoothingEnabled = false;
                 ctx.font = 'bold ' + c + 'px monospace';
@@ -2478,7 +2488,7 @@
 
             function showToast() {
                 var tx = Math.max(4, Math.min(posX, window.innerWidth - 150));
-                var ty = parseInt(cv.style.top) + cv.height + 8;
+                var ty = baseTop + cv.height + 8;
                 var el = document.createElement('div');
                 el.textContent = 'Glitch removed';
                 el.style.cssText = 'position:fixed;left:' + tx + 'px;top:' + ty + 'px;' +
@@ -2500,14 +2510,18 @@
             cv.addEventListener('click', function() { hide(true); });
 
             function tick(ts) {
-                posX -= window.innerWidth < 600 ? 0.7 : 1.1;
+                posX -= window.innerWidth < 600 ? 0.8 : 1.2;
                 cv.style.left = posX + 'px';
 
-                // Swap leg frame every 10 ticks (~167ms at 60fps = believable walk)
+                // Advance walk sequence every 10 ticks (~167ms) for natural pace
                 tickCount++;
-                if (tickCount % 10 === 0) frame = 1 - frame;
+                if (tickCount % 10 === 0) {
+                    seqIdx = (seqIdx + 1) % SEQ.length;
+                    // Body bob: shift top by 1px on mid-stride frames
+                    cv.style.top = (baseTop + BOB[seqIdx]) + 'px';
+                }
 
-                // Redraw chars every 85ms for matrix flicker
+                // Redraw 0/1 chars every 85ms for matrix flicker
                 if (ts - lastRender > 85) { render(); lastRender = ts; }
 
                 if (posX + cv.width < 0) { hide(false); return; }
@@ -2519,7 +2533,7 @@
                 posX = window.innerWidth + 10;
                 cv.style.left = posX + 'px';
                 cv.style.display = 'block';
-                frame = 0; tickCount = 0;
+                seqIdx = 0; tickCount = 0;
                 render();
                 raf = requestAnimationFrame(tick);
             }
