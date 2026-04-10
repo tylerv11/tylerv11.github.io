@@ -2404,6 +2404,96 @@
             });
         })();
 
+        // ===== MATRIX CAT GLITCH =====
+        (function() {
+            // Pixel cat silhouette — facing left, walking leftward
+            // 1 = filled with matrix char, 0 = transparent
+            const CAT = [
+                [0,1,1,0,0,0,0,0,0,0,0],  // left ear
+                [1,1,1,1,0,0,0,0,0,0,0],  // ear + head top
+                [1,1,1,1,1,1,1,1,0,0,0],  // head
+                [1,0,1,1,1,0,1,1,0,0,0],  // face (eye gaps at col 1 and 5)
+                [1,1,1,1,1,1,1,1,1,1,1],  // head base + neck + tail span
+                [0,1,1,1,1,1,1,1,0,0,1],  // body + tail tip
+                [0,0,1,1,0,0,1,1,0,0,0],  // upper legs
+                [0,1,1,0,0,1,1,0,0,0,0],  // paws
+            ];
+            const ROWS = CAT.length, COLS = CAT[0].length;
+
+            function cell() { return window.innerWidth < 600 ? 5 : 7; }
+
+            const cv = document.createElement('canvas');
+            cv.style.cssText = 'position:fixed;pointer-events:auto;cursor:pointer;z-index:1001;image-rendering:pixelated;display:none;';
+            document.body.appendChild(cv);
+            const ctx = cv.getContext('2d');
+
+            let posX = 0, raf = null, lastRender = 0;
+
+            function resize() {
+                const c = cell();
+                cv.width = COLS * c;
+                cv.height = ROWS * c;
+                cv.style.top = Math.max(4, Math.floor((72 - cv.height) / 2)) + 'px';
+            }
+
+            function render() {
+                const c = cell();
+                ctx.clearRect(0, 0, cv.width, cv.height);
+                ctx.font = 'bold ' + c + 'px monospace';
+                ctx.textBaseline = 'top';
+                for (var r = 0; r < ROWS; r++) {
+                    for (var co = 0; co < COLS; co++) {
+                        if (!CAT[r][co]) continue;
+                        ctx.fillStyle = 'rgba(0,255,135,' + (0.55 + Math.random() * 0.45) + ')';
+                        ctx.fillText(Math.random() > 0.5 ? '0' : '1', co * c, r * c);
+                    }
+                }
+            }
+
+            function showToast() {
+                var tx = Math.max(4, Math.min(posX, window.innerWidth - 150));
+                var ty = parseInt(cv.style.top) + cv.height + 8;
+                var el = document.createElement('div');
+                el.textContent = 'Glitch removed';
+                el.style.cssText = 'position:fixed;left:' + tx + 'px;top:' + ty + 'px;' +
+                    'color:#00ff87;font-family:monospace;font-size:11px;letter-spacing:1px;' +
+                    'padding:4px 12px;border:1px solid #00ff87;background:#0a0a0a;' +
+                    'border-radius:3px;z-index:10000;pointer-events:none;white-space:nowrap;' +
+                    'box-shadow:0 0 10px rgba(0,255,135,0.35),inset 0 0 6px rgba(0,255,135,0.06);';
+                document.body.appendChild(el);
+                setTimeout(function() { el.remove(); }, 1800);
+            }
+
+            function hide(byClick) {
+                cv.style.display = 'none';
+                if (raf) { cancelAnimationFrame(raf); raf = null; }
+                if (byClick) showToast();
+                setTimeout(start, byClick ? 5 * 60 * 1000 : 60 * 1000);
+            }
+
+            cv.addEventListener('click', function() { hide(true); });
+
+            function tick(ts) {
+                posX -= window.innerWidth < 600 ? 0.9 : 1.3;
+                cv.style.left = posX + 'px';
+                if (ts - lastRender > 110) { render(); lastRender = ts; }
+                if (posX + cv.width < 0) { hide(false); return; }
+                raf = requestAnimationFrame(tick);
+            }
+
+            function start() {
+                resize();
+                posX = window.innerWidth + 10;
+                cv.style.left = posX + 'px';
+                cv.style.display = 'block';
+                render();
+                raf = requestAnimationFrame(tick);
+            }
+
+            // First appearance after 60 seconds
+            setTimeout(start, 60 * 1000);
+        })();
+
     </script>
 
 </body>
