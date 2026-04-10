@@ -1144,6 +1144,18 @@
             .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
         }
 
+        /* Mobile nav overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            inset: 72px 0 0 0;
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 998;
+        }
+        .nav-overlay.visible { display: block; }
+
         @media (max-width: 768px) {
             .nav-menu { display: none; }
             .nav-menu.open {
@@ -1151,7 +1163,7 @@
                 flex-direction: column;
                 position: fixed;
                 top: 72px; left: 0; right: 0; bottom: 0;
-                background: #0a0a0a;
+                background: rgba(10,10,10,0.97);
                 border-top: 1px solid var(--border-subtle);
                 padding: 32px;
                 gap: 4px;
@@ -1282,6 +1294,7 @@
             <a href="https://www.linkedin.com/in/tyler-vincent11/" class="nav-cta" target="_blank">Let's Connect <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></a>
         </div>
     </nav>
+    <div class="nav-overlay" id="nav-overlay"></div>
 
     <!-- ===== HERO ===== -->
     <section class="hero">
@@ -1805,18 +1818,25 @@
         const navToggle = document.getElementById('nav-toggle');
         const navMenu = document.getElementById('nav-menu');
         const navIcon = document.getElementById('nav-toggle-icon');
+        const navOverlay = document.getElementById('nav-overlay');
+
+        function closeMenu() {
+            navMenu.classList.remove('open');
+            navIcon.className = 'fas fa-bars';
+            if (navOverlay) navOverlay.classList.remove('visible');
+        }
 
         navToggle.addEventListener('click', () => {
             navMenu.classList.toggle('open');
-            navIcon.className = navMenu.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+            const isOpen = navMenu.classList.contains('open');
+            navIcon.className = isOpen ? 'fas fa-times' : 'fas fa-bars';
+            if (navOverlay) navOverlay.classList.toggle('visible', isOpen);
         });
 
-        // Close on link click
+        if (navOverlay) navOverlay.addEventListener('click', closeMenu);
+
         navMenu.querySelectorAll('.nav-link, .nav-cta').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('open');
-                navIcon.className = 'fas fa-bars';
-            });
+            link.addEventListener('click', closeMenu);
         });
 
         // ===== SCROLL REVEAL =====
@@ -2409,8 +2429,8 @@
             // 22 cols × 12 rows — long-bodied cat, head faces left, tail curves up-right
             // 3-frame walk cycle: stride-A → mid → stride-B → mid → stride-A ...
             var BODY = [
-                [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],  // r0  ear tip + tail tip
-                [0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0],  // r1  ear + tail
+                [0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],  // r0  front ear tip + back ear tip + tail tip
+                [0,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0],  // r1  both ears + tail
                 [1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0],  // r2  head + tail
                 [1,0,1,1,1,0,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0],  // r3  face (2 eyes) + tail
                 [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0],  // r4  full body span
