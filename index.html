@@ -2406,48 +2406,74 @@
 
         // ===== MATRIX CAT GLITCH =====
         (function() {
-            // Pixel cat silhouette — facing left, walking leftward
-            // 1 = filled with matrix char, 0 = transparent
-            const CAT = [
-                [0,1,1,0,0,0,0,0,0,0,0],  // left ear
-                [1,1,1,1,0,0,0,0,0,0,0],  // ear + head top
-                [1,1,1,1,1,1,1,1,0,0,0],  // head
-                [1,0,1,1,1,0,1,1,0,0,0],  // face (eye gaps at col 1 and 5)
-                [1,1,1,1,1,1,1,1,1,1,1],  // head base + neck + tail span
-                [0,1,1,1,1,1,1,1,0,0,1],  // body + tail tip
-                [0,0,1,1,0,0,1,1,0,0,0],  // upper legs
-                [0,1,1,0,0,1,1,0,0,0,0],  // paws
+            // Two walking frames — 18 cols × 11 rows
+            // Head faces left, tail curves up-right, legs alternate
+            var FRAMES = [
+              // Frame 1: front-left / back-right legs forward
+              [
+                [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],  // ear tip + tail tip
+                [0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0],  // ear + tail
+                [1,1,1,1,1,1,1,1,1,0,0,0,1,1,0,0,0,0],  // full head + tail
+                [1,0,1,1,1,0,1,1,1,0,1,1,0,0,0,0,0,0],  // face (2 eye gaps) + tail
+                [1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0],  // head-base / body / tail join
+                [0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0],  // body
+                [0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0],  // body
+                [0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0],  // belly
+                [0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],  // legs
+                [0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],  // legs
+                [0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0],  // paws
+              ],
+              // Frame 2: opposite legs
+              [
+                [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+                [0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0],
+                [1,1,1,1,1,1,1,1,1,0,0,0,1,1,0,0,0,0],
+                [1,0,1,1,1,0,1,1,1,0,1,1,0,0,0,0,0,0],
+                [1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0],
+                [0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0],
+                [0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0],
+                [0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0],  // legs swapped
+                [0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0],  // paws swapped
+              ],
             ];
-            const ROWS = CAT.length, COLS = CAT[0].length;
+            var ROWS = FRAMES[0].length, COLS = FRAMES[0][0].length;
+            var frame = 0, tickCount = 0;
 
-            function cell() { return window.innerWidth < 600 ? 5 : 7; }
+            function cell() { return window.innerWidth < 600 ? 3 : 5; }
 
-            const cv = document.createElement('canvas');
+            var cv = document.createElement('canvas');
             cv.style.cssText = 'position:fixed;pointer-events:auto;cursor:pointer;z-index:1001;image-rendering:pixelated;display:none;';
             document.body.appendChild(cv);
-            const ctx = cv.getContext('2d');
+            var ctx = cv.getContext('2d');
 
-            let posX = 0, raf = null, lastRender = 0;
+            var posX = 0, raf = null, lastRender = 0;
 
             function resize() {
-                const c = cell();
+                var c = cell();
                 cv.width = COLS * c;
                 cv.height = ROWS * c;
-                cv.style.top = Math.max(4, Math.floor((72 - cv.height) / 2)) + 'px';
+                cv.style.top = Math.max(2, Math.floor((72 - cv.height) / 2)) + 'px';
             }
 
             function render() {
-                const c = cell();
+                var c = cell();
+                var CAT = FRAMES[frame];
                 ctx.clearRect(0, 0, cv.width, cv.height);
+                ctx.imageSmoothingEnabled = false;
                 ctx.font = 'bold ' + c + 'px monospace';
                 ctx.textBaseline = 'top';
+                ctx.shadowColor = 'rgba(0,255,135,0.5)';
+                ctx.shadowBlur = c < 4 ? 1 : 2;
                 for (var r = 0; r < ROWS; r++) {
                     for (var co = 0; co < COLS; co++) {
                         if (!CAT[r][co]) continue;
-                        ctx.fillStyle = 'rgba(0,255,135,' + (0.55 + Math.random() * 0.45) + ')';
+                        ctx.fillStyle = 'rgba(0,255,135,' + (0.6 + Math.random() * 0.4) + ')';
                         ctx.fillText(Math.random() > 0.5 ? '0' : '1', co * c, r * c);
                     }
                 }
+                ctx.shadowBlur = 0;
             }
 
             function showToast() {
@@ -2459,7 +2485,7 @@
                     'color:#00ff87;font-family:monospace;font-size:11px;letter-spacing:1px;' +
                     'padding:4px 12px;border:1px solid #00ff87;background:#0a0a0a;' +
                     'border-radius:3px;z-index:10000;pointer-events:none;white-space:nowrap;' +
-                    'box-shadow:0 0 10px rgba(0,255,135,0.35),inset 0 0 6px rgba(0,255,135,0.06);';
+                    'box-shadow:0 0 10px rgba(0,255,135,0.4);';
                 document.body.appendChild(el);
                 setTimeout(function() { el.remove(); }, 1800);
             }
@@ -2474,9 +2500,16 @@
             cv.addEventListener('click', function() { hide(true); });
 
             function tick(ts) {
-                posX -= window.innerWidth < 600 ? 0.9 : 1.3;
+                posX -= window.innerWidth < 600 ? 0.7 : 1.1;
                 cv.style.left = posX + 'px';
-                if (ts - lastRender > 110) { render(); lastRender = ts; }
+
+                // Swap leg frame every 10 ticks (~167ms at 60fps = believable walk)
+                tickCount++;
+                if (tickCount % 10 === 0) frame = 1 - frame;
+
+                // Redraw chars every 85ms for matrix flicker
+                if (ts - lastRender > 85) { render(); lastRender = ts; }
+
                 if (posX + cv.width < 0) { hide(false); return; }
                 raf = requestAnimationFrame(tick);
             }
@@ -2486,11 +2519,11 @@
                 posX = window.innerWidth + 10;
                 cv.style.left = posX + 'px';
                 cv.style.display = 'block';
+                frame = 0; tickCount = 0;
                 render();
                 raf = requestAnimationFrame(tick);
             }
 
-            // First appearance after 60 seconds
             setTimeout(start, 60 * 1000);
         })();
 
