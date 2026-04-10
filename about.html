@@ -376,13 +376,16 @@
             .digital-art-section { padding: 0 32px 60px; }
         }
 
+        .nav-overlay { display: none; position: fixed; inset: 72px 0 0 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 998; }
+        .nav-overlay.visible { display: block; }
+
         @media (max-width: 768px) {
             .digital-art-section { padding: 0 20px 48px; }
             .nav-menu { display: none; }
             .nav-menu.open {
                 display: flex; flex-direction: column; position: fixed;
                 top: 72px; left: 0; right: 0; bottom: 0;
-                background: rgba(10,10,10,0.98); padding: 32px; gap: 4px; z-index: 999;
+                background: rgba(10,10,10,0.97); padding: 32px; gap: 4px; z-index: 999;
             }
             .nav-menu.open .nav-link { font-size: 1.2rem; padding: 16px; }
             .nav-menu.open .nav-cta { margin-left: 0; margin-top: 16px; text-align: center; padding: 16px; }
@@ -417,6 +420,7 @@
             <a href="https://www.linkedin.com/in/tyler-vincent11/" class="nav-cta" target="_blank">Let's Connect <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></a>
         </div>
     </nav>
+    <div class="nav-overlay" id="nav-overlay"></div>
 
     <!-- About Section -->
     <section class="section" style="padding-top: 140px;">
@@ -485,17 +489,24 @@
                 <div>&nbsp;</div>
                 <div><span class="t-muted"># About This Site</span></div>
                 <div>&nbsp;</div>
-                <div>Built from scratch — started by reverse-engineering an open-source</div>
-                <div>template and evolved into something entirely my own over time.</div>
+                <div>Built entirely from scratch — no templates, no frameworks. Just</div>
+                <div>vanilla HTML, CSS, and JavaScript, shaped over time into something</div>
+                <div>that feels personal and is always evolving.</div>
                 <div>&nbsp;</div>
-                <div><span class="t-label">Stack:</span> vanilla HTML, CSS, JavaScript. No frameworks.</div>
-                <div><span class="t-label">Hosted:</span> GitHub Pages. Deployed on every push to main.</div>
-                <div><span class="t-label">Design:</span> dark theme, monospace accents, interactive experiments.</div>
+                <div><span class="t-label">Stack:</span> &nbsp;HTML · CSS · JavaScript (vanilla)</div>
+                <div><span class="t-label">Hosted:</span> GitHub Pages &nbsp;·&nbsp; continuous delivery</div>
+                <div><span class="t-label">Design:</span> dark theme · monospace accents · interactive experiments</div>
                 <div>&nbsp;</div>
-                <div>The site is intentionally evolving — it reflects both technical work</div>
-                <div>and personality, and will keep growing as projects and ideas do.</div>
+                <div><span class="t-muted">## Version History</span></div>
                 <div>&nbsp;</div>
-                <div><span class="t-muted">// last updated: 2025 &nbsp;·&nbsp; always a work in progress</span></div>
+                <div><span class="t-label">v1.5</span> <span class="t-muted">Apr 2026</span> &nbsp;— Matrix cat easter egg, cursor system, Mario runner</div>
+                <div><span class="t-label">v1.4</span> <span class="t-muted">Mar 2026</span> &nbsp;— Matrix rain banners, crosshair cursor, heading effects</div>
+                <div><span class="t-label">v1.3</span> <span class="t-muted">Feb 2026</span> &nbsp;— Retro-tech about page, Frogger experiment, UX polish</div>
+                <div><span class="t-label">v1.2</span> <span class="t-muted">Jan 2026</span> &nbsp;— Hero redesign, dark theme overhaul, hover animations</div>
+                <div><span class="t-label">v1.1</span> <span class="t-muted">Dec 2025</span> &nbsp;— Work tiles, Learning Journey, Chewy &amp; Takeda additions</div>
+                <div><span class="t-label">v1.0</span> <span class="t-muted">Nov 2025</span> &nbsp;— Initial launch: portfolio, work grid, education</div>
+                <div>&nbsp;</div>
+                <div><span class="t-muted">// last updated: Apr 2026 &nbsp;·&nbsp; always a work in progress</span></div>
                 <div>&nbsp;</div>
                 <div><span class="prompt">$</span><span style="animation: blink 1s step-end infinite; color: var(--accent);">▌</span></div>
             </div>
@@ -564,15 +575,25 @@
         const navToggle = document.getElementById('nav-toggle');
         const navMenu = document.getElementById('nav-menu');
         const navIcon = document.getElementById('nav-toggle-icon');
+        const navOverlay = document.getElementById('nav-overlay');
+
+        function closeMenu() {
+            navMenu.classList.remove('open');
+            navIcon.className = 'fas fa-bars';
+            if (navOverlay) navOverlay.classList.remove('visible');
+        }
+
         navToggle.addEventListener('click', () => {
             navMenu.classList.toggle('open');
-            navIcon.className = navMenu.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+            const isOpen = navMenu.classList.contains('open');
+            navIcon.className = isOpen ? 'fas fa-times' : 'fas fa-bars';
+            if (navOverlay) navOverlay.classList.toggle('visible', isOpen);
         });
+
+        if (navOverlay) navOverlay.addEventListener('click', closeMenu);
+
         navMenu.querySelectorAll('.nav-link, .nav-cta').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('open');
-                navIcon.className = 'fas fa-bars';
-            });
+            link.addEventListener('click', closeMenu);
         });
 
         // Scroll reveal
