@@ -606,7 +606,6 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 24px;
-            perspective: 1800px;
         }
 
         .project-card {
@@ -648,13 +647,13 @@
         }
 
         .project-card:hover {
-            transform: translateY(-10px) rotateX(7deg) rotateY(-7deg) scale(1.01);
+            transform: perspective(1200px) translateY(-10px) rotateX(6deg) rotateY(-6deg) scale(1.01);
             border-color: rgba(0,255,135,0.18);
             box-shadow: 0 28px 70px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,135,0.06), inset 0 1px 0 rgba(0,255,135,0.06);
         }
 
         .project-card:nth-child(even):hover {
-            transform: translateY(-10px) rotateX(7deg) rotateY(7deg) scale(1.01);
+            transform: perspective(1200px) translateY(-10px) rotateX(6deg) rotateY(6deg) scale(1.01);
         }
 
         .project-card:hover::before,
@@ -1238,7 +1237,6 @@
             .footer-grid { grid-template-columns: 1fr; gap: 24px; }
             .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
             #matrix-cursor-canvas { display: none; }
-            .projects-grid { perspective: none; }
             .project-card,
             .project-card:hover,
             .project-card:nth-child(even):hover {
@@ -1372,7 +1370,7 @@
             <span class="line gradient">Creator.</span>
         </p>
         <p class="hero-subtitle">
-            Data Visualization &amp; Analytics Engineer — I've built data products, dashboards, and tools across SaaS, AI, e-commerce, defense, and pharmaceuticals. I help teams work better and make better decisions.
+            Data Visualization &amp; Analytics Engineer — I've built data products, dashboards, and tools across SaaS, AI, e-commerce, defense, and pharmaceuticals. I help teams work faster and make better decisions.
         </p>
         <div class="hero-actions">
             <a href="about.html" class="btn-primary">
@@ -1445,13 +1443,11 @@
 
             <!-- Chewy Dual Monitor Study -->
             <div class="project-card reveal reveal-delay-2">
-                <div class="card-media" style="background:linear-gradient(135deg,#1a1000 0%,#241800 50%,#1a1000 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-                    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(255,107,53,0.08) 0%,transparent 60%);"></div>
+                <div class="card-media" style="background:linear-gradient(135deg,#140a00 0%,#1e1000 50%,#140a00 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+                    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(243,111,32,0.12) 0%,transparent 65%);"></div>
                     <div style="position:relative;z-index:2;text-align:center;">
-                        <div style="width:64px;height:64px;margin:0 auto 12px;background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.18);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--accent-warm);">
-                            <i class="fas fa-display"></i>
-                        </div>
-                        <div style="font-size:0.7rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.2);">Ergonomics · UX Research</div>
+                        <div style="font-size:2.6rem;font-weight:900;color:#F36F20;letter-spacing:-1.5px;font-family:'Space Grotesk',sans-serif;line-height:1;margin-bottom:10px;text-shadow:0 0 40px rgba(243,111,32,0.35);">chewy<span style="color:#0072CE;">.</span></div>
+                        <div style="font-size:0.65rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.2);">Ergonomics · UX Research</div>
                     </div>
                     <div class="card-overlay">
                         <a href="files/DualMonitor.pdf" class="card-cta" target="_blank">View Study <i class="fas fa-file-pdf"></i></a>
