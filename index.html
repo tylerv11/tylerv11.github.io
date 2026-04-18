@@ -613,52 +613,14 @@
             border: 1px solid var(--border-subtle);
             border-radius: 16px;
             overflow: hidden;
-            transition: transform 0.5s var(--transition-smooth), box-shadow 0.5s var(--transition-smooth), border-color 0.5s var(--transition-smooth);
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
             position: relative;
-            group: true;
-            transform-style: preserve-3d;
-            transform: translateY(0) rotateX(0deg) rotateY(0deg);
-            will-change: transform, box-shadow;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.16), transparent 32%);
-            opacity: 0;
-            pointer-events: none;
-            transform: translateZ(30px);
-            transition: opacity 0.45s ease;
-            z-index: 2;
-        }
-
-        .project-card::after {
-            content: '';
-            position: absolute;
-            inset: 1px;
-            border-radius: inherit;
-            border: 1px solid rgba(255,255,255,0.04);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.45s ease;
-            z-index: 2;
         }
 
         .project-card:hover {
-            transform: perspective(1200px) translateY(-10px) rotateX(6deg) rotateY(-6deg) scale(1.01);
-            border-color: rgba(0,255,135,0.18);
-            box-shadow: 0 28px 70px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,135,0.06), inset 0 1px 0 rgba(0,255,135,0.06);
-        }
-
-        .project-card:nth-child(even):hover {
-            transform: perspective(1200px) translateY(-10px) rotateX(6deg) rotateY(6deg) scale(1.01);
-        }
-
-        .project-card:hover::before,
-        .project-card:hover::after {
-            opacity: 1;
+            transform: translateY(-6px);
+            border-color: rgba(0,255,135,0.22);
+            box-shadow: 0 0 0 1px rgba(0,255,135,0.1), 0 16px 40px rgba(0,0,0,0.45), 0 0 32px rgba(0,255,135,0.07);
         }
 
         .project-card.featured {
@@ -668,8 +630,6 @@
         .project-card .card-media,
         .project-card .card-info {
             position: relative;
-            transform: translateZ(24px);
-            transform-style: preserve-3d;
         }
 
         .project-card .card-media {
@@ -1237,15 +1197,7 @@
             .footer-grid { grid-template-columns: 1fr; gap: 24px; }
             .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
             #matrix-cursor-canvas { display: none; }
-            .project-card,
-            .project-card:hover,
-            .project-card:nth-child(even):hover {
-                transform: translateY(-6px) scale(1.01);
-            }
-            .project-card .card-media,
-            .project-card .card-info {
-                transform: none;
-            }
+            .project-card:hover { transform: translateY(-4px); }
         }
 
         @media (max-width: 480px) {
@@ -1460,6 +1412,22 @@
         .sm-tooltip.visible { display: block; }
         .sm-tooltip strong { display: block; margin-bottom: 3px; font-size: 0.77rem; }
         .sm-tooltip em { color: var(--text-muted); font-style: normal; font-size: 0.67rem; }
+        .sm-lock-bubble {
+            position: absolute;
+            background: rgba(8,8,8,0.93);
+            border: 1px solid rgba(0,255,135,0.2);
+            border-radius: 8px; padding: 8px 11px;
+            font-size: 0.67rem; color: var(--text-secondary);
+            max-width: 155px; line-height: 1.5;
+            pointer-events: none; z-index: 18;
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+            animation: bubbleIn 0.2s ease both;
+        }
+        .sm-lock-bubble strong { display: block; font-size: 0.69rem; color: var(--accent); margin-bottom: 3px; }
+        @keyframes bubbleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .sm-node-locked circle:first-of-type { animation: pulseRing 1.6s ease-in-out infinite; }
+        @keyframes pulseRing { 0%,100% { opacity: 0.07; r: 10; } 50% { opacity: 0.2; r: 14; } }
         .skills-legend {
             display: flex; flex-wrap: wrap; gap: 14px;
             margin-top: 14px; justify-content: center; padding: 0 8px 4px;
@@ -2827,7 +2795,15 @@
                 {
                     title: 'Data Visualization Analytics Engineer 3',
                     company: 'Takeda Pharmaceuticals',
-                    skills: ['Analytics', 'Visualization', 'Operations'],
+                    mapLabel: 'Takeda', mapSub: '/ Data Viz Eng. III',
+                    skills: ['Analytics', 'Visualization', 'Operations', 'AI / ML', 'Leadership'],
+                    skillNotes: {
+                        'Analytics': 'Built Databricks + SQL data pipelines to surface KPIs across manufacturing and operations.',
+                        'Visualization': 'Designed enterprise Power BI dashboards standardizing cross-functional reporting.',
+                        'Operations': 'Drove performance insights enabling faster data-driven operational decisions.',
+                        'AI / ML': 'Leveraged Databricks ML capabilities and AI-assisted analytics for predictive manufacturing insights.',
+                        'Leadership': 'Led the data visualization analytics community of practice, enabling teams across the org.',
+                    },
                     problem: 'Manufacturing teams lacked visibility across fragmented data sources, slowing cross-functional decisions.',
                     approach: 'Built Power BI dashboards and Databricks/SQL pipelines to standardize reporting and surface real-time KPIs.',
                     outcome: 'Unified enterprise reporting across manufacturing, enabling faster data-driven decisions at scale.',
@@ -2836,7 +2812,14 @@
                 {
                     title: 'Chewy Dual Monitor Study',
                     company: 'Chewy, Inc.',
-                    skills: ['Analytics', 'Operations', 'Product'],
+                    mapLabel: 'Chewy.com', mapSub: '/ Dual Monitor Study',
+                    skills: ['Analytics', 'Visualization', 'Operations', 'Product'],
+                    skillNotes: {
+                        'Analytics': 'Designed statistical analysis and measurement protocols to quantify productivity impact.',
+                        'Visualization': 'Visualized ergonomics data and productivity metrics to communicate study findings.',
+                        'Operations': 'Applied findings to recommend workspace optimizations for e-commerce operations teams.',
+                        'Product': 'Framed research as a product decision — what setup should agents use for best output?',
+                    },
                     problem: 'No formal data existed on whether dual monitors improved productivity in a fast-paced e-commerce environment.',
                     approach: 'Designed and ran a controlled ergonomics study with statistical analysis and measurement protocols.',
                     outcome: 'Delivered quantified workspace optimization recommendations backed by ergonomics data.',
@@ -2844,8 +2827,15 @@
                 },
                 {
                     title: 'Process Engineer II',
-                    company: 'Electric Boat — General Dynamics',
-                    skills: ['Optimization', 'Operations', 'Leadership'],
+                    company: 'Electric Boat \u2014 General Dynamics',
+                    mapLabel: 'Gen. Dynamics', mapSub: '/ Process Eng. II',
+                    skills: ['Optimization', 'Operations', 'Leadership', 'Visualization'],
+                    skillNotes: {
+                        'Optimization': 'Six Sigma Black Belt — redesigned work center layouts to maximize throughput on submarine production lines.',
+                        'Operations': 'Built knowledge base for nuclear submarine industrial sites ensuring repeatable, safe operations.',
+                        'Leadership': 'Bridged engineering and floor teams — worked directly with welders and machinists to implement changes.',
+                        'Visualization': 'Created facility layout visualizations and process flow diagrams for work center documentation.',
+                    },
                     problem: 'Nuclear submarine industrial sites lacked standardized layouts and knowledge transfer systems.',
                     approach: 'Applied Six Sigma Black Belt methods to build work center layouts and a formal site knowledge base.',
                     outcome: 'Improved throughput and created a durable knowledge system for welders and machinists.',
@@ -2854,16 +2844,28 @@
                 {
                     title: 'AI Program Manager',
                     company: 'Singaporean SaaS Startup',
+                    mapLabel: 'SaaS Startup', mapSub: '/ AI Prog. Manager',
                     skills: ['AI / ML', 'Product', 'Leadership'],
+                    skillNotes: {
+                        'AI / ML': 'Led Computer Vision programs using object recognition in CCTV footage for real-time analytics.',
+                        'Product': 'Managed product delivery across 8 international deployments for commercial and government clients.',
+                        'Leadership': 'Coordinated cross-cultural engineering and delivery teams across 3+ continents.',
+                    },
                     problem: 'Clients needed real-time intelligence from CCTV footage across diverse global environments.',
                     approach: 'Led Computer Vision programs, coordinating 8 international deployments for commercial and government clients.',
                     outcome: 'Delivered 8+ live deployments across 3 continents with commercial and government clients.',
-                    metrics: ['8+ deployments', 'Gov\'t + commercial clients'],
+                    metrics: ['8+ deployments', "Gov't + commercial clients"],
                 },
                 {
                     title: 'Senior Thesis \u2014 Algorithm Optimization',
                     company: 'Aerospace Corporation',
+                    mapLabel: 'Aerospace Corp.', mapSub: '/ Senior Thesis',
                     skills: ['Optimization', 'Analytics', 'AI / ML'],
+                    skillNotes: {
+                        'Optimization': 'Multi-step scheduling algorithm solving a Traveling Salesman variant for 100+ satellite contacts.',
+                        'Analytics': 'Analyzed scheduling patterns and contact windows to inform algorithm design and validation.',
+                        'AI / ML': 'Applied heuristic search and optimization techniques similar to modern ML scheduling systems.',
+                    },
                     problem: 'Military antenna dishes had no automated scheduling system for 100+ satellite contacts worldwide.',
                     approach: 'Built a multi-step Python optimization (Traveling Salesman variant) deployed on a Raspberry Pi.',
                     outcome: 'Automated 100+ satellite contact schedules with a lightweight embedded solution.',
@@ -2872,7 +2874,13 @@
                 {
                     title: 'SPOT iOS Fitness Tracker',
                     company: 'University Product Team',
+                    mapLabel: 'USC Product Team', mapSub: '/ SPOT iOS App',
                     skills: ['Product', 'Analytics', 'Visualization'],
+                    skillNotes: {
+                        'Product': 'Led team through full product cycle — research, spec writing, user flows, and wireframes.',
+                        'Analytics': 'Used Hierarchical Task Analysis to quantify and prioritize user behaviors and feature needs.',
+                        'Visualization': 'Designed wireframes and interactive prototypes to visualize the user experience.',
+                    },
                     problem: 'Gym-goers lacked a structured, data-driven tool to plan and track progressive workouts.',
                     approach: 'Led a product team using Hierarchical Task Analysis to develop specs, user flows, and wireframes.',
                     outcome: 'Delivered a full product spec and interactive wireframe ready for development handoff.',
@@ -2881,7 +2889,12 @@
                 {
                     title: 'Senior Expedition Guide',
                     company: 'Canadian Wilderness',
+                    mapLabel: 'Canadian Wild.', mapSub: '/ Senior Guide',
                     skills: ['Leadership', 'Operations'],
+                    skillNotes: {
+                        'Leadership': 'Trained 15 employees, led 9\u201312 day remote expeditions, and managed safety under pressure.',
+                        'Operations': 'Planned and executed complex wilderness logistics for multi-day canoe treks.',
+                    },
                     problem: 'Remote wilderness expeditions demand precise logistics, safety, and team development under pressure.',
                     approach: 'Guided 9\u201312 day canoe treks and trained 15 employees in outdoor education and crisis management.',
                     outcome: 'Built a high-performing team with improved safety standards and measurable leadership skill transfer.',
@@ -2890,7 +2903,13 @@
                 {
                     title: 'Business Case Analysis',
                     company: 'University Project',
-                    skills: ['Analytics', 'Optimization'],
+                    mapLabel: 'University', mapSub: '/ Business Case',
+                    skills: ['Analytics', 'Optimization', 'Visualization'],
+                    skillNotes: {
+                        'Analytics': 'Built a full economic model covering cash flow, depreciation, taxation, and risk scenarios.',
+                        'Optimization': 'Applied replacement analysis and choice-among-alternatives frameworks to optimize capital decisions.',
+                        'Visualization': 'Visualized cash flow projections and risk scenarios for executive-level decision presentations.',
+                    },
                     problem: 'Capital investments required a unified economic framework for risk-adjusted decision making.',
                     approach: 'Built a full evaluation covering cash flow, depreciation, taxation, and risk analysis.',
                     outcome: 'Produced a decision-ready framework applicable to real-world capital project evaluations.',
@@ -2899,7 +2918,12 @@
                 {
                     title: 'Industrial Design Projects',
                     company: 'AutoCAD & SolidWorks',
+                    mapLabel: 'AutoCAD / SW', mapSub: '/ CAD Projects',
                     skills: ['Product', 'Optimization'],
+                    skillNotes: {
+                        'Product': 'Designed 3D part and assembly models to accelerate conceptual product development.',
+                        'Optimization': 'Iterated on designs to meet form, fit, and function requirements with minimal material waste.',
+                    },
                     problem: 'Product concepts needed high-fidelity 3D models for rapid evaluation and iteration.',
                     approach: 'Created detailed part and assembly models in AutoCAD and SolidWorks for conceptual development.',
                     outcome: 'Delivered production-ready 3D assets supporting fast design iteration and concept validation.',
@@ -2908,7 +2932,12 @@
                 {
                     title: 'Junior Expedition Guide',
                     company: 'Canadian Wilderness',
+                    mapLabel: 'Canadian Wild.', mapSub: '/ Junior Guide',
                     skills: ['Leadership', 'Operations'],
+                    skillNotes: {
+                        'Leadership': 'Supported senior guides and developed foundational outdoor education and team-building skills.',
+                        'Operations': 'Managed equipment inventory and repairs, reducing operational costs by $15k+.',
+                    },
                     problem: 'Field operations and equipment lacked systematic inventory tracking and maintenance protocols.',
                     approach: 'Inventoried and repaired canoes, fishing gear, and equipment to extend operational lifespan.',
                     outcome: 'Reduced operational expenses by $15k+ through improved equipment lifecycle management.',
@@ -2947,7 +2976,9 @@
                         metricsHtml +
                         '<div class="pao-close-hint">tap again to close</div>';
 
-                    card.insertBefore(overlay, card.firstChild);
+                    var mediaEl = card.querySelector('.card-media');
+                    if (mediaEl) { mediaEl.style.position = 'relative'; mediaEl.appendChild(overlay); }
+                    else card.insertBefore(overlay, card.firstChild);
 
                     // Touch: tap to open/close
                     card.addEventListener('click', function (e) {
@@ -3000,6 +3031,7 @@
             // ----- SKILLS MAP -----
             var SVG_NS = 'http://www.w3.org/2000/svg';
             var smHighlight = null;
+            var lockedSkill = null;
             var smNodes = [], smEdgeEls = [], smProjEls = [], smSkillEls = [];
 
             function buildSkillsMap() {
@@ -3161,12 +3193,35 @@
                     skillG.appendChild(g);
                     smSkillEls.push({ el: g, id: sn.id, node: sn });
 
-                    g.addEventListener('mouseenter', function () { highlightSkill(sn.id); showTooltip(sn, projNodes); });
-                    g.addEventListener('mouseleave', function () { clearHighlight(); hideTooltip(); });
-                    g.addEventListener('keydown', function (e) {
-                        if (e.key === 'Enter' || e.key === ' ') { highlightSkill(sn.id); showTooltip(sn, projNodes); }
-                        if (e.key === 'Escape') { clearHighlight(); hideTooltip(); }
-                    });
+                    (function (sid, snNode) {
+                        g.addEventListener('mouseenter', function () {
+                            if (!lockedSkill) { highlightSkill(sid); showTooltip(snNode, projNodes); }
+                        });
+                        g.addEventListener('mouseleave', function () {
+                            if (!lockedSkill) { clearHighlight(); hideTooltip(); }
+                        });
+                        g.addEventListener('click', function () {
+                            if (lockedSkill === sid) {
+                                lockedSkill = null;
+                                g.classList.remove('sm-node-locked');
+                                clearHighlight(); clearLockBubbles(); hideTooltip();
+                            } else {
+                                if (lockedSkill) {
+                                    var prev = smSkillEls.find(function (s) { return s.id === lockedSkill; });
+                                    if (prev) prev.el.classList.remove('sm-node-locked');
+                                }
+                                lockedSkill = sid;
+                                g.classList.add('sm-node-locked');
+                                highlightSkill(sid);
+                                showLockBubbles(sid, projNodes);
+                                hideTooltip();
+                            }
+                        });
+                        g.addEventListener('keydown', function (e) {
+                            if (e.key === 'Enter' || e.key === ' ') g.dispatchEvent(new MouseEvent('click'));
+                            if (e.key === 'Escape') { lockedSkill = null; g.classList.remove('sm-node-locked'); clearHighlight(); clearLockBubbles(); hideTooltip(); }
+                        });
+                    }(sn.id, sn));
                 });
 
                 // Project nodes
@@ -3184,13 +3239,9 @@
                     circ.setAttribute('stroke', 'rgba(255,255,255,0.35)'); circ.setAttribute('stroke-width', '1');
                     g.appendChild(circ);
 
-                    // Short label
-                    var short = pn.title.split(' \u2014 ')[0];
-                    var words = short.split(' ');
-                    var maxW = 3;
-                    var line1 = words.slice(0, maxW).join(' ');
-                    var line2 = words.length > maxW ? words.slice(maxW, maxW + 3).join(' ') : '';
-
+                    // Company / sub-project label
+                    var line1 = pn.mapLabel || pn.company;
+                    var line2 = pn.mapSub || '';
                     var isBottom = pn.y > CY + 30, isTop = pn.y < CY - 30;
                     var baseY = isBottom ? pn.y + pn.r + 12 : isTop ? pn.y - pn.r - (line2 ? 14 : 5) : pn.y + 3;
 
@@ -3198,9 +3249,10 @@
                         var t = document.createElementNS(SVG_NS, 'text');
                         t.setAttribute('x', pn.x); t.setAttribute('y', baseY + li * 10);
                         t.setAttribute('text-anchor', 'middle');
-                        t.setAttribute('font-size', '8'); t.setAttribute('font-weight', '500');
+                        t.setAttribute('font-size', li === 0 ? '8.5' : '7.5');
+                        t.setAttribute('font-weight', li === 0 ? '600' : '400');
                         t.setAttribute('font-family', 'Inter, sans-serif');
-                        t.setAttribute('fill', 'rgba(255,255,255,0.45)');
+                        t.setAttribute('fill', li === 0 ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.35)');
                         t.textContent = ln;
                         g.appendChild(t);
                     });
@@ -3208,16 +3260,24 @@
                     projG.appendChild(g);
                     smProjEls.push({ el: g, node: pn, idx: pi });
 
-                    g.addEventListener('mouseenter', function () { highlightProj(pi); showProjTooltip(pn); });
-                    g.addEventListener('mouseleave', function () { clearHighlight(); hideTooltip(); });
-                    g.addEventListener('keydown', function (e) {
-                        if (e.key === 'Enter' || e.key === ' ') { highlightProj(pi); showProjTooltip(pn); }
-                        if (e.key === 'Escape') { clearHighlight(); hideTooltip(); }
-                    });
-                    g.addEventListener('click', function () { scrollToCard(pn.title); });
+                    (function (projNode, projIdx) {
+                        g.addEventListener('mouseenter', function () {
+                            if (!lockedSkill) { highlightProj(projIdx); showProjTooltip(projNode); }
+                        });
+                        g.addEventListener('mouseleave', function () {
+                            if (!lockedSkill) { clearHighlight(); hideTooltip(); }
+                        });
+                        g.addEventListener('click', function () { scrollToCard(projNode.title); });
+                        g.addEventListener('keydown', function (e) {
+                            if (e.key === 'Enter' || e.key === ' ') scrollToCard(projNode.title);
+                            if (e.key === 'Escape') { clearHighlight(); hideTooltip(); }
+                        });
+                    }(pn, pi));
                 });
 
-                svg.addEventListener('mouseleave', function () { clearHighlight(); hideTooltip(); });
+                svg.addEventListener('mouseleave', function () {
+                    if (!lockedSkill) { clearHighlight(); hideTooltip(); }
+                });
                 wrap.appendChild(svg);
 
                 // Animate in
@@ -3265,6 +3325,38 @@
                 smEdgeEls.forEach(function (e) { e.setAttribute('stroke-opacity', '0.18'); });
                 smSkillEls.forEach(function (s) { s.el.style.opacity = '1'; });
                 smProjEls.forEach(function (p) { p.el.style.opacity = '1'; });
+            }
+
+            function showLockBubbles(sid, projNodes) {
+                clearLockBubbles();
+                var wrap = document.getElementById('skills-map-svg-wrap');
+                var svg  = document.getElementById('skills-map-svg');
+                if (!wrap || !svg) return;
+                var vb = svg.getAttribute('viewBox').split(' ').map(Number);
+                var scaleX = wrap.clientWidth / (vb[2] || 1);
+                var scaleY = (wrap.clientHeight || wrap.clientWidth * 0.58) / (vb[3] || 1);
+
+                projNodes.forEach(function (pn) {
+                    if (pn.skills.indexOf(sid) === -1) return;
+                    var note = pn.skillNotes && pn.skillNotes[sid];
+                    if (!note) return;
+                    var div = document.createElement('div');
+                    div.className = 'sm-lock-bubble';
+                    div.innerHTML = '<strong>' + (pn.mapLabel || pn.company) + '</strong>' + note;
+                    var px = pn.x * scaleX, py = pn.y * scaleY;
+                    var left = px + pn.r * scaleX + 6;
+                    var top  = py - 30;
+                    if (left + 155 > wrap.clientWidth) left = px - 155 - pn.r * scaleX - 6;
+                    if (top < 4) top = 4;
+                    if (top + 90 > wrap.clientHeight) top = wrap.clientHeight - 94;
+                    div.style.left = left + 'px'; div.style.top = top + 'px';
+                    wrap.appendChild(div);
+                });
+            }
+
+            function clearLockBubbles() {
+                var wrap = document.getElementById('skills-map-svg-wrap');
+                if (wrap) wrap.querySelectorAll('.sm-lock-bubble').forEach(function (el) { el.remove(); });
             }
 
             var tooltip = null;
