@@ -1882,28 +1882,6 @@
         </div><!-- /pgw -->
     </section>
 
-    <!-- ===== STATS BAR ===== -->
-    <div style="padding: 0 48px;">
-        <div class="stats-bar reveal">
-            <div class="stat-item">
-                <div class="stat-number">8+</div>
-                <div class="stat-label">International Deployments</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">100+</div>
-                <div class="stat-label">Satellites Scheduled</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">15</div>
-                <div class="stat-label">Team Members Trained</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">$15k+</div>
-                <div class="stat-label">Costs Reduced</div>
-            </div>
-        </div>
-    </div>
-
     <!-- ===== EXPERIMENTS SECTION ===== -->
     <section class="section" id="experiments">
         <div class="section-header reveal">
@@ -1962,26 +1940,6 @@
                     <div class="frogger-hint">Space / ↑ / W or button to jump · don't fall!</div>
                 </div>
                 <button class="window-restore-btn" id="frogger-restore" onclick="windowRestore('frogger-window')"><i class="fas fa-undo"></i> Restore Mario</button>
-            </div>
-
-            <!-- Clock Widget -->
-            <div class="window reveal reveal-delay-3" id="clock-window">
-                <div class="window-bar">
-                    <div class="window-dots">
-                        <span class="window-dot red" title="Close" onclick="windowAction(this, 'close')"><i class="fas fa-times"></i></span>
-                        <span class="window-dot yellow" title="Minimize" onclick="windowAction(this, 'minimize')"><i class="fas fa-minus"></i></span>
-                        <span class="window-dot green" title="Maximize" onclick="windowAction(this, 'maximize')"><i class="fas fa-expand"></i></span>
-                    </div>
-                    <span class="window-bar-title">clock.app</span>
-                </div>
-                <div class="window-content">
-                    <div class="clock-display">
-                        <div class="clock-time-large" id="clock-time">--:--:--</div>
-                        <div class="clock-date-text" id="clock-date">Loading...</div>
-                        <div class="clock-la-label"><i class="fas fa-location-dot"></i> Los Angeles, CA</div>
-                    </div>
-                </div>
-                <button class="window-restore-btn" id="clock-restore" onclick="windowRestore('clock-window')"><i class="fas fa-undo"></i> Restore Clock</button>
             </div>
 
         </div>
@@ -2094,7 +2052,10 @@
                             <button class="game-btn" style="width:100%;margin-top:8px;" onclick="catAutoOptimize()"><i class="fas fa-magic"></i> Auto-Optimize</button>
                         </div>
                         <div class="catapult-outputs">
-                            <canvas id="catapult-canvas" width="260" height="140"></canvas>
+                            <div style="font-size:0.58rem;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;">Mechanism Preview</div>
+                            <canvas id="catapult-diagram" width="260" height="120" style="display:block;width:100%;border-radius:8px 8px 0 0;background:#050505;border:1px solid var(--border-subtle);border-bottom:none;"></canvas>
+                            <div style="font-size:0.58rem;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin:6px 0 3px;">Trajectory</div>
+                            <canvas id="catapult-canvas" width="260" height="110" style="display:block;width:100%;border-radius:8px;background:#050505;border:1px solid var(--border-subtle);"></canvas>
                             <div class="cat-metrics" id="cat-metrics"></div>
                         </div>
                     </div>
@@ -2304,19 +2265,6 @@
             win.classList.remove('closed', 'minimized', 'maximized');
             if (restoreBtn) restoreBtn.classList.remove('visible');
         }
-
-        // ===== CLOCK =====
-        function updateClock() {
-            const now = new Date();
-            const laOptions = { timeZone: 'America/Los_Angeles' };
-            const timeStr = now.toLocaleTimeString('en-US', { ...laOptions, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            const dateStr = now.toLocaleDateString('en-US', { ...laOptions, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-
-            document.getElementById('clock-time').textContent = timeStr;
-            document.getElementById('clock-date').textContent = dateStr;
-        }
-        updateClock();
-        setInterval(updateClock, 1000);
 
         // ===== WEATHER — Los Angeles (Open-Meteo free API) =====
         async function fetchWeather() {
@@ -3638,52 +3586,46 @@
             var KPI_DATA = [
                 {
                     value: '$1.8M+', label: 'Business Value Delivered',
-                    definition: 'Total estimated financial value generated through cost reduction, productivity gains, and revenue-enabling data products across all roles.',
-                    calculation: 'Sum of documented cost savings, hours saved × labor rates, and value-enabling analytics products deployed to production.',
-                    inclusions: 'Equipment lifecycle savings ($15k+), automation ROI from Power BI dashboards replacing manual reporting at Takeda, satellite scheduling efficiency, Chewy workspace optimization.',
-                    exclusions: 'Unquantified long-term organizational value; commercially sensitive revenue figures from government AI deployments.',
-                    confidence: 72,
+                    how: 'From documented impact: $700K+ cost savings, $750K recovered revenue, and $400K additional savings. Rounded conservatively to avoid overlap.',
+                    context: 'Spans cost reduction, productivity gains, and revenue-enabling data products across multiple industries. Numbers are grounded in documented outcomes and stakeholder-validated metrics — not estimates.',
+                    inclusions: 'Documented cost takeouts, productivity ROI valued at average labor rates, value-enabling analytics products deployed to production, recovered revenue from process improvements.',
+                    exclusions: 'Unquantified long-term organizational value; commercially sensitive revenue figures from government AI deployments; downstream compounding effects.',
                 },
                 {
                     value: '11,000+', label: 'Annual Hours Saved',
-                    definition: 'Estimated hours freed annually from manual processes, repetitive reporting, and inefficient workflows across teams supported.',
-                    calculation: 'Manual process hours × team size × annual frequency, estimated from scope of dashboards, scheduling automation, and computer vision tools deployed.',
-                    inclusions: 'Power BI dashboards replacing manual cross-functional reporting at Takeda; satellite scheduling automation; CCTV analytics removing manual video review across 8 deployments.',
-                    exclusions: 'Overhead for adoption and maintenance; hours saved by indirect or downstream users.',
-                    confidence: 65,
+                    how: 'Projected from scaling a system that saved 600+ hours/year locally to ~11,000 hours/year across 23+ sites. This is a single data product — total including other projects is 20,000+ hours/year.',
+                    context: 'Driven primarily by replacing manual cross-functional reporting with governed, automated Power BI pipelines. Savings are measured at the team level, then extrapolated across documented deployment scope.',
+                    inclusions: 'Power BI dashboards replacing manual reporting cycles, satellite scheduling automation, CCTV analytics removing manual video review across 8 global deployments.',
+                    exclusions: 'Overhead for adoption and training; hours saved by indirect or downstream users not counted; one-time project hours excluded.',
                 },
                 {
                     value: '11M+', label: 'Records Modeled',
-                    definition: 'Volume of data records processed, modeled, or made queryable through pipelines, schemas, and analytics products built or contributed to.',
-                    calculation: 'Estimated row counts across Databricks/SQL pipelines at Takeda manufacturing, CCTV event streams across 8 global deployments, and satellite scheduling datasets.',
-                    inclusions: 'Manufacturing KPI pipelines (Takeda), CCTV event data across 8 global sites, satellite contact scheduling windows.',
-                    exclusions: 'Transient intermediate pipeline records not persisted; data outside direct engineering scope.',
-                    confidence: 60,
+                    how: 'Based on the largest production dataset directly built and governed — an enterprise training analytics system. Including all systems (Chewy customer and agent data, CCTV streams, satellite datasets), the total is likely 3–4× higher.',
+                    context: 'Built with row-level security and SQL transformations to reduce cardinality and data load issues — keeping models performant at scale without compromising governance.',
+                    inclusions: 'Manufacturing KPI pipelines (Takeda), enterprise training analytics, CCTV event streams across 8 global sites, satellite contact scheduling datasets.',
+                    exclusions: 'Transient intermediate pipeline records not persisted to a governed model; data outside direct engineering scope.',
                 },
                 {
                     value: '65+', label: 'Data Products Shipped',
-                    definition: 'Count of dashboards, reports, tools, models, specs, and data-driven deliverables shipped to end users or stakeholders.',
-                    calculation: 'Enumeration of Power BI reports, analysis documents, wireframes, algorithm outputs, knowledge base modules, and workflow tools delivered across all roles.',
-                    inclusions: 'Takeda Power BI dashboards, Chewy study reports, satellite algorithm deliverables, SPOT wireframes, economic analyses, Electric Boat knowledge base modules.',
-                    exclusions: 'Draft or internal working documents not formally delivered to stakeholders.',
-                    confidence: 80,
+                    how: 'Combined: 40+ datasets, 25+ dashboards (dataflows tracked separately), 10 apps, 3 AI agents (training compliance, manufacturing process drift, manpower resource leveling for facility people flow), 7 Computer Vision custom deployments with trained algorithms.',
+                    context: 'Shipped to production across pharma, defense, e-commerce, SaaS, aerospace, and education — each product delivered to real stakeholders with measurable adoption.',
+                    inclusions: 'Takeda Power BI dashboards and semantic models, Chewy research deliverables, satellite algorithm output, SPOT wireframes, Electric Boat knowledge base, AI agent deployments, CV system rollouts.',
+                    exclusions: 'Draft or internal working documents not formally delivered; proof-of-concept prototypes not taken to production.',
                 },
                 {
-                    value: '20+', label: 'People Coached',
-                    definition: 'Individuals directly trained, mentored, or developed through formal programs, field leadership, or community of practice facilitation.',
-                    calculation: 'Direct count: 15 employees trained in Canadian wilderness programs + Takeda data visualization community of practice members + junior team support across roles.',
-                    inclusions: 'Wilderness education program (15 direct trainees), Takeda data visualization community of practice, junior guide mentoring, cross-functional analytics enablement.',
-                    exclusions: 'Indirect organizational learning, conference or presentation audiences.',
-                    confidence: 88,
+                    value: '37+', label: 'People Coached',
+                    how: '37 direct: 24 from Takeda (Power BI, SQL, data modeling), 6 from Chewy, 4 from General Dynamics, and the remainder from other worksites. Does not include coaching during product rollouts.',
+                    context: 'Enablement-focused — training practitioners to be self-sufficient, not just delivering outputs. Includes formal training sessions, 1:1 mentoring, and community of practice facilitation.',
+                    inclusions: 'Takeda data visualization CoP (Power BI + SQL), Chewy analytics training, General Dynamics process training, Canadian wilderness leadership program (15 direct trainees).',
+                    exclusions: 'Indirect organizational learning; end-users coached during product rollouts; presentation audience members.',
                 },
                 {
                     value: '6', label: 'Regions Worked Across',
-                    subtitle: 'USA · Singapore · Malaysia · Vietnam · Canada · Hawaii',
-                    definition: 'Distinct geographic regions where Tyler has had direct, in-person or embedded operational responsibility.',
-                    calculation: 'Direct enumeration of deployment and primary work locations across full career history.',
-                    inclusions: 'Los Angeles CA (Takeda, Chewy), Groton CT (Electric Boat / General Dynamics), Singapore + Malaysia + Vietnam (SaaS AI deployments), Canada (wilderness expeditions), Hawaii (Aerospace Corporation satellite work).',
-                    exclusions: 'Conference travel or brief visits without sustained operational involvement.',
-                    confidence: 95,
+                    subtitle: 'USA · Singapore · Malaysia · Vietnam · Canada · Japan',
+                    how: 'USA (Los Angeles + Groton CT), Singapore, Malaysia, Vietnam, Canada, and Japan — including site visits, manufacturing evaluations, key stakeholder presentations, and international relations. Countries interfaced with through international teams are roughly double this number.',
+                    context: 'Work spans commercial SaaS, government defense, pharma manufacturing, e-commerce, aerospace, and outdoor education — across both in-person deployments and embedded international partnerships.',
+                    inclusions: 'Groton CT (Electric Boat / General Dynamics), Los Angeles CA (Takeda, Chewy), Singapore + Malaysia + Vietnam (SaaS AI deployments), Canada (wilderness expeditions), Japan (manufacturing site work and stakeholder engagement).',
+                    exclusions: 'Countries interfaced with through international partner teams only; brief conference travel without operational involvement.',
                 },
             ];
 
@@ -3694,31 +3636,24 @@
                     var tile = document.createElement('div');
                     tile.className = 'kpi-tile';
                     var subtitleHtml = kpi.subtitle ? '<div class="kpi-subtitle">' + kpi.subtitle + '</div>' : '';
-                    var confPct = kpi.confidence + '%';
                     tile.innerHTML =
                         '<button class="kpi-info-btn" aria-label="About this KPI"><i class="fas fa-info"></i></button>' +
                         '<div class="kpi-value">' + kpi.value + '</div>' +
                         '<div class="kpi-label">' + kpi.label + '</div>' +
                         subtitleHtml +
                         '<div class="kpi-panel">' +
-                            '<div class="kpi-panel-title">' + kpi.value + ' ' + kpi.label + '</div>' +
-                            '<div class="kpi-panel-row"><div class="kpi-panel-key">Definition</div><div class="kpi-panel-val">' + kpi.definition + '</div></div>' +
-                            '<div class="kpi-panel-row"><div class="kpi-panel-key">Calculation</div><div class="kpi-panel-val">' + kpi.calculation + '</div></div>' +
+                            '<div class="kpi-panel-title">How this was calculated</div>' +
+                            '<div class="kpi-panel-row"><div class="kpi-panel-key">Calculation</div><div class="kpi-panel-val">' + kpi.how + '</div></div>' +
+                            '<div class="kpi-panel-row"><div class="kpi-panel-key">Context</div><div class="kpi-panel-val">' + kpi.context + '</div></div>' +
                             '<div class="kpi-panel-row"><div class="kpi-panel-key">Inclusions</div><div class="kpi-panel-val">' + kpi.inclusions + '</div></div>' +
                             '<div class="kpi-panel-row"><div class="kpi-panel-key">Exclusions</div><div class="kpi-panel-val">' + kpi.exclusions + '</div></div>' +
-                            '<div class="kpi-confidence">' +
-                                '<span class="kpi-conf-label">Confidence</span>' +
-                                '<div class="kpi-conf-bar"><div class="kpi-conf-fill" style="width:' + confPct + '"></div></div>' +
-                                '<span class="kpi-conf-pct">' + confPct + '</span>' +
-                            '</div>' +
                         '</div>';
                     var btn = tile.querySelector('.kpi-info-btn');
                     btn.addEventListener('click', function(e) {
                         e.stopPropagation();
-                        var isOpen = tile.classList.toggle('kpi-open');
+                        tile.classList.toggle('kpi-open');
                         document.querySelectorAll('.kpi-tile.kpi-open').forEach(function(t) { if (t !== tile) t.classList.remove('kpi-open'); });
                     });
-                    // Click outside panel to close
                     tile.addEventListener('click', function(e) {
                         if (!e.target.closest('.kpi-panel') && !e.target.closest('.kpi-info-btn')) tile.classList.remove('kpi-open');
                     });
@@ -3731,8 +3666,10 @@
         // ===== CATAPULT OPTIMIZATION LAB =====
         (function() {
             var canvas = document.getElementById('catapult-canvas');
-            if (!canvas) return;
+            var diagCanvas = document.getElementById('catapult-diagram');
+            if (!canvas || !diagCanvas) return;
             var ctx = canvas.getContext('2d');
+            var dctx = diagCanvas.getContext('2d');
 
             function getParams() {
                 return {
@@ -3826,6 +3763,142 @@
                 ctx.fillText(modeLabels[p.mode] || '', 6, 12);
             }
 
+            function drawDiagram(p) {
+                var W = diagCanvas.width, H = diagCanvas.height;
+                dctx.clearRect(0, 0, W, H);
+                var groundY = H - 16;
+                var pivotX = W * 0.42;
+                // Pin height (pivot support height scales 22-52px)
+                var pinH = 22 + (p.pin / 100) * 30;
+                var pivotY = groundY - pinH;
+
+                // Ground line
+                dctx.strokeStyle = 'rgba(255,255,255,0.1)';
+                dctx.lineWidth = 1; dctx.setLineDash([]);
+                dctx.beginPath(); dctx.moveTo(0, groundY); dctx.lineTo(W, groundY); dctx.stroke();
+
+                // Support tower
+                dctx.strokeStyle = 'rgba(255,255,255,0.38)';
+                dctx.lineWidth = 2;
+                dctx.beginPath(); dctx.moveTo(pivotX, groundY); dctx.lineTo(pivotX, pivotY); dctx.stroke();
+                dctx.lineWidth = 1.5;
+                dctx.beginPath(); dctx.moveTo(pivotX - 14, groundY); dctx.lineTo(pivotX + 14, groundY); dctx.stroke();
+                // Braces
+                dctx.strokeStyle = 'rgba(255,255,255,0.18)';
+                dctx.lineWidth = 1;
+                dctx.beginPath(); dctx.moveTo(pivotX - 12, groundY - 3); dctx.lineTo(pivotX - 2, pivotY + 2); dctx.stroke();
+                dctx.beginPath(); dctx.moveTo(pivotX + 12, groundY - 3); dctx.lineTo(pivotX + 2, pivotY + 2); dctx.stroke();
+
+                // Pivot dot
+                dctx.fillStyle = 'rgba(255,255,255,0.7)';
+                dctx.beginPath(); dctx.arc(pivotX, pivotY, 3.5, 0, Math.PI*2); dctx.fill();
+
+                // Arm geometry: pullback angle is how far back the long end is pulled
+                // 30° = arm nearly vertical long-side down; 90° = horizontal; 150° = arm way back
+                var pb = p.pullback; // 30-150
+                // Long side angle from upward vertical (pulled back position, long end trailing)
+                // 0° pullback from our convention = arm vertical (long end up)
+                // Map: pb=30 → ~30° from vertical = arm somewhat up, pb=90 → horizontal, pb=150 → past horizontal
+                var pbRad = (pb - 90) * (Math.PI / 180); // -60 to +60 relative to horizontal
+                var longDX = -Math.cos(pbRad); // long end goes left (pulled back)
+                var longDY = Math.sin(pbRad);  // positive = downward
+
+                var armLong = 38 + (p.bendb / 100) * 10;
+                var armShort = 14;
+                var bendOffset = (p.bendb / 100) * 5;
+                var perpX = -longDY, perpY = longDX; // perp to arm direction
+
+                var longEndX = pivotX + longDX * armLong;
+                var longEndY = pivotY + longDY * armLong;
+                var shortEndX = pivotX - longDX * armShort;
+                var shortEndY = pivotY - longDY * armShort;
+                var midX = (pivotX + longEndX) / 2 + perpX * bendOffset;
+                var midY = (pivotY + longEndY) / 2 + perpY * bendOffset;
+
+                // Long arm (curved for bend-back)
+                dctx.strokeStyle = 'rgba(255,220,80,0.75)';
+                dctx.lineWidth = 2.5;
+                dctx.setLineDash([]);
+                dctx.beginPath();
+                dctx.moveTo(pivotX, pivotY);
+                dctx.quadraticCurveTo(midX, midY, longEndX, longEndY);
+                dctx.stroke();
+
+                // Short arm
+                dctx.strokeStyle = 'rgba(255,220,80,0.45)';
+                dctx.lineWidth = 2;
+                dctx.beginPath(); dctx.moveTo(pivotX, pivotY); dctx.lineTo(shortEndX, shortEndY); dctx.stroke();
+
+                // Counterweight (purple blob on short end)
+                dctx.fillStyle = 'rgba(168,85,247,0.85)';
+                dctx.beginPath(); dctx.arc(shortEndX, shortEndY, 6, 0, Math.PI*2); dctx.fill();
+                dctx.font = '7px Inter,sans-serif'; dctx.fillStyle = 'rgba(168,85,247,0.6)';
+                dctx.fillText('CW', shortEndX - 7, shortEndY - 9);
+
+                // Cup position on long arm
+                var cupT = Math.max(0.5, Math.min(0.92, 0.6 + (p.cup - 50) / 100 * 0.4));
+                var cupX = pivotX + longDX * armLong * cupT;
+                var cupY = pivotY + longDY * armLong * cupT;
+                // Sling rope from cup end to projectile
+                var slingLen = 8 + (p.cup / 100) * 5;
+                var slingX = cupX - longDY * slingLen;
+                var slingY = cupY + longDX * slingLen;
+                dctx.strokeStyle = 'rgba(255,255,255,0.25)';
+                dctx.lineWidth = 1; dctx.setLineDash([]);
+                dctx.beginPath(); dctx.moveTo(cupX, cupY); dctx.lineTo(slingX, slingY); dctx.stroke();
+                // Projectile
+                dctx.fillStyle = 'rgba(0,255,135,0.92)';
+                dctx.beginPath(); dctx.arc(slingX, slingY, 4, 0, Math.PI*2); dctx.fill();
+
+                // Tension spring coils near long end
+                var tnorm = p.tension / 100;
+                dctx.strokeStyle = 'rgba(74,158,255,' + (tnorm * 0.65 + 0.2) + ')';
+                dctx.lineWidth = 1.2; dctx.setLineDash([]);
+                var sx0 = longEndX + 4, sy0 = longEndY;
+                for (var si = 0; si < 4; si++) {
+                    dctx.beginPath();
+                    dctx.arc(sx0 + si * 4, sy0, 2 + tnorm * 1.5, 0, Math.PI * (si % 2 === 0 ? 1 : -1));
+                    dctx.stroke();
+                }
+                dctx.font = '7px Inter,sans-serif'; dctx.fillStyle = 'rgba(74,158,255,0.65)';
+                dctx.fillText('T:' + p.tension + '%', sx0 + 18, sy0 + 5);
+
+                // Launch angle arc (from pivot, post-release angle)
+                var launchRad = p.rotation * (Math.PI / 180);
+                dctx.strokeStyle = 'rgba(255,107,53,0.55)';
+                dctx.lineWidth = 1; dctx.setLineDash([2, 2]);
+                dctx.beginPath(); dctx.arc(pivotX, pivotY, 20, -launchRad, 0); dctx.stroke();
+                dctx.setLineDash([]);
+                // Arrow
+                dctx.strokeStyle = 'rgba(255,107,53,0.7)';
+                dctx.lineWidth = 1.2;
+                var arrowLen = 24;
+                var arrowEndX = pivotX + Math.cos(launchRad) * arrowLen;
+                var arrowEndY = pivotY - Math.sin(launchRad) * arrowLen;
+                dctx.beginPath(); dctx.moveTo(pivotX, pivotY); dctx.lineTo(arrowEndX, arrowEndY); dctx.stroke();
+                // Arrowhead
+                dctx.beginPath();
+                dctx.moveTo(arrowEndX, arrowEndY);
+                dctx.lineTo(arrowEndX - 4 * Math.cos(launchRad - 0.4), arrowEndY + 4 * Math.sin(launchRad - 0.4));
+                dctx.moveTo(arrowEndX, arrowEndY);
+                dctx.lineTo(arrowEndX - 4 * Math.cos(launchRad + 0.4), arrowEndY + 4 * Math.sin(launchRad + 0.4));
+                dctx.stroke();
+                // Rotation label
+                dctx.fillStyle = 'rgba(255,107,53,0.85)';
+                dctx.font = '7.5px Inter,sans-serif';
+                dctx.fillText(p.rotation + '° launch', arrowEndX + 2, arrowEndY - 3);
+
+                // Pin height label (vertical brace annotation)
+                dctx.fillStyle = 'rgba(200,200,200,0.4)';
+                dctx.font = '7px Inter,sans-serif';
+                dctx.fillText('h:' + p.pin + '%', pivotX + 5, pivotY + 12);
+
+                // Pullback label near long end
+                dctx.fillStyle = 'rgba(255,220,80,0.55)';
+                dctx.font = '7px Inter,sans-serif';
+                dctx.fillText('↩' + p.pullback + '°', longEndX - 14, longEndY + 14);
+            }
+
             function renderMetrics(result) {
                 var el = document.getElementById('cat-metrics');
                 if (!el) return;
@@ -3840,6 +3913,7 @@
                 var p = getParams();
                 updateLabels(p);
                 var result = simulate(p);
+                drawDiagram(p);
                 drawTrajectory(p, result);
                 renderMetrics(result);
             }
@@ -3884,33 +3958,65 @@
         // ===== SITE ASSISTANT =====
         (function() {
             var isOpen = false;
-            var KPI_SUMMARY = '$1.8M+ business value, 11,000+ annual hours saved, 11M+ records modeled, 65+ data products shipped, 20+ people coached, 6 regions worked across.';
-            var PROJECT_SUMMARY = 'Takeda (Power BI dashboards, Databricks pipelines), Chewy dual monitor ergonomics study, Electric Boat nuclear submarine process engineering (Six Sigma Black Belt), AI Program Manager at a Singaporean SaaS startup (8 global CV deployments), Senior Thesis satellite scheduling algorithm (Aerospace Corp), SPOT iOS fitness app, Senior/Junior wilderness expedition guide, Business Case Analysis, Industrial Design CAD projects.';
-            var SKILL_SUMMARY = 'Analytics, Data Visualization (Power BI, Tableau), Operations, AI/ML (Computer Vision, Databricks ML), Leadership, Product Management, Optimization (Six Sigma), Programming (Python, SQL), CAD (SolidWorks, AutoCAD).';
 
             var KB = [
-                { keys: ['kpi','metric','impact','value','delivered','hours','records','products','coached','regions'], answer: 'Tyler\'s key KPIs: ' + KPI_SUMMARY + ' Click the ℹ on each KPI tile for full definitions and confidence levels.' },
-                { keys: ['project','work','portfolio','built','shipped'], answer: 'Tyler\'s featured projects: ' + PROJECT_SUMMARY },
-                { keys: ['skill','skills','tech','stack','language','tool'], answer: 'Top skills: ' + SKILL_SUMMARY },
-                { keys: ['industry','industries','sector','pharma','defense','saas','ecommerce','aerospace','education'], answer: 'Tyler has worked across pharma (Takeda), defense (Electric Boat/General Dynamics), SaaS (Singaporean startup), e-commerce (Chewy), aerospace (Aerospace Corp), and education/outdoor leadership (Canadian wilderness).' },
-                { keys: ['region','country','location','where','global','international','singapore','malaysia','vietnam','canada','hawaii'], answer: 'Tyler has worked across 6 regions: USA (LA + Groton CT), Singapore, Malaysia, Vietnam, Canada, and Hawaii — spanning commercial, government, and outdoor leadership programs.' },
-                { keys: ['contact','email','phone','hire','reach','talk','connect','schedule','calendly'], answer: 'You can reach Tyler at tylervincent@alumni.usc.edu, call (469) 243-0073, or schedule time via the Calendly widget (bottom-right). Also connect on LinkedIn!' },
-                { keys: ['takeda','pharma','pharmaceutical','power bi','databricks'], answer: 'At Takeda Pharmaceuticals, Tyler built enterprise Power BI dashboards and Databricks/SQL pipelines for manufacturing analytics, and led the data visualization community of practice.' },
-                { keys: ['chewy','dual monitor','ergonomics','ecommerce'], answer: 'At Chewy, Tyler designed and ran a controlled ergonomics study on dual monitor setups, producing quantified workspace optimization recommendations.' },
-                { keys: ['electric boat','general dynamics','submarine','six sigma'], answer: 'At Electric Boat (General Dynamics), Tyler held a security clearance, applied Six Sigma Black Belt methods, built work center layouts, and developed a knowledge base for nuclear submarine production.' },
-                { keys: ['saas','startup','ai program','computer vision','cctv','deployment'], answer: 'As AI Program Manager at a Singaporean SaaS startup, Tyler led Computer Vision programs across 8 international deployments for commercial and government clients on 3+ continents.' },
-                { keys: ['satellite','aerospace','algorithm','optimization','raspberry pi'], answer: 'For his senior thesis at USC (partnered with Aerospace Corporation), Tyler built a Python optimization algorithm scheduling 100+ military satellite contacts, deployed on a Raspberry Pi.' },
-                { keys: ['education','usc','university','degree'], answer: 'Tyler is a USC (University of Southern California) alumnus.' },
+                // KPIs
+                { keys: ['kpi','metric','impact','value','delivered','business value'], answer: 'Tyler has delivered $1.8M+ in documented business value — from $700K+ cost savings, $750K recovered revenue, and $400K additional savings. These numbers are grounded in stakeholder-validated outcomes, not projections. Click the ℹ on any KPI tile for the full breakdown.' },
+                { keys: ['hours saved','hours','annual hours','time saved'], answer: 'Over 11,000 hours saved annually — projected from scaling a single data product that saved 600+ hours/year locally across 23+ sites. Including other projects, the total is 20,000+ hours/year. That\'s real time returned to people doing meaningful work.' },
+                { keys: ['records','data modeled','records modeled','11m','11 million'], answer: '11M+ records modeled — based on the largest single production dataset Tyler directly built and governed. Including Chewy customer/agent data and CCTV event streams, the total is likely 3–4× higher. Built with row-level security and SQL transformations to maintain performance at scale.' },
+                { keys: ['data products','products shipped','dashboards','65'], answer: '65+ data products shipped: 40+ datasets, 25+ dashboards, 10 apps, 3 AI agents (training compliance, process drift detection, manpower resource leveling), and 7 Computer Vision deployments with custom-trained algorithms.' },
+                { keys: ['coached','trained','mentored','people coached','37'], answer: '37+ people directly coached in Power BI, SQL, and data modeling — 24 at Takeda, 6 at Chewy, 4 at General Dynamics, and others across sites. This doesn\'t count coaching during product rollouts. Tyler believes data literacy compounds — teaching one person multiplies impact.' },
+                { keys: ['region','regions','international','global','country','countries','japan','singapore','vietnam','malaysia','canada'], answer: '6 regions: USA (LA + Groton CT), Singapore, Malaysia, Vietnam, Canada, and Japan — covering manufacturing evaluations, government AI deployments, and international stakeholder relationships. Countries Tyler has interfaced with through international teams is roughly double.' },
+
+                // Projects
+                { keys: ['satellite','aerospace','algorithm','traveling salesman','antenna','scheduling'], answer: 'At the Aerospace Corporation, Tyler created a "Time Position Matrix" tracking 100+ satellites every minute of the day — azimuth and elevation for each antenna dish, for every satellite, at every moment. From this he built a multi-step optimization (similar to the Traveling Salesman Problem) to schedule the shortest path connecting all satellite contacts in a 24-hour window. Deployed on a Raspberry Pi. 100,000+ cell matrix.' },
+                { keys: ['takeda','pharma','pharmaceutical','manufacturing analytics','throughput','bottleneck','distribution'], answer: 'At Takeda, Tyler built governed SQL/Databricks pipelines feeding Power BI semantic models for fractionation and downstream manufacturing operations. He replaced average-based reporting with P20/P50/P90 distribution metrics and common- vs special-cause separation — making real performance signals visible instead of buried in noise. Also built system-level throughput and bottleneck logic using critical-path modeling in SQL and DAX.' },
+                { keys: ['chewy','dual monitor','ergonomics','e-commerce'], answer: 'At Chewy, Tyler ran a controlled ergonomics study to answer a real business question: do dual monitors actually improve productivity for fast-paced e-commerce operations agents? He designed the measurement protocol, ran the statistical analysis, and delivered quantified workspace recommendations. Evidence-based decision-making applied to workspace design.' },
+                { keys: ['electric boat','general dynamics','submarine','six sigma','nuclear','security clearance'], answer: 'At Electric Boat (General Dynamics), Tyler held a security clearance and applied Six Sigma Black Belt methods to nuclear submarine industrial sites. He redesigned work center layouts to maximize throughput, built a knowledge base for welders and machinists, and bridged engineering and floor teams — working directly with the people doing the physical work.' },
+                { keys: ['saas','startup','computer vision','cctv','ai program manager','deployments'], answer: 'As AI Program Manager at a Singaporean SaaS startup, Tyler led Computer Vision programs using object recognition on CCTV footage for real-time analytics — delivered across 8 international deployments for commercial and government clients on 3+ continents. He coordinated cross-cultural engineering and delivery teams across Singapore, Malaysia, Vietnam, and beyond.' },
+                { keys: ['spot','ios','fitness','app','product','wireframe'], answer: 'Tyler led a USC product team to design SPOT — an iOS fitness tracker using Hierarchical Task Analysis to quantify and prioritize user behaviors. He took it through the full product cycle: research, spec writing, user flows, and interactive wireframes ready for development handoff.' },
+                { keys: ['wilderness','expedition','guide','canada','canoe','leadership'], answer: 'Tyler spent seasons as a Senior Expedition Guide leading 9–12 day canoe treks into remote Canadian wilderness. He trained 15 employees in outdoor education, crisis management, and team development. In his junior role, he also reduced operational costs by $15k+ through equipment lifecycle management. Leadership under real stakes — no signal, no backup.' },
+
+                // Skills / approach
+                { keys: ['skill','skills','tech stack','tools','technologies'], answer: 'Core: Power BI (semantic models, DAX, RLS), SQL/Databricks (Delta Lake, transformations), Python (optimization, algorithms). Also: Computer Vision (trained CV models), Six Sigma Black Belt, SolidWorks/AutoCAD, product management, statistical analysis. Tyler moves across the full stack from raw data to executive dashboard.' },
+                { keys: ['strength','strengths','working style','approach','how do you work'], answer: 'Tyler is self-driven, intellectually curious, and builds for the "so what" — not just technically correct answers but insights that change decisions. He\'s a chameleon communicator: comfortable with welders, data engineers, and C-suite in the same day. He comes prepared, thinks independently, and thrives in ambiguous, cross-functional environments.' },
+                { keys: ['why hire','why tyler','why should','differentiator','unique'], answer: 'Tyler sits at a rare intersection: deep technical chops (data engineering, ML, optimization) + field credibility (defense, pharma manufacturing) + communication range (can explain distribution metrics to an operator or a CFO). He doesn\'t just build systems — he builds systems people actually use and trust.' },
+                { keys: ['analytical thinking','analytical','problem solving','complex problem'], answer: 'Tyler approaches problems by first asking what decision needs to be made, then working backwards to what data actually matters. At Takeda he replaced average-based metrics with distribution-driven analysis (P20/P50/P90) because averages were masking real performance signals. At Aerospace Corp he built a 100,000-cell time-position matrix to solve a satellite scheduling problem similar to the Traveling Salesman Problem.' },
+                { keys: ['industry','industries','sector'], answer: 'Tyler has delivered across pharma manufacturing (Takeda), nuclear defense (Electric Boat/General Dynamics), SaaS AI (Singaporean startup), e-commerce (Chewy), aerospace (Aerospace Corporation), and outdoor leadership (Canadian wilderness). Six industries, different constraints, same principle: use data to make better decisions.' },
+
+                // Contact / next steps
+                { keys: ['contact','email','phone','hire','reach','talk','connect','schedule','calendly','interview'], answer: 'Reach Tyler at tylervincent@alumni.usc.edu or (469) 243-0073. Schedule a call via the Calendly widget (bottom-right corner of this page). Also on LinkedIn: linkedin.com/in/tyler-vincent11' },
+                { keys: ['resume','cv'], answer: 'Tyler\'s resume isn\'t linked directly here, but his full work history is on the page — each project card shows the role, problem, approach, and outcomes. For the full PDF resume, reach out at tylervincent@alumni.usc.edu.' },
+                { keys: ['education','usc','university','degree','southern california'], answer: 'Tyler is a USC (University of Southern California) Trojan — Industrial & Systems Engineering, with coursework spanning optimization, product design, economics, and human factors.' },
+
+                // Open-ended fallbacks
+                { keys: ['tell me about','who is tyler','about tyler','who are you'], answer: 'Tyler Vincent is a Data Visualization & Analytics Engineer who\'s built data products, dashboards, and tools across pharma, defense, SaaS, e-commerce, and aerospace. He helps teams work faster and make better decisions — combining data engineering depth with the communication range to make that work stick across organizations.' },
+                { keys: ['curious','learning','interested in','passion','what do you enjoy'], answer: 'Tyler is genuinely curious about systems — how things connect, where the real constraints are, and what the data is actually saying versus what people assume it says. He enjoys teaching as much as building, and believes the best analytics work is the kind that makes the next question easier to ask.' },
             ];
 
             function saAnswer(q) {
                 var lower = q.toLowerCase();
+                // Score-based matching: find entry with most keyword hits
+                var bestScore = 0, bestAnswer = null;
+                for (var i = 0; i < KB.length; i++) {
+                    var score = 0;
+                    for (var j = 0; j < KB[i].keys.length; j++) {
+                        if (lower.indexOf(KB[i].keys[j]) !== -1) score++;
+                    }
+                    if (score > bestScore) { bestScore = score; bestAnswer = KB[i].answer; }
+                }
+                if (bestScore > 0) return bestAnswer;
+                // Fuzzy: check individual words against all keys
+                var words = lower.split(/\s+/);
                 for (var i = 0; i < KB.length; i++) {
                     for (var j = 0; j < KB[i].keys.length; j++) {
-                        if (lower.indexOf(KB[i].keys[j]) !== -1) return KB[i].answer;
+                        var key = KB[i].keys[j];
+                        for (var k = 0; k < words.length; k++) {
+                            if (words[k].length > 3 && key.indexOf(words[k]) !== -1) return KB[i].answer;
+                        }
                     }
                 }
-                return 'I\'m not sure about that one! Try asking about Tyler\'s projects, skills, KPIs, regions, or contact info. Or scroll down — everything\'s on the page!';
+                return 'Great question — I\'m not sure I have a canned answer for that one. Try asking about Tyler\'s projects, KPIs, skills, industries, or working style. Or better yet, reach out directly at tylervincent@alumni.usc.edu.';
             }
 
             function saAddMsg(text, cls) {
