@@ -613,52 +613,14 @@
             border: 1px solid var(--border-subtle);
             border-radius: 16px;
             overflow: hidden;
-            transition: transform 0.5s var(--transition-smooth), box-shadow 0.5s var(--transition-smooth), border-color 0.5s var(--transition-smooth);
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
             position: relative;
-            group: true;
-            transform-style: preserve-3d;
-            transform: translateY(0) rotateX(0deg) rotateY(0deg);
-            will-change: transform, box-shadow;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.16), transparent 32%);
-            opacity: 0;
-            pointer-events: none;
-            transform: translateZ(30px);
-            transition: opacity 0.45s ease;
-            z-index: 2;
-        }
-
-        .project-card::after {
-            content: '';
-            position: absolute;
-            inset: 1px;
-            border-radius: inherit;
-            border: 1px solid rgba(255,255,255,0.04);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.45s ease;
-            z-index: 2;
         }
 
         .project-card:hover {
-            transform: perspective(1200px) translateY(-10px) rotateX(6deg) rotateY(-6deg) scale(1.01);
-            border-color: rgba(0,255,135,0.18);
-            box-shadow: 0 28px 70px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,135,0.06), inset 0 1px 0 rgba(0,255,135,0.06);
-        }
-
-        .project-card:nth-child(even):hover {
-            transform: perspective(1200px) translateY(-10px) rotateX(6deg) rotateY(6deg) scale(1.01);
-        }
-
-        .project-card:hover::before,
-        .project-card:hover::after {
-            opacity: 1;
+            transform: translateY(-6px);
+            border-color: rgba(0,255,135,0.22);
+            box-shadow: 0 0 0 1px rgba(0,255,135,0.1), 0 16px 40px rgba(0,0,0,0.45), 0 0 32px rgba(0,255,135,0.07);
         }
 
         .project-card.featured {
@@ -668,8 +630,6 @@
         .project-card .card-media,
         .project-card .card-info {
             position: relative;
-            transform: translateZ(24px);
-            transform-style: preserve-3d;
         }
 
         .project-card .card-media {
@@ -1237,15 +1197,7 @@
             .footer-grid { grid-template-columns: 1fr; gap: 24px; }
             .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
             #matrix-cursor-canvas { display: none; }
-            .project-card,
-            .project-card:hover,
-            .project-card:nth-child(even):hover {
-                transform: translateY(-6px) scale(1.01);
-            }
-            .project-card .card-media,
-            .project-card .card-info {
-                transform: none;
-            }
+            .project-card:hover { transform: translateY(-4px); }
         }
 
         @media (max-width: 480px) {
@@ -1324,23 +1276,23 @@
         .frog-btn:hover, .frog-btn:active { background: rgba(0,255,135,0.18); border-color: rgba(0,255,135,0.5); transform: scale(0.92); }
         .frogger-hint { font-size: 0.68rem; color: var(--text-muted); text-align: center; margin-top: 6px; }
 
-        /* ===== CAREER SIGNAL DASHBOARD ===== */
-        .signal-dashboard { padding: 0 48px 56px; }
-        .signal-grid {
+        /* ===== KPI DASHBOARD ===== */
+        .kpi-dashboard { padding: 0 48px 60px; }
+        .kpi-grid {
             display: grid;
-            grid-template-columns: 1.7fr repeat(5, 1fr);
-            gap: 14px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
         }
-        .signal-card {
+        .kpi-tile {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
-            border-radius: 14px;
-            padding: 22px 20px 18px;
+            border-radius: 16px;
+            padding: 28px 24px 22px;
             position: relative;
             overflow: hidden;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-        .signal-card::after {
+        .kpi-tile::after {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; height: 1px;
@@ -1348,29 +1300,80 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        .signal-card:hover { border-color: var(--border-hover); box-shadow: 0 8px 32px rgba(0,0,0,0.28); }
-        .signal-card:hover::after { opacity: 1; }
-        .signal-card.featured {
-            background: linear-gradient(135deg, #071510 0%, #0c1d12 60%, #091409 100%);
-            border-color: rgba(0,255,135,0.14);
-        }
-        .signal-card.featured::after { opacity: 1; }
-        .signal-bar {
-            position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
-            background: var(--accent); opacity: 0; transition: opacity 0.3s ease;
-        }
-        .signal-card.featured .signal-bar { opacity: 1; }
-        .signal-value {
+        .kpi-tile:hover { border-color: rgba(0,255,135,0.2); box-shadow: 0 0 28px rgba(0,255,135,0.06), 0 8px 32px rgba(0,0,0,0.3); }
+        .kpi-tile:hover::after { opacity: 1; }
+        .kpi-value {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 2rem; font-weight: 800; letter-spacing: -1.5px;
-            color: var(--text-primary); line-height: 1; margin-bottom: 5px;
+            font-size: 2.4rem; font-weight: 800; letter-spacing: -2px;
+            color: var(--accent); line-height: 1; margin-bottom: 8px;
         }
-        .signal-card.featured .signal-value { color: var(--accent); font-size: 1.75rem; letter-spacing: -1px; }
-        .signal-label {
-            font-size: 0.68rem; font-weight: 700; letter-spacing: 1px;
-            text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;
+        .kpi-label {
+            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.8px;
+            text-transform: uppercase; color: var(--text-secondary); line-height: 1.4;
         }
-        .signal-caption { font-size: 0.7rem; color: var(--text-muted); line-height: 1.55; }
+        .kpi-subtitle {
+            font-size: 0.62rem; color: var(--text-muted); margin-top: 4px; line-height: 1.4;
+        }
+        .kpi-info-btn {
+            position: absolute; top: 14px; right: 14px;
+            width: 26px; height: 26px; border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted); font-size: 0.65rem;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.2s ease;
+        }
+        .kpi-info-btn:hover { background: rgba(0,255,135,0.12); border-color: rgba(0,255,135,0.35); color: var(--accent); }
+        .kpi-tile.kpi-open .kpi-info-btn { background: rgba(0,255,135,0.18); border-color: rgba(0,255,135,0.5); color: var(--accent); }
+        .kpi-panel {
+            position: absolute; inset: 0;
+            background: rgba(7,7,7,0.97);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            padding: 18px 20px; opacity: 0; pointer-events: none;
+            transition: opacity 0.25s ease; overflow-y: auto;
+            border-radius: inherit; z-index: 5;
+        }
+        .kpi-tile.kpi-open .kpi-panel { opacity: 1; pointer-events: auto; }
+        .kpi-panel-title {
+            font-size: 0.65rem; font-weight: 800; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+        }
+        .kpi-panel-row { margin-bottom: 9px; }
+        .kpi-panel-key {
+            font-size: 0.57rem; font-weight: 800; letter-spacing: 1.5px;
+            text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px;
+        }
+        .kpi-panel-val { font-size: 0.73rem; color: rgba(255,255,255,0.72); line-height: 1.55; }
+        .kpi-confidence {
+            margin-top: 11px; padding-top: 11px;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            display: flex; align-items: center; gap: 9px;
+        }
+        .kpi-conf-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
+        .kpi-conf-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+        .kpi-conf-fill { height: 100%; background: var(--accent); border-radius: 2px; }
+        .kpi-conf-pct { font-size: 0.6rem; color: var(--text-muted); white-space: nowrap; }
+
+        /* ===== SIGNAL SWEEP (MINESWEEPER) ===== */
+        .sweep-hud { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; gap: 8px; flex-wrap: wrap; }
+        .sweep-stat { font-size: 0.78rem; color: var(--text-secondary); font-weight: 600; }
+        #sweep-status { text-align: center; margin-top: 8px; font-size: 0.8rem; font-weight: 700; min-height: 20px; }
+        #sweep-grid { margin: 0 auto; }
+
+        /* ===== CATAPULT LAB ===== */
+        .catapult-layout { display: flex; gap: 12px; flex-wrap: wrap; }
+        .catapult-controls { flex: 0 0 auto; min-width: 160px; }
+        .cat-slider-row { margin-bottom: 9px; }
+        .cat-slider-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-muted); display: flex; justify-content: space-between; margin-bottom: 3px; }
+        .cat-slider { width: 100%; accent-color: var(--accent); cursor: pointer; }
+        .cat-mode-row { margin-bottom: 12px; }
+        .cat-mode-row select { width: 100%; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; color: var(--text-primary); padding: 6px 10px; font-size: 0.72rem; cursor: pointer; }
+        .catapult-outputs { flex: 1; min-width: 200px; }
+        #catapult-canvas { display: block; width: 100%; border-radius: 8px; background: #050505; border: 1px solid var(--border-subtle); }
+        .cat-metrics { margin-top: 10px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+        .cat-metric { background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 8px 10px; }
+        .cat-metric-label { font-size: 0.57rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; }
+        .cat-metric-val { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--accent); letter-spacing: -0.5px; }
 
         /* ===== VIEW TOGGLE ===== */
         .view-toggle-wrap { margin-bottom: 28px; }
@@ -1403,7 +1406,6 @@
             border-radius: inherit; overflow: hidden;
         }
         @media (prefers-reduced-motion: reduce) { .pao { transition: none; } }
-        .project-card:hover .pao { opacity: 1; pointer-events: auto; }
         .project-card.pao-open .pao { opacity: 1; pointer-events: auto; }
         .pao-skill-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
         .pao-skill-tag {
@@ -1434,11 +1436,18 @@
             position: absolute; bottom: 9px; right: 12px;
             font-size: 0.6rem; color: rgba(255,255,255,0.18);
         }
-        @media (hover: hover) { .pao-close-hint { display: none; } }
-        @media (hover: none) {
-            .project-card:hover .pao { opacity: 0; }
-            .project-card.pao-open .pao { opacity: 1; pointer-events: auto; }
+        .pao-info-btn {
+            position: absolute; top: 10px; right: 10px; z-index: 15;
+            width: 28px; height: 28px; border-radius: 50%;
+            background: rgba(10,10,10,0.75);
+            border: 1px solid rgba(255,255,255,0.14);
+            color: rgba(255,255,255,0.45); font-size: 0.68rem;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.2s ease;
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
         }
+        .pao-info-btn:hover { background: rgba(0,255,135,0.15); border-color: rgba(0,255,135,0.4); color: var(--accent); }
+        .project-card.pao-open .pao-info-btn { background: rgba(0,255,135,0.2); border-color: rgba(0,255,135,0.55); color: var(--accent); }
 
         /* ===== SKILLS MAP ===== */
         .skills-map-section { display: none; }
@@ -1460,6 +1469,22 @@
         .sm-tooltip.visible { display: block; }
         .sm-tooltip strong { display: block; margin-bottom: 3px; font-size: 0.77rem; }
         .sm-tooltip em { color: var(--text-muted); font-style: normal; font-size: 0.67rem; }
+        .sm-lock-bubble {
+            position: absolute;
+            background: rgba(8,8,8,0.93);
+            border: 1px solid rgba(0,255,135,0.2);
+            border-radius: 8px; padding: 8px 11px;
+            font-size: 0.67rem; color: var(--text-secondary);
+            max-width: 155px; line-height: 1.5;
+            pointer-events: none; z-index: 18;
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+            animation: bubbleIn 0.2s ease both;
+        }
+        .sm-lock-bubble strong { display: block; font-size: 0.69rem; color: var(--accent); margin-bottom: 3px; }
+        @keyframes bubbleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .sm-node-locked circle:first-of-type { animation: pulseRing 1.6s ease-in-out infinite; }
+        @keyframes pulseRing { 0%,100% { opacity: 0.07; r: 10; } 50% { opacity: 0.2; r: 14; } }
         .skills-legend {
             display: flex; flex-wrap: wrap; gap: 14px;
             margin-top: 14px; justify-content: center; padding: 0 8px 4px;
@@ -1493,16 +1518,61 @@
             border: 1px solid var(--border-subtle);
         }
 
-        /* Responsive: dashboard */
-        @media (max-width: 1024px) {
-            .signal-grid { grid-template-columns: repeat(3, 1fr); }
+        /* Responsive: KPI dashboard */
+        @media (max-width: 900px) {
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 768px) {
-            .signal-dashboard { padding: 0 20px 40px; }
-            .signal-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .signal-value { font-size: 1.6rem; }
-            .signal-card.featured .signal-value { font-size: 1.4rem; }
+            .kpi-dashboard { padding: 0 20px 40px; }
+            .kpi-value { font-size: 1.8rem; }
         }
+        @media (max-width: 480px) {
+            .kpi-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ===== SITE ASSISTANT ===== */
+        #site-assistant { position: fixed; bottom: 90px; right: 24px; z-index: 5000; }
+        #sa-toggle {
+            width: 52px; height: 52px; border-radius: 50%;
+            background: var(--accent); border: none; color: #000;
+            font-size: 1.2rem; cursor: pointer;
+            box-shadow: 0 4px 24px rgba(0,255,135,0.35);
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        #sa-toggle:hover { transform: scale(1.08); box-shadow: 0 6px 32px rgba(0,255,135,0.5); }
+        #sa-panel {
+            position: absolute; bottom: 64px; right: 0;
+            width: 320px; background: var(--bg-card);
+            border: 1px solid var(--border-subtle); border-radius: 16px;
+            overflow: hidden; display: none;
+            box-shadow: 0 16px 60px rgba(0,0,0,0.6);
+            animation: slideUp 0.25s var(--transition-smooth) both;
+        }
+        #sa-panel.open { display: flex; flex-direction: column; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+        #sa-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 16px; background: rgba(0,255,135,0.06);
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 0.75rem; font-weight: 700; color: var(--accent);
+        }
+        #sa-header button { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.85rem; }
+        #sa-messages {
+            flex: 1; overflow-y: auto; padding: 14px; max-height: 280px;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .sa-msg { font-size: 0.76rem; line-height: 1.55; padding: 9px 12px; border-radius: 10px; max-width: 90%; }
+        .sa-msg.bot { background: rgba(255,255,255,0.05); border: 1px solid var(--border-subtle); color: var(--text-secondary); align-self: flex-start; }
+        .sa-msg.user { background: rgba(0,255,135,0.1); border: 1px solid rgba(0,255,135,0.2); color: var(--text-primary); align-self: flex-end; }
+        #sa-suggestions { display: flex; flex-wrap: wrap; gap: 5px; padding: 8px 14px; border-top: 1px solid var(--border-subtle); }
+        .sa-chip { padding: 4px 10px; border-radius: 100px; font-size: 0.63rem; background: rgba(255,255,255,0.04); border: 1px solid var(--border-subtle); color: var(--text-muted); cursor: pointer; transition: all 0.15s ease; }
+        .sa-chip:hover { background: rgba(0,255,135,0.08); border-color: rgba(0,255,135,0.25); color: var(--accent); }
+        #sa-input-row { display: flex; gap: 6px; padding: 10px 12px; border-top: 1px solid var(--border-subtle); }
+        #sa-input { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid var(--border-subtle); border-radius: 8px; color: var(--text-primary); padding: 7px 10px; font-size: 0.75rem; outline: none; }
+        #sa-input:focus { border-color: rgba(0,255,135,0.3); }
+        #sa-send { background: var(--accent); border: none; border-radius: 8px; color: #000; width: 32px; height: 32px; cursor: pointer; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.15s ease; }
+        #sa-send:hover { transform: scale(1.08); }
     </style>
 </head>
 <body>
@@ -1583,41 +1653,10 @@
         </div>
     </div>
 
-    <!-- ===== CAREER SIGNAL DASHBOARD ===== -->
-    <div class="signal-dashboard reveal">
-        <div class="signal-grid">
-            <div class="signal-card featured">
-                <div class="signal-bar"></div>
-                <div class="signal-value">6σ</div>
-                <div class="signal-label">Six Sigma Black Belt</div>
-                <div class="signal-caption">Process optimization across nuclear submarine industrial programs — with a security clearance</div>
-            </div>
-            <div class="signal-card">
-                <div class="signal-bar"></div>
-                <div class="signal-value">8+</div>
-                <div class="signal-label">Global Deployments</div>
-                <div class="signal-caption">Commercial &amp; government clients across 3+ continents</div>
-            </div>
-            <div class="signal-card">
-                <div class="signal-value">100+</div>
-                <div class="signal-label">Satellites Scheduled</div>
-                <div class="signal-caption">Embedded optimization algorithm on Raspberry Pi</div>
-            </div>
-            <div class="signal-card">
-                <div class="signal-value">6</div>
-                <div class="signal-label">Industries</div>
-                <div class="signal-caption">Pharma · defense · SaaS · e-commerce · aerospace · education</div>
-            </div>
-            <div class="signal-card">
-                <div class="signal-value">15</div>
-                <div class="signal-label">People Developed</div>
-                <div class="signal-caption">Employees trained across global programs and field leadership</div>
-            </div>
-            <div class="signal-card">
-                <div class="signal-value">5</div>
-                <div class="signal-label">Functions Bridged</div>
-                <div class="signal-caption">Engineering · analytics · product · AI/ML · operations</div>
-            </div>
+    <!-- ===== KPI DASHBOARD ===== -->
+    <div class="kpi-dashboard reveal" id="kpi-dashboard">
+        <div class="kpi-grid" id="kpi-grid">
+            <!-- tiles injected by JS -->
         </div>
     </div>
 
@@ -1947,27 +1986,33 @@
 
         </div>
 
-        <div class="experiments-grid-row2">
+        <div class="experiments-grid-row2" style="grid-template-columns: repeat(3, 1fr);">
 
-            <!-- Pong Game -->
-            <div class="window reveal reveal-delay-1" id="pong-window">
+            <!-- Signal Sweep (Minesweeper) -->
+            <div class="window reveal reveal-delay-1" id="signal-sweep-window">
                 <div class="window-bar">
                     <div class="window-dots">
                         <span class="window-dot red" title="Close" onclick="windowAction(this, 'close')"><i class="fas fa-times"></i></span>
                         <span class="window-dot yellow" title="Minimize" onclick="windowAction(this, 'minimize')"><i class="fas fa-minus"></i></span>
                         <span class="window-dot green" title="Maximize" onclick="windowAction(this, 'maximize')"><i class="fas fa-expand"></i></span>
                     </div>
-                    <span class="window-bar-title">pong.exe</span>
+                    <span class="window-bar-title">signal-sweep.exe</span>
                 </div>
                 <div class="window-content">
-                    <div class="game-score" id="pong-score">You: 0 &nbsp;&bull;&nbsp; CPU: 0</div>
-                    <canvas id="pong-canvas" class="pong-canvas" width="400" height="260"></canvas>
-                    <div class="game-controls">
-                        <button class="game-btn" onclick="pongReset()"><i class="fas fa-redo"></i> Reset</button>
-                        <span style="font-size:0.75rem; color:var(--text-muted); align-self:center;">Use mouse or touch to move paddle</span>
+                    <div class="sweep-hud">
+                        <div class="sweep-stat">💣 <span id="sweep-mine-count">10</span></div>
+                        <div style="display:flex;gap:4px;">
+                            <button class="game-btn" onclick="sweepNewGame('easy')">Easy</button>
+                            <button class="game-btn" onclick="sweepNewGame('medium')">Med</button>
+                            <button class="game-btn" onclick="sweepNewGame('hard')">Hard</button>
+                        </div>
+                        <div class="sweep-stat" id="sweep-timer">⏱ 0s</div>
                     </div>
+                    <div id="sweep-grid"></div>
+                    <div id="sweep-status" style="text-align:center;margin-top:8px;font-size:0.78rem;font-weight:700;min-height:20px;"></div>
+                    <div style="font-size:0.62rem;color:var(--text-muted);text-align:center;margin-top:4px;">Left-click reveal · Right-click flag</div>
                 </div>
-                <button class="window-restore-btn" id="pong-restore" onclick="windowRestore('pong-window')"><i class="fas fa-undo"></i> Restore Pong</button>
+                <button class="window-restore-btn" id="signal-sweep-restore" onclick="windowRestore('signal-sweep-window')"><i class="fas fa-undo"></i> Restore Signal Sweep</button>
             </div>
 
             <!-- Blackjack Game -->
@@ -1998,6 +2043,63 @@
                     </div>
                 </div>
                 <button class="window-restore-btn" id="blackjack-restore" onclick="windowRestore('blackjack-window')"><i class="fas fa-undo"></i> Restore Blackjack</button>
+            </div>
+
+            <!-- Catapult Optimization Lab -->
+            <div class="window reveal reveal-delay-3" id="catapult-window">
+                <div class="window-bar">
+                    <div class="window-dots">
+                        <span class="window-dot red" title="Close" onclick="windowAction(this, 'close')"><i class="fas fa-times"></i></span>
+                        <span class="window-dot yellow" title="Minimize" onclick="windowAction(this, 'minimize')"><i class="fas fa-minus"></i></span>
+                        <span class="window-dot green" title="Maximize" onclick="windowAction(this, 'maximize')"><i class="fas fa-expand"></i></span>
+                    </div>
+                    <span class="window-bar-title">catapult-lab.exe</span>
+                </div>
+                <div class="window-content" style="padding:14px;">
+                    <div class="catapult-layout">
+                        <div class="catapult-controls">
+                            <div class="cat-mode-row">
+                                <div class="cat-slider-label" style="margin-bottom:4px;"><span>Mode</span></div>
+                                <select id="cat-mode" onchange="catRun()">
+                                    <option value="distance">Max Distance</option>
+                                    <option value="height">Max Height</option>
+                                    <option value="accuracy">Target Accuracy</option>
+                                    <option value="variability">Min Variability</option>
+                                </select>
+                            </div>
+                            <div class="cat-slider-row">
+                                <div class="cat-slider-label"><span>Rotation</span><span id="lbl-rotation">45°</span></div>
+                                <input class="cat-slider" type="range" id="cat-rotation" min="10" max="80" value="45" oninput="catRun()">
+                            </div>
+                            <div class="cat-slider-row">
+                                <div class="cat-slider-label"><span>Bend Back</span><span id="lbl-bendb">50</span></div>
+                                <input class="cat-slider" type="range" id="cat-bendb" min="0" max="100" value="50" oninput="catRun()">
+                            </div>
+                            <div class="cat-slider-row">
+                                <div class="cat-slider-label"><span>Tension</span><span id="lbl-tension">60</span></div>
+                                <input class="cat-slider" type="range" id="cat-tension" min="10" max="100" value="60" oninput="catRun()">
+                            </div>
+                            <div class="cat-slider-row">
+                                <div class="cat-slider-label"><span>Pin Height</span><span id="lbl-pin">50</span></div>
+                                <input class="cat-slider" type="range" id="cat-pin" min="20" max="80" value="50" oninput="catRun()">
+                            </div>
+                            <div class="cat-slider-row">
+                                <div class="cat-slider-label"><span>Cup Pos.</span><span id="lbl-cup">50</span></div>
+                                <input class="cat-slider" type="range" id="cat-cup" min="20" max="80" value="50" oninput="catRun()">
+                            </div>
+                            <div class="cat-slider-row">
+                                <div class="cat-slider-label"><span>Pull-Back °</span><span id="lbl-pullback">90°</span></div>
+                                <input class="cat-slider" type="range" id="cat-pullback" min="30" max="150" value="90" oninput="catRun()">
+                            </div>
+                            <button class="game-btn" style="width:100%;margin-top:8px;" onclick="catAutoOptimize()"><i class="fas fa-magic"></i> Auto-Optimize</button>
+                        </div>
+                        <div class="catapult-outputs">
+                            <canvas id="catapult-canvas" width="260" height="140"></canvas>
+                            <div class="cat-metrics" id="cat-metrics"></div>
+                        </div>
+                    </div>
+                </div>
+                <button class="window-restore-btn" id="catapult-restore" onclick="windowRestore('catapult-window')"><i class="fas fa-undo"></i> Restore Catapult Lab</button>
             </div>
 
         </div>
@@ -2038,6 +2140,32 @@
             </div>
         </div>
     </footer>
+
+    <!-- ===== SITE ASSISTANT ===== -->
+    <div id="site-assistant">
+        <button id="sa-toggle" onclick="toggleAssistant()" aria-label="Ask about Tyler's portfolio">
+            <i class="fas fa-robot"></i>
+        </button>
+        <div id="sa-panel">
+            <div id="sa-header">
+                <span><i class="fas fa-robot"></i>&nbsp; Portfolio Assistant</span>
+                <button onclick="toggleAssistant()" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="sa-messages">
+                <div class="sa-msg bot">Hi! I'm Tyler's portfolio assistant. Ask me about his projects, skills, or KPIs.</div>
+            </div>
+            <div id="sa-suggestions">
+                <button class="sa-chip" onclick="saAsk('What are Tyler\'s biggest impacts?')">Biggest impacts?</button>
+                <button class="sa-chip" onclick="saAsk('What industries has Tyler worked in?')">Industries?</button>
+                <button class="sa-chip" onclick="saAsk('What are Tyler\'s top skills?')">Top skills?</button>
+                <button class="sa-chip" onclick="saAsk('Tell me about Tyler\'s KPIs')">KPIs?</button>
+            </div>
+            <div id="sa-input-row">
+                <input id="sa-input" type="text" placeholder="Ask something..." onkeydown="if(event.key==='Enter')saSubmit()">
+                <button id="sa-send" onclick="saSubmit()" aria-label="Send"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
 
     <!-- Calendly badge widget -->
     <script type="text/javascript">
@@ -2240,112 +2368,140 @@
         }
         fetchWeather();
 
-        // ===== PONG GAME =====
+        // ===== SIGNAL SWEEP (MINESWEEPER) =====
         (function() {
-            const canvas = document.getElementById('pong-canvas');
-            const ctx = canvas.getContext('2d');
-            let playerScore = 0, cpuScore = 0;
-            const paddleH = 60, paddleW = 8, ballSize = 8;
-            let playerY = 100, cpuY = 100;
-            let ballX = 200, ballY = 130, ballVX = 3, ballVY = 2;
-            let animId;
-
-            function drawRect(x, y, w, h, color) {
-                ctx.fillStyle = color;
-                ctx.fillRect(x, y, w, h);
-            }
-
-            function drawBall(x, y, r, color) {
-                ctx.fillStyle = color;
-                ctx.beginPath();
-                ctx.arc(x, y, r, 0, Math.PI * 2);
-                ctx.fill();
-            }
-
-            function drawNet() {
-                ctx.setLineDash([4, 6]);
-                ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-                ctx.beginPath();
-                ctx.moveTo(200, 0);
-                ctx.lineTo(200, 260);
-                ctx.stroke();
-                ctx.setLineDash([]);
-            }
-
-            function updateScore() {
-                document.getElementById('pong-score').innerHTML = 'You: ' + playerScore + ' &nbsp;&bull;&nbsp; CPU: ' + cpuScore;
-            }
-
-            function resetBall() {
-                ballX = 200;
-                ballY = 130;
-                ballVX = (Math.random() > 0.5 ? 1 : -1) * 3;
-                ballVY = (Math.random() - 0.5) * 4;
-            }
-
-            function update() {
-                ballX += ballVX;
-                ballY += ballVY;
-
-                if (ballY - ballSize < 0 || ballY + ballSize > 260) ballVY *= -1;
-
-                if (ballX - ballSize < paddleW + 10 && ballY > playerY && ballY < playerY + paddleH) {
-                    ballVX = Math.abs(ballVX) * 1.05;
-                    ballVY += (ballY - (playerY + paddleH / 2)) * 0.15;
-                }
-
-                if (ballX + ballSize > 400 - paddleW - 10 && ballY > cpuY && ballY < cpuY + paddleH) {
-                    ballVX = -Math.abs(ballVX) * 1.05;
-                    ballVY += (ballY - (cpuY + paddleH / 2)) * 0.15;
-                }
-
-                if (Math.abs(ballVX) > 8) ballVX = 8 * Math.sign(ballVX);
-
-                if (ballX < 0) { cpuScore++; updateScore(); resetBall(); }
-                if (ballX > 400) { playerScore++; updateScore(); resetBall(); }
-
-                const cpuCenter = cpuY + paddleH / 2;
-                if (cpuCenter < ballY - 10) cpuY += 2.5;
-                else if (cpuCenter > ballY + 10) cpuY -= 2.5;
-            }
-
-            function draw() {
-                drawRect(0, 0, 400, 260, '#000');
-                drawNet();
-                drawRect(10, playerY, paddleW, paddleH, '#00ff87');
-                drawRect(400 - paddleW - 10, cpuY, paddleW, paddleH, '#4a9eff');
-                drawBall(ballX, ballY, ballSize, '#fff');
-            }
-
-            function gameLoop() {
-                update();
-                draw();
-                animId = requestAnimationFrame(gameLoop);
-            }
-
-            canvas.addEventListener('mousemove', function(e) {
-                const rect = canvas.getBoundingClientRect();
-                const scaleY = 260 / rect.height;
-                playerY = (e.clientY - rect.top) * scaleY - paddleH / 2;
-                playerY = Math.max(0, Math.min(260 - paddleH, playerY));
-            });
-            canvas.addEventListener('touchmove', function(e) {
-                e.preventDefault();
-                const rect = canvas.getBoundingClientRect();
-                const scaleY = 260 / rect.height;
-                playerY = (e.touches[0].clientY - rect.top) * scaleY - paddleH / 2;
-                playerY = Math.max(0, Math.min(260 - paddleH, playerY));
-            }, { passive: false });
-
-            window.pongReset = function() {
-                playerScore = 0;
-                cpuScore = 0;
-                updateScore();
-                resetBall();
+            var CONFIGS = {
+                easy:   { rows: 8,  cols: 8,  mines: 10 },
+                medium: { rows: 10, cols: 10, mines: 20 },
+                hard:   { rows: 12, cols: 12, mines: 35 },
             };
+            var cfg, grid, revealed, flagged, gameOver, firstClick, timerInterval, seconds, mineCount;
 
-            gameLoop();
+            function sweepNewGame(diff) {
+                cfg = CONFIGS[diff] || CONFIGS.easy;
+                grid = []; revealed = []; flagged = [];
+                gameOver = false; firstClick = true; seconds = 0;
+                clearInterval(timerInterval);
+                var timerEl = document.getElementById('sweep-timer');
+                var statusEl = document.getElementById('sweep-status');
+                if (timerEl) timerEl.textContent = '⏱ 0s';
+                if (statusEl) { statusEl.textContent = ''; statusEl.style.color = ''; }
+                mineCount = cfg.mines;
+                var mcEl = document.getElementById('sweep-mine-count');
+                if (mcEl) mcEl.textContent = mineCount;
+                for (var r = 0; r < cfg.rows; r++) {
+                    grid[r] = []; revealed[r] = []; flagged[r] = [];
+                    for (var c = 0; c < cfg.cols; c++) { grid[r][c] = 0; revealed[r][c] = false; flagged[r][c] = false; }
+                }
+                renderGrid();
+            }
+
+            function placeMines(safeR, safeC) {
+                var placed = 0;
+                while (placed < cfg.mines) {
+                    var r = Math.floor(Math.random() * cfg.rows);
+                    var c = Math.floor(Math.random() * cfg.cols);
+                    if (grid[r][c] === -1) continue;
+                    if (Math.abs(r - safeR) <= 1 && Math.abs(c - safeC) <= 1) continue;
+                    grid[r][c] = -1; placed++;
+                }
+                for (var r = 0; r < cfg.rows; r++) {
+                    for (var c = 0; c < cfg.cols; c++) {
+                        if (grid[r][c] === -1) continue;
+                        var count = 0;
+                        eachNeighbor(r, c, function(nr, nc) { if (grid[nr][nc] === -1) count++; });
+                        grid[r][c] = count;
+                    }
+                }
+            }
+
+            function eachNeighbor(r, c, fn) {
+                for (var dr = -1; dr <= 1; dr++) for (var dc = -1; dc <= 1; dc++) {
+                    if (dr === 0 && dc === 0) continue;
+                    var nr = r + dr, nc = c + dc;
+                    if (nr >= 0 && nr < cfg.rows && nc >= 0 && nc < cfg.cols) fn(nr, nc);
+                }
+            }
+
+            function floodReveal(r, c) {
+                if (revealed[r][c] || flagged[r][c]) return;
+                revealed[r][c] = true;
+                if (grid[r][c] === 0) eachNeighbor(r, c, floodReveal);
+            }
+
+            function checkWin() {
+                for (var r = 0; r < cfg.rows; r++) for (var c = 0; c < cfg.cols; c++) {
+                    if (grid[r][c] !== -1 && !revealed[r][c]) return;
+                }
+                gameOver = true; clearInterval(timerInterval);
+                var st = document.getElementById('sweep-status');
+                if (st) { st.textContent = '✅ Field cleared in ' + seconds + 's!'; st.style.color = '#00ff87'; }
+            }
+
+            function renderGrid() {
+                var el = document.getElementById('sweep-grid');
+                if (!el) return;
+                var cellSz = Math.min(26, Math.floor(230 / cfg.cols));
+                el.style.cssText = 'display:grid;grid-template-columns:repeat(' + cfg.cols + ',' + cellSz + 'px);gap:2px;justify-content:center;margin:4px 0;';
+                el.innerHTML = '';
+                for (var r = 0; r < cfg.rows; r++) for (var c = 0; c < cfg.cols; c++) {
+                    (function(r, c) {
+                        var cell = document.createElement('div');
+                        var sz = cellSz + 'px';
+                        cell.style.cssText = 'width:' + sz + ';height:' + sz + ';border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:' + (cellSz * 0.42) + 'px;font-weight:700;cursor:pointer;user-select:none;transition:background 0.1s;';
+                        var numColors = ['','#4a9eff','#00ff87','#ff6b35','#a855f7','#ff5f57','#22d3ee','#ffd700','#aaa'];
+                        if (revealed[r][c]) {
+                            if (grid[r][c] === -1) {
+                                cell.style.background = 'rgba(255,80,80,0.18)'; cell.style.border = '1px solid rgba(255,80,80,0.35)';
+                                cell.textContent = '💣';
+                            } else {
+                                cell.style.background = 'rgba(255,255,255,0.04)'; cell.style.border = '1px solid rgba(255,255,255,0.05)';
+                                if (grid[r][c] > 0) { cell.textContent = grid[r][c]; cell.style.color = numColors[grid[r][c]] || '#aaa'; }
+                            }
+                        } else if (flagged[r][c]) {
+                            cell.style.background = 'rgba(255,200,0,0.08)'; cell.style.border = '1px solid rgba(255,200,0,0.25)';
+                            cell.textContent = '🚩';
+                        } else {
+                            cell.style.background = 'rgba(255,255,255,0.05)'; cell.style.border = '1px solid rgba(255,255,255,0.1)';
+                            cell.addEventListener('mouseover', function() { if (!gameOver && !revealed[r][c]) cell.style.background = 'rgba(0,255,135,0.09)'; });
+                            cell.addEventListener('mouseout', function() { if (!revealed[r][c] && !flagged[r][c]) cell.style.background = 'rgba(255,255,255,0.05)'; });
+                        }
+                        cell.addEventListener('click', function(e) {
+                            if (gameOver || revealed[r][c] || flagged[r][c]) return;
+                            if (firstClick) {
+                                firstClick = false; placeMines(r, c);
+                                timerInterval = setInterval(function() {
+                                    seconds++;
+                                    var te = document.getElementById('sweep-timer');
+                                    if (te) te.textContent = '⏱ ' + seconds + 's';
+                                }, 1000);
+                            }
+                            if (grid[r][c] === -1) {
+                                gameOver = true; clearInterval(timerInterval);
+                                for (var rr = 0; rr < cfg.rows; rr++) for (var cc = 0; cc < cfg.cols; cc++) if (grid[rr][cc] === -1) revealed[rr][cc] = true;
+                                renderGrid();
+                                var st = document.getElementById('sweep-status');
+                                if (st) { st.textContent = '💥 Boom! Click a difficulty to restart.'; st.style.color = '#ff5f57'; }
+                            } else { floodReveal(r, c); renderGrid(); checkWin(); }
+                        });
+                        cell.addEventListener('contextmenu', function(e) {
+                            e.preventDefault();
+                            if (gameOver || revealed[r][c]) return;
+                            flagged[r][c] = !flagged[r][c];
+                            mineCount += flagged[r][c] ? -1 : 1;
+                            var mc = document.getElementById('sweep-mine-count');
+                            if (mc) mc.textContent = mineCount;
+                            renderGrid();
+                        });
+                        el.appendChild(cell);
+                    }(r, c));
+                }
+            }
+
+            window.sweepNewGame = sweepNewGame;
+            sweepNewGame('easy');
         })();
+
 
         // ===== BLACKJACK GAME =====
         (function() {
@@ -2827,7 +2983,15 @@
                 {
                     title: 'Data Visualization Analytics Engineer 3',
                     company: 'Takeda Pharmaceuticals',
-                    skills: ['Analytics', 'Visualization', 'Operations'],
+                    mapLabel: 'Takeda', mapSub: '/ Data Viz Eng. III',
+                    skills: ['Analytics', 'Visualization', 'Operations', 'AI / ML', 'Leadership'],
+                    skillNotes: {
+                        'Analytics': 'Built Databricks + SQL data pipelines to surface KPIs across manufacturing and operations.',
+                        'Visualization': 'Designed enterprise Power BI dashboards standardizing cross-functional reporting.',
+                        'Operations': 'Drove performance insights enabling faster data-driven operational decisions.',
+                        'AI / ML': 'Leveraged Databricks ML capabilities and AI-assisted analytics for predictive manufacturing insights.',
+                        'Leadership': 'Led the data visualization analytics community of practice, enabling teams across the org.',
+                    },
                     problem: 'Manufacturing teams lacked visibility across fragmented data sources, slowing cross-functional decisions.',
                     approach: 'Built Power BI dashboards and Databricks/SQL pipelines to standardize reporting and surface real-time KPIs.',
                     outcome: 'Unified enterprise reporting across manufacturing, enabling faster data-driven decisions at scale.',
@@ -2836,7 +3000,14 @@
                 {
                     title: 'Chewy Dual Monitor Study',
                     company: 'Chewy, Inc.',
-                    skills: ['Analytics', 'Operations', 'Product'],
+                    mapLabel: 'Chewy.com', mapSub: '/ Dual Monitor Study',
+                    skills: ['Analytics', 'Visualization', 'Operations', 'Product'],
+                    skillNotes: {
+                        'Analytics': 'Designed statistical analysis and measurement protocols to quantify productivity impact.',
+                        'Visualization': 'Visualized ergonomics data and productivity metrics to communicate study findings.',
+                        'Operations': 'Applied findings to recommend workspace optimizations for e-commerce operations teams.',
+                        'Product': 'Framed research as a product decision — what setup should agents use for best output?',
+                    },
                     problem: 'No formal data existed on whether dual monitors improved productivity in a fast-paced e-commerce environment.',
                     approach: 'Designed and ran a controlled ergonomics study with statistical analysis and measurement protocols.',
                     outcome: 'Delivered quantified workspace optimization recommendations backed by ergonomics data.',
@@ -2844,8 +3015,15 @@
                 },
                 {
                     title: 'Process Engineer II',
-                    company: 'Electric Boat — General Dynamics',
-                    skills: ['Optimization', 'Operations', 'Leadership'],
+                    company: 'Electric Boat \u2014 General Dynamics',
+                    mapLabel: 'Gen. Dynamics', mapSub: '/ Process Eng. II',
+                    skills: ['Optimization', 'Operations', 'Leadership', 'Visualization'],
+                    skillNotes: {
+                        'Optimization': 'Six Sigma Black Belt — redesigned work center layouts to maximize throughput on submarine production lines.',
+                        'Operations': 'Built knowledge base for nuclear submarine industrial sites ensuring repeatable, safe operations.',
+                        'Leadership': 'Bridged engineering and floor teams — worked directly with welders and machinists to implement changes.',
+                        'Visualization': 'Created facility layout visualizations and process flow diagrams for work center documentation.',
+                    },
                     problem: 'Nuclear submarine industrial sites lacked standardized layouts and knowledge transfer systems.',
                     approach: 'Applied Six Sigma Black Belt methods to build work center layouts and a formal site knowledge base.',
                     outcome: 'Improved throughput and created a durable knowledge system for welders and machinists.',
@@ -2854,16 +3032,28 @@
                 {
                     title: 'AI Program Manager',
                     company: 'Singaporean SaaS Startup',
+                    mapLabel: 'SaaS Startup', mapSub: '/ AI Prog. Manager',
                     skills: ['AI / ML', 'Product', 'Leadership'],
+                    skillNotes: {
+                        'AI / ML': 'Led Computer Vision programs using object recognition in CCTV footage for real-time analytics.',
+                        'Product': 'Managed product delivery across 8 international deployments for commercial and government clients.',
+                        'Leadership': 'Coordinated cross-cultural engineering and delivery teams across 3+ continents.',
+                    },
                     problem: 'Clients needed real-time intelligence from CCTV footage across diverse global environments.',
                     approach: 'Led Computer Vision programs, coordinating 8 international deployments for commercial and government clients.',
                     outcome: 'Delivered 8+ live deployments across 3 continents with commercial and government clients.',
-                    metrics: ['8+ deployments', 'Gov\'t + commercial clients'],
+                    metrics: ['8+ deployments', "Gov't + commercial clients"],
                 },
                 {
                     title: 'Senior Thesis \u2014 Algorithm Optimization',
                     company: 'Aerospace Corporation',
+                    mapLabel: 'Aerospace Corp.', mapSub: '/ Senior Thesis',
                     skills: ['Optimization', 'Analytics', 'AI / ML'],
+                    skillNotes: {
+                        'Optimization': 'Multi-step scheduling algorithm solving a Traveling Salesman variant for 100+ satellite contacts.',
+                        'Analytics': 'Analyzed scheduling patterns and contact windows to inform algorithm design and validation.',
+                        'AI / ML': 'Applied heuristic search and optimization techniques similar to modern ML scheduling systems.',
+                    },
                     problem: 'Military antenna dishes had no automated scheduling system for 100+ satellite contacts worldwide.',
                     approach: 'Built a multi-step Python optimization (Traveling Salesman variant) deployed on a Raspberry Pi.',
                     outcome: 'Automated 100+ satellite contact schedules with a lightweight embedded solution.',
@@ -2872,7 +3062,13 @@
                 {
                     title: 'SPOT iOS Fitness Tracker',
                     company: 'University Product Team',
+                    mapLabel: 'USC Product Team', mapSub: '/ SPOT iOS App',
                     skills: ['Product', 'Analytics', 'Visualization'],
+                    skillNotes: {
+                        'Product': 'Led team through full product cycle — research, spec writing, user flows, and wireframes.',
+                        'Analytics': 'Used Hierarchical Task Analysis to quantify and prioritize user behaviors and feature needs.',
+                        'Visualization': 'Designed wireframes and interactive prototypes to visualize the user experience.',
+                    },
                     problem: 'Gym-goers lacked a structured, data-driven tool to plan and track progressive workouts.',
                     approach: 'Led a product team using Hierarchical Task Analysis to develop specs, user flows, and wireframes.',
                     outcome: 'Delivered a full product spec and interactive wireframe ready for development handoff.',
@@ -2881,7 +3077,12 @@
                 {
                     title: 'Senior Expedition Guide',
                     company: 'Canadian Wilderness',
+                    mapLabel: 'Canadian Wild.', mapSub: '/ Senior Guide',
                     skills: ['Leadership', 'Operations'],
+                    skillNotes: {
+                        'Leadership': 'Trained 15 employees, led 9\u201312 day remote expeditions, and managed safety under pressure.',
+                        'Operations': 'Planned and executed complex wilderness logistics for multi-day canoe treks.',
+                    },
                     problem: 'Remote wilderness expeditions demand precise logistics, safety, and team development under pressure.',
                     approach: 'Guided 9\u201312 day canoe treks and trained 15 employees in outdoor education and crisis management.',
                     outcome: 'Built a high-performing team with improved safety standards and measurable leadership skill transfer.',
@@ -2890,7 +3091,13 @@
                 {
                     title: 'Business Case Analysis',
                     company: 'University Project',
-                    skills: ['Analytics', 'Optimization'],
+                    mapLabel: 'University', mapSub: '/ Business Case',
+                    skills: ['Analytics', 'Optimization', 'Visualization'],
+                    skillNotes: {
+                        'Analytics': 'Built a full economic model covering cash flow, depreciation, taxation, and risk scenarios.',
+                        'Optimization': 'Applied replacement analysis and choice-among-alternatives frameworks to optimize capital decisions.',
+                        'Visualization': 'Visualized cash flow projections and risk scenarios for executive-level decision presentations.',
+                    },
                     problem: 'Capital investments required a unified economic framework for risk-adjusted decision making.',
                     approach: 'Built a full evaluation covering cash flow, depreciation, taxation, and risk analysis.',
                     outcome: 'Produced a decision-ready framework applicable to real-world capital project evaluations.',
@@ -2899,7 +3106,12 @@
                 {
                     title: 'Industrial Design Projects',
                     company: 'AutoCAD & SolidWorks',
+                    mapLabel: 'AutoCAD / SW', mapSub: '/ CAD Projects',
                     skills: ['Product', 'Optimization'],
+                    skillNotes: {
+                        'Product': 'Designed 3D part and assembly models to accelerate conceptual product development.',
+                        'Optimization': 'Iterated on designs to meet form, fit, and function requirements with minimal material waste.',
+                    },
                     problem: 'Product concepts needed high-fidelity 3D models for rapid evaluation and iteration.',
                     approach: 'Created detailed part and assembly models in AutoCAD and SolidWorks for conceptual development.',
                     outcome: 'Delivered production-ready 3D assets supporting fast design iteration and concept validation.',
@@ -2908,7 +3120,12 @@
                 {
                     title: 'Junior Expedition Guide',
                     company: 'Canadian Wilderness',
+                    mapLabel: 'Canadian Wild.', mapSub: '/ Junior Guide',
                     skills: ['Leadership', 'Operations'],
+                    skillNotes: {
+                        'Leadership': 'Supported senior guides and developed foundational outdoor education and team-building skills.',
+                        'Operations': 'Managed equipment inventory and repairs, reducing operational costs by $15k+.',
+                    },
                     problem: 'Field operations and equipment lacked systematic inventory tracking and maintenance protocols.',
                     approach: 'Inventoried and repaired canoes, fishing gear, and equipment to extend operational lifespan.',
                     outcome: 'Reduced operational expenses by $15k+ through improved equipment lifecycle management.',
@@ -2927,11 +3144,15 @@
                     }
                     if (!proj) return;
 
+                    // Find primary link from card-link or card-cta
+                    var linkEl = card.querySelector('.card-link') || card.querySelector('.card-cta[href]:not([style*="cursor:default"])');
+                    var primaryHref = linkEl ? linkEl.getAttribute('href') : null;
+                    var primaryTarget = linkEl ? (linkEl.getAttribute('target') || '_self') : '_blank';
+
                     var skillTagsHtml = proj.skills.map(function (s) {
                         var c = SKILL_COLORS[s] || '#fff';
                         return '<span class="pao-skill-tag" style="color:' + c + ';border-color:' + c + '33">' + s + '</span>';
                     }).join('');
-
                     var metricsHtml = proj.metrics.length
                         ? '<div class="pao-metrics">' + proj.metrics.map(function (m) { return '<span class="pao-pill">' + m + '</span>'; }).join('') + '</div>'
                         : '';
@@ -2945,29 +3166,53 @@
                         '<div class="pao-row"><span class="pao-tag">Approach</span><div class="pao-text">' + proj.approach + '</div></div>' +
                         '<div class="pao-row"><span class="pao-tag">Outcome</span><div class="pao-text">' + proj.outcome + '</div></div>' +
                         metricsHtml +
-                        '<div class="pao-close-hint">tap again to close</div>';
+                        '<div class="pao-close-hint">click ℹ to close</div>';
 
-                    card.insertBefore(overlay, card.firstChild);
+                    var mediaEl = card.querySelector('.card-media');
+                    if (mediaEl) { mediaEl.style.position = 'relative'; mediaEl.appendChild(overlay); }
+                    else card.insertBefore(overlay, card.firstChild);
 
-                    // Touch: tap to open/close
-                    card.addEventListener('click', function (e) {
-                        if (e.target.closest('a')) return;
-                        if (window.matchMedia('(hover: none)').matches) {
-                            var open = card.classList.toggle('pao-open');
-                            overlay.setAttribute('aria-hidden', String(!open));
-                            if (open) {
-                                document.querySelectorAll('.project-card.pao-open').forEach(function (c) {
-                                    if (c !== card) { c.classList.remove('pao-open'); }
-                                });
-                            }
+                    // ℹ button — positioned on the card
+                    var infoBtn = document.createElement('button');
+                    infoBtn.className = 'pao-info-btn';
+                    infoBtn.innerHTML = '<i class="fas fa-info"></i>';
+                    infoBtn.setAttribute('aria-label', 'View project details');
+                    infoBtn.setAttribute('title', 'View project details');
+                    card.style.position = 'relative';
+                    card.appendChild(infoBtn);
+
+                    function togglePao(forceOpen) {
+                        var isOpen = forceOpen !== undefined ? forceOpen : !card.classList.contains('pao-open');
+                        if (isOpen) {
+                            document.querySelectorAll('.project-card.pao-open').forEach(function (c) { c.classList.remove('pao-open'); });
                         }
+                        card.classList.toggle('pao-open', isOpen);
+                        overlay.setAttribute('aria-hidden', String(!isOpen));
+                    }
+
+                    infoBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        togglePao();
                     });
+
+                    // Card click: navigate to link (unless clicking link/iframe/pao/btn)
+                    if (primaryHref) {
+                        card.addEventListener('click', function (e) {
+                            if (e.target.closest('.pao-info-btn')) return;
+                            if (e.target.closest('.pao')) return;
+                            if (e.target.closest('a')) return;
+                            if (e.target.closest('iframe')) return;
+                            if (card.classList.contains('pao-open')) { togglePao(false); return; }
+                            window.open(primaryHref, primaryTarget);
+                        });
+                    }
 
                     // Keyboard
                     card.setAttribute('tabindex', '0');
                     card.addEventListener('keydown', function (e) {
-                        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.toggle('pao-open'); }
-                        if (e.key === 'Escape') card.classList.remove('pao-open');
+                        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePao(); }
+                        if (e.key === 'Escape') togglePao(false);
                     });
                 });
             }
@@ -3000,6 +3245,7 @@
             // ----- SKILLS MAP -----
             var SVG_NS = 'http://www.w3.org/2000/svg';
             var smHighlight = null;
+            var lockedSkill = null;
             var smNodes = [], smEdgeEls = [], smProjEls = [], smSkillEls = [];
 
             function buildSkillsMap() {
@@ -3161,12 +3407,35 @@
                     skillG.appendChild(g);
                     smSkillEls.push({ el: g, id: sn.id, node: sn });
 
-                    g.addEventListener('mouseenter', function () { highlightSkill(sn.id); showTooltip(sn, projNodes); });
-                    g.addEventListener('mouseleave', function () { clearHighlight(); hideTooltip(); });
-                    g.addEventListener('keydown', function (e) {
-                        if (e.key === 'Enter' || e.key === ' ') { highlightSkill(sn.id); showTooltip(sn, projNodes); }
-                        if (e.key === 'Escape') { clearHighlight(); hideTooltip(); }
-                    });
+                    (function (sid, snNode) {
+                        g.addEventListener('mouseenter', function () {
+                            if (!lockedSkill) { highlightSkill(sid); showTooltip(snNode, projNodes); }
+                        });
+                        g.addEventListener('mouseleave', function () {
+                            if (!lockedSkill) { clearHighlight(); hideTooltip(); }
+                        });
+                        g.addEventListener('click', function () {
+                            if (lockedSkill === sid) {
+                                lockedSkill = null;
+                                g.classList.remove('sm-node-locked');
+                                clearHighlight(); clearLockBubbles(); hideTooltip();
+                            } else {
+                                if (lockedSkill) {
+                                    var prev = smSkillEls.find(function (s) { return s.id === lockedSkill; });
+                                    if (prev) prev.el.classList.remove('sm-node-locked');
+                                }
+                                lockedSkill = sid;
+                                g.classList.add('sm-node-locked');
+                                highlightSkill(sid);
+                                showLockBubbles(sid, projNodes);
+                                hideTooltip();
+                            }
+                        });
+                        g.addEventListener('keydown', function (e) {
+                            if (e.key === 'Enter' || e.key === ' ') g.dispatchEvent(new MouseEvent('click'));
+                            if (e.key === 'Escape') { lockedSkill = null; g.classList.remove('sm-node-locked'); clearHighlight(); clearLockBubbles(); hideTooltip(); }
+                        });
+                    }(sn.id, sn));
                 });
 
                 // Project nodes
@@ -3184,13 +3453,9 @@
                     circ.setAttribute('stroke', 'rgba(255,255,255,0.35)'); circ.setAttribute('stroke-width', '1');
                     g.appendChild(circ);
 
-                    // Short label
-                    var short = pn.title.split(' \u2014 ')[0];
-                    var words = short.split(' ');
-                    var maxW = 3;
-                    var line1 = words.slice(0, maxW).join(' ');
-                    var line2 = words.length > maxW ? words.slice(maxW, maxW + 3).join(' ') : '';
-
+                    // Company / sub-project label
+                    var line1 = pn.mapLabel || pn.company;
+                    var line2 = pn.mapSub || '';
                     var isBottom = pn.y > CY + 30, isTop = pn.y < CY - 30;
                     var baseY = isBottom ? pn.y + pn.r + 12 : isTop ? pn.y - pn.r - (line2 ? 14 : 5) : pn.y + 3;
 
@@ -3198,9 +3463,10 @@
                         var t = document.createElementNS(SVG_NS, 'text');
                         t.setAttribute('x', pn.x); t.setAttribute('y', baseY + li * 10);
                         t.setAttribute('text-anchor', 'middle');
-                        t.setAttribute('font-size', '8'); t.setAttribute('font-weight', '500');
+                        t.setAttribute('font-size', li === 0 ? '8.5' : '7.5');
+                        t.setAttribute('font-weight', li === 0 ? '600' : '400');
                         t.setAttribute('font-family', 'Inter, sans-serif');
-                        t.setAttribute('fill', 'rgba(255,255,255,0.45)');
+                        t.setAttribute('fill', li === 0 ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.35)');
                         t.textContent = ln;
                         g.appendChild(t);
                     });
@@ -3208,16 +3474,24 @@
                     projG.appendChild(g);
                     smProjEls.push({ el: g, node: pn, idx: pi });
 
-                    g.addEventListener('mouseenter', function () { highlightProj(pi); showProjTooltip(pn); });
-                    g.addEventListener('mouseleave', function () { clearHighlight(); hideTooltip(); });
-                    g.addEventListener('keydown', function (e) {
-                        if (e.key === 'Enter' || e.key === ' ') { highlightProj(pi); showProjTooltip(pn); }
-                        if (e.key === 'Escape') { clearHighlight(); hideTooltip(); }
-                    });
-                    g.addEventListener('click', function () { scrollToCard(pn.title); });
+                    (function (projNode, projIdx) {
+                        g.addEventListener('mouseenter', function () {
+                            if (!lockedSkill) { highlightProj(projIdx); showProjTooltip(projNode); }
+                        });
+                        g.addEventListener('mouseleave', function () {
+                            if (!lockedSkill) { clearHighlight(); hideTooltip(); }
+                        });
+                        g.addEventListener('click', function () { scrollToCard(projNode.title); });
+                        g.addEventListener('keydown', function (e) {
+                            if (e.key === 'Enter' || e.key === ' ') scrollToCard(projNode.title);
+                            if (e.key === 'Escape') { clearHighlight(); hideTooltip(); }
+                        });
+                    }(pn, pi));
                 });
 
-                svg.addEventListener('mouseleave', function () { clearHighlight(); hideTooltip(); });
+                svg.addEventListener('mouseleave', function () {
+                    if (!lockedSkill) { clearHighlight(); hideTooltip(); }
+                });
                 wrap.appendChild(svg);
 
                 // Animate in
@@ -3265,6 +3539,38 @@
                 smEdgeEls.forEach(function (e) { e.setAttribute('stroke-opacity', '0.18'); });
                 smSkillEls.forEach(function (s) { s.el.style.opacity = '1'; });
                 smProjEls.forEach(function (p) { p.el.style.opacity = '1'; });
+            }
+
+            function showLockBubbles(sid, projNodes) {
+                clearLockBubbles();
+                var wrap = document.getElementById('skills-map-svg-wrap');
+                var svg  = document.getElementById('skills-map-svg');
+                if (!wrap || !svg) return;
+                var vb = svg.getAttribute('viewBox').split(' ').map(Number);
+                var scaleX = wrap.clientWidth / (vb[2] || 1);
+                var scaleY = (wrap.clientHeight || wrap.clientWidth * 0.58) / (vb[3] || 1);
+
+                projNodes.forEach(function (pn) {
+                    if (pn.skills.indexOf(sid) === -1) return;
+                    var note = pn.skillNotes && pn.skillNotes[sid];
+                    if (!note) return;
+                    var div = document.createElement('div');
+                    div.className = 'sm-lock-bubble';
+                    div.innerHTML = '<strong>' + (pn.mapLabel || pn.company) + '</strong>' + note;
+                    var px = pn.x * scaleX, py = pn.y * scaleY;
+                    var left = px + pn.r * scaleX + 6;
+                    var top  = py - 30;
+                    if (left + 155 > wrap.clientWidth) left = px - 155 - pn.r * scaleX - 6;
+                    if (top < 4) top = 4;
+                    if (top + 90 > wrap.clientHeight) top = wrap.clientHeight - 94;
+                    div.style.left = left + 'px'; div.style.top = top + 'px';
+                    wrap.appendChild(div);
+                });
+            }
+
+            function clearLockBubbles() {
+                var wrap = document.getElementById('skills-map-svg-wrap');
+                if (wrap) wrap.querySelectorAll('.sm-lock-bubble').forEach(function (el) { el.remove(); });
             }
 
             var tooltip = null;
@@ -3325,6 +3631,321 @@
 
             injectOverlays();
             initViewToggle();
+        })();
+
+        // ===== KPI DASHBOARD =====
+        (function() {
+            var KPI_DATA = [
+                {
+                    value: '$1.8M+', label: 'Business Value Delivered',
+                    definition: 'Total estimated financial value generated through cost reduction, productivity gains, and revenue-enabling data products across all roles.',
+                    calculation: 'Sum of documented cost savings, hours saved × labor rates, and value-enabling analytics products deployed to production.',
+                    inclusions: 'Equipment lifecycle savings ($15k+), automation ROI from Power BI dashboards replacing manual reporting at Takeda, satellite scheduling efficiency, Chewy workspace optimization.',
+                    exclusions: 'Unquantified long-term organizational value; commercially sensitive revenue figures from government AI deployments.',
+                    confidence: 72,
+                },
+                {
+                    value: '11,000+', label: 'Annual Hours Saved',
+                    definition: 'Estimated hours freed annually from manual processes, repetitive reporting, and inefficient workflows across teams supported.',
+                    calculation: 'Manual process hours × team size × annual frequency, estimated from scope of dashboards, scheduling automation, and computer vision tools deployed.',
+                    inclusions: 'Power BI dashboards replacing manual cross-functional reporting at Takeda; satellite scheduling automation; CCTV analytics removing manual video review across 8 deployments.',
+                    exclusions: 'Overhead for adoption and maintenance; hours saved by indirect or downstream users.',
+                    confidence: 65,
+                },
+                {
+                    value: '11M+', label: 'Records Modeled',
+                    definition: 'Volume of data records processed, modeled, or made queryable through pipelines, schemas, and analytics products built or contributed to.',
+                    calculation: 'Estimated row counts across Databricks/SQL pipelines at Takeda manufacturing, CCTV event streams across 8 global deployments, and satellite scheduling datasets.',
+                    inclusions: 'Manufacturing KPI pipelines (Takeda), CCTV event data across 8 global sites, satellite contact scheduling windows.',
+                    exclusions: 'Transient intermediate pipeline records not persisted; data outside direct engineering scope.',
+                    confidence: 60,
+                },
+                {
+                    value: '65+', label: 'Data Products Shipped',
+                    definition: 'Count of dashboards, reports, tools, models, specs, and data-driven deliverables shipped to end users or stakeholders.',
+                    calculation: 'Enumeration of Power BI reports, analysis documents, wireframes, algorithm outputs, knowledge base modules, and workflow tools delivered across all roles.',
+                    inclusions: 'Takeda Power BI dashboards, Chewy study reports, satellite algorithm deliverables, SPOT wireframes, economic analyses, Electric Boat knowledge base modules.',
+                    exclusions: 'Draft or internal working documents not formally delivered to stakeholders.',
+                    confidence: 80,
+                },
+                {
+                    value: '20+', label: 'People Coached',
+                    definition: 'Individuals directly trained, mentored, or developed through formal programs, field leadership, or community of practice facilitation.',
+                    calculation: 'Direct count: 15 employees trained in Canadian wilderness programs + Takeda data visualization community of practice members + junior team support across roles.',
+                    inclusions: 'Wilderness education program (15 direct trainees), Takeda data visualization community of practice, junior guide mentoring, cross-functional analytics enablement.',
+                    exclusions: 'Indirect organizational learning, conference or presentation audiences.',
+                    confidence: 88,
+                },
+                {
+                    value: '6', label: 'Regions Worked Across',
+                    subtitle: 'USA · Singapore · Malaysia · Vietnam · Canada · Hawaii',
+                    definition: 'Distinct geographic regions where Tyler has had direct, in-person or embedded operational responsibility.',
+                    calculation: 'Direct enumeration of deployment and primary work locations across full career history.',
+                    inclusions: 'Los Angeles CA (Takeda, Chewy), Groton CT (Electric Boat / General Dynamics), Singapore + Malaysia + Vietnam (SaaS AI deployments), Canada (wilderness expeditions), Hawaii (Aerospace Corporation satellite work).',
+                    exclusions: 'Conference travel or brief visits without sustained operational involvement.',
+                    confidence: 95,
+                },
+            ];
+
+            function buildKpiDashboard() {
+                var grid = document.getElementById('kpi-grid');
+                if (!grid) return;
+                KPI_DATA.forEach(function(kpi) {
+                    var tile = document.createElement('div');
+                    tile.className = 'kpi-tile';
+                    var subtitleHtml = kpi.subtitle ? '<div class="kpi-subtitle">' + kpi.subtitle + '</div>' : '';
+                    var confPct = kpi.confidence + '%';
+                    tile.innerHTML =
+                        '<button class="kpi-info-btn" aria-label="About this KPI"><i class="fas fa-info"></i></button>' +
+                        '<div class="kpi-value">' + kpi.value + '</div>' +
+                        '<div class="kpi-label">' + kpi.label + '</div>' +
+                        subtitleHtml +
+                        '<div class="kpi-panel">' +
+                            '<div class="kpi-panel-title">' + kpi.value + ' ' + kpi.label + '</div>' +
+                            '<div class="kpi-panel-row"><div class="kpi-panel-key">Definition</div><div class="kpi-panel-val">' + kpi.definition + '</div></div>' +
+                            '<div class="kpi-panel-row"><div class="kpi-panel-key">Calculation</div><div class="kpi-panel-val">' + kpi.calculation + '</div></div>' +
+                            '<div class="kpi-panel-row"><div class="kpi-panel-key">Inclusions</div><div class="kpi-panel-val">' + kpi.inclusions + '</div></div>' +
+                            '<div class="kpi-panel-row"><div class="kpi-panel-key">Exclusions</div><div class="kpi-panel-val">' + kpi.exclusions + '</div></div>' +
+                            '<div class="kpi-confidence">' +
+                                '<span class="kpi-conf-label">Confidence</span>' +
+                                '<div class="kpi-conf-bar"><div class="kpi-conf-fill" style="width:' + confPct + '"></div></div>' +
+                                '<span class="kpi-conf-pct">' + confPct + '</span>' +
+                            '</div>' +
+                        '</div>';
+                    var btn = tile.querySelector('.kpi-info-btn');
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        var isOpen = tile.classList.toggle('kpi-open');
+                        document.querySelectorAll('.kpi-tile.kpi-open').forEach(function(t) { if (t !== tile) t.classList.remove('kpi-open'); });
+                    });
+                    // Click outside panel to close
+                    tile.addEventListener('click', function(e) {
+                        if (!e.target.closest('.kpi-panel') && !e.target.closest('.kpi-info-btn')) tile.classList.remove('kpi-open');
+                    });
+                    grid.appendChild(tile);
+                });
+            }
+            buildKpiDashboard();
+        })();
+
+        // ===== CATAPULT OPTIMIZATION LAB =====
+        (function() {
+            var canvas = document.getElementById('catapult-canvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+
+            function getParams() {
+                return {
+                    rotation:  parseFloat(document.getElementById('cat-rotation').value),
+                    bendb:     parseFloat(document.getElementById('cat-bendb').value),
+                    tension:   parseFloat(document.getElementById('cat-tension').value),
+                    pin:       parseFloat(document.getElementById('cat-pin').value),
+                    cup:       parseFloat(document.getElementById('cat-cup').value),
+                    pullback:  parseFloat(document.getElementById('cat-pullback').value),
+                    mode:      document.getElementById('cat-mode').value,
+                };
+            }
+
+            function updateLabels(p) {
+                document.getElementById('lbl-rotation').textContent = p.rotation + '°';
+                document.getElementById('lbl-bendb').textContent = p.bendb;
+                document.getElementById('lbl-tension').textContent = p.tension;
+                document.getElementById('lbl-pin').textContent = p.pin;
+                document.getElementById('lbl-cup').textContent = p.cup;
+                document.getElementById('lbl-pullback').textContent = p.pullback + '°';
+            }
+
+            function simulate(p) {
+                // Physics model: simplified trebuchet/catapult ballistics
+                var efficiency = (p.tension / 100) * (p.bendb / 100) * 0.85 + 0.15;
+                var launchAngle = p.rotation * (Math.PI / 180);
+                var releaseBonus = Math.sin((p.pullback - 60) * Math.PI / 180) * 0.3 + 0.7;
+                var pinFactor = 0.6 + (p.pin / 100) * 0.6;
+                var cupFactor = 0.7 + ((50 - Math.abs(p.cup - 50)) / 50) * 0.3;
+                var v0 = efficiency * releaseBonus * pinFactor * cupFactor * 28;
+                var g = 9.8;
+                var vx = v0 * Math.cos(launchAngle);
+                var vy = v0 * Math.sin(launchAngle);
+                var distance = (v0 * v0 * Math.sin(2 * launchAngle)) / g;
+                var height = (vy * vy) / (2 * g);
+                var hangTime = (2 * vy) / g;
+                var variability = Math.round((1 - efficiency * cupFactor) * 100) / 10;
+                return { distance: Math.round(distance * 10) / 10, height: Math.round(height * 10) / 10, hangTime: Math.round(hangTime * 10) / 10, variability: variability, v0: Math.round(v0 * 10) / 10 };
+            }
+
+            function drawTrajectory(p, result) {
+                var W = canvas.width, H = canvas.height;
+                ctx.clearRect(0, 0, W, H);
+                // Ground
+                ctx.fillStyle = 'rgba(255,255,255,0.04)';
+                ctx.fillRect(0, H - 20, W, 20);
+                ctx.strokeStyle = 'rgba(0,255,135,0.2)';
+                ctx.setLineDash([]);
+                ctx.beginPath(); ctx.moveTo(0, H - 20); ctx.lineTo(W, H - 20); ctx.stroke();
+
+                // Catapult sketch
+                ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+                ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.moveTo(20, H - 20); ctx.lineTo(20, H - 44); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(14, H - 44); ctx.lineTo(26, H - 44); ctx.stroke();
+
+                // Trajectory arc
+                var launchAngle = p.rotation * (Math.PI / 180);
+                var v0 = result.v0;
+                var g = 9.8;
+                var totalT = result.hangTime;
+                if (totalT <= 0) return;
+                var maxX = result.distance;
+                var scaleX = (W - 40) / Math.max(maxX, 1);
+                var maxH = result.height;
+                var scaleY = (H - 40) / Math.max(maxH * 1.3, 1);
+
+                ctx.beginPath();
+                ctx.strokeStyle = 'rgba(0,255,135,0.8)';
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([]);
+                var steps = 60;
+                for (var i = 0; i <= steps; i++) {
+                    var t = (i / steps) * totalT;
+                    var x = v0 * Math.cos(launchAngle) * t;
+                    var y = v0 * Math.sin(launchAngle) * t - 0.5 * g * t * t;
+                    var px = 24 + x * scaleX;
+                    var py = (H - 22) - y * scaleY;
+                    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+                }
+                ctx.stroke();
+
+                // Landing dot
+                ctx.fillStyle = 'rgba(0,255,135,0.9)';
+                ctx.beginPath(); ctx.arc(24 + maxX * scaleX, H - 22, 4, 0, Math.PI * 2); ctx.fill();
+
+                // Mode annotation
+                var modeLabels = { distance: 'Optimizing: Distance', height: 'Optimizing: Height', accuracy: 'Optimizing: Accuracy', variability: 'Optimizing: Consistency' };
+                ctx.fillStyle = 'rgba(0,255,135,0.45)';
+                ctx.font = '9px Inter, sans-serif';
+                ctx.fillText(modeLabels[p.mode] || '', 6, 12);
+            }
+
+            function renderMetrics(result) {
+                var el = document.getElementById('cat-metrics');
+                if (!el) return;
+                el.innerHTML =
+                    '<div class="cat-metric"><div class="cat-metric-label">Distance</div><div class="cat-metric-val">' + result.distance + 'm</div></div>' +
+                    '<div class="cat-metric"><div class="cat-metric-label">Max Height</div><div class="cat-metric-val">' + result.height + 'm</div></div>' +
+                    '<div class="cat-metric"><div class="cat-metric-label">Hang Time</div><div class="cat-metric-val">' + result.hangTime + 's</div></div>' +
+                    '<div class="cat-metric"><div class="cat-metric-label">Variability</div><div class="cat-metric-val">±' + result.variability + '%</div></div>';
+            }
+
+            function catRun() {
+                var p = getParams();
+                updateLabels(p);
+                var result = simulate(p);
+                drawTrajectory(p, result);
+                renderMetrics(result);
+            }
+
+            function catAutoOptimize() {
+                var mode = document.getElementById('cat-mode').value;
+                var best = null, bestScore = -Infinity;
+                var searchSpace = [
+                    [10,80],[0,100],[10,100],[20,80],[20,80],[30,150]
+                ];
+                for (var iter = 0; iter < 800; iter++) {
+                    var rotation = searchSpace[0][0] + Math.random() * (searchSpace[0][1] - searchSpace[0][0]);
+                    var bendb    = searchSpace[1][0] + Math.random() * (searchSpace[1][1] - searchSpace[1][0]);
+                    var tension  = searchSpace[2][0] + Math.random() * (searchSpace[2][1] - searchSpace[2][0]);
+                    var pin      = searchSpace[3][0] + Math.random() * (searchSpace[3][1] - searchSpace[3][0]);
+                    var cup      = searchSpace[4][0] + Math.random() * (searchSpace[4][1] - searchSpace[4][0]);
+                    var pullback = searchSpace[5][0] + Math.random() * (searchSpace[5][1] - searchSpace[5][0]);
+                    var p = { rotation: rotation, bendb: bendb, tension: tension, pin: pin, cup: cup, pullback: pullback, mode: mode };
+                    var r = simulate(p);
+                    var score;
+                    if (mode === 'distance')    score = r.distance;
+                    else if (mode === 'height') score = r.height;
+                    else if (mode === 'accuracy') score = -r.variability - Math.abs(r.distance - 30);
+                    else score = -r.variability;
+                    if (score > bestScore) { bestScore = score; best = p; }
+                }
+                if (!best) return;
+                document.getElementById('cat-rotation').value = Math.round(best.rotation);
+                document.getElementById('cat-bendb').value = Math.round(best.bendb);
+                document.getElementById('cat-tension').value = Math.round(best.tension);
+                document.getElementById('cat-pin').value = Math.round(best.pin);
+                document.getElementById('cat-cup').value = Math.round(best.cup);
+                document.getElementById('cat-pullback').value = Math.round(best.pullback);
+                catRun();
+            }
+
+            window.catRun = catRun;
+            window.catAutoOptimize = catAutoOptimize;
+            catRun();
+        })();
+
+        // ===== SITE ASSISTANT =====
+        (function() {
+            var isOpen = false;
+            var KPI_SUMMARY = '$1.8M+ business value, 11,000+ annual hours saved, 11M+ records modeled, 65+ data products shipped, 20+ people coached, 6 regions worked across.';
+            var PROJECT_SUMMARY = 'Takeda (Power BI dashboards, Databricks pipelines), Chewy dual monitor ergonomics study, Electric Boat nuclear submarine process engineering (Six Sigma Black Belt), AI Program Manager at a Singaporean SaaS startup (8 global CV deployments), Senior Thesis satellite scheduling algorithm (Aerospace Corp), SPOT iOS fitness app, Senior/Junior wilderness expedition guide, Business Case Analysis, Industrial Design CAD projects.';
+            var SKILL_SUMMARY = 'Analytics, Data Visualization (Power BI, Tableau), Operations, AI/ML (Computer Vision, Databricks ML), Leadership, Product Management, Optimization (Six Sigma), Programming (Python, SQL), CAD (SolidWorks, AutoCAD).';
+
+            var KB = [
+                { keys: ['kpi','metric','impact','value','delivered','hours','records','products','coached','regions'], answer: 'Tyler\'s key KPIs: ' + KPI_SUMMARY + ' Click the ℹ on each KPI tile for full definitions and confidence levels.' },
+                { keys: ['project','work','portfolio','built','shipped'], answer: 'Tyler\'s featured projects: ' + PROJECT_SUMMARY },
+                { keys: ['skill','skills','tech','stack','language','tool'], answer: 'Top skills: ' + SKILL_SUMMARY },
+                { keys: ['industry','industries','sector','pharma','defense','saas','ecommerce','aerospace','education'], answer: 'Tyler has worked across pharma (Takeda), defense (Electric Boat/General Dynamics), SaaS (Singaporean startup), e-commerce (Chewy), aerospace (Aerospace Corp), and education/outdoor leadership (Canadian wilderness).' },
+                { keys: ['region','country','location','where','global','international','singapore','malaysia','vietnam','canada','hawaii'], answer: 'Tyler has worked across 6 regions: USA (LA + Groton CT), Singapore, Malaysia, Vietnam, Canada, and Hawaii — spanning commercial, government, and outdoor leadership programs.' },
+                { keys: ['contact','email','phone','hire','reach','talk','connect','schedule','calendly'], answer: 'You can reach Tyler at tylervincent@alumni.usc.edu, call (469) 243-0073, or schedule time via the Calendly widget (bottom-right). Also connect on LinkedIn!' },
+                { keys: ['takeda','pharma','pharmaceutical','power bi','databricks'], answer: 'At Takeda Pharmaceuticals, Tyler built enterprise Power BI dashboards and Databricks/SQL pipelines for manufacturing analytics, and led the data visualization community of practice.' },
+                { keys: ['chewy','dual monitor','ergonomics','ecommerce'], answer: 'At Chewy, Tyler designed and ran a controlled ergonomics study on dual monitor setups, producing quantified workspace optimization recommendations.' },
+                { keys: ['electric boat','general dynamics','submarine','six sigma'], answer: 'At Electric Boat (General Dynamics), Tyler held a security clearance, applied Six Sigma Black Belt methods, built work center layouts, and developed a knowledge base for nuclear submarine production.' },
+                { keys: ['saas','startup','ai program','computer vision','cctv','deployment'], answer: 'As AI Program Manager at a Singaporean SaaS startup, Tyler led Computer Vision programs across 8 international deployments for commercial and government clients on 3+ continents.' },
+                { keys: ['satellite','aerospace','algorithm','optimization','raspberry pi'], answer: 'For his senior thesis at USC (partnered with Aerospace Corporation), Tyler built a Python optimization algorithm scheduling 100+ military satellite contacts, deployed on a Raspberry Pi.' },
+                { keys: ['education','usc','university','degree'], answer: 'Tyler is a USC (University of Southern California) alumnus.' },
+            ];
+
+            function saAnswer(q) {
+                var lower = q.toLowerCase();
+                for (var i = 0; i < KB.length; i++) {
+                    for (var j = 0; j < KB[i].keys.length; j++) {
+                        if (lower.indexOf(KB[i].keys[j]) !== -1) return KB[i].answer;
+                    }
+                }
+                return 'I\'m not sure about that one! Try asking about Tyler\'s projects, skills, KPIs, regions, or contact info. Or scroll down — everything\'s on the page!';
+            }
+
+            function saAddMsg(text, cls) {
+                var msgs = document.getElementById('sa-messages');
+                if (!msgs) return;
+                var div = document.createElement('div');
+                div.className = 'sa-msg ' + cls;
+                div.textContent = text;
+                msgs.appendChild(div);
+                msgs.scrollTop = msgs.scrollHeight;
+            }
+
+            window.toggleAssistant = function() {
+                isOpen = !isOpen;
+                var panel = document.getElementById('sa-panel');
+                if (panel) panel.classList.toggle('open', isOpen);
+                if (isOpen) {
+                    var inp = document.getElementById('sa-input');
+                    if (inp) setTimeout(function() { inp.focus(); }, 120);
+                }
+            };
+
+            window.saAsk = function(q) {
+                saAddMsg(q, 'user');
+                setTimeout(function() { saAddMsg(saAnswer(q), 'bot'); }, 320);
+            };
+
+            window.saSubmit = function() {
+                var inp = document.getElementById('sa-input');
+                if (!inp) return;
+                var q = inp.value.trim();
+                if (!q) return;
+                inp.value = '';
+                saAsk(q);
+            };
         })();
 
     </script>
