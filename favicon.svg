@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges">
+  <!-- ear tips -->
+  <rect x="2" y="0" width="2" height="1" fill="#111"/>
+  <rect x="12" y="0" width="2" height="1" fill="#111"/>
+  <!-- ears -->
+  <rect x="1" y="1" width="4" height="2" fill="#111"/>
+  <rect x="11" y="1" width="4" height="2" fill="#111"/>
+  <!-- inner ear accent -->
+  <rect x="2" y="1" width="2" height="1" fill="#2a2a2a"/>
+  <rect x="12" y="1" width="2" height="1" fill="#2a2a2a"/>
+  <!-- head (rows 3–8) -->
+  <rect x="1" y="3" width="14" height="6" fill="#111"/>
+  <!-- head taper bottom -->
+  <rect x="2" y="9"  width="12" height="1" fill="#111"/>
+  <rect x="3" y="10" width="10" height="1" fill="#111"/>
+  <!-- eyes (site accent green) -->
+  <rect x="3" y="4" width="2" height="2" fill="#00ff87"/>
+  <rect x="11" y="4" width="2" height="2" fill="#00ff87"/>
+  <!-- pupil slits -->
+  <rect x="4" y="4" width="1" height="2" fill="#005533"/>
+  <rect x="12" y="4" width="1" height="2" fill="#005533"/>
+  <!-- nose -->
+  <rect x="7" y="7" width="2" height="1" fill="#ff99bb"/>
+  <!-- mouth -->
+  <rect x="6" y="8" width="1" height="1" fill="#1e1e1e"/>
+  <rect x="9" y="8" width="1" height="1" fill="#1e1e1e"/>
+</svg>
