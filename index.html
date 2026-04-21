@@ -1922,29 +1922,6 @@
                 <button class="window-restore-btn" id="weather-restore" onclick="windowRestore('weather-window')"><i class="fas fa-undo"></i> Restore Weather</button>
             </div>
 
-            <!-- Mario Runner Game -->
-            <div class="window reveal reveal-delay-2" id="frogger-window">
-                <div class="window-bar">
-                    <div class="window-dots">
-                        <span class="window-dot red" title="Close" onclick="windowAction(this, 'close')"><i class="fas fa-times"></i></span>
-                        <span class="window-dot yellow" title="Minimize" onclick="windowAction(this, 'minimize')"><i class="fas fa-minus"></i></span>
-                        <span class="window-dot green" title="Maximize" onclick="windowAction(this, 'maximize')"><i class="fas fa-expand"></i></span>
-                    </div>
-                    <span class="window-bar-title">mario-runner.exe</span>
-                </div>
-                <div class="window-content">
-                    <div class="frogger-hud">
-                        <span>SCORE: <span id="frog-score">0</span></span>
-                        <span>BEST: <span id="frog-best">0</span></span>
-                    </div>
-                    <canvas id="frogger-canvas" class="frogger-canvas" width="360" height="260"></canvas>
-                    <div class="frogger-controls">
-                        <button class="frog-btn" id="mario-jump-btn" aria-label="Jump">⬆ JUMP</button>
-                    </div>
-                    <div class="frogger-hint">Space / ↑ / W or button to jump · don't fall!</div>
-                </div>
-                <button class="window-restore-btn" id="frogger-restore" onclick="windowRestore('frogger-window')"><i class="fas fa-undo"></i> Restore Mario</button>
-            </div>
 
         </div>
 
@@ -2094,14 +2071,14 @@
             <div class="footer-col">
                 <h4>Connect</h4>
                 <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank">LinkedIn</a>
-                <a href="https://tylerv11.github.io/" target="_blank">GitHub</a>
+                <a href="https://github.com/tylerv11/" target="_blank">GitHub</a>
             </div>
         </div>
         <div class="footer-bottom">
             <span class="footer-copyright">&copy; Tyler Vincent. All rights reserved.</span>
             <div class="footer-socials">
                 <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://tylerv11.github.io/" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://github.com/tylerv11/" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
             </div>
         </div>
     </footer>
@@ -2566,8 +2543,8 @@
             render(false);
         })();
 
-        // ===== MARIO ENDLESS RUNNER =====
-        (function() {
+        // ===== MARIO ENDLESS RUNNER (removed) =====
+        if (false) { (function() {
             const canvas = document.getElementById('frogger-canvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
@@ -2758,7 +2735,7 @@
 
             reset();
             loop();
-        })();
+        })(); } // end removed mario block
 
         // ===== HEADING MATRIX BACKGROUNDS =====
         (function() {
