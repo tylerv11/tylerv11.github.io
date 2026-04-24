@@ -205,6 +205,8 @@
             gap: 8px;
         }
 
+        .course-tags { position: relative; }
+
         .course-tag {
             padding: 6px 14px;
             background: rgba(255,255,255,0.03);
@@ -213,13 +215,65 @@
             font-size: 0.75rem;
             color: var(--text-muted);
             font-weight: 500;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: default;
         }
 
         .course-tag:hover {
-            background: rgba(255,255,255,0.06);
+            background: rgba(0,255,135,0.08);
+            color: var(--accent);
+            border-color: rgba(0,255,135,0.35);
+            box-shadow: 0 0 12px rgba(0,255,135,0.15), 0 0 24px rgba(0,255,135,0.06);
+            transform: translateY(-1px);
+        }
+
+        .skill-tooltip {
+            position: absolute;
+            right: calc(100% + 14px);
+            top: 50%;
+            transform: translateY(-50%) scale(0.94);
+            background: #111;
+            border: 1px solid rgba(0,255,135,0.25);
+            border-radius: 12px;
+            padding: 12px 16px;
+            width: 220px;
+            font-size: 0.75rem;
             color: var(--text-secondary);
-            border-color: var(--border-hover);
+            line-height: 1.55;
+            box-shadow: 0 0 30px rgba(0,255,135,0.1), 0 8px 32px rgba(0,0,0,0.5);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.22s ease, transform 0.22s ease;
+            z-index: 100;
+            white-space: normal;
+        }
+
+        .skill-tooltip::after {
+            content: '';
+            position: absolute;
+            right: -7px;
+            top: 50%;
+            transform: translateY(-50%) rotate(45deg);
+            width: 12px;
+            height: 12px;
+            background: #111;
+            border-top: 1px solid rgba(0,255,135,0.25);
+            border-right: 1px solid rgba(0,255,135,0.25);
+        }
+
+        .skill-tooltip strong {
+            display: block;
+            color: var(--accent);
+            font-size: 0.7rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .course-tag:hover .skill-tooltip {
+            opacity: 1;
+            transform: translateY(-50%) scale(1);
         }
 
         /* Footer */
@@ -353,6 +407,15 @@
                     <span class="timeline-year">2023</span>
                     <h3>Harvard University, HarvardX</h3>
                     <h4>PH125.8x Data Science: Machine Learning</h4>
+                    <div class="course-tags">
+                        <span class="course-tag">Classification<span class="skill-tooltip"><strong>Classification</strong>Trained models to predict categorical outcomes using decision trees, random forests, and SVMs — foundational for fraud detection, churn prediction, and labeling pipelines.</span></span>
+                        <span class="course-tag">Cross-Validation<span class="skill-tooltip"><strong>Cross-Validation</strong>K-fold and LOOCV techniques to reliably estimate model performance and prevent overfitting — critical for shipping trustworthy ML products.</span></span>
+                        <span class="course-tag">Regularization<span class="skill-tooltip"><strong>Regularization</strong>Ridge, Lasso, and Elastic Net methods to reduce model complexity and improve generalization on unseen data.</span></span>
+                        <span class="course-tag">Matrix Factorization<span class="skill-tooltip"><strong>Matrix Factorization</strong>Collaborative filtering and SVD for recommendation systems — the same techniques powering Netflix, Spotify, and Amazon suggestions.</span></span>
+                        <span class="course-tag">Ensemble Methods<span class="skill-tooltip"><strong>Ensemble Methods</strong>Boosting and bagging approaches (Random Forests, XGBoost-style) that combine weak learners into highly accurate predictors.</span></span>
+                        <span class="course-tag">Recommendation Systems<span class="skill-tooltip"><strong>Recommendation Systems</strong>Built end-to-end pipelines using user-item interaction data to surface personalized content at scale.</span></span>
+                        <span class="course-tag">Naive Bayes<span class="skill-tooltip"><strong>Naive Bayes</strong>Probabilistic classifier used for text classification, spam detection, and rapid baseline modeling with high interpretability.</span></span>
+                    </div>
                 </div>
             </div>
 
@@ -363,6 +426,14 @@
                     <span class="timeline-year">2022</span>
                     <h3>Chewy, Inc</h3>
                     <h4>Organizational Change Management</h4>
+                    <div class="course-tags">
+                        <span class="course-tag">ADKAR Model<span class="skill-tooltip"><strong>ADKAR Model</strong>Prosci's Awareness → Desire → Knowledge → Ability → Reinforcement framework — the industry standard for structuring any large-scale organizational transition.</span></span>
+                        <span class="course-tag">Stakeholder Mapping<span class="skill-tooltip"><strong>Stakeholder Mapping</strong>Identifying and categorizing impacted groups by influence and resistance level to tailor communication and reduce friction during rollouts.</span></span>
+                        <span class="course-tag">Change Readiness<span class="skill-tooltip"><strong>Change Readiness</strong>Assessing organizational capacity and culture fit before deploying change — reduces failure rates by surfacing blockers early.</span></span>
+                        <span class="course-tag">Resistance Management<span class="skill-tooltip"><strong>Resistance Management</strong>Structured techniques to diagnose root causes of resistance and convert skeptics into advocates — essential in enterprise tech adoption.</span></span>
+                        <span class="course-tag">Communication Planning<span class="skill-tooltip"><strong>Communication Planning</strong>Designing targeted messaging cadences across stakeholder tiers to ensure no group is left behind during transformation.</span></span>
+                        <span class="course-tag">Training Design<span class="skill-tooltip"><strong>Training Design</strong>Building role-based training programs that close skill gaps and accelerate adoption of new tools, processes, or systems.</span></span>
+                    </div>
                 </div>
             </div>
 
@@ -373,6 +444,15 @@
                     <span class="timeline-year">2021</span>
                     <h3>General Dynamics Electric Boat</h3>
                     <h4>Lean Six Sigma Black Belt</h4>
+                    <div class="course-tags">
+                        <span class="course-tag">DMAIC<span class="skill-tooltip"><strong>DMAIC</strong>Define → Measure → Analyze → Improve → Control. The Six Sigma backbone for eliminating defects and reducing variation in any process.</span></span>
+                        <span class="course-tag">Statistical Process Control<span class="skill-tooltip"><strong>Statistical Process Control</strong>Using control charts (X-bar, R, P-charts) to monitor process stability and catch out-of-control signals before they become defects.</span></span>
+                        <span class="course-tag">Hypothesis Testing<span class="skill-tooltip"><strong>Hypothesis Testing</strong>T-tests, ANOVA, and chi-square methods to make data-driven decisions with statistical confidence — separating signal from noise.</span></span>
+                        <span class="course-tag">Value Stream Mapping<span class="skill-tooltip"><strong>Value Stream Mapping</strong>Visualizing end-to-end process flow to identify waste, bottlenecks, and non-value-add steps — the entry point to every Lean transformation.</span></span>
+                        <span class="course-tag">Root Cause Analysis<span class="skill-tooltip"><strong>Root Cause Analysis</strong>Fishbone diagrams and 5-Why methodology to drill past symptoms and permanently resolve the source of recurring problems.</span></span>
+                        <span class="course-tag">Kaizen<span class="skill-tooltip"><strong>Kaizen</strong>Continuous improvement philosophy applied in rapid-improvement events — delivering measurable gains in days, not quarters.</span></span>
+                        <span class="course-tag">Process Capability<span class="skill-tooltip"><strong>Process Capability</strong>Cp and Cpk analysis to quantify how well a process meets specification limits and where tolerance headroom exists.</span></span>
+                    </div>
                 </div>
             </div>
 
@@ -384,20 +464,20 @@
                     <h3>University of Southern California</h3>
                     <h4>B.S. Industrial &amp; Systems Engineering</h4>
                     <div class="course-tags">
-                        <span class="course-tag">Six Sigma &amp; Lean Ops</span>
-                        <span class="course-tag">Database Systems</span>
-                        <span class="course-tag">Engineering Statistics</span>
-                        <span class="course-tag">Probability Concepts</span>
-                        <span class="course-tag">Discrete Simulation</span>
-                        <span class="course-tag">Operations Research</span>
-                        <span class="course-tag">HCI Design</span>
-                        <span class="course-tag">Facilities Design</span>
-                        <span class="course-tag">Project Management</span>
-                        <span class="course-tag">Statics</span>
-                        <span class="course-tag">Multimedia Production</span>
-                        <span class="course-tag">Materials Science</span>
-                        <span class="course-tag">MATLAB</span>
-                        <span class="course-tag">Calculus III</span>
+                        <span class="course-tag">Six Sigma &amp; Lean Ops<span class="skill-tooltip"><strong>Six Sigma & Lean Ops</strong>Reduction of process variation and waste elimination — the foundation of every engineering improvement project in manufacturing and beyond.</span></span>
+                        <span class="course-tag">Database Systems<span class="skill-tooltip"><strong>Database Systems</strong>Relational modeling, SQL, normalization, and query optimization — the backbone of every data pipeline and analytics platform.</span></span>
+                        <span class="course-tag">Engineering Statistics<span class="skill-tooltip"><strong>Engineering Statistics</strong>Regression, ANOVA, and reliability analysis applied to real engineering problems — turns raw data into decisions.</span></span>
+                        <span class="course-tag">Probability Concepts<span class="skill-tooltip"><strong>Probability Concepts</strong>Stochastic modeling and probabilistic reasoning — prerequisite for machine learning, simulation, and risk analysis.</span></span>
+                        <span class="course-tag">Discrete Simulation<span class="skill-tooltip"><strong>Discrete Simulation</strong>Modeling complex systems with randomness (queues, factories, networks) to predict behavior before committing resources.</span></span>
+                        <span class="course-tag">Operations Research<span class="skill-tooltip"><strong>Operations Research</strong>Linear programming and optimization models to allocate resources, minimize cost, and maximize throughput in constrained systems.</span></span>
+                        <span class="course-tag">HCI Design<span class="skill-tooltip"><strong>HCI Design</strong>Human-Computer Interaction — designing interfaces around user mental models, reducing friction and cognitive load in products.</span></span>
+                        <span class="course-tag">Facilities Design<span class="skill-tooltip"><strong>Facilities Design</strong>Layout optimization, flow analysis, and ergonomics for physical workspaces — applies directly to supply chain and manufacturing ops.</span></span>
+                        <span class="course-tag">Project Management<span class="skill-tooltip"><strong>Project Management</strong>Scheduling, risk management, and stakeholder coordination across complex multi-phase engineering projects.</span></span>
+                        <span class="course-tag">Statics<span class="skill-tooltip"><strong>Statics</strong>Force analysis and structural equilibrium — builds the engineering intuition for physical system constraints and load paths.</span></span>
+                        <span class="course-tag">Multimedia Production<span class="skill-tooltip"><strong>Multimedia Production</strong>Technical storytelling through video, audio, and visual media — sharpens the ability to communicate complex ideas simply.</span></span>
+                        <span class="course-tag">Materials Science<span class="skill-tooltip"><strong>Materials Science</strong>Properties, failure modes, and selection criteria of metals, polymers, and composites — critical context for manufacturing and defense work.</span></span>
+                        <span class="course-tag">MATLAB<span class="skill-tooltip"><strong>MATLAB</strong>Numerical computing, signal processing, and algorithm prototyping — bridging engineering math to executable code.</span></span>
+                        <span class="course-tag">Calculus III<span class="skill-tooltip"><strong>Calculus III</strong>Multivariable calculus, gradients, and vector fields — the mathematical foundation behind optimization algorithms in ML and engineering.</span></span>
                     </div>
                 </div>
             </div>
@@ -410,9 +490,9 @@
                     <h3>National University of Singapore</h3>
                     <h4>Industrial Engineering Management Exchange Program</h4>
                     <div class="course-tags">
-                        <span class="course-tag">IE2100 - Probability Models</span>
-                        <span class="course-tag">IE2140 - Engineering Economy</span>
-                        <span class="course-tag">GES1031 - Culture &amp; Communication</span>
+                        <span class="course-tag">IE2100 - Probability Models<span class="skill-tooltip"><strong>IE2100 – Probability Models</strong>Markov chains, queuing theory, and stochastic processes — modeling real-world uncertainty in manufacturing, logistics, and tech systems.</span></span>
+                        <span class="course-tag">IE2140 - Engineering Economy<span class="skill-tooltip"><strong>IE2140 – Engineering Economy</strong>NPV, IRR, and cost-benefit analysis for engineering decisions — translates technical trade-offs into business value.</span></span>
+                        <span class="course-tag">GES1031 - Culture &amp; Communication<span class="skill-tooltip"><strong>GES1031 – Culture & Communication</strong>Cross-cultural communication in international business settings — directly applied during 8 global AI deployments in Singapore.</span></span>
                     </div>
                 </div>
             </div>
@@ -439,12 +519,12 @@
                     <h4>Data Visualization &amp; Analytics Engineer</h4>
                     <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.7;margin-bottom:16px;">Built and owned full data products end-to-end. Developed a "North Star" mindset for scalable, governed data systems — designing, deploying, and iterating on analytics solutions across enterprise manufacturing teams.</p>
                     <div class="course-tags">
-                        <span class="course-tag">Power BI</span>
-                        <span class="course-tag">Databricks</span>
-                        <span class="course-tag">SQL</span>
-                        <span class="course-tag">Enterprise Analytics</span>
-                        <span class="course-tag">Data Governance</span>
-                        <span class="course-tag">Cross-functional Stakeholders</span>
+                        <span class="course-tag">Power BI<span class="skill-tooltip"><strong>Power BI</strong>End-to-end report and dashboard development with DAX, data modeling, and Row-Level Security — serving decision-makers across enterprise manufacturing.</span></span>
+                        <span class="course-tag">Databricks<span class="skill-tooltip"><strong>Databricks</strong>Unified lakehouse platform for large-scale data engineering and ML — processing and transforming data at a scale traditional BI tools can't handle.</span></span>
+                        <span class="course-tag">SQL<span class="skill-tooltip"><strong>SQL</strong>Complex query writing, window functions, CTEs, and query optimization across cloud data warehouses — the universal language of data.</span></span>
+                        <span class="course-tag">Enterprise Analytics<span class="skill-tooltip"><strong>Enterprise Analytics</strong>Designing analytics products that serve thousands of users across business units, with governance, documentation, and reliability built in.</span></span>
+                        <span class="course-tag">Data Governance<span class="skill-tooltip"><strong>Data Governance</strong>Defining ownership, access controls, and data quality standards that make analytics trustworthy at scale in regulated industries like pharma.</span></span>
+                        <span class="course-tag">Cross-functional Stakeholders<span class="skill-tooltip"><strong>Cross-functional Stakeholders</strong>Translating requirements from scientists, engineers, and executives into analytics products — bridging technical and business fluency.</span></span>
                     </div>
                 </div>
             </div>
@@ -458,11 +538,11 @@
                     <h4>E-commerce &amp; Technology</h4>
                     <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.7;margin-bottom:16px;">Operated in a fast-paced, data-driven environment focused on rapid deployment and iteration. Deepened skills in user behavior analysis, engagement metrics, and agile execution — with a strong focus on change management.</p>
                     <div class="course-tags">
-                        <span class="course-tag">Agile Execution</span>
-                        <span class="course-tag">Change Management</span>
-                        <span class="course-tag">User Behavior</span>
-                        <span class="course-tag">Rapid Iteration</span>
-                        <span class="course-tag">E-commerce Analytics</span>
+                        <span class="course-tag">Agile Execution<span class="skill-tooltip"><strong>Agile Execution</strong>Sprint-based delivery, backlog prioritization, and retrospective-driven improvement — shipping value faster with less waste.</span></span>
+                        <span class="course-tag">Change Management<span class="skill-tooltip"><strong>Change Management</strong>Leading adoption of new systems and processes across resistant teams — combining data on behavior with structured communication plans.</span></span>
+                        <span class="course-tag">User Behavior<span class="skill-tooltip"><strong>User Behavior</strong>Analyzing clickstream, funnel, and cohort data to understand how customers actually use a product — not how we assume they do.</span></span>
+                        <span class="course-tag">Rapid Iteration<span class="skill-tooltip"><strong>Rapid Iteration</strong>Build → measure → learn loops in fast-paced e-commerce — shipping experiments quickly and using data to decide what sticks.</span></span>
+                        <span class="course-tag">E-commerce Analytics<span class="skill-tooltip"><strong>E-commerce Analytics</strong>Revenue attribution, conversion optimization, and customer lifetime value modeling across a high-volume direct-to-consumer platform.</span></span>
                     </div>
                 </div>
             </div>
@@ -476,11 +556,11 @@
                     <h4>Process Engineer II — Electric Boat / General Dynamics</h4>
                     <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.7;margin-bottom:16px;">Learned validation frameworks and structured system design in a classified manufacturing environment. Gained hands-on shop-floor experience and practical deployment constraints working alongside welders and machinists.</p>
                     <div class="course-tags">
-                        <span class="course-tag">Validation Frameworks</span>
-                        <span class="course-tag">System Design</span>
-                        <span class="course-tag">Manufacturing Ops</span>
-                        <span class="course-tag">Six Sigma Black Belt</span>
-                        <span class="course-tag">Security Clearance</span>
+                        <span class="course-tag">Validation Frameworks<span class="skill-tooltip"><strong>Validation Frameworks</strong>IQ/OQ/PQ and structured qualification protocols used in defense and regulated manufacturing to prove systems meet requirements before deployment.</span></span>
+                        <span class="course-tag">System Design<span class="skill-tooltip"><strong>System Design</strong>Defining functional requirements, interfaces, and failure modes for complex engineered systems in a classified manufacturing environment.</span></span>
+                        <span class="course-tag">Manufacturing Ops<span class="skill-tooltip"><strong>Manufacturing Ops</strong>Hands-on shop-floor experience alongside welders and machinists — bridging the gap between engineering specs and physical production reality.</span></span>
+                        <span class="course-tag">Six Sigma Black Belt<span class="skill-tooltip"><strong>Six Sigma Black Belt</strong>Leading cross-functional improvement projects using full DMAIC methodology — reducing defects and process variation at the highest certification level.</span></span>
+                        <span class="course-tag">Security Clearance<span class="skill-tooltip"><strong>Security Clearance</strong>Experience operating within classified environments with strict access controls, documentation standards, and information security protocols.</span></span>
                     </div>
                 </div>
             </div>
@@ -494,11 +574,11 @@
                     <h4>Algorithm Development &amp; Early Career Engineering</h4>
                     <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.7;margin-bottom:16px;">Built a foundation in Python and programming logic through real-world algorithm development. Developed structured problem-solving and algorithmic thinking applied to satellite scheduling optimization on a Raspberry Pi.</p>
                     <div class="course-tags">
-                        <span class="course-tag">Python</span>
-                        <span class="course-tag">Algorithm Design</span>
-                        <span class="course-tag">Optimization</span>
-                        <span class="course-tag">Problem-Solving</span>
-                        <span class="course-tag">Raspberry Pi</span>
+                        <span class="course-tag">Python<span class="skill-tooltip"><strong>Python</strong>First production Python experience — writing clean, functional code for real scheduling algorithms, not just tutorials. The foundation for all ML and data work that followed.</span></span>
+                        <span class="course-tag">Algorithm Design<span class="skill-tooltip"><strong>Algorithm Design</strong>Structuring computational problems into efficient, scalable solutions — heuristics, search strategies, and constraint handling applied to satellite scheduling.</span></span>
+                        <span class="course-tag">Optimization<span class="skill-tooltip"><strong>Optimization</strong>Combinatorial and scheduling optimization under real-world constraints — maximizing satellite pass coverage with limited ground station windows.</span></span>
+                        <span class="course-tag">Problem-Solving<span class="skill-tooltip"><strong>Problem-Solving</strong>Decomposing ambiguous aerospace engineering challenges into tractable computational problems with measurable outcomes.</span></span>
+                        <span class="course-tag">Raspberry Pi<span class="skill-tooltip"><strong>Raspberry Pi</strong>Deployed production algorithm on embedded hardware — learning resource-constrained computing, edge deployment, and low-level system integration.</span></span>
                     </div>
                 </div>
             </div>
@@ -512,11 +592,11 @@
                     <h4>AI Program Manager — Computer Vision</h4>
                     <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.7;margin-bottom:16px;">Managed and collaborated with AI/data teams in a high-growth, innovation-focused environment. Learned the real-world limitations and capabilities of AI systems while overseeing 8 international deployments for commercial and government clients.</p>
                     <div class="course-tags">
-                        <span class="course-tag">Computer Vision</span>
-                        <span class="course-tag">AI Systems</span>
-                        <span class="course-tag">International Deployments</span>
-                        <span class="course-tag">Team Management</span>
-                        <span class="course-tag">Government Clients</span>
+                        <span class="course-tag">Computer Vision<span class="skill-tooltip"><strong>Computer Vision</strong>Object detection, image classification, and real-time video inference — managing the full deployment lifecycle of CV systems for commercial and government clients.</span></span>
+                        <span class="course-tag">AI Systems<span class="skill-tooltip"><strong>AI Systems</strong>Understanding real-world limitations of AI — model drift, edge cases, and the gap between demo performance and production reliability.</span></span>
+                        <span class="course-tag">International Deployments<span class="skill-tooltip"><strong>International Deployments</strong>Overseeing 8 cross-border AI rollouts — navigating regulatory, cultural, and infrastructure differences across Asia-Pacific markets.</span></span>
+                        <span class="course-tag">Team Management<span class="skill-tooltip"><strong>Team Management</strong>Leading distributed AI and data teams across time zones — aligning engineers, clients, and stakeholders toward shared delivery milestones.</span></span>
+                        <span class="course-tag">Government Clients<span class="skill-tooltip"><strong>Government Clients</strong>Delivering AI products under strict compliance requirements, long procurement cycles, and mission-critical reliability standards.</span></span>
                     </div>
                 </div>
             </div>
