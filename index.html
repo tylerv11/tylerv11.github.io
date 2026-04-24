@@ -1453,121 +1453,162 @@
         .pao-info-btn:hover { background: rgba(0,255,135,0.15); border-color: rgba(0,255,135,0.4); color: var(--accent); }
         .project-card.pao-open .pao-info-btn { background: rgba(0,255,135,0.2); border-color: rgba(0,255,135,0.55); color: var(--accent); }
 
-        /* ===== MOBILE SKILLS BUBBLE MAP ===== */
+        /* ===== MOBILE SKILLS DIAL ===== */
         .mobile-skills-bubble-map { display: none; }
         .mobile-skills-bubble-map.show { display: block; }
 
         @media (max-width: 768px) {
             .mobile-skills-bubble-map {
                 width: 100%;
-                max-width: 100%;
-                margin: 0;
-                padding: 40px 20px;
+                padding: 24px 16px 32px;
             }
+
+            .dial-hint {
+                text-align: center;
+                font-size: 0.7rem;
+                color: var(--text-muted);
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                margin-bottom: 16px;
+            }
+
+            .dial-hint span { color: var(--accent); }
 
             .bubble-container {
                 position: relative;
-                width: 280px;
-                height: 280px;
-                margin: 0 auto 40px;
-                background: radial-gradient(circle at 30% 30%, rgba(0,255,135,0.04), transparent 70%);
+                width: 300px;
+                height: 300px;
+                margin: 0 auto 28px;
+            }
+
+            .dial-center {
+                position: absolute;
+                top: 50%; left: 50%;
+                transform: translate(-50%, -50%);
+                width: 72px; height: 72px;
                 border-radius: 50%;
-                overflow: hidden;
+                background: rgba(0,255,135,0.05);
+                border: 1px solid rgba(0,255,135,0.2);
+                display: flex; align-items: center; justify-content: center;
+                font-size: 0.6rem; font-weight: 700;
+                color: var(--text-muted);
+                letter-spacing: 1.5px;
+                text-transform: uppercase;
+                text-align: center;
+                z-index: 2;
+            }
+
+            .dial-ring {
+                position: absolute;
+                top: 50%; left: 50%;
+                width: 220px; height: 220px;
+                border-radius: 50%;
+                border: 1px dashed rgba(0,255,135,0.1);
+                transform: translate(-50%, -50%);
+            }
+
+            .dial-ring-outer {
+                position: absolute;
+                top: 50%; left: 50%;
+                width: 290px; height: 290px;
+                border-radius: 50%;
+                border: 1px solid rgba(255,255,255,0.03);
+                transform: translate(-50%, -50%);
             }
 
             .bubble {
                 position: absolute;
-                width: 60px;
-                height: 60px;
+                width: 58px; height: 58px;
                 border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                display: flex; align-items: center; justify-content: center;
                 cursor: pointer;
-                background: rgba(0,255,135,0.08);
-                border: 1.5px solid rgba(0,255,135,0.25);
-                transition: all 0.3s ease;
-                font-size: 0.65rem;
-                font-weight: 600;
+                background: rgba(0,255,135,0.07);
+                border: 1.5px solid rgba(0,255,135,0.22);
+                font-size: 0.58rem;
+                font-weight: 700;
                 color: var(--accent);
                 text-align: center;
-                padding: 8px;
+                padding: 7px;
                 user-select: none;
-                animation: spiralRotate 20s linear infinite;
+                line-height: 1.2;
+                will-change: transform;
+                transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
             }
 
-            .bubble:hover {
-                background: rgba(0,255,135,0.15);
-                border-color: rgba(0,255,135,0.4);
-                box-shadow: 0 0 15px rgba(0,255,135,0.2);
-                transform: scale(1.1);
+            .bubble.active {
+                background: rgba(0,255,135,0.18);
+                border-color: rgba(0,255,135,0.65);
+                box-shadow: 0 0 20px rgba(0,255,135,0.3), 0 0 40px rgba(0,255,135,0.1);
+                z-index: 5;
             }
 
-            .bubble.selected {
-                background: rgba(0,255,135,0.2);
-                border-color: rgba(0,255,135,0.6);
-                box-shadow: 0 0 25px rgba(0,255,135,0.35);
-                animation: none;
-                z-index: 10;
-            }
-
-            @keyframes spiralRotate {
-                from { transform: rotate(0deg); }
-                to { transform: rotate(360deg); }
-            }
-
-            .jobs-popup {
+            .skill-info-card {
                 background: var(--bg-card);
-                border: 1px solid rgba(0,255,135,0.25);
+                border: 1px solid rgba(0,255,135,0.22);
                 border-radius: 16px;
                 padding: 20px;
-                margin-top: 20px;
-                animation: slideUp 0.35s ease;
+                animation: cardIn 0.3s cubic-bezier(0.16,1,0.3,1) both;
             }
 
-            @keyframes slideUp {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
+            @keyframes cardIn {
+                from { opacity: 0; transform: translateY(14px); }
+                to   { opacity: 1; transform: translateY(0); }
             }
 
-            .job-item {
-                padding: 12px 0;
-                border-bottom: 1px solid rgba(255,255,255,0.04);
-            }
-
-            .job-item:last-child {
-                border-bottom: none;
-            }
-
-            .job-title {
-                font-size: 0.85rem;
-                font-weight: 600;
-                color: var(--text-primary);
-                margin-bottom: 3px;
-            }
-
-            .job-company {
-                font-size: 0.75rem;
-                color: var(--text-secondary);
-            }
-
-            .close-jobs-btn {
-                display: inline-block;
-                margin-top: 12px;
-                padding: 8px 16px;
-                background: rgba(0,255,135,0.1);
-                border: 1px solid rgba(0,255,135,0.25);
-                border-radius: 8px;
+            .skill-info-title {
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: 1.1rem;
+                font-weight: 700;
                 color: var(--accent);
-                font-size: 0.7rem;
-                font-weight: 600;
+                margin-bottom: 4px;
+            }
+
+            .skill-info-desc {
+                font-size: 0.78rem;
+                color: var(--text-secondary);
+                line-height: 1.6;
+                margin-bottom: 14px;
+            }
+
+            .skill-info-label {
+                font-size: 0.65rem;
+                font-weight: 700;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                color: var(--text-muted);
+                margin-bottom: 10px;
+            }
+
+            .skill-job-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .skill-job-tag {
+                padding: 6px 13px;
+                background: rgba(255,255,255,0.04);
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 100px;
+                font-size: 0.72rem;
+                font-weight: 500;
+                color: var(--text-secondary);
                 cursor: pointer;
                 transition: all 0.2s ease;
+                -webkit-tap-highlight-color: transparent;
             }
 
-            .close-jobs-btn:active {
-                background: rgba(0,255,135,0.15);
-                border-color: rgba(0,255,135,0.4);
+            .skill-job-tag:active {
+                background: rgba(0,255,135,0.1);
+                border-color: rgba(0,255,135,0.3);
+                color: var(--accent);
+            }
+
+            .dial-tap-hint {
+                text-align: center;
+                font-size: 0.65rem;
+                color: var(--text-muted);
+                margin-top: 14px;
             }
         }
 
@@ -1801,13 +1842,15 @@
             </div>
         </div>
 
-        <!-- Mobile Skills Bubble Map -->
+        <!-- Mobile Skills Dial -->
         <div class="mobile-skills-bubble-map" id="mobile-skills-bubble-map">
-            <div class="bubble-container" id="bubble-container"></div>
-            <div class="jobs-popup" id="jobs-popup" style="display: none;">
-                <div id="jobs-list"></div>
-                <button class="close-jobs-btn" onclick="document.getElementById('mobile-skills-bubble-map').classList.remove('show')">Close</button>
+            <p class="dial-hint">Tap a skill to explore <span>→</span></p>
+            <div class="bubble-container" id="bubble-container">
+                <div class="dial-ring-outer"></div>
+                <div class="dial-ring"></div>
+                <div class="dial-center" id="dial-center">Skills</div>
             </div>
+            <div id="skill-info-card-wrap"></div>
         </div>
 
         <!-- Skills Map (hidden by default) -->
@@ -4169,99 +4212,169 @@
             };
         })();
 
-        // ===== MOBILE SKILLS BUBBLE MAP =====
+        // ===== MOBILE SKILLS ROTATING DIAL =====
         (function() {
             if (window.innerWidth > 768) return;
 
-            var skillsData = [
-                { skill: 'Power BI', jobs: ['Takeda', 'Chewy', 'Aerospace Corp'] },
-                { skill: 'Python', jobs: ['Aerospace Corp', 'Takeda', 'SaaS Startup'] },
-                { skill: 'SQL', jobs: ['Takeda', 'Chewy', 'Aerospace Corp'] },
-                { skill: 'Data Science', jobs: ['Takeda', 'Harvard ML', 'SaaS Startup'] },
-                { skill: 'Computer Vision', jobs: ['SaaS Startup', 'Aerospace Corp'] },
-                { skill: 'Six Sigma', jobs: ['Electric Boat', 'Takeda', 'Aerospace Corp'] },
-                { skill: 'Machine Learning', jobs: ['SaaS Startup', 'Harvard ML', 'Takeda'] },
-                { skill: 'Team Management', jobs: ['SaaS Startup', 'Chewy', 'Aerospace Corp'] },
-                { skill: 'Algorithm Design', jobs: ['Aerospace Corp', 'Takeda', 'SaaS Startup'] },
-                { skill: 'Change Management', jobs: ['Chewy', 'Takeda', 'Electric Boat'] },
-                { skill: 'Optimization', jobs: ['Aerospace Corp', 'Takeda', 'Electric Boat'] },
-                { skill: 'Process Engineering', jobs: ['Electric Boat', 'Takeda', 'Aerospace Corp'] }
+            var skills = [
+                {
+                    skill: 'Power BI',
+                    desc: 'Built semantic models, DAX measures, and Row-Level Security for enterprise dashboards across manufacturing and e-commerce.',
+                    jobs: ['Takeda Pharmaceuticals', 'Chewy, Inc', 'Aerospace Corp']
+                },
+                {
+                    skill: 'Python',
+                    desc: 'Algorithm development, optimization, and data pipelines. First used in production to schedule 100+ satellites on a Raspberry Pi.',
+                    jobs: ['Aerospace Corporation', 'Takeda Pharmaceuticals', 'SaaS Startup']
+                },
+                {
+                    skill: 'SQL',
+                    desc: 'Complex queries, CTEs, window functions, and Delta Lake transformations powering production analytics at scale.',
+                    jobs: ['Takeda Pharmaceuticals', 'Chewy, Inc', 'Aerospace Corp']
+                },
+                {
+                    skill: 'Data Science',
+                    desc: 'Classification, regression, and distribution-driven analysis. Replaced average-based KPIs with P20/P50/P90 metrics.',
+                    jobs: ['Takeda Pharmaceuticals', 'HarvardX ML', 'SaaS Startup']
+                },
+                {
+                    skill: 'Computer Vision',
+                    desc: 'Led CV deployment using object recognition on CCTV footage for real-time analytics across 8 international sites.',
+                    jobs: ['SaaS Startup (SG)', 'Aerospace Corporation']
+                },
+                {
+                    skill: 'Six Sigma',
+                    desc: 'Black Belt certified. DMAIC methodology applied to nuclear submarine manufacturing and pharma process improvement.',
+                    jobs: ['Electric Boat / GD', 'Takeda Pharmaceuticals']
+                },
+                {
+                    skill: 'Machine Learning',
+                    desc: 'Ensemble methods, classification, matrix factorization and recommendation systems via Harvard PH125.8x.',
+                    jobs: ['HarvardX (Harvard)', 'SaaS Startup (SG)', 'Takeda Pharmaceuticals']
+                },
+                {
+                    skill: 'Optimization',
+                    desc: 'Satellite scheduling (Traveling Salesman variant), Lean value stream mapping, and critical-path SQL modeling.',
+                    jobs: ['Aerospace Corporation', 'Takeda Pharmaceuticals', 'Electric Boat / GD']
+                },
+                {
+                    skill: 'Databricks',
+                    desc: 'Lakehouse pipelines using Delta Lake for governed, scalable data engineering feeding Power BI semantic layers.',
+                    jobs: ['Takeda Pharmaceuticals']
+                },
+                {
+                    skill: 'Change Management',
+                    desc: 'ADKAR-based adoption programs for enterprise tech rollouts. Stakeholder mapping, resistance planning, training design.',
+                    jobs: ['Chewy, Inc', 'Takeda Pharmaceuticals', 'Electric Boat / GD']
+                },
+                {
+                    skill: 'Leadership',
+                    desc: 'Led distributed engineering teams, guided 37+ people in data skills, and commanded wilderness expeditions in Canada with no backup.',
+                    jobs: ['SaaS Startup (SG)', 'Chewy, Inc', 'Wilderness Guide']
+                },
+                {
+                    skill: 'Process Eng.',
+                    desc: 'Shop-floor process redesign in classified defense manufacturing. Work center layouts, knowledge bases, validation frameworks.',
+                    jobs: ['Electric Boat / GD', 'Takeda Pharmaceuticals', 'Aerospace Corp']
+                }
             ];
 
             var container = document.getElementById('bubble-container');
-            if (!container) return;
+            var cardWrap = document.getElementById('skill-info-card-wrap');
+            var dialCenter = document.getElementById('dial-center');
+            if (!container || !cardWrap) return;
 
-            // Create bubbles in spiral positions
-            skillsData.forEach(function(item, index) {
-                var bubble = document.createElement('div');
-                bubble.className = 'bubble';
-                bubble.textContent = item.skill;
+            var cx = 150, cy = 150, radius = 110;
+            var totalSkills = skills.length;
+            var dialAngle = 0;
+            var speed = 0.004;
+            var paused = false;
+            var rafId = null;
+            var activeIndex = -1;
+            var bubbleEls = [];
 
-                // Calculate spiral position
-                var angle = (index / skillsData.length) * Math.PI * 2;
-                var radius = 90;
-                var x = 140 + Math.cos(angle) * radius;
-                var y = 140 + Math.sin(angle) * radius;
+            // Build bubbles
+            skills.forEach(function(item, i) {
+                var el = document.createElement('div');
+                el.className = 'bubble';
+                el.textContent = item.skill;
+                container.appendChild(el);
+                bubbleEls.push(el);
 
-                bubble.style.left = x + 'px';
-                bubble.style.top = y + 'px';
-                bubble.style.animation = 'spiralRotate 20s linear infinite';
-                bubble.style.animationDelay = (index * 0.1) + 's';
-
-                bubble.addEventListener('click', function(e) {
+                el.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    handleBubbleClick(item);
+                    selectBubble(i);
                 });
-
-                container.appendChild(bubble);
             });
 
-            function handleBubbleClick(item) {
-                // Remove previous selection
-                document.querySelectorAll('.bubble').forEach(function(b) {
-                    b.classList.remove('selected');
+            function positionBubbles() {
+                bubbleEls.forEach(function(el, i) {
+                    var a = dialAngle + (i / totalSkills) * Math.PI * 2;
+                    var x = cx + Math.cos(a) * radius;
+                    var y = cy + Math.sin(a) * radius;
+                    el.style.left  = (x - 29) + 'px';
+                    el.style.top   = (y - 29) + 'px';
+                    // Counter-rotate text so it stays upright
+                    el.style.transform = 'rotate(' + (-dialAngle * (180 / Math.PI)) + 'deg)';
                 });
-
-                // Mark this bubble as selected
-                event.target.classList.add('selected');
-
-                // Show jobs
-                var jobsList = document.getElementById('jobs-list');
-                jobsList.innerHTML = '<strong style="display: block; color: var(--accent); margin-bottom: 12px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">' + item.skill + ' Used In:</strong>';
-
-                item.jobs.forEach(function(job) {
-                    var jobItem = document.createElement('div');
-                    jobItem.className = 'job-item';
-                    jobItem.innerHTML = '<div class="job-title">' + job + '</div>';
-                    jobsList.appendChild(jobItem);
-                });
-
-                document.getElementById('jobs-popup').style.display = 'block';
             }
 
-            // Show mobile bubble map when skills button is clicked
+            function tick() {
+                if (!paused) dialAngle += speed;
+                positionBubbles();
+                rafId = requestAnimationFrame(tick);
+            }
+
+            tick();
+
+            function selectBubble(idx) {
+                if (activeIndex === idx) {
+                    // Deselect — resume
+                    activeIndex = -1;
+                    paused = false;
+                    dialCenter.textContent = 'Skills';
+                    bubbleEls.forEach(function(b) { b.classList.remove('active'); });
+                    cardWrap.innerHTML = '';
+                    return;
+                }
+
+                activeIndex = idx;
+                paused = true;
+                var item = skills[idx];
+
+                bubbleEls.forEach(function(b, i) {
+                    b.classList.toggle('active', i === idx);
+                });
+
+                dialCenter.textContent = item.skill;
+
+                // Build info card
+                var tagsHtml = item.jobs.map(function(j) {
+                    return '<span class="skill-job-tag">' + j + '</span>';
+                }).join('');
+
+                cardWrap.innerHTML =
+                    '<div class="skill-info-card">' +
+                        '<div class="skill-info-title">' + item.skill + '</div>' +
+                        '<div class="skill-info-desc">' + item.desc + '</div>' +
+                        '<div class="skill-info-label">Used At</div>' +
+                        '<div class="skill-job-tags">' + tagsHtml + '</div>' +
+                        '<div class="dial-tap-hint">Tap the skill again to resume</div>' +
+                    '</div>';
+            }
+
+            // Show/hide dial when Skills Map button toggled
             var skillsBtn = document.getElementById('btn-skills');
             if (skillsBtn) {
                 skillsBtn.addEventListener('click', function() {
                     var mapSection = document.getElementById('skills-map-section');
-                    var bubbleMap = document.getElementById('mobile-skills-bubble-map');
-                    var pgw = document.getElementById('pgw');
-
-                    if (mapSection && mapSection.classList.contains('active')) {
-                        bubbleMap.classList.add('show');
-                        if (pgw) pgw.style.display = 'none';
-                    }
+                    var bubbleMap  = document.getElementById('mobile-skills-bubble-map');
+                    var pgw        = document.getElementById('pgw');
+                    var isActive   = mapSection && mapSection.classList.contains('active');
+                    bubbleMap.classList.toggle('show', isActive);
+                    if (pgw) pgw.style.display = isActive ? 'none' : 'block';
                 });
             }
-
-            // Reset when Skills Map is closed
-            window.addEventListener('click', function(e) {
-                if (e.target.id === 'btn-skills' && document.getElementById('skills-map-section').classList.contains('active')) {
-                    document.getElementById('mobile-skills-bubble-map').classList.remove('show');
-                    var pgw = document.getElementById('pgw');
-                    if (pgw) pgw.style.display = 'block';
-                }
-            });
         })();
 
     </script>
