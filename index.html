@@ -1453,6 +1453,124 @@
         .pao-info-btn:hover { background: rgba(0,255,135,0.15); border-color: rgba(0,255,135,0.4); color: var(--accent); }
         .project-card.pao-open .pao-info-btn { background: rgba(0,255,135,0.2); border-color: rgba(0,255,135,0.55); color: var(--accent); }
 
+        /* ===== MOBILE SKILLS BUBBLE MAP ===== */
+        .mobile-skills-bubble-map { display: none; }
+        .mobile-skills-bubble-map.show { display: block; }
+
+        @media (max-width: 768px) {
+            .mobile-skills-bubble-map {
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                padding: 40px 20px;
+            }
+
+            .bubble-container {
+                position: relative;
+                width: 280px;
+                height: 280px;
+                margin: 0 auto 40px;
+                background: radial-gradient(circle at 30% 30%, rgba(0,255,135,0.04), transparent 70%);
+                border-radius: 50%;
+                overflow: hidden;
+            }
+
+            .bubble {
+                position: absolute;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                background: rgba(0,255,135,0.08);
+                border: 1.5px solid rgba(0,255,135,0.25);
+                transition: all 0.3s ease;
+                font-size: 0.65rem;
+                font-weight: 600;
+                color: var(--accent);
+                text-align: center;
+                padding: 8px;
+                user-select: none;
+                animation: spiralRotate 20s linear infinite;
+            }
+
+            .bubble:hover {
+                background: rgba(0,255,135,0.15);
+                border-color: rgba(0,255,135,0.4);
+                box-shadow: 0 0 15px rgba(0,255,135,0.2);
+                transform: scale(1.1);
+            }
+
+            .bubble.selected {
+                background: rgba(0,255,135,0.2);
+                border-color: rgba(0,255,135,0.6);
+                box-shadow: 0 0 25px rgba(0,255,135,0.35);
+                animation: none;
+                z-index: 10;
+            }
+
+            @keyframes spiralRotate {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+
+            .jobs-popup {
+                background: var(--bg-card);
+                border: 1px solid rgba(0,255,135,0.25);
+                border-radius: 16px;
+                padding: 20px;
+                margin-top: 20px;
+                animation: slideUp 0.35s ease;
+            }
+
+            @keyframes slideUp {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            .job-item {
+                padding: 12px 0;
+                border-bottom: 1px solid rgba(255,255,255,0.04);
+            }
+
+            .job-item:last-child {
+                border-bottom: none;
+            }
+
+            .job-title {
+                font-size: 0.85rem;
+                font-weight: 600;
+                color: var(--text-primary);
+                margin-bottom: 3px;
+            }
+
+            .job-company {
+                font-size: 0.75rem;
+                color: var(--text-secondary);
+            }
+
+            .close-jobs-btn {
+                display: inline-block;
+                margin-top: 12px;
+                padding: 8px 16px;
+                background: rgba(0,255,135,0.1);
+                border: 1px solid rgba(0,255,135,0.25);
+                border-radius: 8px;
+                color: var(--accent);
+                font-size: 0.7rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+
+            .close-jobs-btn:active {
+                background: rgba(0,255,135,0.15);
+                border-color: rgba(0,255,135,0.4);
+            }
+        }
+
         /* ===== SKILLS MAP ===== */
         .skills-map-section { display: none; }
         .skills-map-section.active { display: block; }
@@ -1680,6 +1798,15 @@
                 <button class="view-btn" id="btn-skills" aria-pressed="false">
                     <i class="fas fa-diagram-project"></i> Skills Map
                 </button>
+            </div>
+        </div>
+
+        <!-- Mobile Skills Bubble Map -->
+        <div class="mobile-skills-bubble-map" id="mobile-skills-bubble-map">
+            <div class="bubble-container" id="bubble-container"></div>
+            <div class="jobs-popup" id="jobs-popup" style="display: none;">
+                <div id="jobs-list"></div>
+                <button class="close-jobs-btn" onclick="document.getElementById('mobile-skills-bubble-map').classList.remove('show')">Close</button>
             </div>
         </div>
 
@@ -4034,6 +4161,101 @@
                 inp.value = '';
                 saAsk(q);
             };
+        })();
+
+        // ===== MOBILE SKILLS BUBBLE MAP =====
+        (function() {
+            if (window.innerWidth > 768) return;
+
+            var skillsData = [
+                { skill: 'Power BI', jobs: ['Takeda', 'Chewy', 'Aerospace Corp'] },
+                { skill: 'Python', jobs: ['Aerospace Corp', 'Takeda', 'SaaS Startup'] },
+                { skill: 'SQL', jobs: ['Takeda', 'Chewy', 'Aerospace Corp'] },
+                { skill: 'Data Science', jobs: ['Takeda', 'Harvard ML', 'SaaS Startup'] },
+                { skill: 'Computer Vision', jobs: ['SaaS Startup', 'Aerospace Corp'] },
+                { skill: 'Six Sigma', jobs: ['Electric Boat', 'Takeda', 'Aerospace Corp'] },
+                { skill: 'Machine Learning', jobs: ['SaaS Startup', 'Harvard ML', 'Takeda'] },
+                { skill: 'Team Management', jobs: ['SaaS Startup', 'Chewy', 'Aerospace Corp'] },
+                { skill: 'Algorithm Design', jobs: ['Aerospace Corp', 'Takeda', 'SaaS Startup'] },
+                { skill: 'Change Management', jobs: ['Chewy', 'Takeda', 'Electric Boat'] },
+                { skill: 'Optimization', jobs: ['Aerospace Corp', 'Takeda', 'Electric Boat'] },
+                { skill: 'Process Engineering', jobs: ['Electric Boat', 'Takeda', 'Aerospace Corp'] }
+            ];
+
+            var container = document.getElementById('bubble-container');
+            if (!container) return;
+
+            // Create bubbles in spiral positions
+            skillsData.forEach(function(item, index) {
+                var bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                bubble.textContent = item.skill;
+
+                // Calculate spiral position
+                var angle = (index / skillsData.length) * Math.PI * 2;
+                var radius = 90;
+                var x = 140 + Math.cos(angle) * radius;
+                var y = 140 + Math.sin(angle) * radius;
+
+                bubble.style.left = x + 'px';
+                bubble.style.top = y + 'px';
+                bubble.style.animation = 'spiralRotate 20s linear infinite';
+                bubble.style.animationDelay = (index * 0.1) + 's';
+
+                bubble.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    handleBubbleClick(item);
+                });
+
+                container.appendChild(bubble);
+            });
+
+            function handleBubbleClick(item) {
+                // Remove previous selection
+                document.querySelectorAll('.bubble').forEach(function(b) {
+                    b.classList.remove('selected');
+                });
+
+                // Mark this bubble as selected
+                event.target.classList.add('selected');
+
+                // Show jobs
+                var jobsList = document.getElementById('jobs-list');
+                jobsList.innerHTML = '<strong style="display: block; color: var(--accent); margin-bottom: 12px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">' + item.skill + ' Used In:</strong>';
+
+                item.jobs.forEach(function(job) {
+                    var jobItem = document.createElement('div');
+                    jobItem.className = 'job-item';
+                    jobItem.innerHTML = '<div class="job-title">' + job + '</div>';
+                    jobsList.appendChild(jobItem);
+                });
+
+                document.getElementById('jobs-popup').style.display = 'block';
+            }
+
+            // Show mobile bubble map when skills button is clicked
+            var skillsBtn = document.getElementById('btn-skills');
+            if (skillsBtn) {
+                skillsBtn.addEventListener('click', function() {
+                    var mapSection = document.getElementById('skills-map-section');
+                    var bubbleMap = document.getElementById('mobile-skills-bubble-map');
+                    var pgw = document.getElementById('pgw');
+
+                    if (mapSection && mapSection.classList.contains('active')) {
+                        bubbleMap.classList.add('show');
+                        if (pgw) pgw.style.display = 'none';
+                    }
+                });
+            }
+
+            // Reset when Skills Map is closed
+            window.addEventListener('click', function(e) {
+                if (e.target.id === 'btn-skills' && document.getElementById('skills-map-section').classList.contains('active')) {
+                    document.getElementById('mobile-skills-bubble-map').classList.remove('show');
+                    var pgw = document.getElementById('pgw');
+                    if (pgw) pgw.style.display = 'block';
+                }
+            });
         })();
 
     </script>
