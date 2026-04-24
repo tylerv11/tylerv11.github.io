@@ -262,6 +262,21 @@
             border-right: 1px solid rgba(0,255,135,0.25);
         }
 
+        .skill-tooltip.right-position {
+            right: auto;
+            left: calc(100% + 14px);
+        }
+
+        .skill-tooltip.right-position::after {
+            right: auto;
+            left: -7px;
+            transform: translateY(-50%) rotate(-135deg);
+            border-top: none;
+            border-right: none;
+            border-bottom: 1px solid rgba(0,255,135,0.25);
+            border-left: 1px solid rgba(0,255,135,0.25);
+        }
+
         .skill-tooltip strong {
             display: block;
             color: var(--accent);
@@ -274,6 +289,38 @@
         .course-tag:hover .skill-tooltip {
             opacity: 1;
             transform: translateY(-50%) scale(1);
+        }
+
+        /* Mobile optimization */
+        @media (max-width: 768px) {
+            .skill-tooltip {
+                position: fixed;
+                right: 12px;
+                left: 12px;
+                top: auto;
+                bottom: 80px;
+                width: auto;
+                transform: scale(0.94);
+                max-height: 120px;
+                overflow-y: auto;
+            }
+
+            .skill-tooltip::after {
+                display: none;
+            }
+
+            .skill-tooltip.right-position {
+                left: 12px;
+                right: 12px;
+            }
+
+            .skill-tooltip.right-position::after {
+                display: none;
+            }
+
+            .course-tag:hover .skill-tooltip {
+                transform: scale(1);
+            }
         }
 
         /* Footer */
@@ -763,6 +810,32 @@
                 resize();
                 window.addEventListener('resize', resize);
                 setInterval(draw, 140);
+            });
+        })();
+
+        // ===== TOOLTIP POSITION DETECTOR =====
+        (function() {
+            document.querySelectorAll('.course-tag').forEach(function(tag) {
+                tag.addEventListener('mouseenter', function() {
+                    var tooltip = this.querySelector('.skill-tooltip');
+                    if (!tooltip) return;
+
+                    // Check if we're on mobile
+                    if (window.innerWidth <= 768) return;
+
+                    // Get positions
+                    var rect = this.getBoundingClientRect();
+                    var tooltipWidth = 220;
+                    var padding = 14;
+                    var leftPos = rect.left - tooltipWidth - padding;
+
+                    // If left position would be off-screen, position right instead
+                    if (leftPos < 12) {
+                        tooltip.classList.add('right-position');
+                    } else {
+                        tooltip.classList.remove('right-position');
+                    }
+                });
             });
         })();
     </script>
