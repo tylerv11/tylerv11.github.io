@@ -297,12 +297,13 @@
                 position: fixed;
                 right: 12px;
                 left: 12px;
-                top: auto;
-                bottom: 80px;
+                top: 50%;
+                transform: translateY(-50%) scale(0.94);
                 width: auto;
-                transform: scale(0.94);
-                max-height: 120px;
+                max-height: 70vh;
+                max-width: calc(100vw - 24px);
                 overflow-y: auto;
+                z-index: 1001;
             }
 
             .skill-tooltip::after {
@@ -319,7 +320,7 @@
             }
 
             .course-tag:hover .skill-tooltip {
-                transform: scale(1);
+                transform: translateY(-50%) scale(1);
             }
         }
 
