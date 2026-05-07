@@ -263,7 +263,7 @@ const PortfolioAssistant = (() => {
   }
 
   // ===== MAIN QUERY HANDLER =====
-  async function handleQuery(question) {
+  function handleQuery(question) {
     // 1. Validate input
     const validation = validateInput(question);
     if (!validation.valid) {
@@ -287,9 +287,13 @@ const PortfolioAssistant = (() => {
     // 3. Find answer in knowledge base
     recordQuery();
 
-    let answer = 'Question not found in knowledge base.';
+    let answer = 'I\'m reading from Tyler\'s portfolio knowledge base...';
+
     if (state.kbLoaded) {
       answer = findBestAnswerInKB(question);
+    } else {
+      // KB not loaded yet, provide helpful message
+      answer = 'Still loading Tyler\'s full portfolio data. Please try your question again in a moment.';
     }
 
     return {
