@@ -15,12 +15,6 @@
 
 export default {
   async fetch(request, env) {
-    // Only allow POST requests
-    if (request.method !== 'POST') {
-      return new Response('Method not allowed', { status: 405 });
-    }
-
-    // Check origin is from your portfolio domain
     const origin = request.headers.get('origin');
     const allowedOrigins = [
       'https://tylerv11.github.io',
@@ -28,8 +22,28 @@ export default {
       'http://localhost:8000',
     ];
 
+    const corsHeaders = {
+      'Access-Control-Allow-Origin': allowedOrigins.includes(origin) ? origin : 'https://tylerv11.github.io',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    };
+
+    // Handle CORS preflight requests
+    if (request.method === 'OPTIONS') {
+      return new Response(null, {
+        status: 204,
+        headers: corsHeaders,
+      });
+    }
+
+    // Only allow POST requests
+    if (request.method !== 'POST') {
+      return new Response('Method not allowed', { status: 405, headers: corsHeaders });
+    }
+
+    // Check origin is from your portfolio domain
     if (!allowedOrigins.includes(origin)) {
-      return new Response('CORS not allowed', { status: 403 });
+      return new Response('CORS not allowed', { status: 403, headers: corsHeaders });
     }
 
     // Get API key from environment (not exposed to client)
@@ -38,7 +52,7 @@ export default {
       console.error('OPENROUTER_API_KEY not set in environment');
       return new Response(
         JSON.stringify({ error: { message: 'API key not configured' } }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
+        { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
       );
     }
 
@@ -50,7 +64,7 @@ export default {
       if (!body.model || !body.messages) {
         return new Response(
           JSON.stringify({ error: { message: 'Invalid request: missing model or messages' } }),
-          { status: 400, headers: { 'Content-Type': 'application/json' } }
+          { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
         );
       }
 
@@ -59,7 +73,7 @@ export default {
       if (!allowedModels.includes(body.model)) {
         return new Response(
           JSON.stringify({ error: { message: `Model ${body.model} not allowed` } }),
-          { status: 400, headers: { 'Content-Type': 'application/json' } }
+          { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
         );
       }
 
@@ -83,16 +97,14 @@ export default {
         status: response.status,
         headers: {
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': origin,
-          'Access-Control-Allow-Methods': 'POST',
-          'Access-Control-Allow-Headers': 'Content-Type',
+          ...corsHeaders,
         },
       });
     } catch (error) {
       console.error('Worker error:', error);
       return new Response(
         JSON.stringify({ error: { message: 'Internal server error' } }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
+        { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
       );
     }
   },
