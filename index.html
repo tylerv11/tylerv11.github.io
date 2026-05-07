@@ -2042,16 +2042,175 @@
             flex-shrink: 0;
             margin-top: 1px;
         }
+        /* ===== AGENT CARDS (CLICKABLE) ===== */
+        .agent-cards-grid { display: flex; flex-direction: column; gap: 5px; }
+        .agent-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease;
+            user-select: none;
+        }
+        .agent-card:hover { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.12); }
+        .agent-card.open { border-color: rgba(74,158,255,0.22); background: rgba(74,158,255,0.02); }
+        .agent-card.hub-card.open { border-color: rgba(240,160,80,0.25); background: rgba(240,160,80,0.02); }
+        .agent-card.advisor-card.open { border-color: rgba(0,200,150,0.22); background: rgba(0,200,150,0.02); }
+        .agent-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 18px;
+        }
+        .agent-card-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            min-width: 108px;
+        }
+        .agent-type-badge {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 2px 9px;
+            border-radius: 100px;
+        }
+        .type-hub { background: rgba(240,160,80,0.1); border: 1px solid rgba(240,160,80,0.25); color: #f0a050; }
+        .type-advisor { background: rgba(0,200,150,0.08); border: 1px solid rgba(0,200,150,0.22); color: #00c896; }
+        .type-exec { background: rgba(74,158,255,0.08); border: 1px solid rgba(74,158,255,0.22); color: #6ab0ff; }
+        .agent-card-summary {
+            flex: 1;
+            font-size: 0.81rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+        .agent-card-chevron {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+        .agent-card.open .agent-card-chevron { transform: rotate(180deg); }
+        .agent-card-detail {
+            display: none;
+            padding: 4px 18px 16px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .agent-detail-row {
+            display: grid;
+            grid-template-columns: 110px 1fr;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-size: 0.82rem;
+        }
+        .agent-detail-row:last-child { border-bottom: none; }
+        .agent-detail-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding-top: 2px;
+        }
+        .agent-detail-val { color: var(--text-secondary); line-height: 1.65; }
+        .agent-skill-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+        .agent-skill-tag {
+            padding: 3px 10px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+        /* ===== SECURITY SECTION ===== */
+        .security-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 8px 0;
+        }
+        .security-block {
+            background: rgba(255,50,50,0.03);
+            border: 1px solid rgba(255,80,80,0.12);
+            border-radius: 12px;
+            padding: 20px 22px;
+        }
+        .security-block-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: #ff8080;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .security-block p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        /* ===== DISCORD SECTION ===== */
+        .discord-flow {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            background: rgba(88,101,242,0.06);
+            border: 1px solid rgba(88,101,242,0.18);
+            border-radius: 14px;
+            padding: 20px 24px;
+            overflow-x: auto;
+            margin: 8px 0;
+        }
+        .discord-flow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            min-width: 100px;
+            text-align: center;
+        }
+        .discord-flow-icon {
+            width: 42px; height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+        .discord-flow-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            line-height: 1.3;
+        }
+        .discord-flow-sub {
+            font-size: 0.62rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+        .discord-flow-arrow {
+            color: rgba(255,255,255,0.2);
+            font-size: 1rem;
+            padding: 0 8px;
+            flex-shrink: 0;
+        }
         @media (max-width: 900px) {
             .ai-council-header, .ai-council-body { padding-left: 24px; padding-right: 24px; }
             .ai-council-2col { grid-template-columns: 1fr; }
             .governance-grid { grid-template-columns: repeat(2, 1fr); }
-            .recruiting-grid { grid-template-columns: 1fr; }
+            .security-grid { grid-template-columns: 1fr; }
+            .agent-card-summary { display: none; }
         }
         @media (max-width: 600px) {
             .governance-grid { grid-template-columns: 1fr 1fr; }
-            .agent-table { font-size: 0.76rem; }
-            .agent-table td, .agent-table th { padding: 10px 10px; }
+            .agent-detail-row { grid-template-columns: 90px 1fr; }
         }
     </style>
 </head>
@@ -2384,15 +2543,15 @@
         <div class="ai-council-card reveal">
 
             <div class="ai-council-header">
-                <div class="ai-council-badge">&#9679; Featured Experiment</div>
+                <div class="ai-council-badge">&#9679; Personal AI Project</div>
                 <h3 class="ai-council-title">Personal AI Council:<br>Hub-and-Spoke Agent System</h3>
-                <p class="ai-council-subtitle">Multi-agent orchestration with production-grade governance on constrained hardware — built and running locally on a 16GB M4 Mac mini.</p>
+                <p class="ai-council-subtitle">A personal multi-agent system built with a mix of local Ollama models and API-routed calls to Claude, running on a 16GB M4 Mac mini. Tyler sets the vision. Zeus runs the show.</p>
             </div>
 
             <div class="ai-council-body">
 
                 <p class="ai-council-overview">
-                    A persistent, multi-agent AI council where <strong style="color:var(--accent-warm)">Zeus</strong> is the central hub — routing tasks, owning the queue, and enforcing governance. Three <strong style="color:#00c896">advisors</strong> (Prometheus, Argus, Hestia) consult but never command. Five <strong style="color:var(--accent-blue)">execution agents</strong> receive orders from Zeus only. No agent ever talks to another agent. All routing through Zeus. All decisions through Tyler.
+                    A persistent, multi-agent AI council where <strong style="color:var(--accent-warm)">Zeus</strong> is the central hub: routing tasks, owning the queue, and enforcing governance. Three <strong style="color:#00c896">advisors</strong> (Prometheus, Argus, Hestia) consult but never command. Five <strong style="color:var(--accent-blue)">execution agents</strong> receive orders from Zeus only. No agent ever talks to another agent. All routing through Zeus. All goals set by Tyler.
                 </p>
 
                 <!-- Architecture Diagram -->
@@ -2493,111 +2652,431 @@
                 <div class="ai-council-2col">
                     <div class="council-block">
                         <div class="council-block-title">Why Hub-and-Spoke?</div>
-                        <p>Zeus is the only node with a full picture of system state. Advisors (Prometheus, Argus, Hestia) inform but never command. Execution agents (Atlas, Muse, Hermes, Hephaestus, Plutus) receive a task, execute it in isolation, and return a result — nothing more. This eliminates trust chains, makes Argus's audit logging trivial, and means a hallucinating Muse or hung Hermes can only damage its own task scope, not the entire system.</p>
+                        <p>Zeus is the only node with a full picture of system state. Advisors (Prometheus, Argus, Hestia) inform but never command. Execution agents (Atlas, Muse, Hermes, Hephaestus, Plutus) receive one task, execute it in isolation, and return a result. This eliminates trust chains, makes Argus's audit logging trivial, and means a hallucinating Muse or hung Hermes can only damage its own task scope.</p>
                     </div>
                     <div class="council-block">
                         <div class="council-block-title">Why Zeus is Critical</div>
-                        <p>Without a single point of orchestration, agents accumulate state, contradict each other, and spiral into recursive loops. Zeus enforces sequencing, holds the approval gates, owns escalation to Tyler, and is the only node that can write to Prometheus's memory store. Removing Zeus means removing governance entirely — the advisors become noise and the execution agents become uncoordinated tools.</p>
+                        <p>Without a single point of orchestration, agents accumulate state, contradict each other, and spiral into recursive loops. Zeus enforces sequencing, holds the approval gates, owns escalation to Tyler, and is the only node that can write to Prometheus's memory store. Remove Zeus and the advisors become noise while the execution agents become uncoordinated tools.</p>
                     </div>
                 </div>
 
-                <!-- Agent Table -->
-                <div class="ai-council-section-title">Agent Roster</div>
-                <table class="agent-table" aria-label="AI Council agent roster">
-                    <thead>
-                        <tr>
-                            <th>Agent</th>
-                            <th>Role</th>
-                            <th>When It Runs</th>
-                            <th>Skills Demonstrated</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="background:rgba(210,140,50,0.03);">
-                            <td><span class="agent-name-pill"><span class="agent-dot" style="background:#f0a050;box-shadow:0 0 6px rgba(240,160,80,0.5);"></span>Zeus</span></td>
-                            <td>The hub. Receives all task requests, routes them to the appropriate agent, owns the approval gates, and enforces timeouts. No agent acts without Zeus dispatching it.</td>
-                            <td>Always-on — persistent event queue, daemon process</td>
-                            <td>Orchestration design, queue management, approval-gate logic, escalation protocols</td>
-                        </tr>
-                        <tr style="background:rgba(0,190,140,0.02);">
-                            <td colspan="4" style="padding:10px 16px 4px;font-size:0.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(0,195,145,0.5);">— Advisors (consultation only, no command authority) —</td>
-                        </tr>
-                        <tr>
-                            <td><span class="agent-name-pill"><span class="agent-dot" style="background:#00c896;box-shadow:0 0 6px rgba(0,200,150,0.5);"></span>Prometheus</span></td>
-                            <td>Persistent memory and strategic context. Reads prior session state, surfaces relevant history, flags pattern-level concerns before Zeus acts.</td>
-                            <td>Consulted by Zeus before high-stakes or repeated task types</td>
-                            <td>Memory architecture, context retrieval, strategic pattern recognition</td>
-                        </tr>
-                        <tr>
-                            <td><span class="agent-name-pill"><span class="agent-dot" style="background:#00c896;box-shadow:0 0 6px rgba(0,200,150,0.5);"></span>Argus</span></td>
-                            <td>Security and audit layer. Reviews proposed actions for risk, maintains the audit trail, and raises flags to Zeus when a task crosses a governance threshold.</td>
-                            <td>Consulted on any action touching external systems, credentials, or file writes</td>
-                            <td>Security review, audit logging, risk classification, governance enforcement</td>
-                        </tr>
-                        <tr>
-                            <td><span class="agent-name-pill"><span class="agent-dot" style="background:#00c896;box-shadow:0 0 6px rgba(0,200,150,0.5);"></span>Hestia</span></td>
-                            <td>System health monitor. Tracks memory pressure, process state, daemon health, and hardware limits. Reports to Zeus before resource-intensive tasks.</td>
-                            <td>Background health checks; queried by Zeus before heavy compute tasks</td>
-                            <td>Resource monitoring, hardware-aware scheduling, failure prediction</td>
-                        </tr>
-                        <tr style="background:rgba(74,158,255,0.02);">
-                            <td colspan="4" style="padding:10px 16px 4px;font-size:0.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(100,165,255,0.45);">— Execution Agents (command-only, receive tasks from Zeus) —</td>
-                        </tr>
-                        <tr>
-                            <td><span class="agent-name-pill"><span class="agent-dot dot-blue"></span>Atlas</span></td>
-                            <td>Job search and career intelligence agent. Queries job boards, filters by criteria, compiles structured briefs, tracks application pipeline state.</td>
-                            <td>On Zeus command; scheduled sweeps or on-demand research runs</td>
-                            <td>Structured data retrieval, filtering logic, pipeline state management</td>
-                        </tr>
-                        <tr>
-                            <td><span class="agent-name-pill"><span class="agent-dot dot-blue"></span>Muse</span></td>
-                            <td>Creative output agent. Drafts, refines, and structures written content — cover letters, project descriptions, narrative summaries — on Zeus instruction.</td>
-                            <td>On Zeus command; output always approval-gated before delivery</td>
-                            <td>Controlled generation, tone matching, iterative refinement, human-in-loop output</td>
-                        </tr>
-                        <tr>
-                            <td><span class="agent-name-pill"><span class="agent-dot dot-blue"></span>Hermes</span></td>
-                            <td>Research and intelligence agent. Fetches web content, synthesizes findings, and returns structured briefs to Zeus. Never takes action on findings directly.</td>
-                            <td>On Zeus command; results cached to Prometheus for future context</td>
-                            <td>Information retrieval, source validation, structured summarization</td>
-                        </tr>
-                        <tr>
-                            <td><span class="agent-name-pill"><span class="agent-dot dot-blue"></span>Hephaestus</span></td>
-                            <td>Automation and tooling agent. Executes code, manages files, runs shell commands, builds scripts. The hands of the system — high capability, tightly scoped per task.</td>
-                            <td>On Zeus command; all file writes and shell execs require Argus pre-check</td>
-                            <td>Code execution, file ops, shell automation, tool use, sandboxed execution</td>
-                        </tr>
-                        <tr>
-                            <td><span class="agent-name-pill"><span class="agent-dot dot-blue"></span>Plutus</span></td>
-                            <td>Markets and financial intelligence agent. Tracks market data, summarizes financial signals, and surfaces insights. Read-only by default — no trade execution without explicit human approval.</td>
-                            <td>Scheduled sweeps and on-demand queries; all outputs advisory only</td>
-                            <td>Data ingestion, signal analysis, risk-aware reporting, hard execution guardrails</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <!-- MCP SVG -->
+                <div class="ai-council-section-title">How Agents Connect: MCP</div>
+                <div class="ai-council-diagram-wrap" style="padding:28px 20px 20px;">
+                    <svg viewBox="0 0 700 295" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MCP architecture diagram showing agents connecting through the Model Context Protocol to tool servers including file system, shell, memory, Discord, web search, and external APIs">
+                        <defs>
+                            <marker id="mcp-down" markerWidth="7" markerHeight="5" refX="3.5" refY="5" orient="auto">
+                                <polygon points="0 0, 7 0, 3.5 5" fill="rgba(74,158,255,0.5)"/>
+                            </marker>
+                        </defs>
+                        <!-- Section labels -->
+                        <text x="12" y="55" font-size="8.5" fill="rgba(255,255,255,0.25)" font-family="Inter,sans-serif" letter-spacing="1" font-weight="700" text-anchor="start">AGENTS</text>
+                        <text x="12" y="128" font-size="8.5" fill="rgba(255,255,255,0.25)" font-family="Inter,sans-serif" letter-spacing="1" font-weight="700" text-anchor="start">PROTOCOL</text>
+                        <text x="12" y="210" font-size="8.5" fill="rgba(255,255,255,0.25)" font-family="Inter,sans-serif" letter-spacing="1" font-weight="700" text-anchor="start">TOOLS</text>
 
-                <!-- Governance -->
-                <div class="ai-council-section-title">Governance Approach</div>
-                <div class="governance-grid">
-                    <div class="gov-pill">
-                        <div class="gov-pill-icon">&#x1F512;</div>
-                        <div class="gov-pill-label">Sandbox Isolation</div>
-                        <div class="gov-pill-desc">Each spoke runs in an isolated context with no access to peer agents or shared state</div>
+                        <!-- Agent boxes (3 representative) -->
+                        <rect x="72" y="16" width="148" height="52" rx="8" fill="rgba(110,60,10,0.4)" stroke="rgba(220,130,45,0.55)" stroke-width="1.5"/>
+                        <text x="146" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#f0a050" font-family="Space Grotesk,sans-serif">Zeus</text>
+                        <text x="146" y="55" text-anchor="middle" font-size="9" fill="rgba(220,155,70,0.65)" font-family="Inter,sans-serif">Orchestrator (Claude API)</text>
+
+                        <rect x="276" y="16" width="148" height="52" rx="8" fill="rgba(12,35,85,0.65)" stroke="rgba(55,115,215,0.55)" stroke-width="1.5"/>
+                        <text x="350" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#6ab0ff" font-family="Space Grotesk,sans-serif">Hermes / Hephaestus</text>
+                        <text x="350" y="55" text-anchor="middle" font-size="9" fill="rgba(100,165,255,0.65)" font-family="Inter,sans-serif">Execution agents (local + API)</text>
+
+                        <rect x="480" y="16" width="148" height="52" rx="8" fill="rgba(12,65,52,0.55)" stroke="rgba(0,175,125,0.55)" stroke-width="1.5"/>
+                        <text x="554" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#00c896" font-family="Space Grotesk,sans-serif">Prometheus / Argus</text>
+                        <text x="554" y="55" text-anchor="middle" font-size="9" fill="rgba(0,195,145,0.65)" font-family="Inter,sans-serif">Advisors (local Ollama)</text>
+
+                        <!-- Down lines to MCP bar -->
+                        <line x1="146" y1="68" x2="146" y2="105" stroke="rgba(74,158,255,0.3)" stroke-width="1.5" stroke-dasharray="3 3"/>
+                        <line x1="350" y1="68" x2="350" y2="105" stroke="rgba(74,158,255,0.3)" stroke-width="1.5" stroke-dasharray="3 3"/>
+                        <line x1="554" y1="68" x2="554" y2="105" stroke="rgba(74,158,255,0.3)" stroke-width="1.5" stroke-dasharray="3 3"/>
+
+                        <!-- MCP Client protocol bar -->
+                        <rect x="72" y="105" width="556" height="38" rx="8" fill="rgba(30,60,120,0.35)" stroke="rgba(74,158,255,0.35)" stroke-width="1.5"/>
+                        <text x="350" y="120" text-anchor="middle" font-size="10" font-weight="700" fill="rgba(100,165,255,0.8)" font-family="Space Grotesk,sans-serif" letter-spacing="1">MODEL CONTEXT PROTOCOL (MCP)</text>
+                        <text x="350" y="135" text-anchor="middle" font-size="8.5" fill="rgba(100,165,255,0.45)" font-family="Inter,sans-serif">Standardized client/server bridge. Agents call tools without custom integration code.</text>
+
+                        <!-- Down lines to tool servers -->
+                        <line x1="111" y1="143" x2="111" y2="170" stroke="rgba(74,158,255,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
+                        <line x1="220" y1="143" x2="220" y2="170" stroke="rgba(74,158,255,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
+                        <line x1="329" y1="143" x2="329" y2="170" stroke="rgba(74,158,255,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
+                        <line x1="436" y1="143" x2="436" y2="170" stroke="rgba(74,158,255,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
+                        <line x1="543" y1="143" x2="543" y2="170" stroke="rgba(74,158,255,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
+                        <line x1="627" y1="143" x2="627" y2="170" stroke="rgba(74,158,255,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
+
+                        <!-- Tool server boxes -->
+                        <rect x="72" y="170" width="78" height="55" rx="7" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <text x="111" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="Space Grotesk,sans-serif">&#128193;</text>
+                        <text x="111" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="Inter,sans-serif">File System</text>
+                        <text x="111" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif">read/write</text>
+
+                        <rect x="181" y="170" width="78" height="55" rx="7" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <text x="220" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="Space Grotesk,sans-serif">&#x1F5A5;</text>
+                        <text x="220" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="Inter,sans-serif">Shell / Bash</text>
+                        <text x="220" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif">sandboxed</text>
+
+                        <rect x="290" y="170" width="78" height="55" rx="7" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <text x="329" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="Space Grotesk,sans-serif">&#x1F9E0;</text>
+                        <text x="329" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="Inter,sans-serif">Memory</text>
+                        <text x="329" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif">Prometheus store</text>
+
+                        <rect x="397" y="170" width="78" height="55" rx="7" fill="rgba(88,101,242,0.08)" stroke="rgba(88,101,242,0.3)" stroke-width="1"/>
+                        <text x="436" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(180,185,255,0.8)" font-family="Space Grotesk,sans-serif">&#x1F4AC;</text>
+                        <text x="436" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(160,168,255,0.75)" font-family="Inter,sans-serif">Discord</text>
+                        <text x="436" y="219" text-anchor="middle" font-size="7.5" fill="rgba(160,168,255,0.4)" font-family="Inter,sans-serif">in/out channel</text>
+
+                        <rect x="504" y="170" width="78" height="55" rx="7" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <text x="543" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="Space Grotesk,sans-serif">&#x1F50D;</text>
+                        <text x="543" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="Inter,sans-serif">Web Search</text>
+                        <text x="543" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif">Hermes tool</text>
+
+                        <rect x="588" y="170" width="78" height="55" rx="7" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <text x="627" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="Space Grotesk,sans-serif">&#x2601;&#xFE0F;</text>
+                        <text x="627" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="Inter,sans-serif">External APIs</text>
+                        <text x="627" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif">jobs, markets</text>
+
+                        <!-- Bottom note -->
+                        <text x="350" y="277" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.22)" font-family="Inter,sans-serif" letter-spacing="0.5">Each MCP server is a sandboxed process. Agents call tools via protocol, never via direct import or shell injection.</text>
+                    </svg>
+                    <p class="ai-council-diagram-caption">MCP replaces custom integrations. Every tool is a standardized server the agent calls the same way.</p>
+                </div>
+
+                <!-- Discord Section -->
+                <div class="ai-council-section-title">Discord as the Control Surface</div>
+                <div class="discord-flow">
+                    <div class="discord-flow-step">
+                        <div class="discord-flow-icon" style="background:rgba(88,101,242,0.15);border:1px solid rgba(88,101,242,0.35);font-size:1.3rem;">&#x1F4AC;</div>
+                        <div class="discord-flow-label">Tyler sends message</div>
+                        <div class="discord-flow-sub">Discord channel<br>natural language</div>
                     </div>
-                    <div class="gov-pill">
-                        <div class="gov-pill-icon">&#x2714;&#xFE0F;</div>
-                        <div class="gov-pill-label">Approval Gates</div>
-                        <div class="gov-pill-desc">High-risk actions (push, delete, send) require explicit human confirmation before execution</div>
+                    <div class="discord-flow-arrow">&#8594;</div>
+                    <div class="discord-flow-step">
+                        <div class="discord-flow-icon" style="background:rgba(88,101,242,0.12);border:1px solid rgba(88,101,242,0.25);">&#x1F50C;</div>
+                        <div class="discord-flow-label">Discord MCP Server</div>
+                        <div class="discord-flow-sub">routes to Zeus<br>via MCP bridge</div>
                     </div>
-                    <div class="gov-pill">
-                        <div class="gov-pill-icon">&#x1F4CB;</div>
-                        <div class="gov-pill-label">Audit Logging</div>
-                        <div class="gov-pill-desc">Every Zeus decision, tool call, and approval is timestamped and written to persistent log</div>
+                    <div class="discord-flow-arrow">&#8594;</div>
+                    <div class="discord-flow-step">
+                        <div class="discord-flow-icon" style="background:rgba(110,60,10,0.35);border:1px solid rgba(220,130,45,0.45);">&#x26A1;</div>
+                        <div class="discord-flow-label">Zeus parses intent</div>
+                        <div class="discord-flow-sub">classifies task<br>consults advisors</div>
                     </div>
-                    <div class="gov-pill">
-                        <div class="gov-pill-icon">&#x1F6A8;</div>
-                        <div class="gov-pill-label">Escalation Protocol</div>
-                        <div class="gov-pill-desc">Ambiguous or high-blast-radius tasks escalate to human rather than proceed autonomously</div>
+                    <div class="discord-flow-arrow">&#8594;</div>
+                    <div class="discord-flow-step">
+                        <div class="discord-flow-icon" style="background:rgba(12,35,85,0.5);border:1px solid rgba(55,115,215,0.4);">&#x1F916;</div>
+                        <div class="discord-flow-label">Agent executes</div>
+                        <div class="discord-flow-sub">Hermes, Muse,<br>Hephaestus, etc.</div>
+                    </div>
+                    <div class="discord-flow-arrow">&#8594;</div>
+                    <div class="discord-flow-step">
+                        <div class="discord-flow-icon" style="background:rgba(110,60,10,0.35);border:1px solid rgba(220,130,45,0.45);">&#x26A1;</div>
+                        <div class="discord-flow-label">Zeus formats reply</div>
+                        <div class="discord-flow-sub">approval gate<br>if needed</div>
+                    </div>
+                    <div class="discord-flow-arrow">&#8594;</div>
+                    <div class="discord-flow-step">
+                        <div class="discord-flow-icon" style="background:rgba(88,101,242,0.15);border:1px solid rgba(88,101,242,0.35);font-size:1.3rem;">&#x1F4AC;</div>
+                        <div class="discord-flow-label">Reply in Discord</div>
+                        <div class="discord-flow-sub">focused thread<br>keeps context</div>
+                    </div>
+                </div>
+                <p style="font-size:0.82rem;color:var(--text-muted);margin:10px 0 0;line-height:1.65;">Discord channels act as named conversation scopes. Each channel maps to a domain (research, jobs, creative), so Zeus knows which execution agent to prioritize. Threads keep long-running tasks in context without polluting other channels.</p>
+
+                <!-- Agent Roster (Clickable Cards) -->
+                <div class="ai-council-section-title">Agent Roster <span style="font-size:0.7rem;color:var(--text-muted);letter-spacing:0;text-transform:none;font-weight:400;margin-left:8px;">click any agent for details</span></div>
+                <div class="agent-cards-grid">
+
+                    <div class="agent-card hub-card" onclick="toggleAgent(this)">
+                        <div class="agent-card-header">
+                            <span class="agent-dot" style="background:#f0a050;box-shadow:0 0 5px rgba(240,160,80,0.4);flex-shrink:0;"></span>
+                            <span class="agent-card-name">Zeus</span>
+                            <span class="agent-type-badge type-hub">Hub</span>
+                            <span class="agent-card-summary">Routes all tasks, owns the queue, holds approval gates</span>
+                            <i class="fas fa-chevron-down agent-card-chevron"></i>
+                        </div>
+                        <div class="agent-card-detail">
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Role</span>
+                                <span class="agent-detail-val">Central orchestrator. Receives every task request, consults Argus and Prometheus, then dispatches to the appropriate execution agent. No agent acts without Zeus dispatching it. Owns the approval gates for high-risk actions and escalates to Tyler when scope is ambiguous.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">When It Runs</span>
+                                <span class="agent-detail-val">Always-on persistent daemon with an event queue. Wakes on Discord message, scheduled cron trigger, or direct API call.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Model</span>
+                                <span class="agent-detail-val">Claude API (Sonnet or Opus depending on task complexity). Zeus is the highest-model tier in the system.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Skills</span>
+                                <div class="agent-skill-tags">
+                                    <span class="agent-skill-tag">Orchestration</span><span class="agent-skill-tag">Queue Management</span><span class="agent-skill-tag">Approval Gates</span><span class="agent-skill-tag">Escalation Logic</span><span class="agent-skill-tag">Task Classification</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="agent-card advisor-card" onclick="toggleAgent(this)">
+                        <div class="agent-card-header">
+                            <span class="agent-dot" style="background:#00c896;box-shadow:0 0 5px rgba(0,200,150,0.4);flex-shrink:0;"></span>
+                            <span class="agent-card-name">Prometheus</span>
+                            <span class="agent-type-badge type-advisor">Advisor</span>
+                            <span class="agent-card-summary">Memory and strategy. Surfaces past context before Zeus acts.</span>
+                            <i class="fas fa-chevron-down agent-card-chevron"></i>
+                        </div>
+                        <div class="agent-card-detail">
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Role</span>
+                                <span class="agent-detail-val">Persistent memory and strategic context. Reads prior session state, surfaces relevant history, and flags pattern-level concerns before Zeus dispatches a task. Writes summaries back to the memory store after each session.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">When It Runs</span>
+                                <span class="agent-detail-val">Consulted by Zeus before high-stakes or repeated task types. Also runs a nightly summary pass to prune stale memory entries.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Model</span>
+                                <span class="agent-detail-val">Local Ollama model (lightweight). Memory retrieval does not need frontier-model reasoning.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Skills</span>
+                                <div class="agent-skill-tags">
+                                    <span class="agent-skill-tag">Memory Architecture</span><span class="agent-skill-tag">Context Retrieval</span><span class="agent-skill-tag">TTL Management</span><span class="agent-skill-tag">Pattern Recognition</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="agent-card advisor-card" onclick="toggleAgent(this)">
+                        <div class="agent-card-header">
+                            <span class="agent-dot" style="background:#00c896;box-shadow:0 0 5px rgba(0,200,150,0.4);flex-shrink:0;"></span>
+                            <span class="agent-card-name">Argus</span>
+                            <span class="agent-type-badge type-advisor">Advisor</span>
+                            <span class="agent-card-summary">Security and audit. Reviews every action before execution.</span>
+                            <i class="fas fa-chevron-down agent-card-chevron"></i>
+                        </div>
+                        <div class="agent-card-detail">
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Role</span>
+                                <span class="agent-detail-val">Security review and audit layer. Evaluates proposed actions for risk (file writes, outbound calls, shell commands), maintains the structured audit log, and raises a flag to Zeus when a task crosses a governance threshold. Argus never blocks directly: it advises Zeus, and Zeus holds the gate.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">When It Runs</span>
+                                <span class="agent-detail-val">Consulted on any action touching external systems, credentials, file writes, or outbound communication.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Model</span>
+                                <span class="agent-detail-val">Local Ollama model for fast, cheap risk classification. Escalates to Claude API only when a decision is genuinely ambiguous.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Skills</span>
+                                <div class="agent-skill-tags">
+                                    <span class="agent-skill-tag">Security Review</span><span class="agent-skill-tag">Audit Logging</span><span class="agent-skill-tag">Risk Classification</span><span class="agent-skill-tag">Governance Enforcement</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="agent-card advisor-card" onclick="toggleAgent(this)">
+                        <div class="agent-card-header">
+                            <span class="agent-dot" style="background:#00c896;box-shadow:0 0 5px rgba(0,200,150,0.4);flex-shrink:0;"></span>
+                            <span class="agent-card-name">Hestia</span>
+                            <span class="agent-type-badge type-advisor">Advisor</span>
+                            <span class="agent-card-summary">System health. Reports memory pressure and hardware limits to Zeus.</span>
+                            <i class="fas fa-chevron-down agent-card-chevron"></i>
+                        </div>
+                        <div class="agent-card-detail">
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Role</span>
+                                <span class="agent-detail-val">System health monitor. Tracks wired memory usage, process state, Ollama model load times, and Openclaw daemon health. Reports to Zeus before resource-intensive tasks so Zeus can decide whether to use a local model or route to the API instead.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">When It Runs</span>
+                                <span class="agent-detail-val">Background health checks every few minutes. Also queried by Zeus immediately before any task that would load a local model.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Model</span>
+                                <span class="agent-detail-val">No LLM. Pure scripted health checks via shell and system APIs.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Skills</span>
+                                <div class="agent-skill-tags">
+                                    <span class="agent-skill-tag">Resource Monitoring</span><span class="agent-skill-tag">Hardware-Aware Scheduling</span><span class="agent-skill-tag">Failure Prediction</span><span class="agent-skill-tag">Daemon Health</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="agent-card" onclick="toggleAgent(this)">
+                        <div class="agent-card-header">
+                            <span class="agent-dot dot-blue" style="flex-shrink:0;"></span>
+                            <span class="agent-card-name">Atlas</span>
+                            <span class="agent-type-badge type-exec">Execution</span>
+                            <span class="agent-card-summary">Job search and career intelligence. Queries boards, tracks pipeline.</span>
+                            <i class="fas fa-chevron-down agent-card-chevron"></i>
+                        </div>
+                        <div class="agent-card-detail">
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Role</span>
+                                <span class="agent-detail-val">Job search and career intelligence. Queries job boards via MCP API tools, filters by set criteria, compiles structured briefs, and tracks application pipeline state back to Prometheus memory. Returns results to Zeus only.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">When It Runs</span>
+                                <span class="agent-detail-val">On Zeus command via scheduled sweeps or on-demand Discord request.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Model</span>
+                                <span class="agent-detail-val">Claude API (Haiku for structured filtering, Sonnet for brief synthesis).</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Skills</span>
+                                <div class="agent-skill-tags">
+                                    <span class="agent-skill-tag">Structured Retrieval</span><span class="agent-skill-tag">Filtering Logic</span><span class="agent-skill-tag">Pipeline State</span><span class="agent-skill-tag">API Tool Use</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="agent-card" onclick="toggleAgent(this)">
+                        <div class="agent-card-header">
+                            <span class="agent-dot dot-blue" style="flex-shrink:0;"></span>
+                            <span class="agent-card-name">Muse</span>
+                            <span class="agent-type-badge type-exec">Execution</span>
+                            <span class="agent-card-summary">Creative output. Drafts content on Zeus instruction, always approval-gated.</span>
+                            <i class="fas fa-chevron-down agent-card-chevron"></i>
+                        </div>
+                        <div class="agent-card-detail">
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Role</span>
+                                <span class="agent-detail-val">Creative output agent. Drafts, refines, and structures written content: cover letters, project descriptions, narrative summaries. All output routes back through Zeus and requires explicit approval before any delivery or publication.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">When It Runs</span>
+                                <span class="agent-detail-val">On Zeus command only. Output is never sent directly anywhere.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Model</span>
+                                <span class="agent-detail-val">Claude API (Sonnet). Creative quality warrants API routing over local model.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Skills</span>
+                                <div class="agent-skill-tags">
+                                    <span class="agent-skill-tag">Controlled Generation</span><span class="agent-skill-tag">Tone Matching</span><span class="agent-skill-tag">Iterative Refinement</span><span class="agent-skill-tag">Human-in-Loop Output</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="agent-card" onclick="toggleAgent(this)">
+                        <div class="agent-card-header">
+                            <span class="agent-dot dot-blue" style="flex-shrink:0;"></span>
+                            <span class="agent-card-name">Hermes</span>
+                            <span class="agent-type-badge type-exec">Execution</span>
+                            <span class="agent-card-summary">Research and intelligence. Fetches, synthesizes, returns briefs to Zeus.</span>
+                            <i class="fas fa-chevron-down agent-card-chevron"></i>
+                        </div>
+                        <div class="agent-card-detail">
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Role</span>
+                                <span class="agent-detail-val">Research and intelligence agent. Uses the Web Search MCP server to fetch content, synthesizes findings into structured briefs, and returns them to Zeus. Never takes action on findings directly. Results are cached to Prometheus for future context.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">When It Runs</span>
+                                <span class="agent-detail-val">On Zeus command. Often triggered via a Discord research request routed through Zeus.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Model</span>
+                                <span class="agent-detail-val">Claude API (Haiku for search, Sonnet for synthesis).</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Skills</span>
+                                <div class="agent-skill-tags">
+                                    <span class="agent-skill-tag">Information Retrieval</span><span class="agent-skill-tag">Source Validation</span><span class="agent-skill-tag">Structured Summarization</span><span class="agent-skill-tag">MCP Web Search</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="agent-card" onclick="toggleAgent(this)">
+                        <div class="agent-card-header">
+                            <span class="agent-dot dot-blue" style="flex-shrink:0;"></span>
+                            <span class="agent-card-name">Hephaestus</span>
+                            <span class="agent-type-badge type-exec">Execution</span>
+                            <span class="agent-card-summary">Automation. Executes code, runs shell, writes files. Tightly scoped per task.</span>
+                            <i class="fas fa-chevron-down agent-card-chevron"></i>
+                        </div>
+                        <div class="agent-card-detail">
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Role</span>
+                                <span class="agent-detail-val">Automation and tooling agent. The hands of the system. Executes code, manages files, runs shell commands, builds scripts. Every task is narrowly scoped by Zeus. All file writes and shell commands require an Argus pre-check before Hephaestus is dispatched.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">When It Runs</span>
+                                <span class="agent-detail-val">On Zeus command after Argus security review. Runs as a standard macOS user profile with no sudo rights.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Model</span>
+                                <span class="agent-detail-val">Claude Code (Claude API). Hephaestus is the highest-privilege agent, so it gets the highest-capability model.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Skills</span>
+                                <div class="agent-skill-tags">
+                                    <span class="agent-skill-tag">Code Execution</span><span class="agent-skill-tag">File Ops</span><span class="agent-skill-tag">Shell Automation</span><span class="agent-skill-tag">Tool Use</span><span class="agent-skill-tag">Sandboxed Execution</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="agent-card" onclick="toggleAgent(this)">
+                        <div class="agent-card-header">
+                            <span class="agent-dot dot-blue" style="flex-shrink:0;"></span>
+                            <span class="agent-card-name">Plutus</span>
+                            <span class="agent-type-badge type-exec">Execution</span>
+                            <span class="agent-card-summary">Markets and financial intelligence. Read-only by default.</span>
+                            <i class="fas fa-chevron-down agent-card-chevron"></i>
+                        </div>
+                        <div class="agent-card-detail">
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Role</span>
+                                <span class="agent-detail-val">Markets and financial intelligence. Tracks market data via API MCP servers, summarizes financial signals, and surfaces insights. Read-only by default. No trade execution without explicit Tyler approval routed through Zeus.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">When It Runs</span>
+                                <span class="agent-detail-val">Scheduled market sweeps and on-demand queries. All outputs are advisory only and return to Zeus first.</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Model</span>
+                                <span class="agent-detail-val">Claude API (Haiku for data retrieval, Sonnet for signal analysis).</span>
+                            </div>
+                            <div class="agent-detail-row">
+                                <span class="agent-detail-label">Skills</span>
+                                <div class="agent-skill-tags">
+                                    <span class="agent-skill-tag">Data Ingestion</span><span class="agent-skill-tag">Signal Analysis</span><span class="agent-skill-tag">Risk-Aware Reporting</span><span class="agent-skill-tag">Hard Execution Guardrails</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Security -->
+                <div class="ai-council-section-title">Security Design</div>
+                <div class="security-grid">
+                    <div class="security-block">
+                        <div class="security-block-title">&#x1F512; Standard Profile, No Sudo</div>
+                        <p>The entire agent system runs on a dedicated standard macOS user profile with no administrator rights. Even if an agent is compromised or produces a malicious shell command, it cannot escalate privileges, install software system-wide, or touch system files. Sudo is physically unavailable to this profile.</p>
+                    </div>
+                    <div class="security-block">
+                        <div class="security-block-title">&#x1F9F1; Memory Partition</div>
+                        <p>Agent memory is sandboxed to a dedicated directory within the standard profile's home folder. No agent has a path reference to any other user's home directory, system keychain, or sensitive config files. Prometheus reads and writes only within this bounded store. Cross-user reads are structurally impossible.</p>
+                    </div>
+                    <div class="security-block">
+                        <div class="security-block-title">&#x1F6AB; No Sideways Communication</div>
+                        <p>Execution agents have no knowledge of each other's existence. They receive a task payload from Zeus, operate within their MCP tool scope, and return a result. There is no shared message bus, no direct agent-to-agent API, and no shared writable state outside Prometheus's memory store, which only Zeus can write to.</p>
+                    </div>
+                    <div class="security-block">
+                        <div class="security-block-title">&#x2705; Argus Reviews Every Action</div>
+                        <p>Before Zeus dispatches any execution agent task involving files, shell, external calls, or outbound messages, Argus classifies the risk. High-risk or ambiguous actions are escalated to Tyler via Discord rather than proceeding. The audit log is append-only and written to a path that execution agents cannot access.</p>
                     </div>
                 </div>
 
@@ -2606,92 +3085,35 @@
                 <div class="ai-council-2col">
                     <div>
                         <div class="council-block">
-                            <div class="council-block-title">Model Stratification</div>
-                            <p>Not every task needs the most capable model. Zeus uses Opus for orchestration and complex decisions; spokes use Sonnet or Haiku for well-scoped, repeatable tasks. This stretches API budget and reduces latency without sacrificing quality where it matters.</p>
+                            <div class="council-block-title">Model Stratification: Local vs API</div>
+                            <p>Not every task needs a frontier model or an API call. Advisors (Prometheus, Argus) run local Ollama models: fast, free, and private. Execution agents with complex reasoning (Muse, Hermes) route to Claude API. Hestia runs no LLM at all. This stretches API budget and keeps latency low for advisory work.</p>
                         </div>
                         <div class="council-code">
-<span class="c"># Zeus task routing pseudocode</span>
-<span class="g">zeus</span>.route(task) <span class="c">→</span>
-  <span class="c"># consult advisors first</span>
-  <span class="p">argus</span>.review(task)        <span class="c"># security check</span>
-  <span class="p">prometheus</span>.context(task)  <span class="c"># memory lookup</span>
-  <span class="c"># dispatch to execution agent</span>
+<span class="c"># Zeus routing logic</span>
+<span class="g">zeus</span>.route(task):
+  <span class="p">argus</span>.review(task)       <span class="c"># local model</span>
+  <span class="p">prometheus</span>.context(task) <span class="c"># local model</span>
   if task.type == <span class="b">'research'</span>:
-    dispatch → <span class="b">hermes</span>
+    dispatch(<span class="b">hermes</span>, <span class="b">'haiku'</span>)
   elif task.type == <span class="b">'code'</span>:
-    dispatch → <span class="b">hephaestus</span>
+    dispatch(<span class="b">hephaestus</span>, <span class="b">'sonnet'</span>)
   elif task.type == <span class="b">'creative'</span>:
-    dispatch → <span class="b">muse</span>
+    dispatch(<span class="b">muse</span>, <span class="b">'sonnet'</span>)
                         </div>
                     </div>
                     <div>
                         <div class="council-block">
-                            <div class="council-block-title">Memory Management</div>
-                            <p>File-based memory with TTL enforcement. Each memory entry has a type (user / feedback / project / reference), a description used for relevance scoring, and a timestamp. Zeus prunes stale entries before each session. No vector DB required — semantic matching happens at retrieval time.</p>
+                            <div class="council-block-title">The 16GB Constraint</div>
+                            <p>Running multiple model processes on 16GB of unified memory means memory pressure is a first-class design constraint. Baseline wired memory sits around 1GB. Loading Ollama alongside a Claude Code session and the Openclaw daemon pushes toward swap. Agents run serially through Zeus, not in parallel. This turns out to be the correct governance pattern regardless of hardware.</p>
                         </div>
                         <div class="council-block" style="margin-top:14px;">
-                            <div class="council-block-title">Timeout Enforcement</div>
-                            <p>Every spoke task has a hard timeout. Zeus tracks wall-clock time per agent, cancels overrun tasks, logs the failure, and optionally retries with a simpler model or smaller scope. Silent hangs are treated as failures.</p>
+                            <div class="council-block-title">Why Logging Matters</div>
+                            <p>Without an audit trail, reconstructing why Zeus dispatched a specific agent with a specific payload is guesswork. Argus writes a structured log entry for every task: timestamp, agent, task type, risk classification, and outcome. This turned debugging from guesswork into forensics.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Skills Demonstrated -->
-                <div class="ai-council-section-title">Skills Demonstrated</div>
-                <div class="skills-tags">
-                    <span class="skill-tag g">Multi-Agent Orchestration</span>
-                    <span class="skill-tag g">System Design</span>
-                    <span class="skill-tag b">Governance &amp; Safety Rails</span>
-                    <span class="skill-tag b">Tool Use &amp; API Integration</span>
-                    <span class="skill-tag p">Memory Architecture</span>
-                    <span class="skill-tag p">Prompt Engineering</span>
-                    <span class="skill-tag b">Process &amp; Daemon Management</span>
-                    <span class="skill-tag g">Production Failure Thinking</span>
-                    <span class="skill-tag b">Audit Logging Design</span>
-                    <span class="skill-tag p">Model Cost Optimization</span>
-                    <span class="skill-tag b">Human-in-the-Loop Patterns</span>
-                    <span class="skill-tag g">Constrained Hardware Engineering</span>
-                </div>
-
-                <!-- Real Constraints & Learnings -->
-                <div class="ai-council-section-title">Real Constraints &amp; Learnings</div>
-                <div class="constraint-card">
-                    <div class="constraint-title">&#9888; The 16GB Problem</div>
-                    <div class="constraint-body">Running multiple model processes simultaneously on a 16GB M4 Mac mini means memory pressure is a first-class concern. Baseline system wired memory sits around 1GB. Running Ollama alongside Claude Code sessions and Openclaw daemon pushes into swap territory fast. The system is designed to run agents serially through Zeus, not in parallel, specifically because of this constraint — which turns out to be the right pattern anyway.</div>
-                </div>
-                <div class="constraint-card">
-                    <div class="constraint-title">&#128203; Why Logging Matters More Than You Think</div>
-                    <div class="constraint-body">The first version had no audit trail. When agents produced unexpected results, there was no way to reconstruct what Zeus had dispatched, what context each spoke had received, or where the decision chain diverged. Adding structured logging — not just stdout — transformed debugging from guesswork into forensics. Every production system lesson, learned on personal hardware.</div>
-                </div>
-
-                <!-- Current State -->
-                <div class="ai-council-section-title">Current State</div>
-                <div class="status-row">
-                    <span class="sbadge live"><span class="dot-sm" style="background:var(--accent);border-radius:50%;"></span> Zeus — live</span>
-                    <span class="sbadge live"><span class="dot-sm" style="background:var(--accent);border-radius:50%;"></span> Prometheus — live</span>
-                    <span class="sbadge live"><span class="dot-sm" style="background:var(--accent);border-radius:50%;"></span> Argus — live</span>
-                    <span class="sbadge live"><span class="dot-sm" style="background:var(--accent);border-radius:50%;"></span> Hestia — live</span>
-                    <span class="sbadge live"><span class="dot-sm" style="background:var(--accent);border-radius:50%;"></span> Hephaestus — live</span>
-                    <span class="sbadge staged"><span class="dot-sm" style="background:var(--accent-blue);border-radius:50%;"></span> Hermes — staged</span>
-                    <span class="sbadge staged"><span class="dot-sm" style="background:var(--accent-blue);border-radius:50%;"></span> Atlas — staged</span>
-                    <span class="sbadge staged"><span class="dot-sm" style="background:var(--accent-blue);border-radius:50%;"></span> Muse — staged</span>
-                    <span class="sbadge planned"><span class="dot-sm" style="background:var(--text-muted);border-radius:50%;"></span> Plutus — planned</span>
-                    <span class="sbadge planned"><span class="dot-sm" style="background:var(--text-muted);border-radius:50%;"></span> Tyler approval UI — planned</span>
-                </div>
-
-                <!-- Recruiting Callout -->
-                <div class="recruiting-callout">
-                    <div class="recruiting-title">What this demonstrates to an engineering team:</div>
-                    <div class="recruiting-grid">
-                        <div class="recruiting-item">System design thinking — hub-and-spoke isn't just a pattern, it's a deliberate choice with trade-offs understood</div>
-                        <div class="recruiting-item">Governance by default — sandboxing, approval gates, and audit trails were designed in, not bolted on</div>
-                        <div class="recruiting-item">Real-world constraint engineering — 16GB is a real limit, not a simulation; every decision reflects it</div>
-                        <div class="recruiting-item">Production failure thinking — silent hangs, escalation paths, and retry logic addressed before they caused problems</div>
-                        <div class="recruiting-item">Not just prompt writing — this is orchestration, infrastructure, and rails; LLMs are one component of many</div>
-                        <div class="recruiting-item">Cost-aware model usage — stratified model routing shows awareness of latency and API spend trade-offs</div>
-                    </div>
-                    <p style="margin-top:18px;font-size:0.78rem;color:var(--text-muted);">Repo available on request &mdash; currently in private experiments. <a href="https://github.com/tylerv11/" target="_blank" style="color:var(--accent-blue);text-decoration:none;">github.com/tylerv11</a></p>
-                </div>
+                <p style="margin-top:32px;font-size:0.78rem;color:var(--text-muted);">Private repo, available on request. <a href="https://github.com/tylerv11/" target="_blank" style="color:var(--accent-blue);text-decoration:none;">github.com/tylerv11</a></p>
 
             </div>
         </div>
@@ -2926,6 +3348,21 @@
                 });
             }
         });
+    </script>
+
+    <script>
+        function toggleAgent(el) {
+            var detail = el.querySelector('.agent-card-detail');
+            var isOpen = el.classList.contains('open');
+            document.querySelectorAll('.agent-card.open').forEach(function(card) {
+                card.classList.remove('open');
+                card.querySelector('.agent-card-detail').style.display = 'none';
+            });
+            if (!isOpen) {
+                el.classList.add('open');
+                detail.style.display = 'block';
+            }
+        }
     </script>
 
     <script>
