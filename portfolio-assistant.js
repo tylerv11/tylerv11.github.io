@@ -306,10 +306,17 @@ const PortfolioAssistant = (() => {
       });
 
       if (!response.ok) {
-        const error = await response.json();
+        let errorMessage = 'Unknown error';
+        try {
+          const error = await response.json();
+          errorMessage = error.error?.message || JSON.stringify(error);
+        } catch (e) {
+          errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+        }
+        console.error('[API_ERROR]', errorMessage, 'Status:', response.status);
         return {
           success: false,
-          error: `API error: ${error.error?.message || 'Unknown error'}`,
+          error: `API error: ${errorMessage}`,
         };
       }
 
@@ -415,7 +422,9 @@ const PortfolioAssistant = (() => {
           remainingQueries: getRemainingQueries(),
         };
       } else {
-        // API failed, fall back to fuzzy
+        // API failed, fall back to fuzzy and log error for debugging
+        console.warn('[PORTFOLIO_ASSISTANT] Smart Mode failed:', apiResult.error);
+        logSecurityEvent('smart_mode_failure', { error: apiResult.error });
         return fallbackToFuzzy(question);
       }
     }
