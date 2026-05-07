@@ -1808,8 +1808,30 @@
             text-align: center;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
         }
-        .ai-council-diagram-wrap svg { max-width: 100%; height: auto; min-width: 280px; }
+        .ai-council-diagram-wrap svg {
+            width: 100%;
+            height: auto;
+            max-width: 900px;
+            min-width: 320px;
+        }
+        @media (max-width: 1200px) {
+            .ai-council-diagram-wrap svg { max-width: 800px; }
+        }
+        @media (max-width: 900px) {
+            .ai-council-diagram-wrap svg { max-width: 90vw; }
+        }
+        @media (max-width: 600px) {
+            .ai-council-diagram-wrap {
+                padding: 24px 12px 16px;
+                min-height: auto;
+            }
+            .ai-council-diagram-wrap svg { max-width: 95vw; min-width: 300px; }
+        }
         .ai-council-diagram-caption {
             font-size: 0.72rem;
             color: var(--text-muted);
@@ -2587,7 +2609,7 @@
             <div class="ai-council-body">
 
                 <p class="ai-council-overview">
-                    A persistent, multi-agent AI council where <strong style="color:var(--accent-warm)">Zeus</strong> is the central hub: routing tasks, owning the queue, and enforcing governance. Three <strong style="color:#00c896">advisors</strong> (Prometheus, Argus, Hestia) consult but never command. Five <strong style="color:var(--accent-blue)">execution agents</strong> receive orders from Zeus only. No agent ever talks to another agent. All routing through Zeus. All goals set by Tyler.
+                    A persistent, multi-agent AI council where <strong style="color:var(--accent-warm)">Zeus ⚡ (ChatGPT 5.4)</strong> is the central hub: routing tasks, owning the queue, and enforcing governance. Three <strong style="color:#00c896">advisors</strong> (Prometheus, Argus, Hestia) consult but never command. Five <strong style="color:var(--accent-blue)">execution agents</strong> receive orders from Zeus only. No agent ever talks to another agent. All routing through Zeus. All goals set by Tyler.
                 </p>
 
                 <!-- Architecture Diagram -->
@@ -4184,12 +4206,35 @@
                 { id: 'Operations',    color: '#ff6b35' },
                 { id: 'Product',       color: '#ec4899' },
                 { id: 'Leadership',    color: '#06b6d4' },
+                { id: 'Orchestration', color: '#14b8a6' },
+                { id: 'Governance',    color: '#f97316' },
+                { id: 'Tool Use',      color: '#8b5cf6' },
+                { id: 'Prompt Eng.',   color: '#06b6d4' },
+                { id: 'Prod. Thinking',color: '#ec4899' },
             ];
 
             var SKILL_COLORS = {};
             SKILL_DEFS.forEach(function (s) { SKILL_COLORS[s.id] = s.color; });
 
             var PROJECTS = [
+                {
+                    title: 'Personal AI Council: Hub-and-Spoke Agent System',
+                    company: 'Deployed Locally',
+                    mapLabel: 'AI Council', mapSub: '/ Multi-Agent Orchestration',
+                    skills: ['Orchestration', 'AI / ML', 'Tool Use', 'Governance', 'Prompt Eng.', 'Prod. Thinking'],
+                    skillNotes: {
+                        'Orchestration': 'Zeus (ChatGPT 5.4) orchestrates 8 agents: routes to Hermes (research), Atlas (jobs), Muse (creative), Hephaestus (automation), Argus (security), Hestia (health), Plutus (finance), Prometheus (strategy). All routing tables hardcoded. No cross-agent talk.',
+                        'AI / ML': 'Execution agents (Hermes, Atlas, Muse, Hephaestus, Plutus, Prometheus) use Deepseek v4 Flash via OpenRouter for cost efficiency. Advisors (Argus, Hestia) run locally on Ollama (Llama3.1:8b primary, Qwen3.5:4b fallback).',
+                        'Tool Use': 'MCP integration: agents access web_fetch (research), file I/O (automation), Discord APIs (routing), GitHub/Bash (execution). Hermes/Atlas web tools allowed. Hephaestus has full code execution. Argus/Hestia local-only. Role-based tool allowlists per agent.',
+                        'Governance': 'Argus security audits daily. Sandbox: each agent has isolated workspace + memory partition. Standard macOS profile (no sudo). Command allowlists per agent (Argus denies exec, Hermes denies file write). Approval gates for irreversible ops. Audit log on all Zeus decisions.',
+                        'Prompt Eng.': 'System prompt per agent (300–600 words): Zeus routes and enforces sequencing. Hermes finds events (strict verification required). Atlas scores jobs (table format mandatory). Hephaestus plans before building. Argus scores security 0–100. Each prompt includes output contract: From:, Model:, then body.',
+                        'Prod. Thinking': 'Discord: 8 channels, 1 per agent. Zeus control channel requires mention. Hermes, Hestia, Argus, Muse, Plutus, Atlas, Hephaestus post directly. Prometheus stores strategy insights. Memory: Prometheus holds long-term patterns. Hestia watches 24–48h. Error handling: agents self-repair once on incomplete output.',
+                    },
+                    problem: 'Single LLM cannot handle diverse reasoning tasks efficiently. Local-only is slow, API-only is expensive.',
+                    approach: 'Built hub-and-spoke agent system with Zeus orchestrator routing tasks to specialized agents, each using optimal model for their role.',
+                    outcome: 'Deployed personal multi-agent system combining local (Ollama) and cloud (Deepseek, Claude) models with MCP tool integration and Discord control surface.',
+                    metrics: ['6 specialized agents', 'Cost-efficient stratification', 'Full tool integration', 'Discord control'],
+                },
                 {
                     title: 'Data Visualization Analytics Engineer 3',
                     company: 'Takeda Pharmaceuticals',
@@ -5397,7 +5442,7 @@
             var cx = 150, cy = 150, radius = 110;
             var totalSkills = skills.length;
             var dialAngle = 0;
-            var speed = 0.004;
+            var speed = 0;
             var paused = false;
             var rafId = null;
             var activeIndex = -1;
