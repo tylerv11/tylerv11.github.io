@@ -199,38 +199,67 @@ const PortfolioAssistant = (() => {
 
     // Category routing based on question intent
     let category = 'full_kb';
-    if (lowerQ.includes('strength') || lowerQ.includes('strong')) category = 'strategic_themes';
-    if (lowerQ.includes('weakness') || lowerQ.includes('weak') || lowerQ.includes('challenge')) category = 'strategic_themes';
-    if (lowerQ.includes('project') || lowerQ.includes('built') || lowerQ.includes('built') || lowerQ.includes('work')) category = 'projects';
-    if (lowerQ.includes('skill') || lowerQ.includes('tech') || lowerQ.includes('language')) category = 'technical_skills';
-    if (lowerQ.includes('leadership') || lowerQ.includes('team') || lowerQ.includes('coaching') || lowerQ.includes('manage')) category = 'leadership';
-    if (lowerQ.includes('govern') || lowerQ.includes('compliance') || lowerQ.includes('architecture')) category = 'architecture';
-    if (lowerQ.includes('impact') || lowerQ.includes('scale') || lowerQ.includes('metric')) category = 'impact';
-    if (lowerQ.includes('interest') || lowerQ.includes('career') || lowerQ.includes('future')) category = 'career_interests';
+    if (lowerQ.includes('strength') || lowerQ.includes('strong') || lowerQ.includes('best at') || lowerQ.includes('excel')) {
+      category = 'strategic_themes';
+    }
+    if (lowerQ.includes('weakness') || lowerQ.includes('weak') || lowerQ.includes('challenge') || lowerQ.includes('struggle')) {
+      category = 'strategic_themes';
+    }
+    if (lowerQ.includes('project') || lowerQ.includes('built') || lowerQ.includes('build') || lowerQ.includes('work on')) {
+      category = 'projects';
+    }
+    if (lowerQ.includes('skill') || lowerQ.includes('tech') || lowerQ.includes('language') || lowerQ.includes('tools') || lowerQ.includes('platform')) {
+      category = 'technical_skills';
+    }
+    if (lowerQ.includes('leadership') || lowerQ.includes('team') || lowerQ.includes('coaching') || lowerQ.includes('manage') || lowerQ.includes('mentor') || lowerQ.includes('lead')) {
+      category = 'leadership';
+    }
+    if (lowerQ.includes('govern') || lowerQ.includes('compliance') || lowerQ.includes('architecture') || lowerQ.includes('design') || lowerQ.includes('model')) {
+      category = 'architecture';
+    }
+    if (lowerQ.includes('impact') || lowerQ.includes('scale') || lowerQ.includes('metric') || lowerQ.includes('result') || lowerQ.includes('outcome')) {
+      category = 'impact';
+    }
+    if (lowerQ.includes('interest') || lowerQ.includes('career') || lowerQ.includes('future') || lowerQ.includes('next') || lowerQ.includes('growth')) {
+      category = 'career_interests';
+    }
+    if (lowerQ.includes('summary') || lowerQ.includes('overview') || lowerQ.includes('about') || lowerQ.includes('who')) {
+      category = 'professional_summary';
+    }
 
     const categoryText = state.kbCategories[category] || state.kbCategories['full_kb'];
 
-    // Score sections by keyword overlap
-    const sections = categoryText.split('\n\n');
-    let bestSection = null;
+    // Score paragraphs by keyword overlap
+    const paragraphs = categoryText.split('\n\n').filter(p => p.trim().length > 20);
+    let bestParagraph = null;
     let bestScore = 0;
 
-    sections.forEach(section => {
-      if (section.trim().length < 20) return;
-      const sectionLower = section.toLowerCase();
+    paragraphs.forEach(para => {
+      const paraLower = para.toLowerCase();
       let score = 0;
 
+      // Score by exact keyword matches (weighted higher)
       words.forEach(word => {
-        if (sectionLower.includes(word)) score += word.length; // Weight by word length
+        const wordCount = (paraLower.match(new RegExp(`\\b${word}\\b`, 'g')) || []).length;
+        score += wordCount * (word.length / 5); // Weight by word length
       });
 
       if (score > bestScore) {
         bestScore = score;
-        bestSection = section;
+        bestParagraph = para;
       }
     });
 
-    return bestSection || categoryText.substring(0, 500);
+    // If no good match found, return a section heading + context
+    if (!bestParagraph || bestScore === 0) {
+      // Return first few paragraphs from category
+      return categoryText.substring(0, 800).trim();
+    }
+
+    // Trim to reasonable length and add context
+    let answer = bestParagraph.substring(0, 600).trim();
+    if (bestParagraph.length > 600) answer += '...';
+    return answer;
   }
 
   // ===== MAIN QUERY HANDLER =====
