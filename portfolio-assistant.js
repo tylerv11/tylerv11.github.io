@@ -13,8 +13,10 @@ const PortfolioAssistant = (() => {
     MAX_SESSION_QUERIES: 15,
     MAX_QUERIES_PER_MINUTE: 5,
     SESSION_TIMEOUT_MS: 3600000, // 1 hour
-    OPENROUTER_MODEL: 'deepseek/deepseek-chat',
-    OPENROUTER_API_ENDPOINT: 'https://openrouter.ai/api/v1/chat/completions',
+    OPENROUTER_MODEL: 'deepseek/deepseek-2.5',
+    // Point to your Cloudflare Worker (set via window.CLOUDFLARE_WORKER_URL before init)
+    // Falls back to direct OpenRouter if not set
+    OPENROUTER_API_ENDPOINT: window.CLOUDFLARE_WORKER_URL || 'https://openrouter.ai/api/v1/chat/completions',
     MAX_RESPONSE_TOKENS: 500,
     CONTEXT_CHUNKS: 2,
     CHUNK_SIZE_TOKENS: 500,
@@ -254,16 +256,19 @@ const PortfolioAssistant = (() => {
 
   // ===== SMART MODE: DEEPSEEK API CALL =====
   async function callDeepseekAPI(question, contextChunks) {
-    // For GitHub Pages (static site), API key must come from:
-    // 1. A backend proxy service (Cloudflare Worker, Vercel, etc.)
-    // 2. Or set via window.OPENROUTER_API_KEY before initialization
-    const apiKey = window.OPENROUTER_API_KEY || localStorage.getItem('openrouter_api_key');
+    // Check if using Cloudflare Worker (recommended, secure)
+    const isUsingWorker = CONFIG.OPENROUTER_API_ENDPOINT.includes('workers.dev');
 
-    if (!apiKey) {
-      return {
-        success: false,
-        error: 'Smart Mode requires API setup. Contact me at tylervincent@alumni.usc.edu to enable.',
-      };
+    // If direct client-side: API key must be set
+    let apiKey = null;
+    if (!isUsingWorker) {
+      apiKey = window.OPENROUTER_API_KEY || localStorage.getItem('openrouter_api_key');
+      if (!apiKey) {
+        return {
+          success: false,
+          error: 'Smart Mode not configured. Set up Cloudflare Worker or API key via PORTFOLIO_ASSISTANT_SETUP.md',
+        };
+      }
     }
 
     const systemPrompt = `You are Tyler Vincent's portfolio assistant. Answer only questions about his professional experience, skills, projects, and background based on the provided context. Be direct and concise. If the question is not about Tyler or his work, politely decline and suggest asking about his portfolio instead.`;
@@ -274,15 +279,21 @@ const PortfolioAssistant = (() => {
 
     const userMessage = `Context:\n${contextText}\n\nQuestion: ${question}`;
 
+    // Build headers: if using Cloudflare Worker, don't include Authorization (Worker adds it)
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    if (!isUsingWorker && apiKey) {
+      headers['Authorization'] = `Bearer ${apiKey}`;
+      headers['HTTP-Referer'] = 'https://tylerv11.github.io';
+      headers['X-Title'] = 'Tyler Vincent Portfolio';
+    }
+
     try {
       const response = await fetch(CONFIG.OPENROUTER_API_ENDPOINT, {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'HTTP-Referer': 'https://tylerv11.github.io',
-          'X-Title': 'Tyler Vincent Portfolio',
-          'Content-Type': 'application/json',
-        },
+        headers: headers,
         body: JSON.stringify({
           model: CONFIG.OPENROUTER_MODEL,
           messages: [
