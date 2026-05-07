@@ -1,11 +1,11 @@
-# Tyler Vincent — Data & Analytics Portfolio
+# Tyler Vincent - Data & Analytics Portfolio
 # Manufacturing Analytics | Data Engineering | Business Intelligence
 
 ---
 
 ## Professional Summary
 
-Tyler Vincent is a Data Visualization & Analytics Engineer specializing in manufacturing analytics, enterprise data pipelines, and BI development for life sciences and industrial organizations. His work combines hands-on data engineering (Python, SQL, Databricks) with business intelligence development (Power BI, DAX, semantic modeling) and Lean Six Sigma process thinking. He holds a Lean Six Sigma Black Belt and a degree in Industrial & Systems Engineering. Tyler is largely self-taught in data engineering and has operated as both the technical lead and analytics owner for large-scale manufacturing operations — building data pipelines, owning semantic models, coaching teams, and driving governance simultaneously.
+Tyler Vincent is a Data Visualization & Analytics Engineer specializing in manufacturing analytics, enterprise data pipelines, and BI development for life sciences and industrial organizations. His work combines hands-on data engineering (Python, SQL, Databricks) with business intelligence development (Power BI, DAX, semantic modeling) and Lean Six Sigma process thinking. He holds a Lean Six Sigma Black Belt and a degree in Industrial & Systems Engineering. Tyler is largely self-taught in data engineering and has operated as both the technical lead and analytics owner for large-scale manufacturing operations - building data pipelines, owning semantic models, coaching teams, and driving governance simultaneously.
 
 ---
 
@@ -38,11 +38,11 @@ Tyler Vincent is a Data Visualization & Analytics Engineer specializing in manuf
 Tyler designed and operationalized a global enterprise qualification dashboard that transformed how employee training compliance is monitored across manufacturing sites worldwide.
 
 **The Problem:**
-Training qualification tracking was fragmented—reliant on static exports, site-specific spreadsheets, and manual reconciliation across teams. Compliance visibility was poor, and it took hours to answer basic questions like "is this employee qualified today?"
+Training qualification tracking was fragmented-reliant on static exports, site-specific spreadsheets, and manual reconciliation across teams. Compliance visibility was poor, and it took hours to answer basic questions like "is this employee qualified today?"
 
 **What Tyler Built:**
 - Consolidated 11+ million training records into a single authoritative dashboard
-- Designed business logic that goes beyond basic "qualified/not qualified" flags—it correctly identifies employees whose status has lapsed due to duplicates, overlapping curricula, or delayed source-system cleanup
+- Designed business logic that goes beyond basic "qualified/not qualified" flags-it correctly identifies employees whose status has lapsed due to duplicates, overlapping curricula, or delayed source-system cleanup
 - Built parent-child curriculum rollup logic so managers see both individual task status and overall compliance
 - Implemented row-level security so each manager sees only their direct reports
 - Added an AI instruction layer (Copilot for Power BI) so users can ask free-form questions like "Who's overdue for lab safety training?"
@@ -63,7 +63,7 @@ Training qualification tracking was fragmented—reliant on static exports, site
 
 ### 2. Manufacturing Cycle Time & Throughput Analytics Platform
 
-Tyler owns and continuously develops the analytics layer for manufacturing cycle time performance—the system that reveals where bottlenecks exist, what's causing delays, and where capacity can be gained.
+Tyler owns and continuously develops the analytics layer for manufacturing cycle time performance-the system that reveals where bottlenecks exist, what's causing delays, and where capacity can be gained.
 
 **The Problem:**
 Manufacturing teams had visibility into *what* happened (production reports) but not *why* or *where* the time went. Bottleneck identification required manual investigation; performance signals were buried in noise. Different departments used different metrics, creating confusion.
@@ -96,7 +96,7 @@ Manufacturing teams had visibility into *what* happened (production reports) but
 Tyler built a badge-based analytics system to give scheduling and supervisors visibility into staffing patterns, movement, and capacity.
 
 **The Problem:**
-Manufacturing cannot hire additional headcount easily. Production planning quality depends on knowing exactly who's present each shift—but this data was scattered across badge systems and manual logs. Manpower variability can introduce 5–10% fluctuations in task duration.
+Manufacturing cannot hire additional headcount easily. Production planning quality depends on knowing exactly who's present each shift-but this data was scattered across badge systems and manual logs. Manpower variability can introduce 5–10% fluctuations in task duration.
 
 **What Tyler Built:**
 - Integrated the badge access control system into the data platform
@@ -140,12 +140,12 @@ A lightweight web app (Databricks + Flask) that lets floor technicians enter del
 Tyler developed multiple AI-powered analytics capabilities, treating AI as an extension of governed enterprise platforms rather than a disconnected experiment.
 
 **What Tyler Has Built:**
-- **Copilot for Power BI:** Enabled across multiple datasets with custom instruction layers that define metric logic, terminology, and grounding rules—so Copilot understands manufacturing domain concepts like "float," "bottleneck," "cycle time," and "microstep" without users needing to know exact column names
+- **Copilot for Power BI:** Enabled across multiple datasets with custom instruction layers that define metric logic, terminology, and grounding rules-so Copilot understands manufacturing domain concepts like "float," "bottleneck," "cycle time," and "microstep" without users needing to know exact column names
 - **SharePoint Agent:** Built a conversational entry point to organizational knowledge and process documentation
 - **LLM Instruction Layer Engineering:** Designed natural language context layers that let AI assistants answer domain-specific questions accurately and avoid hallucination
 
 **Strategic Significance:**
-This work ties AI enablement to enterprise governance, semantic models, access control, and validated business logic—establishing patterns that other teams can inherit rather than reinvent.
+This work ties AI enablement to enterprise governance, semantic models, access control, and validated business logic-establishing patterns that other teams can inherit rather than reinvent.
 
 ---
 
@@ -216,13 +216,13 @@ Tyler owns or has significantly contributed to a portfolio of 25+ site analytics
 ## How Tyler Approaches Work
 
 **On Problem-Solving:**
-Tyler asks "what decision needs to be made?" before diving into data. At one manufacturing company, he replaced average-based KPIs with distribution analysis (P20/P50/P90) because averages were masking real performance signals. At an aerospace company, he built a 100,000-cell matrix to optimize satellite scheduling using constraint satisfaction methods. He works backwards from the decision to the data needed—not the other way around.
+Tyler asks "what decision needs to be made?" before diving into data. At one manufacturing company, he replaced average-based KPIs with distribution analysis (P20/P50/P90) because averages were masking real performance signals. At an aerospace company, he built a 100,000-cell matrix to optimize satellite scheduling using constraint satisfaction methods. He works backwards from the decision to the data needed-not the other way around.
 
 **On Sustainability:**
 Every major product includes documentation, shared ownership structures, and version control. The goal is to reduce single-person dependency so teams can maintain and extend solutions without the original builder. He coaches team members, creates knowledge bases, and ensures others understand the "why" behind the system design.
 
 **On Communication:**
-Tyler is fluent in multiple languages: shop-floor operations, SQL, C-suite strategy, Lean Six Sigma, and product design. He can explain distribution metrics to an operator or a CFO—and adjusts his framing based on what matters to the audience. He's comfortable presenting to everyone from technicians to executives.
+Tyler is fluent in multiple languages: shop-floor operations, SQL, C-suite strategy, Lean Six Sigma, and product design. He can explain distribution metrics to an operator or a CFO-and adjusts his framing based on what matters to the audience. He's comfortable presenting to everyone from technicians to executives.
 
 **On Scope & Impact:**
 Tyler builds systems that work *and* that people actually use. He's not grinding for grinding's sake; he's solving the actual problem that matters and delivering measurable outcomes. He prioritizes impact and adoption over technical perfection.
@@ -297,10 +297,10 @@ He's actively growing in:
 
 ## Background & Education
 
-**Lean Six Sigma Black Belt** — Certified in DMAIC methodology; practical experience in manufacturing process improvement, throughput optimization, and statistical analysis
+**Lean Six Sigma Black Belt** - Certified in DMAIC methodology; practical experience in manufacturing process improvement, throughput optimization, and statistical analysis
 
-**Industrial & Systems Engineering Degree** — From a major research university; coursework spanning optimization, product design, economics, human factors, and operations research
+**Industrial & Systems Engineering Degree** - From a major research university; coursework spanning optimization, product design, economics, human factors, and operations research
 
-**Self-Taught Data Engineer** — Built expertise in Python, SQL, Databricks, and Power BI through real-world project delivery at scale; no formal data science degree, but deep hands-on experience with millions of records in production systems
+**Self-Taught Data Engineer** - Built expertise in Python, SQL, Databricks, and Power BI through real-world project delivery at scale; no formal data science degree, but deep hands-on experience with millions of records in production systems
 
-**Outdoor Leadership & Expedition Guide** — Former Senior Guide leading 9–12 day wilderness expeditions; trained 15 employees in outdoor education, crisis management, and team development; leadership under real stakes (no communications, no backup)—skills that transfer directly to managing ambiguous, high-pressure technical situations
+**Outdoor Leadership & Expedition Guide** - Former Senior Guide leading 9–12 day wilderness expeditions; trained 15 employees in outdoor education, crisis management, and team development; leadership under real stakes (no communications, no backup)-skills that transfer directly to managing ambiguous, high-pressure technical situations
