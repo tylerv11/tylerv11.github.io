@@ -1,0 +1,32 @@
+# Environment
+.env
+.env.local
+.env*.local
+*.key
+*.pem
+
+# API Keys & Secrets
+API_KEY
+OPENROUTER_API_KEY
+openrouter_api_key
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build & Logs
+dist/
+build/
+*.log
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Raw source docs (for RAG only, not for deployment)
+portfolio_knowledge_base.raw.md
+portfolio_knowledge_base.backup.md
