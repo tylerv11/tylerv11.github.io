@@ -5381,16 +5381,30 @@
                 var sendBtn = document.getElementById('sa-send');
                 if (sendBtn) sendBtn.disabled = true;
 
-                var result = PortfolioAssistant.handleQuery(q);
-                setTimeout(function() {
-                    if (result.success) {
-                        saAddMsg(result.answer, 'bot');
-                    } else {
-                        saAddMsg('❌ ' + result.error, 'bot');
-                    }
-                    if (sendBtn) sendBtn.disabled = false;
-                    updateInfoBar();
-                }, 280);
+                // Try curated KB first (best quality answers)
+                var curatedAnswer = saAnswer(q);
+                var isFallback = curatedAnswer.includes('I\'m not sure I have a canned answer');
+
+                if (!isFallback) {
+                    // Found a curated answer, use it
+                    setTimeout(function() {
+                        saAddMsg(curatedAnswer, 'bot');
+                        if (sendBtn) sendBtn.disabled = false;
+                        updateInfoBar();
+                    }, 280);
+                } else {
+                    // No curated match, try knowledge base parsing
+                    var result = PortfolioAssistant.handleQuery(q);
+                    setTimeout(function() {
+                        if (result.success) {
+                            saAddMsg(result.answer, 'bot');
+                        } else {
+                            saAddMsg('❌ ' + result.error, 'bot');
+                        }
+                        if (sendBtn) sendBtn.disabled = false;
+                        updateInfoBar();
+                    }, 280);
+                }
             };
 
             window.saSubmit = function() {
