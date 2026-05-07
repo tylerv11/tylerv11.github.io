@@ -4206,11 +4206,7 @@
                 { id: 'Operations',    color: '#ff6b35' },
                 { id: 'Product',       color: '#ec4899' },
                 { id: 'Leadership',    color: '#06b6d4' },
-                { id: 'Orchestration', color: '#14b8a6' },
                 { id: 'Governance',    color: '#f97316' },
-                { id: 'Tool Use',      color: '#8b5cf6' },
-                { id: 'Prompt Eng.',   color: '#06b6d4' },
-                { id: 'Prod. Thinking',color: '#ec4899' },
             ];
 
             var SKILL_COLORS = {};
@@ -4218,22 +4214,18 @@
 
             var PROJECTS = [
                 {
-                    title: 'Personal AI Council: Hub-and-Spoke Agent System',
-                    company: 'Deployed Locally',
-                    mapLabel: 'AI Council', mapSub: '/ Multi-Agent Orchestration',
-                    skills: ['Orchestration', 'AI / ML', 'Tool Use', 'Governance', 'Prompt Eng.', 'Prod. Thinking'],
+                    title: 'Self Hosted AI Council: Hub-and-Spoke Agent System',
+                    company: 'Self Hosted AI Council',
+                    mapLabel: 'Self Hosted', mapSub: '/ AI Council',
+                    skills: ['AI / ML', 'Governance'],
                     skillNotes: {
-                        'Orchestration': 'Zeus (ChatGPT 5.4) orchestrates 8 agents: routes to Hermes (research), Atlas (jobs), Muse (creative), Hephaestus (automation), Argus (security), Hestia (health), Plutus (finance), Prometheus (strategy). All routing tables hardcoded. No cross-agent talk.',
-                        'AI / ML': 'Execution agents (Hermes, Atlas, Muse, Hephaestus, Plutus, Prometheus) use Deepseek v4 Flash via OpenRouter for cost efficiency. Advisors (Argus, Hestia) run locally on Ollama (Llama3.1:8b primary, Qwen3.5:4b fallback).',
-                        'Tool Use': 'MCP integration: agents access web_fetch (research), file I/O (automation), Discord APIs (routing), GitHub/Bash (execution). Hermes/Atlas web tools allowed. Hephaestus has full code execution. Argus/Hestia local-only. Role-based tool allowlists per agent.',
-                        'Governance': 'Argus security audits daily. Sandbox: each agent has isolated workspace + memory partition. Standard macOS profile (no sudo). Command allowlists per agent (Argus denies exec, Hermes denies file write). Approval gates for irreversible ops. Audit log on all Zeus decisions.',
-                        'Prompt Eng.': 'System prompt per agent (300–600 words): Zeus routes and enforces sequencing. Hermes finds events (strict verification required). Atlas scores jobs (table format mandatory). Hephaestus plans before building. Argus scores security 0–100. Each prompt includes output contract: From:, Model:, then body.',
-                        'Prod. Thinking': 'Discord: 8 channels, 1 per agent. Zeus control channel requires mention. Hermes, Hestia, Argus, Muse, Plutus, Atlas, Hephaestus post directly. Prometheus stores strategy insights. Memory: Prometheus holds long-term patterns. Hestia watches 24–48h. Error handling: agents self-repair once on incomplete output.',
+                        'AI / ML': 'Execution agents (Hermes, Atlas, Muse, Hephaestus, Plutus, Prometheus) use Deepseek v4 Flash via OpenRouter for cost efficiency. Advisors (Argus, Hestia) run locally on Ollama (Llama3.1:8b primary, Qwen3.5:4b fallback). Zeus (ChatGPT 5.4) orchestrates routing.',
+                        'Governance': 'Argus security audits daily. Sandbox: each agent has isolated workspace + memory partition. Standard macOS profile (no sudo). Command allowlists per agent. Approval gates for irreversible ops. Audit log on all Zeus decisions.',
                     },
                     problem: 'Single LLM cannot handle diverse reasoning tasks efficiently. Local-only is slow, API-only is expensive.',
                     approach: 'Built hub-and-spoke agent system with Zeus orchestrator routing tasks to specialized agents, each using optimal model for their role.',
                     outcome: 'Deployed personal multi-agent system combining local (Ollama) and cloud (Deepseek, Claude) models with MCP tool integration and Discord control surface.',
-                    metrics: ['6 specialized agents', 'Cost-efficient stratification', 'Full tool integration', 'Discord control'],
+                    metrics: ['8 specialized agents', 'Cost-efficient stratification', 'Discord control'],
                 },
                 {
                     title: 'Data Visualization Analytics Engineer 3',
@@ -4272,12 +4264,13 @@
                     title: 'Process Engineer II',
                     company: 'Electric Boat \u2014 General Dynamics',
                     mapLabel: 'Gen. Dynamics', mapSub: '/ Process Eng. II',
-                    skills: ['Optimization', 'Operations', 'Leadership', 'Visualization'],
+                    skills: ['Optimization', 'Operations', 'Leadership', 'Visualization', 'Governance'],
                     skillNotes: {
                         'Optimization': 'Six Sigma Black Belt — redesigned work center layouts to maximize throughput on submarine production lines.',
                         'Operations': 'Built knowledge base for nuclear submarine industrial sites ensuring repeatable, safe operations.',
                         'Leadership': 'Bridged engineering and floor teams — worked directly with welders and machinists to implement changes.',
                         'Visualization': 'Created facility layout visualizations and process flow diagrams for work center documentation.',
+                        'Governance': 'Operated under security clearance protocols in classified defense manufacturing environment. Enforced safety standards and regulatory compliance for nuclear submarine production.',
                     },
                     problem: 'Nuclear submarine industrial sites lacked standardized layouts and knowledge transfer systems.',
                     approach: 'Applied Six Sigma Black Belt methods to build work center layouts and a formal site knowledge base.',
@@ -4303,11 +4296,12 @@
                     title: 'Senior Thesis \u2014 Algorithm Optimization',
                     company: 'Aerospace Corporation',
                     mapLabel: 'Aerospace Corp.', mapSub: '/ Senior Thesis',
-                    skills: ['Optimization', 'Analytics', 'AI / ML'],
+                    skills: ['Optimization', 'Analytics', 'AI / ML', 'Governance'],
                     skillNotes: {
                         'Optimization': 'Multi-step scheduling algorithm solving a Traveling Salesman variant for 100+ satellite contacts.',
                         'Analytics': 'Analyzed scheduling patterns and contact windows to inform algorithm design and validation.',
                         'AI / ML': 'Applied heuristic search and optimization techniques similar to modern ML scheduling systems.',
+                        'Governance': 'Developed systems for military aerospace applications requiring strict reliability and validation protocols. Documented algorithms for reproducible, auditable scheduling.',
                     },
                     problem: 'Military antenna dishes had no automated scheduling system for 100+ satellite contacts worldwide.',
                     approach: 'Built a multi-step Python optimization (Traveling Salesman variant) deployed on a Raspberry Pi.',
@@ -4333,10 +4327,11 @@
                     title: 'Senior Expedition Guide',
                     company: 'Canadian Wilderness',
                     mapLabel: 'Canadian Wild.', mapSub: '/ Senior Guide',
-                    skills: ['Leadership', 'Operations'],
+                    skills: ['Leadership', 'Operations', 'Governance'],
                     skillNotes: {
                         'Leadership': 'Trained 15 employees, led 9\u201312 day remote expeditions, and managed safety under pressure.',
                         'Operations': 'Planned and executed complex wilderness logistics for multi-day canoe treks.',
+                        'Governance': 'Established and enforced safety protocols for remote expeditions with no external backup. Managed risk through systematic training, equipment maintenance standards, and crisis response procedures.',
                     },
                     problem: 'Remote wilderness expeditions demand precise logistics, safety, and team development under pressure.',
                     approach: 'Guided 9\u201312 day canoe treks and trained 15 employees in outdoor education and crisis management.',
@@ -4376,10 +4371,11 @@
                     title: 'Junior Expedition Guide',
                     company: 'Canadian Wilderness',
                     mapLabel: 'Canadian Wild.', mapSub: '/ Junior Guide',
-                    skills: ['Leadership', 'Operations'],
+                    skills: ['Leadership', 'Operations', 'Governance'],
                     skillNotes: {
                         'Leadership': 'Supported senior guides and developed foundational outdoor education and team-building skills.',
                         'Operations': 'Managed equipment inventory and repairs, reducing operational costs by $15k+.',
+                        'Governance': 'Maintained equipment safety standards and maintenance protocols ensuring field operations compliance. Contributed to systematic tracking systems that reduced liability risk.',
                     },
                     problem: 'Field operations and equipment lacked systematic inventory tracking and maintenance protocols.',
                     approach: 'Inventoried and repaired canoes, fishing gear, and equipment to extend operational lifespan.',
@@ -5464,13 +5460,12 @@
 
             function positionBubbles() {
                 bubbleEls.forEach(function(el, i) {
-                    var a = dialAngle + (i / totalSkills) * Math.PI * 2;
+                    var a = (i / totalSkills) * Math.PI * 2;
                     var x = cx + Math.cos(a) * radius;
                     var y = cy + Math.sin(a) * radius;
                     el.style.left  = (x - 29) + 'px';
                     el.style.top   = (y - 29) + 'px';
-                    // Counter-rotate text so it stays upright
-                    el.style.transform = 'rotate(' + (-dialAngle * (180 / Math.PI)) + 'deg)';
+                    el.style.transform = 'rotate(0deg)';
                 });
             }
 
