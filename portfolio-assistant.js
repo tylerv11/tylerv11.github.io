@@ -192,7 +192,7 @@ const PortfolioAssistant = (() => {
     return match ? match[0] : '';
   }
 
-  // ===== INTELLIGENT FUZZY MATCHING =====
+  // ===== INTELLIGENT FUZZY MATCHING WITH NARRATIVE FORMATTING =====
   function findBestAnswerInKB(question) {
     const lowerQ = question.toLowerCase();
     const words = lowerQ.split(/\s+/).filter(w => w.length > 2);
@@ -205,7 +205,7 @@ const PortfolioAssistant = (() => {
     if (lowerQ.includes('weakness') || lowerQ.includes('weak') || lowerQ.includes('challenge') || lowerQ.includes('struggle')) {
       category = 'strategic_themes';
     }
-    if (lowerQ.includes('project') || lowerQ.includes('built') || lowerQ.includes('build') || lowerQ.includes('work on')) {
+    if (lowerQ.includes('project') || lowerQ.includes('built') || lowerQ.includes('build') || lowerQ.includes('work on') || lowerQ.includes('created')) {
       category = 'projects';
     }
     if (lowerQ.includes('skill') || lowerQ.includes('tech') || lowerQ.includes('language') || lowerQ.includes('tools') || lowerQ.includes('platform')) {
@@ -229,37 +229,55 @@ const PortfolioAssistant = (() => {
 
     const categoryText = state.kbCategories[category] || state.kbCategories['full_kb'];
 
-    // Score paragraphs by keyword overlap
-    const paragraphs = categoryText.split('\n\n').filter(p => p.trim().length > 20);
-    let bestParagraph = null;
-    let bestScore = 0;
-
-    paragraphs.forEach(para => {
-      const paraLower = para.toLowerCase();
-      let score = 0;
-
-      // Score by exact keyword matches (weighted higher)
-      words.forEach(word => {
-        const wordCount = (paraLower.match(new RegExp(`\\b${word}\\b`, 'g')) || []).length;
-        score += wordCount * (word.length / 5); // Weight by word length
-      });
-
-      if (score > bestScore) {
-        bestScore = score;
-        bestParagraph = para;
-      }
-    });
-
-    // If no good match found, return a section heading + context
-    if (!bestParagraph || bestScore === 0) {
-      // Return first few paragraphs from category
-      return categoryText.substring(0, 800).trim();
+    // Extract and score relevant snippets
+    const snippets = extractRelevantSnippets(categoryText, words);
+    if (snippets.length > 0) {
+      return formatSnippetsAsAnswer(snippets, question);
     }
 
-    // Trim to reasonable length and add context
-    let answer = bestParagraph.substring(0, 600).trim();
-    if (bestParagraph.length > 600) answer += '...';
+    // Fallback to category summary
+    return formatCategorySummary(categoryText, category);
+  }
+
+  function extractRelevantSnippets(text, keywords) {
+    const paragraphs = text.split('\n\n').filter(p => p.trim().length > 20);
+    const scored = paragraphs.map(para => {
+      const paraLower = para.toLowerCase();
+      let score = 0;
+      keywords.forEach(word => {
+        const wordCount = (paraLower.match(new RegExp(`\\b${word}\\b`, 'g')) || []).length;
+        score += wordCount * (word.length / 5);
+      });
+      return { text: para, score };
+    });
+
+    return scored
+      .filter(s => s.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 2)
+      .map(s => s.text);
+  }
+
+  function formatSnippetsAsAnswer(snippets, question) {
+    // Clean up markdown formatting and create narrative answer
+    let answer = snippets
+      .map(s => s.replace(/^#+\s+/gm, '').trim())
+      .filter(s => s.length > 0)
+      .join('\n\n');
+
+    // Limit length
+    if (answer.length > 800) {
+      answer = answer.substring(0, 800).trim() + '...';
+    }
+
     return answer;
+  }
+
+  function formatCategorySummary(categoryText, category) {
+    const cleaned = categoryText.replace(/^#+\s+/gm, '').trim();
+    let summary = cleaned.substring(0, 700).trim();
+    if (cleaned.length > 700) summary += '...';
+    return summary;
   }
 
   // ===== MAIN QUERY HANDLER =====
@@ -284,16 +302,20 @@ const PortfolioAssistant = (() => {
       };
     }
 
-    // 3. Find answer in knowledge base
+    // 3. Find answer using hybrid approach
     recordQuery();
 
-    let answer = 'I\'m reading from Tyler\'s portfolio knowledge base...';
+    // Try to find answer from curated KB first (best results)
+    let answer = findAnswerInCuratedKB(question);
 
-    if (state.kbLoaded) {
+    // If no good match in curated KB, try knowledge base parsing
+    if (!answer && state.kbLoaded) {
       answer = findBestAnswerInKB(question);
-    } else {
-      // KB not loaded yet, provide helpful message
-      answer = 'Still loading Tyler\'s full portfolio data. Please try your question again in a moment.';
+    }
+
+    // Fallback if nothing found
+    if (!answer) {
+      answer = 'Great question! I\'m not sure I have a direct answer for that one. Try asking about Tyler\'s projects, KPIs, skills, industries, or working style. Or reach out directly at tylervincent@alumni.usc.edu.';
     }
 
     return {
@@ -303,6 +325,7 @@ const PortfolioAssistant = (() => {
       remainingQueries: getRemainingQueries(),
     };
   }
+
 
   // ===== LOGGING =====
   function logSecurityEvent(eventType, details) {
