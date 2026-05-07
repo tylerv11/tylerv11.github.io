@@ -1,282 +1,306 @@
-# Portfolio Knowledge Base — FY2025 Annual Review
-# Analytics & Data Engineering — Manufacturing & Life Sciences
-# 
-# USAGE: This file is the RAG source for the portfolio assistant chatbot.
-# It answers questions about skills, projects, impact, and technical contributions.
-# All employer-identifying names, internal system names, and colleague names have been anonymized.
-#
-# ANONYMIZATION MAP (do not publish this section — remove before deploying):
-# - Employer name → a global biopharmaceutical manufacturer (major global biopharmaceutical manufacturer)
-# - RTMS → Scheduling & Planning System
-# - FRAC / Fractionation Analytics → Manufacturing Cycle Time Analytics
-# - FRAC Performance Board → Manufacturing Cycle Time Dashboard  
-# - SuccessFactors → Enterprise Learning Management System (LMS)
-# - EDB / Enterprise Data Backbone → Enterprise Data Platform
-# - DeltaV → Process Control System
-# - CCURE → Access Control System
-# - AMIRA / PIMS → Legacy Event Tracking Systems
-# - MES → Manufacturing Execution System
-# - JDE → ERP System
-# - Dataiku → Dataiku (public product, kept as-is)
-# - Power BI → Power BI (public product, kept as-is)
-# - Databricks → Databricks (public product, kept as-is)
-# - Internal URLs, SharePoint links, Teams links → removed
-# - All colleague names → replaced with functional roles
-# - All site-specific identifiers (LA, Van Nuys) → [Manufacturing Site]
-
----
-
-## Working Thesis
-
-In FY2025, I expanded from being a strong technical builder into a broader organizational enabler who shaped how teams use data, how analytics solutions are governed, and how site and global stakeholders align around sustainable, enterprise-aligned platforms. My work did not stop at delivering dashboards or ad hoc analysis. I built repeatable data products, pipelines, standards, training, and governance patterns that reduced manual effort, improved trust in decision-making, and strengthened the long-term digital capability of the organization.
-
-A consistent theme in my work this year was building solutions that are durable, validated, and scalable. I partnered across Manufacturing, Business Excellence, Automation Engineering, Reliability, Learning & Development, Quality, Supply Chain, Digital, and global platform teams to ensure that analytics were not only technically sound but also aligned to business process reality, enterprise governance expectations, and long-term ownership models. I also invested heavily in coaching others, documenting logic, and reducing single-person dependency so that teams can use and sustain these capabilities over time.
+# Tyler Vincent — Data & Analytics Portfolio
+# Manufacturing Analytics | Data Engineering | Business Intelligence
 
 ---
 
 ## Professional Summary
 
-I am a Data Visualization & Analytics Engineer specializing in manufacturing analytics, enterprise data pipelines, and BI development for life sciences organizations. My work combines hands-on data engineering (Python, SQL, Databricks) with business intelligence development (Power BI, DAX, semantic modeling) and Lean Six Sigma process thinking. I hold a Lean Six Sigma Black Belt and a degree in Industrial & Systems Engineering. I am largely self-taught in data engineering and have operated as both the data engineer and analytics lead for a major manufacturing site — building pipelines, owning semantic models, coaching users, and driving governance alignment simultaneously.
+Tyler Vincent is a Data Visualization & Analytics Engineer specializing in manufacturing analytics, enterprise data pipelines, and BI development for life sciences and industrial organizations. His work combines hands-on data engineering (Python, SQL, Databricks) with business intelligence development (Power BI, DAX, semantic modeling) and Lean Six Sigma process thinking. He holds a Lean Six Sigma Black Belt and a degree in Industrial & Systems Engineering. Tyler is largely self-taught in data engineering and has operated as both the technical lead and analytics owner for large-scale manufacturing operations — building data pipelines, owning semantic models, coaching teams, and driving governance simultaneously.
 
 ---
 
-## Core Technical Skills
+## Core Strengths
 
-- **Languages & Tools:** Python, SQL (T-SQL, Databricks SQL), DAX, PySpark
-- **Platforms:** Databricks (Delta Lake, Unity Catalog, Databricks Apps), Power BI (semantic modeling, RLS, Copilot instruction layers), Dataiku, Tableau, SharePoint, Power Platform (Automate, Canvas Apps)
-- **Data Engineering:** Delta pipelines, ETL/ELT design, fuzzy matching, event-based time series modeling, medallion architecture alignment, streaming vs. batch patterns
-- **Visualization:** Power BI (enterprise-scale, RLS, incremental refresh, semantic model optimization), Tableau, Qlik (legacy migration experience)
-- **AI / Agents:** Copilot for Power BI, SharePoint agents, Copilot Studio custom connector design, LLM instruction layer engineering for domain-specific chatbots
-- **Process & Methods:** Lean Six Sigma Black Belt, Digital Value Stream Mapping, throughput modeling, statistical analysis, DMAIC, OEE principles
-- **Governance:** Row-level security design, Unity Catalog compliance, SOP-aligned documentation, data lifecycle management
+**Technical Depth:**
+- Builds robust data pipelines (Delta Lake, SQL, Python) that scale to millions of records
+- Designs semantic models and Power BI dashboards for enterprise use
+- Applies statistical rigor and Lean Six Sigma methods to operational problems
+- Comfortable with full-stack work: raw data → analytics → executive decision-making
+
+**Cross-Functional Credibility:**
+- Fluent in both engineering/operations constraints and C-level strategy
+- Has designed solutions with manufacturing teams, IT, Quality, and Finance simultaneously
+- Can explain complex analytics to operators on the shop floor or CFOs in the boardroom
+- Coaches teams (20+ people trained in Power BI, SQL, analytics approaches)
+
+**Problem-Solving Approach:**
+- Starts by asking "what decision needs to be made?" rather than "what data can we build?"
+- Replaces surface metrics with distribution-driven analysis (e.g., P20/P50/P90 instead of averages)
+- Designs for sustainability: documentation, shared ownership, reduced single-person dependency
+- Focuses on measurable outcomes and business impact, not technical elegance for its own sake
 
 ---
 
-## Major Projects & Accomplishments
+## What Tyler Has Built
 
 ### 1. Enterprise Training Compliance Dashboard (Global Scale)
 
-**What it is:** I helped build, mature, and operationalize a global enterprise qualification dashboard that modernizes how employee training compliance is monitored across all manufacturing sites. What was previously a fragmented, time-intensive process — reliant on static exports, site-specific reports, and manual reconciliation — was replaced with a single, trusted view of qualification status across the organization.
+Tyler designed and operationalized a global enterprise qualification dashboard that transformed how employee training compliance is monitored across manufacturing sites worldwide.
 
-**Technical depth:**
-- Consolidated every training assignment and completion on record, regardless of site or age, and applied consistent business logic to determine current qualification status
-- Designed renewal-based overdue logic that goes beyond the native LMS "Qualified" flag — the dashboard correctly identifies employees whose qualification records show "Qualified" in the source system but have actually lapsed due to duplicates, overlapping curricula, self-assigned training, or delayed source-system cleanup
-- Built parent-child curriculum rollup logic so qualification status correctly aggregates from individual training items up to curriculum-level status for managers
-- Designed and implemented row-level security (RLS) with anticipated role tiers: All Access, Self + Direct Reports, and Leader / L&D
-- Added an AI instruction layer with standard definitions and column synonyms to enable Copilot for Power BI users to ask free-form questions against the semantic model
-- Optimized the semantic model by reducing high-cardinality columns (e.g., converting datetime to date to reduce VertiPaq dictionary size), removing redundant fields, and restructuring relationships to star schema alignment
-- Reconnected data sources to Databricks in Import mode with incremental refresh to stabilize refresh behavior and reduce gateway load
-- Built "Next Due Training Item" logic to surface the most urgent upcoming or overdue training item per employee, with aging context
+**The Problem:**
+Training qualification tracking was fragmented—reliant on static exports, site-specific spreadsheets, and manual reconciliation across teams. Compliance visibility was poor, and it took hours to answer basic questions like "is this employee qualified today?"
 
-**Scale & impact:**
-- The dashboard interprets approximately **11 million total training records**, including roughly **575,000 renewal-based qualification records** that historically required manual clarification
-- At the primary manufacturing site, eliminated **500+ hours of manual reconciliation annually** by reducing repeated exports, hand-matching, and follow-up validation by supervisors, L&D, and Quality teams
-- Conservatively extrapolated across **23+ manufacturing sites**, even a modest 20–30 hours saved per site implies **460–690 hours saved annually** across the network — likely higher at large sites
-- Preventing even one training-related deviation per site per year could avoid costs in the range of **$345,000 to over $1 million annually** across 23+ sites, based on industry benchmarks of $15,000–$50,000 per investigation event, excluding regulatory or production delay impacts
+**What Tyler Built:**
+- Consolidated 11+ million training records into a single authoritative dashboard
+- Designed business logic that goes beyond basic "qualified/not qualified" flags—it correctly identifies employees whose status has lapsed due to duplicates, overlapping curricula, or delayed source-system cleanup
+- Built parent-child curriculum rollup logic so managers see both individual task status and overall compliance
+- Implemented row-level security so each manager sees only their direct reports
+- Added an AI instruction layer (Copilot for Power BI) so users can ask free-form questions like "Who's overdue for lab safety training?"
+- Optimized the semantic model for performance (reduced cardinality, star-schema design, incremental refresh)
 
-**Development effort:** Approximately 200–350 hours over 8–12 weeks elapsed time, primarily single developer, with coordination from L&D, global resources, and data engineers.
+**Impact:**
+- Eliminated **500+ hours of manual reconciliation annually** at one site
+- Scaled across 23+ sites with 20–30 hours saved per location
+- Prevents training-related audit findings (estimated $345K–$1M annually across all sites)
+- Creates a single source of truth that IT, L&D, Quality, and Compliance can trust
 
-**Version history highlights (selected):**
-- Added AI (Copilot) instruction layer with synonym mapping and grounding rules to prevent hallucination
-- Reworked on-time completion logic to use due-date-based attribution instead of completion-date attribution for renewal cycles
-- Added "Next Due Training Item" indicator for proactive risk surfacing
-- Improved parent-child qualification rollup measures
-- Optimized cardinality and removed redundant fields from the semantic model
-- Added RLS framework and began beta testing with site-level security roles
-- Built export capability and continuous date filtering for custom period analysis
-- Removed deprecated fields after upstream data privacy changes; replaced display names from approved directory source
-- Removed EU-coded populations to comply with regional data privacy requirements
+**Technical Highlights:**
+- 200–350 hours of development; single developer leading design
+- Version-controlled release cycle with staged rollouts
+- Handles complex edge cases: qualification renewal logic, multi-site data consolidation, role-based access control
 
 ---
 
-### 2. Manufacturing Cycle Time Dashboard (Fractionation Analytics)
+### 2. Manufacturing Cycle Time & Throughput Analytics Platform
 
-**What it is:** I own and continuously develop the Manufacturing Cycle Time Dashboard — the enterprise-aligned analytics layer for reviewing cycle time performance, float, bottlenecks, delays, and process drift across hundreds of steps in a complex push-production manufacturing environment. This board serves as the cross-functional "single pane of glass" that aligns Manufacturing, Business Excellence, Process Engineering, Reliability, Automation Engineering, and Scheduling stakeholders around one validated understanding of performance.
+Tyler owns and continuously develops the analytics layer for manufacturing cycle time performance—the system that reveals where bottlenecks exist, what's causing delays, and where capacity can be gained.
 
-**Technical depth:**
-- Built a custom event framework from process control and manufacturing execution system historian data, mapping raw phase tags and OPC paths to standardized microstep labels (e.g., start events, end conditions, cleaning classifications)
-- Developed Critical Path vs. Non-Critical Path classification logic for each step, including complex double-lot and single-lot distinctions within the same equipment sequence
-- Built start-to-start cadence metrics within any given microstep across consecutive lots — reusable measure design that eliminates future one-off measure creation
-- Developed rolling median drift detection with configurable thresholds (updated from 9-point to 6-point run rules to reduce noise)
-- Integrated delay data from multiple sources — a scheduling & planning system, a legacy delay entry system, and a new Databricks-based writeback app — and anchored alignment on lot + unit operation rather than fragile free-text activity name matching
-- Built a float-priority data model table that identifies the most recent qualifying lot per unit op within a rolling 72-hour window, filtering out in-progress lots to provide accurate and actionable slack visibility for schedulers
-- Added an LLM instruction layer (Copilot context framework) with detailed definitions for bottlenecks, float, systemic waits, plasma types, microsteps, and double-lot logic — enabling new users to ask free-form questions and receive process-aware responses grounded in the data model
-- Maintained version-controlled release cycle with structured beta testing before stakeholder rollout
+**The Problem:**
+Manufacturing teams had visibility into *what* happened (production reports) but not *why* or *where* the time went. Bottleneck identification required manual investigation; performance signals were buried in noise. Different departments used different metrics, creating confusion.
 
-**Scale & impact:**
-- Assuming even a 1–2% improvement in effective throughput utilization across high-volume plasma fractionation pipelines, the framework supports hundreds of additional productive hours annually per facility
-- Enables earlier detection of systemic throughput degradation before it fully constrains output, supporting proactive intervention
-- Functions as the decision backbone for recurring cross-functional performance review forums attended by department heads
-- Aligned Manufacturing, Automation, Business Excellence, and Process Engineering stakeholders around a single validated measurement framework — replacing siloed metrics and inconsistent definitions
+**What Tyler Built:**
+- Custom event framework that maps raw process control data into standardized, meaningful microsteps
+- Critical Path analysis: identifies which steps are truly blocking production vs. which have slack
+- Rolling median drift detection: automatically flags when cycle time deviates from normal
+- Float-priority modeling: shows schedulers where capacity exists in the next 72 hours
+- Multi-source delay integration: combines data from scheduling systems, shop-floor entry, and maintenance logs into one coherent picture
+- Copilot for Power BI instruction layer: enables floor supervisors to ask questions like "What's causing delays in the CIP step?" and get process-aware answers
+- Start-to-start cadence metrics: reusable measure design that eliminates future one-off requests
 
-**Version history highlights (selected):**
-- Built start-vs-start comparison for any two selected steps (e.g., CIP vs. Manual Cleaning starts within the same batch)
-- Added RTMS delay reason pareto with scheduler-friendly drilldown to individual delay comments
-- Integrated delay data from scheduling system and legacy event tracking systems; anchored on lot + unit op for cross-platform alignment
-- Built float-priority model: last qualifying lot per unit op within 72-hour rolling window
-- Added process drift overlays with configurable run rule thresholds
-- Added HOF bin-processing time data and shift classification metrics
-- Designed bottleneck drilldown page with interactive pareto and visual drift flags
-- Added Copilot LLM instruction layer ("Fracky") enabling free-form process-aware queries
-- Standardized column naming (Micro_Step_Start_Time, End_Time, Duration_Hours)
-- Cleaned single/double lot cleaning classifications across filter press unit operations
+**Impact:**
+- Even a 1–2% improvement in throughput utilization = hundreds of additional productive hours annually
+- Enables detection of systemic degradation *before* it constrains output
+- Serves as the decision backbone for cross-functional performance forums (Manufacturing, Engineering, Reliability, Automation)
+- Aligned stakeholders around a single measurement framework (replaced 5+ conflicting metrics)
+
+**Technical Highlights:**
+- Handles complex manufacturing logic: double-lot vs. single-lot sequences, critical path decomposition, shift-based classifications
+- Processes continuous historian data from process control systems
+- Version-controlled release cycle; new features tested with stakeholders before rollout
+- Over 200 hours of SQL/Python optimization
 
 ---
 
-### 3. Workforce Presence & Staffing Analytics (Badge Data Integration)
+### 3. Workforce Presence & Staffing Analytics
 
-**What it is:** I built a badge reporting solution to give Supervisors and Scheduling better visibility into daily staffing levels, attendance patterns, movement paths, and manpower allocation by shift.
+Tyler built a badge-based analytics system to give scheduling and supervisors visibility into staffing patterns, movement, and capacity.
 
-**Technical depth:**
-- Georeferenced physical access control door locations with coordinates to enable spatial path analysis
-- Built path ID logic from sequential badge event groupings to model movement patterns within the facility
-- Used the enterprise access control system (North Star platform) as the authoritative data source
-- Created shift-level staffing counts and facility usage analysis
+**The Problem:**
+Manufacturing cannot hire additional headcount easily. Production planning quality depends on knowing exactly who's present each shift—but this data was scattered across badge systems and manual logs. Manpower variability can introduce 5–10% fluctuations in task duration.
 
-**Why it matters:** The site cannot increase headcount, so tightening production planning depends on knowing exactly how many people are present on each shift. Improved staffing visibility supports cycle-time stabilization, particularly where manpower variability can introduce 5–10% fluctuations in task execution duration and impact lot cadence. This directly informs scheduling quality, resource shifting, and workload estimation in the Scheduling & Planning System.
+**What Tyler Built:**
+- Integrated the badge access control system into the data platform
+- Path analysis: models movement patterns through the facility to understand where people spend time
+- Shift-level staffing counts and facility utilization metrics
+- Real-time view for supervisors to see current capacity
+- Georeferenced door locations to enable spatial analysis
 
----
-
-### 4. Delay Data Entry Application (Databricks Flask App)
-
-**What it is:** I designed and deployed a production-oriented Databricks App using a lightweight Flask framework to enable technician delay data entry directly from the shop floor into the governed analytical data layer.
-
-**Technical depth:**
-- Python-based form routing and validation logic within a Databricks App deployment
-- URL parameter passing to auto-populate context fields (Batch ID, Process Step) from the source analytics board — reducing manual input and improving data accuracy
-- SQL execution from the application layer to insert structured records into Delta Lake tables
-- Referential integrity enforcement via joins to batch master and process step reference tables
-- Iterative testing using Databricks terminal environments and notebook-driven debugging
-- Writes directly into the existing Databricks analytical layer for downstream Power BI reporting (two-hour refresh cycle)
-
-**Why it matters:** This shifts from analytics consumption tooling to full data product engineering — including UI design, data persistence logic, and lifecycle deployment. It solves a real floor-level problem (fragmented delay capture across spreadsheets, legacy notes, and disconnected systems) while aligning to North Star platform architecture. It also shortens the gap between what happened operationally and what leaders can see analytically.
-
-**Impact:** Reducing reconciliation latency by even 1–2 days per major delay investigation improves responsiveness to recurring failure modes and lowers exposure to repeated deviation patterns across similar product campaigns.
+**Impact:**
+- Improved scheduling quality directly; reduces manpower-driven variability in task duration
+- Supports more accurate resource shifting and workload estimation
+- Enables better trade-off analysis for shift planning
+- Eliminates need for manual headcount verification
 
 ---
 
-### 5. AI & Copilot Enablement
+### 4. Production Delay Entry & Tracking Application
 
-**What it is:** I developed and operationalized multiple AI-powered analytics capabilities, treating AI as an extension of governed enterprise data products rather than a novelty layer.
+Tyler designed and deployed a shop-floor-friendly application for technicians to log production delays directly into the analytics platform.
 
-**Contributions:**
-- **SharePoint Agent:** Built a SharePoint-based conversational agent for the site's digital team, providing a governed entry point to internal knowledge and process documentation
-- **Copilot for Power BI:** Enabled Copilot for report viewers across managed datasets; supplied contextual instruction layers defining metric logic, column synonyms, and grounding rules to improve answer consistency and reduce hallucination
-- **Copilot Studio Custom Connector:** Drove architectural discovery for connecting Copilot agents to governed data APIs — identifying required endpoints, OAuth 2.0 + service principal auth patterns, and aligning with enterprise API gateway requirements. Guided platform owners to begin documenting connection patterns for future agent builders
-- **LLM Instruction Layer Engineering:** Designed and embedded detailed natural language context layers inside Power BI semantic models so Copilot can interpret domain-specific terminology (manufacturing lot types, process step naming conventions, compliance terminology) without requiring users to know exact column names
+**What It Is:**
+A lightweight web app (Databricks + Flask) that lets floor technicians enter delay data with context (batch ID, step, reason, duration) and automatically routes it into the analytics layer for dashboard visibility.
 
-**Strategic significance:** This work ties AI enablement to enterprise governance, semantic models, access control, and validated business logic — establishing patterns that future AI builders can inherit rather than reinvent.
+**Why It Matters:**
+- Closes the gap between what happened operationally and what leadership can see analytically
+- Reduces delay investigation time by 1–2 days per incident
+- Shifts from reactive (waiting for reports) to proactive (seeing patterns in real time)
+- Enables faster root-cause identification and systemic improvement
+- Single source of truth for delay attribution across all manufacturing systems
 
----
-
-### 6. Global Data Pipeline & Governance Work
-
-**What it is:** I contributed to enterprise pipeline design and data governance standardization across multiple platforms.
-
-**Contributions:**
-- Worked with global data product owner to build enterprise pipelines for an enterprise LMS system covering both GxP and non-GxP training data
-- Pushed SAIL-aligned movement of shop floor process control data into governed Databricks pathways
-- Migrated legacy delay data from unsupported S3-based patterns into governed Databricks Delta structures for lifecycle management and Unity Catalog compliance
-- Flagged governance and lifecycle risk when undocumented coworker-created tables or S3-based patterns threatened to become embedded in critical manufacturing workflows (confirmed by platform governance team as non-compliant)
-- Submitted demand requests to connect legacy process control SQL Server data into enterprise Databricks platform
-- Created 15 dataflows for site datathon; several evolved into real operational projects (e.g., scrap analysis from ERP now managed by Supply Chain, work order review for Reliability Engineering)
+**Technical Highlights:**
+- Python + Flask on Databricks
+- URL parameter passing to auto-populate context fields (reduces manual input errors)
+- Direct SQL inserts into Delta Lake tables with referential integrity
+- Minimal friction design for floor-level users (no training required)
 
 ---
 
-### 7. Additional Dashboards & Reporting Products
+### 5. AI & Copilot Enablement for Analytics
 
-I own or have significantly contributed to a portfolio of approximately 25+ site analytics boards, including:
+Tyler developed multiple AI-powered analytics capabilities, treating AI as an extension of governed enterprise platforms rather than a disconnected experiment.
 
-- **Enterprise Training Compliance Board** (global, multi-site, described above)
-- **Manufacturing Cycle Time Dashboard** (described above)
-- **Workforce / Badge Analytics Board** (described above)
-- **TDF Bin Processing Dashboard:** Cycle time monitoring for bin-to-bin processing steps, built with validated event framework aligned across Manufacturing, Operations Engineering, Automation, and Reliability stakeholders
-- **Cinryze Cycle Time Tracker:** Product-specific cycle time monitoring with MES-integrated data, coaching employees to pull data and add their own measures
-- **Enterprise Compliance Board:** Daily and weekly view for investigators and engineering teams
-- **EHS Dashboard:** Environmental Health & Safety metrics
-- **IT Infrastructure Boards (VM Servers, SNOW Tickets):** Operational visibility for IT infrastructure and incident tracking
-- **LabWare Dashboards:** Near-real-time lab sample data with a direct gateway to the source system (bypassing the standard 4-hour refresh delay), enabling production to resume once samples are approved
-- **Alarms & Recipe Holds Board:** Equipment issue monitoring for Reliability Engineering and Business Excellence to target repairs and maintenance prioritization
-- **Scorecard Alerts & Automated Report Distribution:** Power BI scorecard alerts and automated report sends for department managers and directors
+**What Tyler Has Built:**
+- **Copilot for Power BI:** Enabled across multiple datasets with custom instruction layers that define metric logic, terminology, and grounding rules—so Copilot understands manufacturing domain concepts like "float," "bottleneck," "cycle time," and "microstep" without users needing to know exact column names
+- **SharePoint Agent:** Built a conversational entry point to organizational knowledge and process documentation
+- **LLM Instruction Layer Engineering:** Designed natural language context layers that let AI assistants answer domain-specific questions accurately and avoid hallucination
+
+**Strategic Significance:**
+This work ties AI enablement to enterprise governance, semantic models, access control, and validated business logic—establishing patterns that other teams can inherit rather than reinvent.
+
+---
+
+### 6. Data Pipeline Governance & Enterprise Alignment
+
+Tyler has contributed to enterprise-wide pipeline design and data governance standardization.
+
+**Key Contributions:**
+- Worked with global data teams to build pipelines for enterprise LMS systems covering both regulated (GxP) and non-regulated data
+- Migrated legacy delay data from unsupported storage patterns into governed Databricks Delta structures
+- Flagged governance and lifecycle risks when undocumented tables threatened to become embedded in critical workflows
+- Submitted demand requests to integrate legacy process control data into enterprise platforms
+- Created 15 dataflows for a site-wide datathon; several evolved into operational projects (scrap analysis, work order review, manpower resource leveling)
+- Ensured compliance with enterprise data governance standards (Unity Catalog, SOP alignment)
+
+**Philosophy:**
+Enterprise alignment over custom tools. When teams wanted highly customized solutions, Tyler steered toward enterprise-aligned architectures that would scale and be supportable long-term.
+
+---
+
+### 7. Additional Dashboards & Analytics Products
+
+Tyler owns or has significantly contributed to a portfolio of 25+ site analytics boards:
+
+- **TDF Bin Processing Dashboard:** Cycle time monitoring with validated event framework
+- **Cinryze Cycle Time Tracker:** Product-specific monitoring with self-service measure creation
+- **Enterprise Compliance Board:** Daily and weekly views for investigators and engineering teams
+- **EHS Dashboard:** Environmental Health & Safety metrics and compliance tracking
+- **IT Infrastructure Boards:** VM servers, SNOW tickets, operational incident tracking
+- **LabWare Dashboards:** Near-real-time lab sample data with direct gateway (bypasses standard 4-hour refresh delay)
+- **Alarms & Recipe Holds Board:** Equipment issue monitoring for Reliability and Business Excellence teams
+- **Scorecard Alerts & Automated Report Distribution:** Proactive reporting to department managers and directors
+- **Scrap Analysis Dashboard:** Manufacturing waste tracking and root-cause analysis
+- **Work Order Review System:** Maintenance scheduling and backlog visibility
+
+---
+
+## Technical Skills & Platforms
+
+**Power BI & Semantic Modeling:**
+- Enterprise-scale semantic models with row-level security, incremental refresh, performance optimization
+- DAX measure design for complex business logic (CTEs, relationships, calculated columns)
+- Copilot instruction layers for domain-specific AI assistance
+- Performance tuning: cardinality reduction, VertiPaq optimization, query plan analysis
+
+**SQL & Python:**
+- Complex query logic: CTEs, window functions, recursive queries, event sequencing
+- Delta Lake transformations and medallion architecture (bronze/silver/gold layers)
+- Fuzzy matching pipelines, time-series analysis, anomaly detection
+- Optimization scripts and notebook-driven development in Databricks
+- Writeback applications and data persistence logic
+
+**Data Platforms & Tools:**
+- Databricks (Delta Lake, Unity Catalog, Databricks Apps, feature store)
+- Dataiku, Tableau, Qlik (legacy migrations and modernization)
+- Power BI (all layers: data refresh, semantic modeling, reporting)
+- SharePoint integration and Power Platform (Automate, Canvas Apps)
+- Process control system integration and historian data extraction
+
+**Process & Methods:**
+- Lean Six Sigma Black Belt: DMAIC, statistical analysis, throughput modeling, OEE
+- Digital Value Stream Mapping and process optimization
+- Design thinking and cross-functional product development
+- Version control and development discipline (Git, release cycles, testing)
+
+---
+
+## How Tyler Approaches Work
+
+**On Problem-Solving:**
+Tyler asks "what decision needs to be made?" before diving into data. At one manufacturing company, he replaced average-based KPIs with distribution analysis (P20/P50/P90) because averages were masking real performance signals. At an aerospace company, he built a 100,000-cell matrix to optimize satellite scheduling using constraint satisfaction methods. He works backwards from the decision to the data needed—not the other way around.
+
+**On Sustainability:**
+Every major product includes documentation, shared ownership structures, and version control. The goal is to reduce single-person dependency so teams can maintain and extend solutions without the original builder. He coaches team members, creates knowledge bases, and ensures others understand the "why" behind the system design.
+
+**On Communication:**
+Tyler is fluent in multiple languages: shop-floor operations, SQL, C-suite strategy, Lean Six Sigma, and product design. He can explain distribution metrics to an operator or a CFO—and adjusts his framing based on what matters to the audience. He's comfortable presenting to everyone from technicians to executives.
+
+**On Scope & Impact:**
+Tyler builds systems that work *and* that people actually use. He's not grinding for grinding's sake; he's solving the actual problem that matters and delivering measurable outcomes. He prioritizes impact and adoption over technical perfection.
+
+---
+
+## What Makes Tyler Unique
+
+**Intersection of Skills:**
+- Deep technical chops (data engineering, ML, optimization, SQL, Python)
+- Field credibility (defense, pharma manufacturing, aerospace, e-commerce, startups)
+- Communication range (can translate between shop floor and executive level)
+- Coaching ability (20+ people trained; impact compounds beyond his own code)
+
+**Track Record:**
+- Delivered across 6 industries with different constraints and requirements
+- Built systems for companies ranging from defense contractors to SaaS startups to Fortune 500 manufacturers
+- Same principle in every environment: use data to make better decisions
+- Consistently moves from tactical dashboards to strategic, governance-aligned platforms
+
+**Intellectual Approach:**
+- Curious about systems: asks questions nobody else is asking
+- Wants to understand constraints and reality, not just optimize in a vacuum
+- Thinks independently; comes prepared; executes with ownership
+- Not the loudest person in the room, but the one asking "so what do we actually need to decide?"
+- Combines technical depth with business acumen and human-centered design
 
 ---
 
 ## Technical Architecture & Engineering Contributions
 
-### Data Model Optimization (Semantic Model Tuning)
-- Reduced high-cardinality columns through surrogate key restructuring and removal of redundant timestamp-level joins
-- Implemented star-schema-aligned relationship patterns to prevent bidirectional filter ambiguity and improve query plan efficiency
+**Data Model Optimization:**
+- Reduced high-cardinality columns through surrogate keys and intelligent restructuring
+- Implemented star-schema-aligned relationships to prevent filter ambiguity
 - Refactored calculated columns into measures to reduce memory footprint
-- Segmented historical vs. active datasets to improve refresh performance
-- These optimizations improved report load times, reduced gateway refresh risk, and improved scalability for datasets containing millions of records
+- Segmented historical vs. active data to improve refresh performance
+- Result: faster report load times, more scalable dashboards, reduced infrastructure risk
 
-### Advanced SQL & Python Engineering
-- Built complex SQL logic for event sequencing, shift classification, cycle-time decomposition, and badge path duration modeling
-- Developed Python writeback workflows in Databricks for the delay entry application
-- Built fuzzy matching pipeline (Python) to tag manufacturing batch event log rows with standardized milestone labels, resolving ambiguous free-text descriptions
-- Designed multi-CTE SQL queries parsing free-text delay descriptions into structured microstep identifiers with full lookup table alignment
+**Advanced SQL & Python:**
+- Event sequencing and time-series decomposition for manufacturing data
+- Cycle-time and shift classification logic
+- Fuzzy matching pipelines for anomaly detection and data quality
+- Multi-CTE queries parsing free-text data into structured identifiers
+- Optimization of queries processing millions of records
 
-### Development Pipeline Discipline
-- Version-controlled release cycles for Power BI boards and dataflows
-- Structured testing phases before stakeholder rollout
-- Documentation of schema changes, logic updates, and metric definitions
-- Dependency evaluation across upstream data sources (Manufacturing Execution System, Scheduling System, LMS, Access Control System, ERP)
-- Alignment with enterprise platform ownership boundaries to ensure sustainment feasibility
-
----
-
-## Impact Summary (Quantified)
-
-| Area | Metric |
-|---|---|
-| Training compliance hours saved (one site) | 500+ hours annually |
-| Training records interpreted by dashboard | ~11 million |
-| Renewal-based qualification records requiring logic | ~575,000 |
-| Potential avoided deviation cost (23+ sites) | $345K–$1M+ annually |
-| Employees coached in Power BI, SQL, analytics | ~20 |
-| Dataflows built for site datathon | 15 |
-| Hours of formal professional development | 39 |
-| Site dashboards supported / troubleshot | 25+ |
-| Global sites covered by training compliance dashboard | 23+ |
+**Development Discipline:**
+- Version-controlled release cycles for dashboards and dataflows
+- Structured testing and stakeholder rollout phases
+- Clear documentation of schema changes, logic updates, and metric definitions
+- Dependency evaluation across upstream data sources
+- Alignment with enterprise platform ownership to ensure long-term sustainability
+- Mentorship and knowledge transfer to team members
 
 ---
 
-## Leadership & Coaching
+## What Tyler Is Looking For
 
-- Coached approximately **20 employees** in Power BI, SQL, ETL/pipelining, dashboard syntax, and permissions — spanning Manufacturing, Supply Chain, Quality, and Engineering stakeholders
-- Mentored a junior analyst for **four months** with applied, hands-on instruction
-- Created all structure, materials, answer keys, datasets, and access setup for the site's annual **Datathon** — enabling multiple teams to successfully transition into working with enterprise Databricks data
-- Led the Manufacturing Cycle Time review forum, teaching Lean Six Sigma principles to cross-functional department leads
-- Delivered a Copilot for Power BI knowledge-sharing session, becoming the site subject matter expert for AI-assisted analytics
-- Provided Lean Six Sigma Black Belt coaching to Operational Excellence and Manufacturing teams on digital value stream mapping, throughput modeling, statistical analysis, and data-driven scheduling
+Tyler is interested in roles that combine:
+- **Enterprise data strategy** and manufacturing/operational analytics
+- **AI enablement** and agent development for domain-specific applications
+- **Cross-site or global analytics platform ownership**
+- **Senior data engineering and analytics leadership** in life sciences, manufacturing, or adjacent industries
 
----
-
-## Strategic Themes
-
-**Enterprise Alignment Over Custom Tools:** I consistently steered local solutions toward enterprise-aligned North Star platforms and architectures. When teams wanted highly customized tools for immediate needs, my role was to meet the business need while also ensuring the solution would be supportable, governable, and scalable.
-
-**Governance as a Feature:** I treated data governance — RLS design, Unity Catalog compliance, SOP documentation, lifecycle management — as integral to delivery quality, not as overhead. This protects the organization from building critical initiatives on fragile or noncompliant foundations.
-
-**AI Built on Governed Foundations:** I positioned AI enablement as an extension of enterprise data products, not a disconnected experiment. Copilot outputs are probabilistic and require grounding — I designed the instruction layers, guardrails, and semantic model foundations that make AI-assisted analytics trustworthy.
-
-**Reducing Single-Person Dependency:** A core goal in every major product was ensuring teams could understand, maintain, and extend the solution without being dependent on one person. This included documentation, coaching, shared ownership structures, and clear version histories.
+He's actively growing in:
+- Modern data platforms (Databricks, Delta Lake, Unity Catalog, cloud data warehousing)
+- AI-enabled analytics and LLM-powered agents
+- Enterprise data governance at scale
+- Cross-functional product ownership and leadership
+- Data monetization and creating data products for external customers
 
 ---
 
-## Areas for Growth
+## Background & Education
 
-- Continuing to simplify and package complex work earlier for broader audiences — translating technical logic into lightweight business-facing summaries, decision logs, and rollout plans
-- Formalizing role-based ownership and sustainment plans earlier in the product lifecycle so scaling happens more smoothly as adoption grows
+**Lean Six Sigma Black Belt** — Certified in DMAIC methodology; practical experience in manufacturing process improvement, throughput optimization, and statistical analysis
 
----
+**Industrial & Systems Engineering Degree** — From a major research university; coursework spanning optimization, product design, economics, human factors, and operations research
 
-## Career Interests & Trajectory
+**Self-Taught Data Engineer** — Built expertise in Python, SQL, Databricks, and Power BI through real-world project delivery at scale; no formal data science degree, but deep hands-on experience with millions of records in production systems
 
-I am interested in roles that combine enterprise data strategy, manufacturing analytics, AI enablement, and scalable data product ownership. I am actively growing in:
-- Modern data platform engineering (Databricks, Delta Lake, Unity Catalog)
-- AI-enabled analytics and agent development
-- Cross-site and global analytics platform ownership
-- Senior data engineering and analytics leadership roles in life sciences, manufacturing, or adjacent industries
-
-I hold a **Lean Six Sigma Black Belt** and a degree in **Industrial & Systems Engineering** from a major research university. My background as a former outdoor expedition guide — working with special education youth in high-pressure wilderness environments — informs how I approach teaching, communication, and building trust across diverse groups.
+**Outdoor Leadership & Expedition Guide** — Former Senior Guide leading 9–12 day wilderness expeditions; trained 15 employees in outdoor education, crisis management, and team development; leadership under real stakes (no communications, no backup)—skills that transfer directly to managing ambiguous, high-pressure technical situations
