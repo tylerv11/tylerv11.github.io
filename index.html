@@ -13,6 +13,8 @@
     <!-- Calendly -->
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+    <!-- Portfolio Assistant — Dual-Mode RAG + Security -->
+    <script src="portfolio-assistant.js" type="text/javascript" defer></script>
     <style>
         /* ============================================
            PREMIUM BRAND THEME — Tyler Vincent
@@ -1736,6 +1738,13 @@
         #sa-input:focus { border-color: rgba(0,255,135,0.3); }
         #sa-send { background: var(--accent); border: none; border-radius: 8px; color: #000; width: 32px; height: 32px; cursor: pointer; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.15s ease; }
         #sa-send:hover { transform: scale(1.08); }
+        #sa-send:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        #sa-mode-controls { display: flex; align-items: center; gap: 8px; }
+        #sa-smart-toggle { display: flex; align-items: center; gap: 4px; cursor: pointer; font-size: 0.7rem; user-select: none; }
+        #sa-smart-toggle input { width: 14px; height: 14px; cursor: pointer; accent-color: var(--accent); }
+        #sa-smart-toggle span { color: var(--text-muted); transition: color 0.2s ease; }
+        #sa-smart-toggle input:checked + span { color: var(--accent); }
 
         /* ===== AI COUNCIL SECTION ===== */
         .ai-council-card {
@@ -3378,16 +3387,26 @@
         <div id="sa-panel">
             <div id="sa-header">
                 <span><i class="fas fa-robot"></i>&nbsp; Portfolio Assistant</span>
+                <div id="sa-mode-controls">
+                    <label id="sa-smart-toggle" title="AI-powered smart search">
+                        <input type="checkbox" id="sa-smart-mode" onchange="toggleSmartMode()">
+                        <span>🧠 Smart</span>
+                    </label>
+                </div>
                 <button onclick="toggleAssistant()" aria-label="Close"><i class="fas fa-times"></i></button>
             </div>
+            <div id="sa-info-bar" style="display:none; font-size: 0.7rem; padding: 6px 10px; background: rgba(0,255,135,0.05); border-bottom: 1px solid var(--border-subtle); color: var(--text-muted);">
+                <span id="sa-queries-remaining"></span>
+                <span id="sa-cost-est"></span>
+            </div>
             <div id="sa-messages">
-                <div class="sa-msg bot">Hi! I'm Tyler's portfolio assistant. Ask me about his projects, skills, or KPIs.</div>
+                <div class="sa-msg bot">Hi! I'm Tyler's portfolio assistant. Ask me about his projects, skills, or KPIs. Toggle <strong>Smart Mode</strong> for AI-powered answers.</div>
             </div>
             <div id="sa-suggestions">
                 <button class="sa-chip" onclick="saAsk('What are Tyler\'s biggest impacts?')">Biggest impacts?</button>
                 <button class="sa-chip" onclick="saAsk('What industries has Tyler worked in?')">Industries?</button>
                 <button class="sa-chip" onclick="saAsk('What are Tyler\'s top skills?')">Top skills?</button>
-                <button class="sa-chip" onclick="saAsk('Tell me about Tyler\'s KPIs')">KPIs?</button>
+                <button class="sa-chip" onclick="saAsk('Tell me about Tyler\'s experience with manufacturing?')">Manufacturing?</button>
             </div>
             <div id="sa-input-row">
                 <input id="sa-input" type="text" placeholder="Ask something..." onkeydown="if(event.key==='Enter')saSubmit()">
@@ -5328,6 +5347,8 @@
                 return 'Great question — I\'m not sure I have a canned answer for that one. Try asking about Tyler\'s projects, KPIs, skills, industries, or working style. Or better yet, reach out directly at tylervincent@alumni.usc.edu.';
             }
 
+            var smartModeEnabled = false;
+
             function saAddMsg(text, cls) {
                 var msgs = document.getElementById('sa-messages');
                 if (!msgs) return;
@@ -5338,6 +5359,46 @@
                 msgs.scrollTop = msgs.scrollHeight;
             }
 
+            function updateInfoBar() {
+                var infoBar = document.getElementById('sa-info-bar');
+                var queriesSpan = document.getElementById('sa-queries-remaining');
+                var costSpan = document.getElementById('sa-cost-est');
+                if (!infoBar) return;
+
+                var state = PortfolioAssistant.getState();
+                var remaining = state.queriesRemaining;
+                var timeout = state.sessionTimeoutMinutes;
+
+                if (remaining <= 0) {
+                    queriesSpan.textContent = '⏳ Session limit reached';
+                    infoBar.style.display = 'block';
+                } else if (remaining <= 3) {
+                    queriesSpan.textContent = remaining + ' queries left this session';
+                    costSpan.textContent = smartModeEnabled ? ' · ~$0.0001/query' : ' · Free';
+                    infoBar.style.display = 'block';
+                } else if (smartModeEnabled) {
+                    queriesSpan.textContent = remaining + ' remaining · Smart mode active';
+                    costSpan.textContent = ' · ~$0.0001/query';
+                    infoBar.style.display = 'block';
+                } else {
+                    infoBar.style.display = 'none';
+                }
+            }
+
+            window.toggleSmartMode = function() {
+                var checkbox = document.getElementById('sa-smart-mode');
+                smartModeEnabled = checkbox && checkbox.checked;
+                if (smartModeEnabled && !PortfolioAssistant.getState().smartModeAvailable) {
+                    saAddMsg('⚠️ Smart Mode loading... using fuzzy matching for now.', 'bot');
+                    checkbox.checked = false;
+                    smartModeEnabled = false;
+                } else {
+                    var mode = smartModeEnabled ? '🧠 Smart Mode activated (AI-powered RAG)' : 'Switched to fuzzy matching (instant, free)';
+                    saAddMsg(mode, 'bot');
+                }
+                updateInfoBar();
+            };
+
             window.toggleAssistant = function() {
                 isOpen = !isOpen;
                 var panel = document.getElementById('sa-panel');
@@ -5345,12 +5406,42 @@
                 if (isOpen) {
                     var inp = document.getElementById('sa-input');
                     if (inp) setTimeout(function() { inp.focus(); }, 120);
+                    updateInfoBar();
                 }
             };
 
             window.saAsk = function(q) {
                 saAddMsg(q, 'user');
-                setTimeout(function() { saAddMsg(saAnswer(q), 'bot'); }, 320);
+
+                if (smartModeEnabled && PortfolioAssistant) {
+                    // Use Smart Mode with security checks
+                    var sendBtn = document.getElementById('sa-send');
+                    if (sendBtn) sendBtn.disabled = true;
+
+                    PortfolioAssistant.query(q, true).then(function(result) {
+                        setTimeout(function() {
+                            if (result.success) {
+                                var msg = result.answer;
+                                if (result.estimatedCost > 0) {
+                                    msg += '\n\n[Cost: ~$' + result.estimatedCost.toFixed(6) + ']';
+                                }
+                                saAddMsg(msg, 'bot');
+                            } else {
+                                saAddMsg('❌ ' + result.error, 'bot');
+                            }
+                            if (sendBtn) sendBtn.disabled = false;
+                            updateInfoBar();
+                        }, 280);
+                    }).catch(function(e) {
+                        saAddMsg('⚠️ Network error. Using fuzzy matching: ' + saAnswer(q), 'bot');
+                        if (sendBtn) sendBtn.disabled = false;
+                        updateInfoBar();
+                    });
+                } else {
+                    // Use fuzzy matching (fast, free, instant)
+                    setTimeout(function() { saAddMsg(saAnswer(q), 'bot'); }, 320);
+                    updateInfoBar();
+                }
             };
 
             window.saSubmit = function() {
