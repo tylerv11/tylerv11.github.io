@@ -1806,8 +1806,10 @@
             border-radius: 16px;
             padding: 36px 24px 28px;
             text-align: center;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
-        .ai-council-diagram-wrap svg { max-width: 100%; height: auto; }
+        .ai-council-diagram-wrap svg { max-width: 100%; height: auto; min-width: 280px; }
         .ai-council-diagram-caption {
             font-size: 0.72rem;
             color: var(--text-muted);
@@ -2207,10 +2209,44 @@
             .governance-grid { grid-template-columns: repeat(2, 1fr); }
             .security-grid { grid-template-columns: 1fr; }
             .agent-card-summary { display: none; }
+            .agent-card-header { gap: 8px; }
+            .agent-card-name { min-width: 90px; font-size: 0.85rem; }
+            .agent-type-badge { font-size: 0.58rem; padding: 2px 7px; }
+            .agent-card-chevron { font-size: 0.65rem; }
+            .discord-flow { flex-wrap: wrap; padding: 14px 16px; }
+            .discord-flow-step { min-width: 80px; margin: 4px; }
+            .discord-flow-arrow { padding: 0 4px; font-size: 0.9rem; }
         }
         @media (max-width: 600px) {
-            .governance-grid { grid-template-columns: 1fr 1fr; }
-            .agent-detail-row { grid-template-columns: 90px 1fr; }
+            .governance-grid { grid-template-columns: 1fr; }
+            .agent-detail-row { grid-template-columns: 80px 1fr; gap: 8px; padding: 8px 0; }
+            .agent-detail-label { font-size: 0.65rem; padding-top: 1px; }
+            .agent-detail-val { font-size: 0.78rem; line-height: 1.5; }
+            .agent-card-header { padding: 11px 12px; gap: 6px; }
+            .agent-card-name { min-width: 70px; font-size: 0.78rem; }
+            .agent-type-badge { font-size: 0.55rem; padding: 1px 6px; }
+            .agent-skill-tag { font-size: 0.65rem; padding: 2px 8px; }
+            .ai-council-card { margin-bottom: 32px; }
+            .ai-council-title { font-size: 1.4rem; }
+            .ai-council-subtitle { font-size: 0.85rem; }
+            .security-block { padding: 16px 18px; }
+            .security-block-title { font-size: 0.75rem; }
+            .security-block p { font-size: 0.78rem; }
+            .discord-flow { gap: 8px; padding: 10px 12px; }
+            .discord-flow-step { min-width: 70px; }
+            .discord-flow-icon { width: 36px; height: 36px; font-size: 0.9rem; }
+            .discord-flow-label { font-size: 0.65rem; }
+            .discord-flow-sub { font-size: 0.55rem; }
+        }
+        @media (max-width: 480px) {
+            .ai-council-header, .ai-council-body { padding-left: 14px; padding-right: 14px; }
+            .agent-card-header { flex-wrap: wrap; }
+            .agent-card-name { flex-basis: 100%; order: 1; }
+            .agent-type-badge { order: 2; }
+            .agent-card-chevron { order: 3; }
+            .agent-card-summary { display: none; }
+            .agent-detail-row { grid-template-columns: 1fr; gap: 4px; }
+            .agent-detail-label { margin-bottom: 2px; }
         }
     </style>
 </head>
@@ -2836,7 +2872,7 @@
                             </div>
                             <div class="agent-detail-row">
                                 <span class="agent-detail-label">Model</span>
-                                <span class="agent-detail-val">Local Ollama model (lightweight). Memory retrieval does not need frontier-model reasoning.</span>
+                                <span class="agent-detail-val">Local Ollama or Deepseek (free, private, fast). Memory retrieval and pattern-matching do not need frontier-model reasoning.</span>
                             </div>
                             <div class="agent-detail-row">
                                 <span class="agent-detail-label">Skills</span>
@@ -2866,7 +2902,7 @@
                             </div>
                             <div class="agent-detail-row">
                                 <span class="agent-detail-label">Model</span>
-                                <span class="agent-detail-val">Local Ollama model for fast, cheap risk classification. Escalates to Claude API only when a decision is genuinely ambiguous.</span>
+                                <span class="agent-detail-val">Local Ollama or Deepseek for fast, free risk classification. Escalates to Claude API only when a decision is genuinely ambiguous.</span>
                             </div>
                             <div class="agent-detail-row">
                                 <span class="agent-detail-label">Skills</span>
@@ -2926,7 +2962,7 @@
                             </div>
                             <div class="agent-detail-row">
                                 <span class="agent-detail-label">Model</span>
-                                <span class="agent-detail-val">Claude API (Haiku for structured filtering, Sonnet for brief synthesis).</span>
+                                <span class="agent-detail-val">Deepseek R1 for filtering logic and reasoning over job criteria. Haiku for lightweight summarization. Sonnet for complex brief synthesis when quality matters.</span>
                             </div>
                             <div class="agent-detail-row">
                                 <span class="agent-detail-label">Skills</span>
@@ -2986,7 +3022,7 @@
                             </div>
                             <div class="agent-detail-row">
                                 <span class="agent-detail-label">Model</span>
-                                <span class="agent-detail-val">Claude API (Haiku for search, Sonnet for synthesis).</span>
+                                <span class="agent-detail-val">Haiku for web search retrieval. Deepseek R1 for reasoning over findings. Sonnet for high-quality synthesis when research quality is critical.</span>
                             </div>
                             <div class="agent-detail-row">
                                 <span class="agent-detail-label">Skills</span>
@@ -3046,7 +3082,7 @@
                             </div>
                             <div class="agent-detail-row">
                                 <span class="agent-detail-label">Model</span>
-                                <span class="agent-detail-val">Claude API (Haiku for data retrieval, Sonnet for signal analysis).</span>
+                                <span class="agent-detail-val">Haiku for market data retrieval. Deepseek R1 for financial reasoning and signal pattern-matching. Sonnet only for high-stakes market decisions.</span>
                             </div>
                             <div class="agent-detail-row">
                                 <span class="agent-detail-label">Skills</span>
@@ -3085,20 +3121,23 @@
                 <div class="ai-council-2col">
                     <div>
                         <div class="council-block">
-                            <div class="council-block-title">Model Stratification: Local vs API</div>
-                            <p>Not every task needs a frontier model or an API call. Advisors (Prometheus, Argus) run local Ollama models: fast, free, and private. Execution agents with complex reasoning (Muse, Hermes) route to Claude API. Hestia runs no LLM at all. This stretches API budget and keeps latency low for advisory work.</p>
+                            <div class="council-block-title">Model Stratification: Local, Deepseek, and API</div>
+                            <p>Every task routes to the minimum-capable model that solves it reliably. Advisors (Prometheus, Argus, Hestia) run local Ollama or Deepseek models: free, private, and fast for classification tasks. Execution agents use Deepseek R1 for reasoning-heavy work (cost-efficient), Claude Haiku for lightweight retrieval, and Sonnet/Opus for creative or high-stakes decisions. This stretches API budget and keeps latency low for local work.</p>
                         </div>
                         <div class="council-code">
-<span class="c"># Zeus routing logic</span>
+<span class="c"># Zeus task routing with model selection</span>
 <span class="g">zeus</span>.route(task):
-  <span class="p">argus</span>.review(task)       <span class="c"># local model</span>
-  <span class="p">prometheus</span>.context(task) <span class="c"># local model</span>
-  if task.type == <span class="b">'research'</span>:
-    dispatch(<span class="b">hermes</span>, <span class="b">'haiku'</span>)
-  elif task.type == <span class="b">'code'</span>:
-    dispatch(<span class="b">hephaestus</span>, <span class="b">'sonnet'</span>)
-  elif task.type == <span class="b">'creative'</span>:
-    dispatch(<span class="b">muse</span>, <span class="b">'sonnet'</span>)
+  <span class="p">argus</span>.review(task)     <span class="c"># Ollama/Deepseek local</span>
+  hestia.check()             <span class="c"># no model needed</span>
+  if memory_budget &lt; 4GB:
+    use_local = true
+  select_model(task):
+    if task.needs_reasoning:
+      return <span class="b">deepseek_r1</span>  <span class="c"># cost-efficient thinking</span>
+    elif task.is_retrieval:
+      return <span class="b">haiku</span>       <span class="c"># fast API call</span>
+    elif task.is_creative:
+      return <span class="b">sonnet</span>      <span class="c"># quality matters</span>
                         </div>
                     </div>
                     <div>
