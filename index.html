@@ -1736,6 +1736,323 @@
         #sa-input:focus { border-color: rgba(0,255,135,0.3); }
         #sa-send { background: var(--accent); border: none; border-radius: 8px; color: #000; width: 32px; height: 32px; cursor: pointer; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.15s ease; }
         #sa-send:hover { transform: scale(1.08); }
+
+        /* ===== AI COUNCIL SECTION ===== */
+        .ai-council-card {
+            background: linear-gradient(160deg, rgba(8,10,30,0.95), rgba(10,10,18,0.97));
+            border: 1px solid rgba(74,158,255,0.18);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 48px;
+            transition: all 0.5s var(--transition-smooth);
+        }
+        .ai-council-card:hover {
+            border-color: rgba(74,158,255,0.35);
+            box-shadow: 0 24px 80px rgba(74,158,255,0.07);
+        }
+        .ai-council-header {
+            padding: 44px 52px 36px;
+            background: linear-gradient(135deg, rgba(74,158,255,0.07), rgba(168,85,247,0.04));
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .ai-council-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 15px;
+            background: rgba(74,158,255,0.1);
+            border: 1px solid rgba(74,158,255,0.25);
+            border-radius: 100px;
+            color: var(--accent-blue);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+        }
+        .ai-council-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.5rem, 2.6vw, 2.3rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.15;
+            margin-bottom: 14px;
+            background: linear-gradient(135deg, #ffffff 40%, var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .ai-council-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            line-height: 1.75;
+        }
+        .ai-council-body {
+            padding: 8px 52px 52px;
+        }
+        .ai-council-overview {
+            font-size: 0.93rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 820px;
+            padding: 28px 0 8px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .ai-council-diagram-wrap {
+            margin: 36px 0 32px;
+            background: rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 36px 24px 28px;
+            text-align: center;
+        }
+        .ai-council-diagram-wrap svg { max-width: 100%; height: auto; }
+        .ai-council-diagram-caption {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 16px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .ai-council-section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--accent-blue);
+            margin: 40px 0 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .ai-council-section-title::before {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: var(--accent-blue);
+        }
+        .agent-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.83rem;
+            margin-bottom: 8px;
+        }
+        .agent-table th {
+            text-align: left;
+            padding: 10px 16px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .agent-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            color: var(--text-secondary);
+            vertical-align: top;
+            line-height: 1.6;
+        }
+        .agent-table tr:last-child td { border-bottom: none; }
+        .agent-table tr:hover td { background: rgba(255,255,255,0.015); }
+        .agent-name-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 0.83rem;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+        .agent-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .dot-green { background: var(--accent); box-shadow: 0 0 6px rgba(0,255,135,0.5); }
+        .dot-blue { background: var(--accent-blue); box-shadow: 0 0 6px rgba(74,158,255,0.5); }
+        .dot-purple { background: var(--accent-purple); box-shadow: 0 0 6px rgba(168,85,247,0.5); }
+        .dot-warm { background: var(--accent-warm); box-shadow: 0 0 6px rgba(255,107,53,0.5); }
+        .dot-cyan { background: #00d4ff; box-shadow: 0 0 6px rgba(0,212,255,0.5); }
+        .dot-pink { background: #ff4d8d; box-shadow: 0 0 6px rgba(255,77,141,0.5); }
+        .ai-council-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            margin-bottom: 8px;
+        }
+        .council-block {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 22px 24px;
+        }
+        .council-block-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            margin-bottom: 14px;
+        }
+        .council-block p {
+            font-size: 0.83rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+        }
+        .council-code {
+            background: rgba(0,0,0,0.55);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-left: 3px solid var(--accent-blue);
+            border-radius: 8px;
+            padding: 16px 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+        .council-code .c { color: var(--text-muted); }
+        .council-code .g { color: var(--accent); font-weight: 600; }
+        .council-code .b { color: var(--accent-blue); }
+        .council-code .p { color: var(--accent-purple); }
+        .council-code .w { color: var(--accent-warm); }
+        .governance-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin: 8px 0;
+        }
+        .gov-pill {
+            background: rgba(168,85,247,0.05);
+            border: 1px solid rgba(168,85,247,0.15);
+            border-radius: 12px;
+            padding: 20px 16px;
+            text-align: center;
+        }
+        .gov-pill-icon { font-size: 1.5rem; margin-bottom: 10px; }
+        .gov-pill-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+        }
+        .gov-pill-desc {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+            line-height: 1.5;
+        }
+        .skills-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 8px 0;
+        }
+        .skill-tag {
+            padding: 6px 14px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        .skill-tag.g { background: rgba(0,255,135,0.06); border-color: rgba(0,255,135,0.2); color: var(--accent); }
+        .skill-tag.b { background: rgba(74,158,255,0.06); border-color: rgba(74,158,255,0.2); color: var(--accent-blue); }
+        .skill-tag.p { background: rgba(168,85,247,0.06); border-color: rgba(168,85,247,0.2); color: var(--accent-purple); }
+        .constraint-card {
+            background: rgba(255,107,53,0.04);
+            border: 1px solid rgba(255,107,53,0.14);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 12px 0;
+        }
+        .constraint-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 0.83rem;
+            color: var(--accent-warm);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .constraint-body {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .status-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 8px 0;
+        }
+        .sbadge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 13px;
+            border-radius: 100px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+        .sbadge.live { background: rgba(0,255,135,0.07); border: 1px solid rgba(0,255,135,0.22); color: var(--accent); }
+        .sbadge.staged { background: rgba(74,158,255,0.07); border: 1px solid rgba(74,158,255,0.22); color: var(--accent-blue); }
+        .sbadge.planned { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.09); color: var(--text-muted); }
+        .sbadge .dot-sm { width: 5px; height: 5px; border-radius: 50%; }
+        .recruiting-callout {
+            background: linear-gradient(135deg, rgba(0,255,135,0.04), rgba(74,158,255,0.03));
+            border: 1px solid rgba(0,255,135,0.14);
+            border-radius: 16px;
+            padding: 30px 36px;
+            margin-top: 44px;
+        }
+        .recruiting-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 18px;
+        }
+        .recruiting-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 32px;
+        }
+        .recruiting-item {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 9px;
+            align-items: flex-start;
+            line-height: 1.55;
+        }
+        .recruiting-item::before {
+            content: '→';
+            color: var(--accent);
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        @media (max-width: 900px) {
+            .ai-council-header, .ai-council-body { padding-left: 24px; padding-right: 24px; }
+            .ai-council-2col { grid-template-columns: 1fr; }
+            .governance-grid { grid-template-columns: repeat(2, 1fr); }
+            .recruiting-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 600px) {
+            .governance-grid { grid-template-columns: 1fr 1fr; }
+            .agent-table { font-size: 0.76rem; }
+            .agent-table td, .agent-table th { padding: 10px 10px; }
+        }
     </style>
 </head>
 <body>
@@ -2062,6 +2379,323 @@
             <div class="section-label">Experiments</div>
             <h2 class="section-heading">Playing with code, <br><span class="muted">because why not.</span></h2>
         </div>
+
+        <!-- ===== AI COUNCIL FEATURED CARD ===== -->
+        <div class="ai-council-card reveal">
+
+            <div class="ai-council-header">
+                <div class="ai-council-badge">&#9679; Featured Experiment</div>
+                <h3 class="ai-council-title">Personal AI Council:<br>Hub-and-Spoke Agent System</h3>
+                <p class="ai-council-subtitle">Multi-agent orchestration with production-grade governance on constrained hardware — built and running locally on a 16GB M4 Mac mini.</p>
+            </div>
+
+            <div class="ai-council-body">
+
+                <p class="ai-council-overview">
+                    A persistent, multi-agent AI council where <strong style="color:var(--accent-warm)">Zeus</strong> is the central hub — routing tasks, owning the queue, and enforcing governance. Three <strong style="color:#00c896">advisors</strong> (Prometheus, Argus, Hestia) consult but never command. Five <strong style="color:var(--accent-blue)">execution agents</strong> receive orders from Zeus only. No agent ever talks to another agent. All routing through Zeus. All decisions through Tyler.
+                </p>
+
+                <!-- Architecture Diagram -->
+                <div class="ai-council-diagram-wrap">
+                    <svg viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI Council architecture: Tyler at top provides vision and final decisions. Zeus is the central hub that routes tasks and owns the task queue. Three advisor agents (Prometheus for memory and strategy, Argus for security and audit, Hestia for system health) provide advisory consultation via dashed lines. Five execution agents (Atlas for job search, Muse for creative tasks, Hermes for research, Hephaestus for automation, Plutus for markets) receive command flow from Zeus. Agents never communicate directly.">
+                        <defs>
+                            <marker id="cmd-arrow" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                <polygon points="0 0, 9 3.5, 0 7" fill="rgba(210,140,55,0.85)"/>
+                            </marker>
+                            <marker id="adv-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="rgba(0,190,140,0.75)"/>
+                            </marker>
+                            <marker id="tyler-arrow" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                <polygon points="0 0, 9 3.5, 0 7" fill="rgba(168,100,255,0.85)"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Tyler → Zeus command arrow -->
+                        <line x1="350" y1="73" x2="355" y2="120" stroke="rgba(168,85,247,0.55)" stroke-width="2" marker-end="url(#tyler-arrow)"/>
+
+                        <!-- Zeus → Execution agents (command flow, solid) -->
+                        <line x1="340" y1="182" x2="83" y2="330" stroke="rgba(200,130,50,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
+                        <line x1="348" y1="182" x2="216" y2="330" stroke="rgba(200,130,50,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
+                        <line x1="360" y1="182" x2="350" y2="330" stroke="rgba(200,130,50,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
+                        <line x1="372" y1="182" x2="487" y2="330" stroke="rgba(200,130,50,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
+                        <line x1="380" y1="182" x2="617" y2="330" stroke="rgba(200,130,50,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
+
+                        <!-- Advisor dashed lines (advisory consultation → Zeus) -->
+                        <line x1="171" y1="129" x2="253" y2="148" stroke="rgba(0,190,140,0.5)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#adv-arrow)"/>
+                        <line x1="171" y1="195" x2="253" y2="155" stroke="rgba(0,190,140,0.5)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#adv-arrow)"/>
+                        <line x1="171" y1="261" x2="253" y2="163" stroke="rgba(0,190,140,0.5)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#adv-arrow)"/>
+
+                        <!-- Tyler box (purple) -->
+                        <rect x="258" y="18" width="184" height="55" rx="10" fill="rgba(80,50,170,0.38)" stroke="rgba(168,85,247,0.65)" stroke-width="1.5"/>
+                        <text x="350" y="43" text-anchor="middle" font-size="17" font-weight="800" fill="#d4b0ff" font-family="Space Grotesk, sans-serif">Tyler</text>
+                        <text x="350" y="62" text-anchor="middle" font-size="10.5" fill="rgba(200,175,255,0.65)" font-family="Inter, sans-serif">Vision + final decisions</text>
+
+                        <!-- Zeus box (amber/warm) -->
+                        <rect x="252" y="120" width="216" height="62" rx="10" fill="rgba(110,60,10,0.5)" stroke="rgba(220,130,45,0.7)" stroke-width="1.5"/>
+                        <text x="360" y="146" text-anchor="middle" font-size="17" font-weight="800" fill="#f0a050" font-family="Space Grotesk, sans-serif">Zeus &#x26A1;</text>
+                        <text x="360" y="166" text-anchor="middle" font-size="10" fill="rgba(220,155,70,0.7)" font-family="Inter, sans-serif">Hub &nbsp;&middot;&nbsp; routes &nbsp;&middot;&nbsp; owns task queue</text>
+
+                        <!-- Advisors label -->
+                        <text x="90" y="94" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.28)" font-family="Inter, sans-serif" letter-spacing="1.5" font-style="italic">Advisors</text>
+
+                        <!-- Prometheus box (teal) -->
+                        <rect x="14" y="104" width="157" height="50" rx="8" fill="rgba(12,65,52,0.65)" stroke="rgba(0,175,125,0.6)" stroke-width="1.5"/>
+                        <text x="92" y="127" text-anchor="middle" font-size="13.5" font-weight="700" fill="#00c896" font-family="Space Grotesk, sans-serif">Prometheus</text>
+                        <text x="92" y="144" text-anchor="middle" font-size="9.5" fill="rgba(0,195,145,0.6)" font-family="Inter, sans-serif">Memory + strategy</text>
+
+                        <!-- Argus box (teal) -->
+                        <rect x="14" y="170" width="157" height="50" rx="8" fill="rgba(12,65,52,0.65)" stroke="rgba(0,175,125,0.6)" stroke-width="1.5"/>
+                        <text x="92" y="193" text-anchor="middle" font-size="13.5" font-weight="700" fill="#00c896" font-family="Space Grotesk, sans-serif">Argus</text>
+                        <text x="92" y="210" text-anchor="middle" font-size="9.5" fill="rgba(0,195,145,0.6)" font-family="Inter, sans-serif">Security + audit</text>
+
+                        <!-- Hestia box (teal) -->
+                        <rect x="14" y="236" width="157" height="50" rx="8" fill="rgba(12,65,52,0.65)" stroke="rgba(0,175,125,0.6)" stroke-width="1.5"/>
+                        <text x="92" y="259" text-anchor="middle" font-size="13.5" font-weight="700" fill="#00c896" font-family="Space Grotesk, sans-serif">Hestia</text>
+                        <text x="92" y="276" text-anchor="middle" font-size="9.5" fill="rgba(0,195,145,0.6)" font-family="Inter, sans-serif">System health</text>
+
+                        <!-- Execution agents row (blue) -->
+                        <!-- Atlas -->
+                        <rect x="22" y="330" width="122" height="58" rx="8" fill="rgba(12,35,85,0.7)" stroke="rgba(55,115,215,0.6)" stroke-width="1.5"/>
+                        <text x="83" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#6ab0ff" font-family="Space Grotesk, sans-serif">Atlas</text>
+                        <text x="83" y="372" text-anchor="middle" font-size="9.5" fill="rgba(100,165,255,0.6)" font-family="Inter, sans-serif">Job search</text>
+
+                        <!-- Muse -->
+                        <rect x="155" y="330" width="122" height="58" rx="8" fill="rgba(12,35,85,0.7)" stroke="rgba(55,115,215,0.6)" stroke-width="1.5"/>
+                        <text x="216" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#6ab0ff" font-family="Space Grotesk, sans-serif">Muse</text>
+                        <text x="216" y="372" text-anchor="middle" font-size="9.5" fill="rgba(100,165,255,0.6)" font-family="Inter, sans-serif">Creative</text>
+
+                        <!-- Hermes -->
+                        <rect x="289" y="330" width="122" height="58" rx="8" fill="rgba(12,35,85,0.7)" stroke="rgba(55,115,215,0.6)" stroke-width="1.5"/>
+                        <text x="350" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#6ab0ff" font-family="Space Grotesk, sans-serif">Hermes</text>
+                        <text x="350" y="372" text-anchor="middle" font-size="9.5" fill="rgba(100,165,255,0.6)" font-family="Inter, sans-serif">Research</text>
+
+                        <!-- Hephaestus -->
+                        <rect x="423" y="330" width="128" height="58" rx="8" fill="rgba(12,35,85,0.7)" stroke="rgba(55,115,215,0.6)" stroke-width="1.5"/>
+                        <text x="487" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#6ab0ff" font-family="Space Grotesk, sans-serif">Hephaestus</text>
+                        <text x="487" y="372" text-anchor="middle" font-size="9.5" fill="rgba(100,165,255,0.6)" font-family="Inter, sans-serif">Automation</text>
+
+                        <!-- Plutus -->
+                        <rect x="563" y="330" width="122" height="58" rx="8" fill="rgba(12,35,85,0.7)" stroke="rgba(55,115,215,0.6)" stroke-width="1.5"/>
+                        <text x="624" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#6ab0ff" font-family="Space Grotesk, sans-serif">Plutus</text>
+                        <text x="624" y="372" text-anchor="middle" font-size="9.5" fill="rgba(100,165,255,0.6)" font-family="Inter, sans-serif">Markets</text>
+
+                        <!-- Legend -->
+                        <line x1="22" y1="416" x2="50" y2="416" stroke="rgba(200,130,50,0.7)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
+                        <text x="64" y="420" font-size="9.5" fill="rgba(255,255,255,0.38)" font-family="Inter, sans-serif">Command flow</text>
+                        <line x1="190" y1="416" x2="218" y2="416" stroke="rgba(0,190,140,0.65)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#adv-arrow)"/>
+                        <text x="232" y="420" font-size="9.5" fill="rgba(255,255,255,0.38)" font-family="Inter, sans-serif">Advisory consultation</text>
+                    </svg>
+                    <p class="ai-council-diagram-caption">Agents never communicate directly &mdash; all routing goes through Zeus</p>
+                </div>
+
+                <!-- Architecture Explanation -->
+                <div class="ai-council-section-title">Architecture</div>
+                <div class="ai-council-2col">
+                    <div class="council-block">
+                        <div class="council-block-title">Why Hub-and-Spoke?</div>
+                        <p>Zeus is the only node with a full picture of system state. Advisors (Prometheus, Argus, Hestia) inform but never command. Execution agents (Atlas, Muse, Hermes, Hephaestus, Plutus) receive a task, execute it in isolation, and return a result — nothing more. This eliminates trust chains, makes Argus's audit logging trivial, and means a hallucinating Muse or hung Hermes can only damage its own task scope, not the entire system.</p>
+                    </div>
+                    <div class="council-block">
+                        <div class="council-block-title">Why Zeus is Critical</div>
+                        <p>Without a single point of orchestration, agents accumulate state, contradict each other, and spiral into recursive loops. Zeus enforces sequencing, holds the approval gates, owns escalation to Tyler, and is the only node that can write to Prometheus's memory store. Removing Zeus means removing governance entirely — the advisors become noise and the execution agents become uncoordinated tools.</p>
+                    </div>
+                </div>
+
+                <!-- Agent Table -->
+                <div class="ai-council-section-title">Agent Roster</div>
+                <table class="agent-table" aria-label="AI Council agent roster">
+                    <thead>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Role</th>
+                            <th>When It Runs</th>
+                            <th>Skills Demonstrated</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background:rgba(210,140,50,0.03);">
+                            <td><span class="agent-name-pill"><span class="agent-dot" style="background:#f0a050;box-shadow:0 0 6px rgba(240,160,80,0.5);"></span>Zeus</span></td>
+                            <td>The hub. Receives all task requests, routes them to the appropriate agent, owns the approval gates, and enforces timeouts. No agent acts without Zeus dispatching it.</td>
+                            <td>Always-on — persistent event queue, daemon process</td>
+                            <td>Orchestration design, queue management, approval-gate logic, escalation protocols</td>
+                        </tr>
+                        <tr style="background:rgba(0,190,140,0.02);">
+                            <td colspan="4" style="padding:10px 16px 4px;font-size:0.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(0,195,145,0.5);">— Advisors (consultation only, no command authority) —</td>
+                        </tr>
+                        <tr>
+                            <td><span class="agent-name-pill"><span class="agent-dot" style="background:#00c896;box-shadow:0 0 6px rgba(0,200,150,0.5);"></span>Prometheus</span></td>
+                            <td>Persistent memory and strategic context. Reads prior session state, surfaces relevant history, flags pattern-level concerns before Zeus acts.</td>
+                            <td>Consulted by Zeus before high-stakes or repeated task types</td>
+                            <td>Memory architecture, context retrieval, strategic pattern recognition</td>
+                        </tr>
+                        <tr>
+                            <td><span class="agent-name-pill"><span class="agent-dot" style="background:#00c896;box-shadow:0 0 6px rgba(0,200,150,0.5);"></span>Argus</span></td>
+                            <td>Security and audit layer. Reviews proposed actions for risk, maintains the audit trail, and raises flags to Zeus when a task crosses a governance threshold.</td>
+                            <td>Consulted on any action touching external systems, credentials, or file writes</td>
+                            <td>Security review, audit logging, risk classification, governance enforcement</td>
+                        </tr>
+                        <tr>
+                            <td><span class="agent-name-pill"><span class="agent-dot" style="background:#00c896;box-shadow:0 0 6px rgba(0,200,150,0.5);"></span>Hestia</span></td>
+                            <td>System health monitor. Tracks memory pressure, process state, daemon health, and hardware limits. Reports to Zeus before resource-intensive tasks.</td>
+                            <td>Background health checks; queried by Zeus before heavy compute tasks</td>
+                            <td>Resource monitoring, hardware-aware scheduling, failure prediction</td>
+                        </tr>
+                        <tr style="background:rgba(74,158,255,0.02);">
+                            <td colspan="4" style="padding:10px 16px 4px;font-size:0.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(100,165,255,0.45);">— Execution Agents (command-only, receive tasks from Zeus) —</td>
+                        </tr>
+                        <tr>
+                            <td><span class="agent-name-pill"><span class="agent-dot dot-blue"></span>Atlas</span></td>
+                            <td>Job search and career intelligence agent. Queries job boards, filters by criteria, compiles structured briefs, tracks application pipeline state.</td>
+                            <td>On Zeus command; scheduled sweeps or on-demand research runs</td>
+                            <td>Structured data retrieval, filtering logic, pipeline state management</td>
+                        </tr>
+                        <tr>
+                            <td><span class="agent-name-pill"><span class="agent-dot dot-blue"></span>Muse</span></td>
+                            <td>Creative output agent. Drafts, refines, and structures written content — cover letters, project descriptions, narrative summaries — on Zeus instruction.</td>
+                            <td>On Zeus command; output always approval-gated before delivery</td>
+                            <td>Controlled generation, tone matching, iterative refinement, human-in-loop output</td>
+                        </tr>
+                        <tr>
+                            <td><span class="agent-name-pill"><span class="agent-dot dot-blue"></span>Hermes</span></td>
+                            <td>Research and intelligence agent. Fetches web content, synthesizes findings, and returns structured briefs to Zeus. Never takes action on findings directly.</td>
+                            <td>On Zeus command; results cached to Prometheus for future context</td>
+                            <td>Information retrieval, source validation, structured summarization</td>
+                        </tr>
+                        <tr>
+                            <td><span class="agent-name-pill"><span class="agent-dot dot-blue"></span>Hephaestus</span></td>
+                            <td>Automation and tooling agent. Executes code, manages files, runs shell commands, builds scripts. The hands of the system — high capability, tightly scoped per task.</td>
+                            <td>On Zeus command; all file writes and shell execs require Argus pre-check</td>
+                            <td>Code execution, file ops, shell automation, tool use, sandboxed execution</td>
+                        </tr>
+                        <tr>
+                            <td><span class="agent-name-pill"><span class="agent-dot dot-blue"></span>Plutus</span></td>
+                            <td>Markets and financial intelligence agent. Tracks market data, summarizes financial signals, and surfaces insights. Read-only by default — no trade execution without explicit human approval.</td>
+                            <td>Scheduled sweeps and on-demand queries; all outputs advisory only</td>
+                            <td>Data ingestion, signal analysis, risk-aware reporting, hard execution guardrails</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Governance -->
+                <div class="ai-council-section-title">Governance Approach</div>
+                <div class="governance-grid">
+                    <div class="gov-pill">
+                        <div class="gov-pill-icon">&#x1F512;</div>
+                        <div class="gov-pill-label">Sandbox Isolation</div>
+                        <div class="gov-pill-desc">Each spoke runs in an isolated context with no access to peer agents or shared state</div>
+                    </div>
+                    <div class="gov-pill">
+                        <div class="gov-pill-icon">&#x2714;&#xFE0F;</div>
+                        <div class="gov-pill-label">Approval Gates</div>
+                        <div class="gov-pill-desc">High-risk actions (push, delete, send) require explicit human confirmation before execution</div>
+                    </div>
+                    <div class="gov-pill">
+                        <div class="gov-pill-icon">&#x1F4CB;</div>
+                        <div class="gov-pill-label">Audit Logging</div>
+                        <div class="gov-pill-desc">Every Zeus decision, tool call, and approval is timestamped and written to persistent log</div>
+                    </div>
+                    <div class="gov-pill">
+                        <div class="gov-pill-icon">&#x1F6A8;</div>
+                        <div class="gov-pill-label">Escalation Protocol</div>
+                        <div class="gov-pill-desc">Ambiguous or high-blast-radius tasks escalate to human rather than proceed autonomously</div>
+                    </div>
+                </div>
+
+                <!-- Technical Decisions -->
+                <div class="ai-council-section-title">Technical Decisions</div>
+                <div class="ai-council-2col">
+                    <div>
+                        <div class="council-block">
+                            <div class="council-block-title">Model Stratification</div>
+                            <p>Not every task needs the most capable model. Zeus uses Opus for orchestration and complex decisions; spokes use Sonnet or Haiku for well-scoped, repeatable tasks. This stretches API budget and reduces latency without sacrificing quality where it matters.</p>
+                        </div>
+                        <div class="council-code">
+<span class="c"># Zeus task routing pseudocode</span>
+<span class="g">zeus</span>.route(task) <span class="c">→</span>
+  <span class="c"># consult advisors first</span>
+  <span class="p">argus</span>.review(task)        <span class="c"># security check</span>
+  <span class="p">prometheus</span>.context(task)  <span class="c"># memory lookup</span>
+  <span class="c"># dispatch to execution agent</span>
+  if task.type == <span class="b">'research'</span>:
+    dispatch → <span class="b">hermes</span>
+  elif task.type == <span class="b">'code'</span>:
+    dispatch → <span class="b">hephaestus</span>
+  elif task.type == <span class="b">'creative'</span>:
+    dispatch → <span class="b">muse</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="council-block">
+                            <div class="council-block-title">Memory Management</div>
+                            <p>File-based memory with TTL enforcement. Each memory entry has a type (user / feedback / project / reference), a description used for relevance scoring, and a timestamp. Zeus prunes stale entries before each session. No vector DB required — semantic matching happens at retrieval time.</p>
+                        </div>
+                        <div class="council-block" style="margin-top:14px;">
+                            <div class="council-block-title">Timeout Enforcement</div>
+                            <p>Every spoke task has a hard timeout. Zeus tracks wall-clock time per agent, cancels overrun tasks, logs the failure, and optionally retries with a simpler model or smaller scope. Silent hangs are treated as failures.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skills Demonstrated -->
+                <div class="ai-council-section-title">Skills Demonstrated</div>
+                <div class="skills-tags">
+                    <span class="skill-tag g">Multi-Agent Orchestration</span>
+                    <span class="skill-tag g">System Design</span>
+                    <span class="skill-tag b">Governance &amp; Safety Rails</span>
+                    <span class="skill-tag b">Tool Use &amp; API Integration</span>
+                    <span class="skill-tag p">Memory Architecture</span>
+                    <span class="skill-tag p">Prompt Engineering</span>
+                    <span class="skill-tag b">Process &amp; Daemon Management</span>
+                    <span class="skill-tag g">Production Failure Thinking</span>
+                    <span class="skill-tag b">Audit Logging Design</span>
+                    <span class="skill-tag p">Model Cost Optimization</span>
+                    <span class="skill-tag b">Human-in-the-Loop Patterns</span>
+                    <span class="skill-tag g">Constrained Hardware Engineering</span>
+                </div>
+
+                <!-- Real Constraints & Learnings -->
+                <div class="ai-council-section-title">Real Constraints &amp; Learnings</div>
+                <div class="constraint-card">
+                    <div class="constraint-title">&#9888; The 16GB Problem</div>
+                    <div class="constraint-body">Running multiple model processes simultaneously on a 16GB M4 Mac mini means memory pressure is a first-class concern. Baseline system wired memory sits around 1GB. Running Ollama alongside Claude Code sessions and Openclaw daemon pushes into swap territory fast. The system is designed to run agents serially through Zeus, not in parallel, specifically because of this constraint — which turns out to be the right pattern anyway.</div>
+                </div>
+                <div class="constraint-card">
+                    <div class="constraint-title">&#128203; Why Logging Matters More Than You Think</div>
+                    <div class="constraint-body">The first version had no audit trail. When agents produced unexpected results, there was no way to reconstruct what Zeus had dispatched, what context each spoke had received, or where the decision chain diverged. Adding structured logging — not just stdout — transformed debugging from guesswork into forensics. Every production system lesson, learned on personal hardware.</div>
+                </div>
+
+                <!-- Current State -->
+                <div class="ai-council-section-title">Current State</div>
+                <div class="status-row">
+                    <span class="sbadge live"><span class="dot-sm" style="background:var(--accent);border-radius:50%;"></span> Zeus — live</span>
+                    <span class="sbadge live"><span class="dot-sm" style="background:var(--accent);border-radius:50%;"></span> Prometheus — live</span>
+                    <span class="sbadge live"><span class="dot-sm" style="background:var(--accent);border-radius:50%;"></span> Argus — live</span>
+                    <span class="sbadge live"><span class="dot-sm" style="background:var(--accent);border-radius:50%;"></span> Hestia — live</span>
+                    <span class="sbadge live"><span class="dot-sm" style="background:var(--accent);border-radius:50%;"></span> Hephaestus — live</span>
+                    <span class="sbadge staged"><span class="dot-sm" style="background:var(--accent-blue);border-radius:50%;"></span> Hermes — staged</span>
+                    <span class="sbadge staged"><span class="dot-sm" style="background:var(--accent-blue);border-radius:50%;"></span> Atlas — staged</span>
+                    <span class="sbadge staged"><span class="dot-sm" style="background:var(--accent-blue);border-radius:50%;"></span> Muse — staged</span>
+                    <span class="sbadge planned"><span class="dot-sm" style="background:var(--text-muted);border-radius:50%;"></span> Plutus — planned</span>
+                    <span class="sbadge planned"><span class="dot-sm" style="background:var(--text-muted);border-radius:50%;"></span> Tyler approval UI — planned</span>
+                </div>
+
+                <!-- Recruiting Callout -->
+                <div class="recruiting-callout">
+                    <div class="recruiting-title">What this demonstrates to an engineering team:</div>
+                    <div class="recruiting-grid">
+                        <div class="recruiting-item">System design thinking — hub-and-spoke isn't just a pattern, it's a deliberate choice with trade-offs understood</div>
+                        <div class="recruiting-item">Governance by default — sandboxing, approval gates, and audit trails were designed in, not bolted on</div>
+                        <div class="recruiting-item">Real-world constraint engineering — 16GB is a real limit, not a simulation; every decision reflects it</div>
+                        <div class="recruiting-item">Production failure thinking — silent hangs, escalation paths, and retry logic addressed before they caused problems</div>
+                        <div class="recruiting-item">Not just prompt writing — this is orchestration, infrastructure, and rails; LLMs are one component of many</div>
+                        <div class="recruiting-item">Cost-aware model usage — stratified model routing shows awareness of latency and API spend trade-offs</div>
+                    </div>
+                    <p style="margin-top:18px;font-size:0.78rem;color:var(--text-muted);">Repo available on request &mdash; currently in private experiments. <a href="https://github.com/tylerv11/" target="_blank" style="color:var(--accent-blue);text-decoration:none;">github.com/tylerv11</a></p>
+                </div>
+
+            </div>
+        </div>
+        <!-- ===== END AI COUNCIL ===== -->
 
         <div class="experiments-grid">
 
