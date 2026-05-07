@@ -1,26 +1,17 @@
 /**
- * PORTFOLIO ASSISTANT — Dual-Mode RAG System
- * Mode 1: Fuzzy matching (instant, free)
- * Mode 2: Smart RAG via Deepseek + OpenRouter (semantic, cost-controlled)
+ * PORTFOLIO ASSISTANT — Enhanced Fuzzy Matching System
+ * Intelligently parses and matches against portfolio_knowledge_base.md
  *
- * Security: Comprehensive guardrails against injection, jailbreak, rate limiting, token abuse.
+ * Security: Comprehensive guardrails against injection, jailbreak, rate limiting.
  */
 
 const PortfolioAssistant = (() => {
   // ===== CONFIGURATION =====
   const CONFIG = {
     MAX_QUESTION_LENGTH: 500,
-    MAX_SESSION_QUERIES: 15,
-    MAX_QUERIES_PER_MINUTE: 5,
+    MAX_SESSION_QUERIES: 30,
+    MAX_QUERIES_PER_MINUTE: 10,
     SESSION_TIMEOUT_MS: 3600000, // 1 hour
-    OPENROUTER_MODEL: 'deepseek/deepseek-2.5',
-    // Point to your Cloudflare Worker (set via window.CLOUDFLARE_WORKER_URL before init)
-    // Falls back to direct OpenRouter if not set
-    OPENROUTER_API_ENDPOINT: window.CLOUDFLARE_WORKER_URL || 'https://openrouter.ai/api/v1/chat/completions',
-    MAX_RESPONSE_TOKENS: 500,
-    CONTEXT_CHUNKS: 2,
-    CHUNK_SIZE_TOKENS: 500,
-    KB_CHECK_INTERVAL: 1000, // ms to check KB before enabling Smart Mode
   };
 
   // ===== ATTACK PATTERN SIGNATURES =====
@@ -30,8 +21,6 @@ const PortfolioAssistant = (() => {
     promptInjection: /(ignore|override|bypass|system:|instructions:|forget|jailbreak|GPT|ChatGPT|Claude|you are now|act as|pretend|simulate|forget previous|disregard|don't follow|instead of)/gi,
     commandInject: /^(rm|ls|cat|curl|wget|nc|telnet|bash|sh|cmd|powershell)/gi,
     filePathTraversal: /\.\.\//g,
-    xxe: /(<!ENTITY|<!DOCTYPE|SYSTEM|PUBLIC)/gi,
-    ldapInjection: /[*()\\]/g,
   };
 
   // Tyler-specific keywords (must have at least one for relevance)
@@ -40,9 +29,10 @@ const PortfolioAssistant = (() => {
     'engineer', 'data', 'visualization', 'manufacturing', 'analytics', 'databricks',
     'power bi', 'python', 'sql', 'dashboard', 'kpi', 'hire', 'linkedin', 'github',
     'usc', 'lean', 'six sigma', 'background', 'resume', 'about', 'contact',
-    'deepseek', 'openrouter', 'assistant', 'help', 'question', 'what', 'how',
-    'who', 'where', 'when', 'why', 'tell', 'show', 'explain', 'describe',
-    'aerospace', 'electric boat', 'wilderness', 'guide', 'training', 'compliance',
+    'assistant', 'help', 'question', 'what', 'how', 'who', 'where', 'when', 'why',
+    'tell', 'show', 'explain', 'describe', 'aerospace', 'electric boat', 'wilderness',
+    'guide', 'training', 'compliance', 'strength', 'weakness', 'project', 'challenge',
+    'impact', 'leadership', 'governance', 'ai', 'machine learning', 'coaching',
   ];
 
   // ===== STATE MANAGEMENT =====
@@ -51,10 +41,9 @@ const PortfolioAssistant = (() => {
     queryCount: 0,
     queryTimestamps: [],
     knowledgeBase: null,
-    kbChunks: [],
+    kbCategories: {},
     kbLoaded: false,
-    smartModeEnabled: false,
-    currentMode: 'fuzzy', // 'fuzzy' or 'smart'
+    currentMode: 'fuzzy',
   };
 
   // ===== SECURITY: INPUT VALIDATION =====
@@ -84,7 +73,7 @@ const PortfolioAssistant = (() => {
         const suspicionLevel = calculateSuspicionLevel(question);
         if (suspicionLevel > 0.6) {
           errors.push(`Blocked: Potential ${attackType} detected. I only answer portfolio questions.`);
-          logSecurityEvent('attack_pattern', { attackType, suspicionLevel, question: question.substring(0, 50) });
+          logSecurityEvent('attack_pattern', { attackType, suspicionLevel });
           break;
         }
       }
@@ -98,7 +87,7 @@ const PortfolioAssistant = (() => {
 
     // 5. Repeating patterns (spam detection)
     if (hasRepeatingPattern(question)) {
-      errors.push('Question looks like spam or flooding. Please try a different question.');
+      errors.push('Question looks like spam. Please try a different question.');
     }
 
     return {
@@ -109,19 +98,14 @@ const PortfolioAssistant = (() => {
   }
 
   function calculateSuspicionLevel(text) {
-    let suspicion = 0;
     let matches = 0;
-
     for (const pattern of Object.values(ATTACK_PATTERNS)) {
       matches += (text.match(pattern) || []).length;
     }
-
-    suspicion = Math.min(1, matches / 5); // Normalize to 0-1
-    return suspicion;
+    return Math.min(1, matches / 5);
   }
 
   function hasRepeatingPattern(text) {
-    // Detects "aaaa" or "123123123" patterns
     return /(.)\1{4,}|(\d{3}){3,}|([a-z])\3{4,}/i.test(text);
   }
 
@@ -161,7 +145,6 @@ const PortfolioAssistant = (() => {
   function recordQuery() {
     state.queryCount++;
     state.queryTimestamps.push(Date.now());
-    // Keep only recent timestamps
     state.queryTimestamps = state.queryTimestamps.filter(t => t > Date.now() - 60000);
   }
 
@@ -169,65 +152,30 @@ const PortfolioAssistant = (() => {
     return CONFIG.MAX_SESSION_QUERIES - state.queryCount;
   }
 
-  // ===== SECURITY: TOKEN & CONTEXT MANAGEMENT =====
-  function estimateTokens(text) {
-    // Rough estimate: ~4 characters per token
-    return Math.ceil(text.length / 4);
-  }
-
-  function validateContextWindow(question, chunks) {
-    const estimatedTokens =
-      estimateTokens(question) +
-      chunks.reduce((sum, chunk) => sum + estimateTokens(chunk.content), 0) +
-      CONFIG.MAX_RESPONSE_TOKENS;
-
-    // Deepseek has 128k context window; use 80% for safety
-    const MAX_SAFE_TOKENS = 102400;
-
-    if (estimatedTokens > MAX_SAFE_TOKENS) {
-      return {
-        valid: false,
-        reason: 'Context too large. Using fuzzy matching instead.',
-        estimatedTokens,
-      };
-    }
-
-    return { valid: true, estimatedTokens };
-  }
-
-  // ===== KNOWLEDGE BASE CHUNKING =====
-  async function loadAndChunkKnowledgeBase() {
+  // ===== KNOWLEDGE BASE LOADING & PARSING =====
+  async function loadAndParseKnowledgeBase() {
     try {
-      // Use GitHub raw content URL (GitHub Pages doesn't serve .md as plain text)
       const kbUrl = 'https://raw.githubusercontent.com/tylerv11/tylerv11.github.io/main/portfolio_knowledge_base.md';
       const response = await fetch(kbUrl);
-      if (!response.ok) throw new Error(`KB fetch failed: ${response.status} ${response.statusText}`);
+      if (!response.ok) throw new Error(`KB fetch failed: ${response.status}`);
 
       const text = await response.text();
       state.knowledgeBase = text;
 
-      // Split by headings (##, ###, etc.)
-      const headingRegex = /^#{2,4}\s+(.+?)$/gm;
-      const sections = [];
-      let lastIndex = 0;
+      // Parse into categories by heading
+      const sections = text.split(/^## /m);
 
-      let match;
-      while ((match = headingRegex.exec(text)) !== null) {
-        if (match.index > lastIndex) {
-          sections.push(text.substring(lastIndex, match.index));
-        }
-        lastIndex = match.index;
-      }
-      sections.push(text.substring(lastIndex));
-
-      // Chunk sections into ~500 token chunks
-      state.kbChunks = sections
-        .map(section => ({
-          content: section.trim(),
-          tokens: estimateTokens(section),
-          heading: (section.match(/^#{2,4}\s+(.+)$/m) || [null, 'Unknown'])[1],
-        }))
-        .filter(chunk => chunk.tokens > 0);
+      state.kbCategories = {
+        'professional_summary': extractSection(text, 'Professional Summary'),
+        'technical_skills': extractSection(text, 'Core Technical Skills'),
+        'projects': extractSection(text, 'Major Projects'),
+        'architecture': extractSection(text, 'Technical Architecture'),
+        'impact': extractSection(text, 'Impact Summary'),
+        'leadership': extractSection(text, 'Leadership & Coaching'),
+        'strategic_themes': extractSection(text, 'Strategic Themes'),
+        'career_interests': extractSection(text, 'Career Interests'),
+        'full_kb': text,
+      };
 
       state.kbLoaded = true;
       return true;
@@ -238,151 +186,55 @@ const PortfolioAssistant = (() => {
     }
   }
 
-  // ===== SMART MODE: SEMANTIC SEARCH =====
-  function findRelevantChunks(question, topK = CONFIG.CONTEXT_CHUNKS) {
-    if (!state.kbLoaded || state.kbChunks.length === 0) return [];
-
-    // Simple semantic relevance: keyword overlap
-    const qWords = question.toLowerCase().split(/\s+/);
-    const scored = state.kbChunks.map(chunk => {
-      const contentWords = chunk.content.toLowerCase().split(/\s+/);
-      const overlap = qWords.filter(w => contentWords.includes(w)).length;
-      return { ...chunk, score: overlap };
-    });
-
-    return scored
-      .sort((a, b) => b.score - a.score)
-      .slice(0, topK)
-      .filter(chunk => chunk.score > 0);
+  function extractSection(text, heading) {
+    const regex = new RegExp(`## ${heading}[\\s\\S]*?(?=^## |$)`, 'm');
+    const match = text.match(regex);
+    return match ? match[0] : '';
   }
 
-  // ===== SMART MODE: DEEPSEEK API CALL =====
-  async function callDeepseekAPI(question, contextChunks) {
-    // Check if using Cloudflare Worker (recommended, secure)
-    const isUsingWorker = CONFIG.OPENROUTER_API_ENDPOINT.includes('workers.dev');
+  // ===== INTELLIGENT FUZZY MATCHING =====
+  function findBestAnswerInKB(question) {
+    const lowerQ = question.toLowerCase();
+    const words = lowerQ.split(/\s+/).filter(w => w.length > 2);
 
-    // If direct client-side: API key must be set
-    let apiKey = null;
-    if (!isUsingWorker) {
-      apiKey = window.OPENROUTER_API_KEY || localStorage.getItem('openrouter_api_key');
-      if (!apiKey) {
-        return {
-          success: false,
-          error: 'Smart Mode not configured. Set up Cloudflare Worker or API key via PORTFOLIO_ASSISTANT_SETUP.md',
-        };
-      }
-    }
+    // Category routing based on question intent
+    let category = 'full_kb';
+    if (lowerQ.includes('strength') || lowerQ.includes('strong')) category = 'strategic_themes';
+    if (lowerQ.includes('weakness') || lowerQ.includes('weak') || lowerQ.includes('challenge')) category = 'strategic_themes';
+    if (lowerQ.includes('project') || lowerQ.includes('built') || lowerQ.includes('built') || lowerQ.includes('work')) category = 'projects';
+    if (lowerQ.includes('skill') || lowerQ.includes('tech') || lowerQ.includes('language')) category = 'technical_skills';
+    if (lowerQ.includes('leadership') || lowerQ.includes('team') || lowerQ.includes('coaching') || lowerQ.includes('manage')) category = 'leadership';
+    if (lowerQ.includes('govern') || lowerQ.includes('compliance') || lowerQ.includes('architecture')) category = 'architecture';
+    if (lowerQ.includes('impact') || lowerQ.includes('scale') || lowerQ.includes('metric')) category = 'impact';
+    if (lowerQ.includes('interest') || lowerQ.includes('career') || lowerQ.includes('future')) category = 'career_interests';
 
-    const systemPrompt = `You are Tyler Vincent's portfolio assistant. Answer only questions about his professional experience, skills, projects, and background based on the provided context. Be direct and concise. If the question is not about Tyler or his work, politely decline and suggest asking about his portfolio instead.`;
+    const categoryText = state.kbCategories[category] || state.kbCategories['full_kb'];
 
-    const contextText = contextChunks
-      .map(c => `# ${c.heading}\n${c.content}`)
-      .join('\n\n---\n\n');
+    // Score sections by keyword overlap
+    const sections = categoryText.split('\n\n');
+    let bestSection = null;
+    let bestScore = 0;
 
-    const userMessage = `Context:\n${contextText}\n\nQuestion: ${question}`;
+    sections.forEach(section => {
+      if (section.trim().length < 20) return;
+      const sectionLower = section.toLowerCase();
+      let score = 0;
 
-    // Build headers: if using Cloudflare Worker, don't include Authorization (Worker adds it)
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-
-    if (!isUsingWorker && apiKey) {
-      headers['Authorization'] = `Bearer ${apiKey}`;
-      headers['HTTP-Referer'] = 'https://tylerv11.github.io';
-      headers['X-Title'] = 'Tyler Vincent Portfolio';
-    }
-
-    try {
-      const response = await fetch(CONFIG.OPENROUTER_API_ENDPOINT, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify({
-          model: CONFIG.OPENROUTER_MODEL,
-          messages: [
-            { role: 'system', content: systemPrompt },
-            { role: 'user', content: userMessage },
-          ],
-          max_tokens: CONFIG.MAX_RESPONSE_TOKENS,
-          temperature: 0.7,
-        }),
+      words.forEach(word => {
+        if (sectionLower.includes(word)) score += word.length; // Weight by word length
       });
 
-      if (!response.ok) {
-        let errorMessage = 'Unknown error';
-        try {
-          const error = await response.json();
-          errorMessage = error.error?.message || JSON.stringify(error);
-        } catch (e) {
-          errorMessage = `HTTP ${response.status}: ${response.statusText}`;
-        }
-        console.error('[API_ERROR]', errorMessage, 'Status:', response.status);
-        return {
-          success: false,
-          error: `API error: ${errorMessage}`,
-        };
+      if (score > bestScore) {
+        bestScore = score;
+        bestSection = section;
       }
+    });
 
-      const data = await response.json();
-      const answer = data.choices?.[0]?.message?.content || '';
-
-      // Validate response doesn't contain code/injection
-      if (validateResponse(answer)) {
-        return {
-          success: true,
-          answer,
-          mode: 'smart',
-          estimatedCost: calculateEstimatedCost(question, answer),
-        };
-      } else {
-        return {
-          success: false,
-          error: 'Response validation failed. Using fuzzy matching.',
-        };
-      }
-    } catch (error) {
-      console.error('Deepseek API error:', error);
-      return {
-        success: false,
-        error: `Network error: ${error.message}. Falling back to fuzzy matching.`,
-      };
-    }
-  }
-
-  function validateResponse(response) {
-    // Ensure response doesn't contain code, shell commands, or suspicious patterns
-    if (response.length > 2000) return false; // Too long
-    if (response.length < 10) return false; // Too short
-
-    // Check for code blocks or commands
-    if (/```|<script|javascript:|bash|sh |eval|exec|system\(|shell|terminal/.test(response)) {
-      logSecurityEvent('suspicious_response', { response: response.substring(0, 100) });
-      return false;
-    }
-
-    return true;
-  }
-
-  function calculateEstimatedCost(question, answer) {
-    const tokens = estimateTokens(question) + estimateTokens(answer);
-    // Deepseek 2.5: ~$0.07 per 1M input, ~$0.28 per 1M output
-    const costPer1M = 0.07 + 0.28; // Rough average
-    return (tokens / 1000000) * costPer1M;
-  }
-
-  // ===== FUZZY MATCHING FALLBACK (existing system) =====
-  function answerWithFuzzyMatching(question) {
-    // This integrates with existing fuzzy matching in index.html
-    // Fallback when KB is not loaded or API fails
-    return {
-      success: true,
-      answer: 'Using fuzzy matching mode. This mode has limited knowledge, but it\'s instant and free.',
-      mode: 'fuzzy',
-      estimatedCost: 0,
-    };
+    return bestSection || categoryText.substring(0, 500);
   }
 
   // ===== MAIN QUERY HANDLER =====
-  async function handleQuery(question, useSmartMode = false) {
+  async function handleQuery(question) {
     // 1. Validate input
     const validation = validateInput(question);
     if (!validation.valid) {
@@ -403,87 +255,47 @@ const PortfolioAssistant = (() => {
       };
     }
 
-    // 3. Attempt Smart Mode if requested and KB loaded
-    if (useSmartMode && state.kbLoaded) {
-      const chunks = findRelevantChunks(question);
-      if (chunks.length === 0) {
-        // No relevant chunks found, fall back to fuzzy
-        return fallbackToFuzzy(question);
-      }
+    // 3. Find answer in knowledge base
+    recordQuery();
 
-      const contextCheck = validateContextWindow(question, chunks);
-      if (!contextCheck.valid) {
-        return fallbackToFuzzy(question);
-      }
-
-      const apiResult = await callDeepseekAPI(question, chunks);
-      if (apiResult.success) {
-        recordQuery();
-        return {
-          ...apiResult,
-          remainingQueries: getRemainingQueries(),
-        };
-      } else {
-        // API failed, fall back to fuzzy and log error for debugging
-        console.warn('[PORTFOLIO_ASSISTANT] Smart Mode failed:', apiResult.error);
-        logSecurityEvent('smart_mode_failure', { error: apiResult.error });
-        return fallbackToFuzzy(question);
-      }
+    let answer = 'Question not found in knowledge base.';
+    if (state.kbLoaded) {
+      answer = findBestAnswerInKB(question);
     }
 
-    // 4. Default to fuzzy matching
-    return fallbackToFuzzy(question);
-  }
-
-  function fallbackToFuzzy(question) {
-    recordQuery();
     return {
       success: true,
-      answer: 'Using fuzzy matching. For better answers, enable Smart Search (AI-powered).',
+      answer,
       mode: 'fuzzy',
-      estimatedCost: 0,
       remainingQueries: getRemainingQueries(),
     };
   }
 
-  // ===== LOGGING & MONITORING =====
+  // ===== LOGGING =====
   function logSecurityEvent(eventType, details) {
-    console.warn(`[SECURITY] ${eventType}:`, details);
-    // Could also send to a server-side log for monitoring
+    console.log(`[SECURITY] ${eventType}:`, details);
   }
 
   // ===== PUBLIC API =====
   return {
-    async init() {
-      const loaded = await loadAndChunkKnowledgeBase();
-      state.smartModeEnabled = loaded;
-      return loaded;
+    init: async () => {
+      await loadAndParseKnowledgeBase();
     },
-
-    async query(question, useSmartMode = false) {
-      return handleQuery(question, useSmartMode);
-    },
-
-    getState() {
-      return {
-        smartModeAvailable: state.smartModeEnabled,
-        currentMode: state.currentMode,
-        queriesRemaining: getRemainingQueries(),
-        sessionTimeoutMinutes: Math.ceil((state.sessionStart + CONFIG.SESSION_TIMEOUT_MS - Date.now()) / 60000),
-      };
-    },
-
-    resetSession() {
-      state.queryCount = 0;
-      state.queryTimestamps = [];
-      state.sessionStart = Date.now();
-    },
+    handleQuery,
+    getState: () => ({
+      queryCount: state.queryCount,
+      queriesRemaining: getRemainingQueries(),
+      sessionTimeoutMinutes: Math.ceil((CONFIG.SESSION_TIMEOUT_MS - (Date.now() - state.sessionStart)) / 60000),
+      kbLoaded: state.kbLoaded,
+    }),
   };
 })();
 
-// Initialize on page load
+// Auto-initialize when page loads
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => PortfolioAssistant.init());
+  document.addEventListener('DOMContentLoaded', () => {
+    PortfolioAssistant.init();
+  });
 } else {
   PortfolioAssistant.init();
 }
