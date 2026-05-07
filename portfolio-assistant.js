@@ -198,8 +198,10 @@ const PortfolioAssistant = (() => {
   // ===== KNOWLEDGE BASE CHUNKING =====
   async function loadAndChunkKnowledgeBase() {
     try {
-      const response = await fetch('/portfolio_knowledge_base.md');
-      if (!response.ok) throw new Error('KB fetch failed');
+      // Use GitHub raw content URL (GitHub Pages doesn't serve .md as plain text)
+      const kbUrl = 'https://raw.githubusercontent.com/tylerv11/tylerv11.github.io/main/portfolio_knowledge_base.md';
+      const response = await fetch(kbUrl);
+      if (!response.ok) throw new Error(`KB fetch failed: ${response.status} ${response.statusText}`);
 
       const text = await response.text();
       state.knowledgeBase = text;
