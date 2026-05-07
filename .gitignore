@@ -1,9 +1,14 @@
-# Environment
+# Environment & Secrets (CRITICAL — never commit)
 .env
 .env.local
 .env*.local
+.env.*.local
+.env.production
+.env.development
 *.key
 *.pem
+secrets.json
+config.local.js
 
 # API Keys & Secrets
 API_KEY
