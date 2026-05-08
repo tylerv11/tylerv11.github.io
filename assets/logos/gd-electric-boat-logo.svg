@@ -1,0 +1,12 @@
+<svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .gd-text { font-family: Arial, sans-serif; font-size: 18px; font-weight: 700; fill: rgba(255,255,255,0.85); }
+      .gd-accent { stroke: rgba(74,158,255,0.7); stroke-width: 2; fill: none; }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="200" height="80" fill="none"/>
+  <text x="50" y="48" class="gd-text">GD</text>
+  <text x="80" y="48" class="gd-text" style="font-size: 14px;">Electric Boat</text>
+  <path d="M 35 35 L 45 55 L 55 35" class="gd-accent"/>
+</svg>
