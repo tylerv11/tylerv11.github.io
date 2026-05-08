@@ -1,0 +1,11 @@
+<svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .aero-text { font-family: Arial, sans-serif; font-size: 20px; font-weight: 700; fill: rgba(255,255,255,0.85); letter-spacing: 0.5px; }
+      .aero-accent { fill: rgba(74,158,255,0.6); }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="200" height="80" fill="none"/>
+  <text x="100" y="52" class="aero-text" text-anchor="middle">Aerospace</text>
+  <polygon points="100,25 110,40 90,40" class="aero-accent"/>
+</svg>

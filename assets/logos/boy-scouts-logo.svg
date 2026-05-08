@@ -1,0 +1,13 @@
+<svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .bsa-text { font-family: Arial, sans-serif; font-size: 20px; font-weight: 700; letter-spacing: 0.5px; }
+      .bsa-blue { fill: rgba(0,51,153,0.85); }
+      .bsa-red { fill: rgba(204,0,0,0.85); }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="200" height="80" fill="none"/>
+  <text x="60" y="48" class="bsa-text bsa-blue">Boy</text>
+  <text x="120" y="48" class="bsa-text bsa-red">Scouts</text>
+  <circle cx="100" cy="28" r="8" class="bsa-blue" opacity="0.6"/>
+</svg>
