@@ -643,16 +643,37 @@
             position: absolute;
             bottom: 12px;
             right: 12px;
-            height: 32px;
+            height: 48px;
             width: auto;
-            max-width: 120px;
-            opacity: 0.8;
+            max-width: 160px;
+            opacity: 0.85;
             transition: opacity 0.3s ease;
             z-index: 10;
+            object-fit: contain;
+            object-position: bottom right;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
 
         .project-card:hover .card-logo {
             opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .card-logo {
+                height: 42px;
+                max-width: 140px;
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-logo {
+                height: 38px;
+                max-width: 120px;
+                bottom: 8px;
+                right: 8px;
+            }
         }
 
         .project-card .card-media {
@@ -1023,11 +1044,13 @@
             opacity: 0;
             transform: translateY(40px);
             transition: all 0.8s var(--transition-smooth);
+            will-change: transform, opacity;
         }
 
         .reveal.visible {
             opacity: 1;
             transform: translateY(0);
+            will-change: auto;
         }
 
         .reveal-delay-1 { transition-delay: 0.1s; }
@@ -2365,11 +2388,6 @@
         <p class="hero-subtitle">
             Data Visualization &amp; Analytics Engineer - I've built data products, dashboards, and tools across SaaS, AI, e-commerce, defense, and pharmaceuticals. I help teams work faster and make better decisions.
         </p>
-        <div class="hero-actions">
-            <a href="about.html" class="btn-primary">
-                About Me <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
         <div class="hero-scroll">
             <span>Scroll</span>
             <div class="scroll-line"></div>
@@ -2407,7 +2425,7 @@
     <section class="section" id="work">
         <div class="section-header reveal">
             <div class="section-label">Selected Work</div>
-            <h2 class="section-heading">Projects that pushed <br><span class="muted">boundaries forward.</span></h2>
+            <h2 class="section-heading">Examples of my work <br><span class="muted">throughout the years</span></h2>
         </div>
 
         <!-- View Toggle -->
@@ -2469,7 +2487,7 @@
                         <span class="card-tag">Analytics</span>
                         <span style="display:inline-block;padding:3px 10px;background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.25);border-radius:100px;font-size:0.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);">Current</span>
                     </div>
-                    <h3>Data Visualization Analytics Engineer 3</h3>
+                    <h3>Data and Analytics Engineer III</h3>
                     <div class="card-company">Takeda Pharmaceuticals - Los Angeles, CA</div>
                     <p>Building enterprise data products for manufacturing and operations. Designing Power BI dashboards and data pipelines across Databricks and SQL. Driving performance insights and standardizing data for cross-functional decision-making.</p>
                 </div>
@@ -2513,7 +2531,7 @@
                     <p>Built work center layouts and a knowledge base for nuclear submarine industrial sites with a security clearance. Six Sigma Black Belt. Bridged theory and practice, working with welders and machinists.</p>
                     <a href="https://youtu.be/n--isQ2pwJc" class="card-link" target="_blank">See the work <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <img src="assets/logos/gd-electric-boat-logo.svg" alt="General Dynamics Electric Boat" class="card-logo" />
+                <img src="assets/logos/gd-electric-boat-logo.png" alt="General Dynamics Electric Boat" class="card-logo" />
             </div>
 
             <!-- AI Program Manager -->
@@ -2654,13 +2672,13 @@
             <div class="ai-council-header">
                 <div class="ai-council-badge">&#9679; Personal AI Project</div>
                 <h3 class="ai-council-title">Personal AI Council:<br>Hub-and-Spoke Agent System</h3>
-                <p class="ai-council-subtitle">A personal multi-agent system built with a mix of local Ollama models and API-routed calls to Claude, running on a 16GB M4 Mac mini. Tyler sets the vision. Zeus runs the show.</p>
+                <p class="ai-council-subtitle">A personal multi-agent system built with a mix of models: ChatGPT 5.4, DeepSeek v4 Flash, DeepSeek v2.5, Ollama, Mistral, and Qwen, running on a 16GB M4 Mac. Tyler sets the vision. Zeus runs the show.</p>
             </div>
 
             <div class="ai-council-body">
 
                 <p class="ai-council-overview">
-                    A persistent, multi-agent AI council where <strong style="color:var(--accent-warm)">Zeus ⚡ (ChatGPT 5.4)</strong> is the central hub: routing tasks, owning the queue, and enforcing governance. Three <strong style="color:#00c896">advisors</strong> (Prometheus, Argus, Hestia) consult but never command. Five <strong style="color:var(--accent-blue)">execution agents</strong> receive orders from Zeus only. No agent ever talks to another agent. All routing through Zeus. All goals set by Tyler.
+                    A persistent, multi-agent AI council where <strong style="color:var(--accent-warm)">Zeus ⚡ (ChatGPT 5.4)</strong> is the central hub: routing tasks, owning the queue, and enforcing governance. The system uses a diverse mix of models—ChatGPT 5.4, DeepSeek v4 Flash, DeepSeek v2.5, Ollama, Mistral, and Qwen—routing each task to the best-fit model. Three <strong style="color:#00c896">advisors</strong> (Prometheus, Argus, Hestia) consult but never command. Five <strong style="color:var(--accent-blue)">execution agents</strong> receive orders from Zeus only. No agent ever talks to another agent. All routing through Zeus. All goals set by Tyler.
                 </p>
 
                 <!-- Architecture Diagram -->
@@ -3194,8 +3212,8 @@
                 <div class="ai-council-2col">
                     <div>
                         <div class="council-block">
-                            <div class="council-block-title">Model Stratification: Local, Deepseek, and API</div>
-                            <p>Every task routes to the minimum-capable model that solves it reliably. Advisors (Prometheus, Argus, Hestia) run local Ollama or Deepseek models: free, private, and fast for classification tasks. Execution agents use Deepseek R1 for reasoning-heavy work (cost-efficient), Claude Haiku for lightweight retrieval, and Sonnet/Opus for creative or high-stakes decisions. This stretches API budget and keeps latency low for local work.</p>
+                            <div class="council-block-title">Model Stratification: Mixed Model Approach</div>
+                            <p>Every task routes to the minimum-capable model that solves it reliably. The system uses a strategic mix: ChatGPT 5.4 for Zeus (orchestration), DeepSeek v4 Flash and v2.5 for cost-efficient reasoning, Ollama/Mistral/Qwen for local processing (private, fast, free), and specialized models for each execution agent. Advisors run on local models for classification and auditing. Execution agents scale up to ChatGPT or DeepSeek for reasoning-heavy or creative work. This stretches budget and keeps latency low.</p>
                         </div>
                         <div class="council-code">
 <span class="c"># Zeus task routing with model selection</span>
@@ -3567,11 +3585,20 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        // Check if elements are already in viewport on page load
+        document.querySelectorAll('.reveal').forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                el.classList.add('visible');
+            } else {
+                observer.observe(el);
+            }
+        });
 
         // ===== WINDOW BUTTONS - INTERACTIVE =====
         function windowAction(dotEl, action) {
@@ -4277,7 +4304,7 @@
                     mapLabel: 'Self Hosted', mapSub: '/ AI Council',
                     skills: ['AI / ML', 'Governance'],
                     skillNotes: {
-                        'AI / ML': 'Execution agents (Hermes, Atlas, Muse, Hephaestus, Plutus, Prometheus) use Deepseek v4 Flash via OpenRouter for cost efficiency. Advisors (Argus, Hestia) run locally on Ollama (Llama3.1:8b primary, Qwen3.5:4b fallback). Zeus (ChatGPT 5.4) orchestrates routing.',
+                        'AI / ML': 'Multi-model system: Zeus (ChatGPT 5.4) orchestrates routing. Execution agents use DeepSeek v4 Flash, DeepSeek v2.5, and Mistral via OpenRouter for cost efficiency. Advisors (Prometheus, Argus, Hestia) run locally on Ollama, Mistral, and Qwen for fast classification and auditing. Each task routes to the minimum-capable model that solves it.',
                         'Governance': 'Argus security audits daily. Sandbox: each agent has isolated workspace + memory partition. Standard macOS profile (no sudo). Command allowlists per agent. Approval gates for irreversible ops. Audit log on all Zeus decisions.',
                     },
                     problem: 'Single LLM cannot handle diverse reasoning tasks efficiently. Local-only is slow, API-only is expensive.',
@@ -4286,7 +4313,7 @@
                     metrics: ['8 specialized agents', 'Cost-efficient stratification', 'Discord control'],
                 },
                 {
-                    title: 'Data Visualization Analytics Engineer 3',
+                    title: 'Data and Analytics Engineer III',
                     company: 'Takeda Pharmaceuticals',
                     mapLabel: 'Takeda', mapSub: '/ Data Viz Eng. III',
                     skills: ['Analytics', 'Visualization', 'Operations', 'AI / ML', 'Leadership'],
@@ -5339,8 +5366,10 @@
 
                 // Skills / approach
                 { keys: ['skill','skills','tech stack','tools','technologies'], answer: 'Core: Power BI (semantic models, DAX, RLS), SQL/Databricks (Delta Lake, transformations), Python (optimization, algorithms). Also: Computer Vision (trained CV models), Six Sigma Black Belt, SolidWorks/AutoCAD, product management, statistical analysis. Tyler moves across the full stack from raw data to executive dashboard.' },
+                { keys: ['data engineering','engineering','databricks','delta lake','pipelines','transformations','etl','data pipeline','sql'], answer: 'Tyler is a Data Engineering builder - not just dashboards, but the pipelines and data models behind them. At Takeda, he designed governed SQL/Databricks pipelines feeding Power BI semantic models with row-level security and real-time transformations. He replaced average-based metrics with distribution-driven analysis (P20/P50/P90 percentiles). At Chewy and across 6 regions, he built and governed data architectures handling 11M+ records with sub-second query performance. He uses Delta Lake for ACID compliance, builds semantic models with DAX for the business logic, and obsesses over data quality at scale. The principle: clean pipelines enable good decisions.' },
+                { keys: ['recent work','what he been','up to','lately','ai council','automation','workflow','constraints','creative'], answer: 'Most recently, Tyler built an AI Council to help automate routine workflows and increase productivity across teams. The constraint: work within existing systems, no greenfield tooling. That\'s where creativity comes in - identifying high-value automations that fit the system, sequencing them for maximum impact. It\'s been great to work within constraints and get creative building solutions that actually compound. The goal is turning routine work into decision-focused time so teams can focus on what matters.' },
                 { keys: ['strength','strengths','working style','approach','how do you work'], answer: 'Tyler is self-driven, intellectually curious, and builds for the "so what" - not just technically correct answers but insights that change decisions. He\'s a chameleon communicator: comfortable with welders, data engineers, and C-suite in the same day. He comes prepared, thinks independently, and thrives in ambiguous, cross-functional environments.' },
-                { keys: ['why hire','why tyler','why should','differentiator','unique'], answer: 'Tyler sits at a rare intersection: deep technical chops (data engineering, ML, optimization) + field credibility (defense, pharma manufacturing) + communication range (can explain distribution metrics to an operator or a CFO). He doesn\'t just build systems - he builds systems people actually use and trust.' },
+                { keys: ['why hire','why tyler','why should','differentiator','unique'], answer: 'What makes Tyler unique: (1) He moves across the full stack - from raw data pipelines to executive dashboards, from SQL to Python to Power BI to product design. (2) He has credibility in high-stakes fields - nuclear defense, pharma manufacturing, aerospace - where technical mistakes matter. (3) He\'s a translator - equally comfortable with engineers, operators, and C-suite. (4) He builds systems people actually use and trust, not just technically correct systems. (5) He teaches (37+ people trained), so his impact compounds. (6) He thinks independently and asks the questions nobody else is asking - the "so what" questions that change decisions.' },
                 { keys: ['analytical thinking','analytical','problem solving','complex problem'], answer: 'Tyler approaches problems by first asking what decision needs to be made, then working backwards to what data actually matters. At Takeda he replaced average-based metrics with distribution-driven analysis (P20/P50/P90) because averages were masking real performance signals. At Aerospace Corp he built a 100,000-cell time-position matrix to solve a satellite scheduling problem similar to the Traveling Salesman Problem.' },
                 { keys: ['industry','industries','sector'], answer: 'Tyler has delivered across pharma manufacturing (Takeda), nuclear defense (Electric Boat/General Dynamics), SaaS AI (Singaporean startup), e-commerce (Chewy), aerospace (Aerospace Corporation), and outdoor leadership (Canadian wilderness). Six industries, different constraints, same principle: use data to make better decisions.' },
 
@@ -5358,7 +5387,7 @@
 
                 // Open-ended fallbacks
                 { keys: ['tell me about','who is tyler','about tyler','who are you'], answer: 'Tyler Vincent is a Data Visualization & Analytics Engineer who\'s built data products, dashboards, and tools across pharma, defense, SaaS, e-commerce, and aerospace. He helps teams work faster and make better decisions - combining data engineering depth with the communication range to make that work stick across organizations.' },
-                { keys: ['curious','learning','interested in','passion','what do you enjoy'], answer: 'Tyler is genuinely curious about systems - how things connect, where the real constraints are, and what the data is actually saying versus what people assume it says. He enjoys teaching as much as building, and believes the best analytics work is the kind that makes the next question easier to ask.' },
+                { keys: ['curious','learning','interested in','passion','what do you enjoy','learning now'], answer: 'Tyler is currently exploring: (1) AI Council - building systems to automate workflows and increase team productivity through intelligent orchestration. (2) Device firmware compatibility - flashing and maintaining older devices (iPads, Kindles, etc.) to work with current formats and software. (3) Network infrastructure - looking at NAS (network-attached storage) and self-hosting solutions for long-term data management and independence. (4) Consultations - helping others apply technical solutions to their unique constraints. He\'s passionate about taking what he\'s learned in enterprise settings and applying it to personal projects and consultations - where you can iterate faster and see impact immediately.' },
             ];
 
             function saAnswer(q) {
@@ -5583,18 +5612,26 @@
 
             function selectBubble(idx) {
                 if (activeIndex === idx) {
-                    // Deselect - resume
+                    // Deselect - show all
                     activeIndex = -1;
                     paused = false;
                     dialCenter.textContent = 'Skills';
                     bubbleEls.forEach(function(b) { b.classList.remove('active'); });
                     cardWrap.innerHTML = '';
+                    // Show all skill clusters with fade-in
+                    var allClusters = document.querySelectorAll('.skill-cluster');
+                    allClusters.forEach(function(c) {
+                        c.style.opacity = '1';
+                        c.style.pointerEvents = 'auto';
+                        c.style.display = 'block';
+                    });
                     return;
                 }
 
                 activeIndex = idx;
                 paused = true;
                 var item = skills[idx];
+                var skillId = item.skill;
 
                 bubbleEls.forEach(function(b, i) {
                     b.classList.toggle('active', i === idx);
@@ -5611,10 +5648,27 @@
                     '<div class="skill-info-card">' +
                         '<div class="skill-info-title">' + item.skill + '</div>' +
                         '<div class="skill-info-desc">' + item.desc + '</div>' +
-                        '<div class="skill-info-label">Used At</div>' +
+                        '<div class="skill-info-label">Projects Using ' + item.skill + '</div>' +
                         '<div class="skill-job-tags">' + tagsHtml + '</div>' +
-                        '<div class="dial-tap-hint">Tap the skill again to resume</div>' +
+                        '<div class="dial-tap-hint">↓ Scroll to see projects · Tap again to show all</div>' +
                     '</div>';
+
+                // Filter skill clusters to show only the selected skill's projects
+                var allClusters = document.querySelectorAll('.skill-cluster');
+                var foundMatch = false;
+                allClusters.forEach(function(cluster) {
+                    var clusterName = cluster.querySelector('.skill-cluster-name');
+                    if (clusterName && clusterName.textContent === skillId) {
+                        cluster.style.opacity = '1';
+                        cluster.style.pointerEvents = 'auto';
+                        cluster.style.display = 'block';
+                        foundMatch = true;
+                    } else {
+                        cluster.style.opacity = '0.2';
+                        cluster.style.pointerEvents = 'none';
+                        cluster.style.display = 'none';
+                    }
+                });
             }
 
             // Show/hide dial when Skills Map button toggled
