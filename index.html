@@ -639,6 +639,22 @@
             position: relative;
         }
 
+        .card-logo {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            height: 32px;
+            width: auto;
+            max-width: 120px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+
+        .project-card:hover .card-logo {
+            opacity: 1;
+        }
+
         .project-card .card-media {
             position: relative;
             height: 240px;
@@ -2457,6 +2473,9 @@
                     <div class="card-company">Takeda Pharmaceuticals - Los Angeles, CA</div>
                     <p>Building enterprise data products for manufacturing and operations. Designing Power BI dashboards and data pipelines across Databricks and SQL. Driving performance insights and standardizing data for cross-functional decision-making.</p>
                 </div>
+                <svg class="card-logo" viewBox="0 0 100 100" style="height:40px;width:auto;">
+                    <text x="50" y="60" font-size="14" font-weight="bold" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-family="Arial">Takeda</text>
+                </svg>
             </div>
 
             <!-- Chewy Dual Monitor Study -->
@@ -2478,6 +2497,9 @@
                     <p>Ergonomics and productivity research on dual monitor setups in a fast-paced e-commerce environment. Findings and recommendations for workspace optimization.</p>
                     <a href="files/DualMonitor.pdf" class="card-link" target="_blank">Read the study <i class="fas fa-arrow-right"></i></a>
                 </div>
+                <svg class="card-logo" viewBox="0 0 100 100" style="height:40px;width:auto;">
+                    <text x="50" y="60" font-size="12" font-weight="bold" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-family="Arial">chewy</text>
+                </svg>
             </div>
 
             <!-- Electric Boat -->
@@ -2495,6 +2517,9 @@
                     <p>Built work center layouts and a knowledge base for nuclear submarine industrial sites with a security clearance. Six Sigma Black Belt. Bridged theory and practice, working with welders and machinists.</p>
                     <a href="https://youtu.be/n--isQ2pwJc" class="card-link" target="_blank">See the work <i class="fas fa-arrow-right"></i></a>
                 </div>
+                <svg class="card-logo" viewBox="0 0 100 100" style="height:40px;width:auto;">
+                    <text x="50" y="60" font-size="9" font-weight="bold" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-family="Arial">GD EB</text>
+                </svg>
             </div>
 
             <!-- AI Program Manager -->
@@ -2508,10 +2533,11 @@
                 <div class="card-info">
                     <span class="card-tag purple">AI / ML</span>
                     <h3>AI Program Manager</h3>
-                    <div class="card-company">Singaporean SaaS Startup</div>
+                    <div class="card-company">Graymatics</div>
                     <p>Led Computer Vision projects using object recognition in CCTV footage for real-time analytics. Managed 8 international deployments for commercial and government clients worldwide.</p>
-                    <a href="https://youtu.be/K_zY6VuuR1I?t=2" class="card-link" target="_blank">Watch overview <i class="fas fa-arrow-right"></i></a>
+                    <a href="assets/diagrams/system-architecture.png" class="card-link" target="_blank">View architecture <i class="fas fa-arrow-right"></i></a>
                 </div>
+                <img src="assets/logos/graymatics-logo.svg" alt="Graymatics" class="card-logo" />
             </div>
 
             <!-- Aerospace -->
@@ -2529,6 +2555,9 @@
                     <p>Developed a Python algorithm scheduling military antenna dishes worldwide to 100+ satellites. A multi-step optimization running on a Raspberry Pi, similar to the Traveling Salesman problem.</p>
                     <a href="files/Genetic Algorithm.pdf" class="card-link" target="_blank">Read the paper <i class="fas fa-arrow-right"></i></a>
                 </div>
+                <svg class="card-logo" viewBox="0 0 100 100" style="height:40px;width:auto;">
+                    <text x="50" y="60" font-size="10" font-weight="bold" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-family="Arial">Aero</text>
+                </svg>
             </div>
 
             <!-- SPOT -->
