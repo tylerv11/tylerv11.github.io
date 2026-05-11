@@ -1,6 +1,6 @@
 /**
  * PORTFOLIO ASSISTANT — Enhanced Fuzzy Matching System
- * Intelligently parses and matches against portfolio_knowledge_base.md
+ * Intelligently parses and matches against ctx.md
  *
  * Security: Comprehensive guardrails against injection, jailbreak, rate limiting.
  */
@@ -155,7 +155,7 @@ const PortfolioAssistant = (() => {
   // ===== KNOWLEDGE BASE LOADING & PARSING =====
   async function loadAndParseKnowledgeBase() {
     try {
-      const kbUrl = 'https://raw.githubusercontent.com/tylerv11/tylerv11.github.io/main/portfolio_knowledge_base.md';
+      const kbUrl = 'https://raw.githubusercontent.com/tylerv11/tylerv11.github.io/main/ctx.md';
       const response = await fetch(kbUrl);
       if (!response.ok) throw new Error(`KB fetch failed: ${response.status}`);
 
