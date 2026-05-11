@@ -170,12 +170,10 @@ Enterprise alignment over custom tools. When teams wanted highly customized solu
 
 Tyler owns or has significantly contributed to a portfolio of 25+ site analytics boards:
 
-- **TDF Bin Processing Dashboard:** Cycle time monitoring with validated event framework
-- **Cinryze Cycle Time Tracker:** Product-specific monitoring with self-service measure creation
-- **Enterprise Compliance Board:** Daily and weekly views for investigators and engineering teams
+- **Investigatoin Compliance Board:** Daily and weekly views for investigators and engineering teams
 - **EHS Dashboard:** Environmental Health & Safety metrics and compliance tracking
 - **IT Infrastructure Boards:** VM servers, SNOW tickets, operational incident tracking
-- **LabWare Dashboards:** Near-real-time lab sample data with direct gateway (bypasses standard 4-hour refresh delay)
+- **Lab Dashboards:** Near-real-time lab sample data with direct gateway (bypasses standard 4-hour refresh delay)
 - **Alarms & Recipe Holds Board:** Equipment issue monitoring for Reliability and Business Excellence teams
 - **Scorecard Alerts & Automated Report Distribution:** Proactive reporting to department managers and directors
 - **Scrap Analysis Dashboard:** Manufacturing waste tracking and root-cause analysis
