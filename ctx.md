@@ -5,7 +5,7 @@
 
 ## Professional Summary
 
-Tyler Vincent is a Data Visualization & Analytics Engineer specializing in manufacturing analytics, enterprise data pipelines, and BI development for life sciences and industrial organizations. His work combines hands-on data engineering (Python, SQL, Databricks) with business intelligence development (Power BI, DAX, semantic modeling) and Lean Six Sigma process thinking. He holds a Lean Six Sigma Black Belt and a degree in Industrial & Systems Engineering. Tyler is largely self-taught in data engineering and has operated as both the technical lead and analytics owner for large-scale manufacturing operations - building data pipelines, owning semantic models, coaching teams, and driving governance simultaneously.
+Tyler Vincent is a Data Engineer (Analytics/BI) with 5+ years building end-to-end data products in regulated manufacturing and tech operations. Strong in SQL, governed data modeling, Databricks/Delta-style transformations, and Power BI semantic models (DAX, RLS). Lean Six Sigma Black Belt with a track record of turning operational data into trusted metrics that improve planning, throughput, and execution. He operates as both the technical lead and analytics owner — building data pipelines, owning semantic models, coaching teams, and driving governance simultaneously.
 
 ---
 
@@ -41,7 +41,7 @@ Tyler designed and operationalized a global enterprise qualification dashboard t
 Training qualification tracking was fragmented-reliant on static exports, site-specific spreadsheets, and manual reconciliation across teams. Compliance visibility was poor, and it took hours to answer basic questions like "is this employee qualified today?"
 
 **What Tyler Built:**
-- Consolidated 11+ million training records into a single authoritative dashboard
+- Consolidated 15M+ training records (from 100M+ source records across ERP, MES, LMS, LIMS) into a single authoritative dashboard
 - Designed business logic that goes beyond basic "qualified/not qualified" flags-it correctly identifies employees whose status has lapsed due to duplicates, overlapping curricula, or delayed source-system cleanup
 - Built parent-child curriculum rollup logic so managers see both individual task status and overall compliance
 - Implemented row-level security so each manager sees only their direct reports
@@ -49,9 +49,9 @@ Training qualification tracking was fragmented-reliant on static exports, site-s
 - Optimized the semantic model for performance (reduced cardinality, star-schema design, incremental refresh)
 
 **Impact:**
-- Eliminated **500+ hours of manual reconciliation annually** at one site
-- Scaled across 23+ sites with 20–30 hours saved per location
-- Prevents training-related audit findings (estimated $345K–$1M annually across all sites)
+- Eliminated **15,000+ hrs/yr** of manual reconciliation and out-of-compliance risk across 23+ GxP-regulated global sites — a delivered outcome, not a projection
+- Processes 100M+ source records (ERP, MES, LMS, LIMS) distilled into 15M governed rows with full business context daily
+- Prevents training-related audit findings across all sites
 - Creates a single source of truth that IT, L&D, Quality, and Compliance can trust
 
 **Technical Highlights:**
@@ -78,9 +78,9 @@ Manufacturing teams had visibility into *what* happened (production reports) but
 - Start-to-start cadence metrics: reusable measure design that eliminates future one-off requests
 
 **Impact:**
-- Even a 1–2% improvement in throughput utilization = hundreds of additional productive hours annually
+- Reduced cycle times **27% (30 to 22 min)** by building a Flask-based Databricks writeback app to surface, Pareto, and target production delays — capturing technician delay inputs with prepopulated batch context, validated joins against master data, and writing records in Delta tables
+- Uncovered **$6.5M in business opportunity** during a site-wide sprint by translating event-based production data into digital value stream maps and manufacturing analytics using validated Lean Six Sigma metrics (Cpk, float) in SQL, DAX, and QlikScript — validated with stakeholders and presented to site leadership
 - Enables detection of systemic degradation *before* it constrains output
-- Serves as the decision backbone for cross-functional performance forums (Manufacturing, Engineering, Reliability, Automation)
 - Aligned stakeholders around a single measurement framework (replaced 5+ conflicting metrics)
 
 **Technical Highlights:**
@@ -194,20 +194,25 @@ Tyler owns or has significantly contributed to a portfolio of 25+ site analytics
 - Delta Lake transformations and medallion architecture (bronze/silver/gold layers)
 - Fuzzy matching pipelines, time-series analysis, anomaly detection
 - Optimization scripts and notebook-driven development in Databricks
-- Writeback applications and data persistence logic
+- Writeback applications (Flask on Databricks) and data persistence logic into Delta tables
 
 **Data Platforms & Tools:**
 - Databricks (Delta Lake, Unity Catalog, Databricks Apps, feature store)
-- Dataiku, Tableau, Qlik (legacy migrations and modernization)
+- Dataiku, Tableau, QlikSense, QlikScript (legacy migrations and modernization)
 - Power BI (all layers: data refresh, semantic modeling, reporting)
+- Azure, Snowflake, ETL/ELT, star schema modeling
 - SharePoint integration and Power Platform (Automate, Canvas Apps)
 - Process control system integration and historian data extraction
 
 **Process & Methods:**
-- Lean Six Sigma Black Belt: DMAIC, statistical analysis, throughput modeling, OEE
+- Lean Six Sigma Black Belt: DMAIC, SPC/variation analysis, throughput modeling, OEE, Cpk
 - Digital Value Stream Mapping and process optimization
+- A/B testing, hypothesis testing, regression analysis
 - Design thinking and cross-functional product development
 - Version control and development discipline (Git, release cycles, testing)
+
+**Certifications:**
+- Six Sigma Black Belt · Agile PM (Microsoft Project) · Model Context Protocol · CPR/First Aid
 
 ---
 

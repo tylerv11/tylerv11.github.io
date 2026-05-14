@@ -2479,7 +2479,7 @@
                         <div style="font-size:0.65rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.22);">Biopharma · Manufacturing Analytics</div>
                     </div>
                     <div class="card-overlay">
-                        <span class="card-cta" style="cursor:default;">Los Angeles, CA &nbsp;<i class="fas fa-location-dot"></i></span>
+                        <a href="https://github.com/tylerv11/data-engineering-pipelines" class="card-cta" target="_blank">View SQL &amp; Pipeline Work <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <div class="card-info">
@@ -2491,7 +2491,7 @@
                     <div class="card-company">Takeda Pharmaceuticals - Los Angeles, CA</div>
                     <p>Building enterprise data products for manufacturing and operations. Designing Power BI dashboards and data pipelines across Databricks and SQL. Driving performance insights and standardizing data for cross-functional decision-making.</p>
                     <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06);">
-                        <div style="font-size:0.65rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:10px;">Pipeline Samples</div>
+                        <div style="font-size:0.65rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:10px;"><a href="https://github.com/tylerv11/data-engineering-pipelines" target="_blank" style="color:rgba(255,255,255,0.3);text-decoration:none;">Pipeline Samples <i class="fas fa-arrow-right" style="font-size:0.6rem;"></i></a></div>
                         <div style="display:flex;flex-direction:column;gap:8px;">
                             <a href="https://github.com/tylerv11/data-engineering-pipelines/tree/main/workforce-qualification-intelligence" class="card-link" target="_blank" style="margin-top:0;font-size:0.8rem;">Workforce Qualification Intelligence <i class="fas fa-arrow-right"></i></a>
                             <a href="https://github.com/tylerv11/data-engineering-pipelines/tree/main/facility-movement-shift-analytics" class="card-link" target="_blank" style="margin-top:0;font-size:0.8rem;">Facility Movement &amp; Shift Analytics <i class="fas fa-arrow-right"></i></a>
@@ -2629,39 +2629,7 @@
                 </div>
             </div>
 
-            <!-- Industrial Design -->
-            <div class="project-card reveal reveal-delay-1">
-                <div class="card-media">
-                    <img src="images/frenchpress.jpg" alt="French Press 3D Model" loading="lazy" />
-                    <div class="card-overlay">
-                        <a href="images/frenchpress.jpg" class="card-cta" target="_blank">View 3D Drawings <i class="fas fa-cube"></i></a>
-                    </div>
-                </div>
-                <div class="card-info">
-                    <span class="card-tag purple">Design</span>
-                    <h3>Industrial Design Projects</h3>
-                    <div class="card-company">AutoCAD &amp; SolidWorks</div>
-                    <p>Designed high detail, 3D part and assembly models with AutoCAD and SolidWorks for rapid, conceptual product development.</p>
-                    <a href="images/frenchpress.jpg" class="card-link" target="_blank">View drawings <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
 
-            <!-- Junior Guide -->
-            <div class="project-card reveal reveal-delay-2">
-                <div class="card-media">
-                    <iframe src="https://www.youtube.com/embed/ZxaGePjpJwk" title="Junior Expedition Guide" allowfullscreen loading="lazy"></iframe>
-                    <div class="card-overlay">
-                        <a href="https://youtu.be/ZxaGePjpJwk" class="card-cta" target="_blank">Watch Video <i class="fas fa-play"></i></a>
-                    </div>
-                </div>
-                <div class="card-info">
-                    <span class="card-tag">Leadership</span>
-                    <h3>Junior Expedition Guide</h3>
-                    <div class="card-company">Canadian Wilderness</div>
-                    <p>Measured inventory levels and repaired fishing equipment, kevlar and aluminum canoes to increase service life and reduce operational expenses by $15k+.</p>
-                    <a href="https://youtu.be/ZxaGePjpJwk" class="card-link" target="_blank">View photos <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
 
         </div>
         </div><!-- /pgw -->
@@ -2680,6 +2648,7 @@
             <div class="ai-council-header">
                 <div class="ai-council-badge">&#9679; Personal AI Project</div>
                 <h3 class="ai-council-title">Personal AI Council:<br>Hub-and-Spoke Agent System</h3>
+                <p style="font-size:0.92rem;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:10px;">I had this idea to start working with LLMs on my own machine and host my own on a headless PC to help me with daily work — and put my knowledge to the test. I decided to jump in and build a project making use of my LLM experience, testing out Model Context Protocol and agentic workflows. Here is what I built.</p>
                 <p class="ai-council-subtitle">A personal multi-agent system built with a mix of models: ChatGPT 5.4, DeepSeek v4 Flash, DeepSeek v2.5, Ollama, Mistral, and Qwen, running on a 16GB M4 Mac. Tyler sets the vision. Zeus runs the show.</p>
             </div>
 
@@ -3468,7 +3437,8 @@
                 <button class="sa-chip" onclick="saAsk('What are Tyler\'s biggest strengths?')">Strengths?</button>
                 <button class="sa-chip" onclick="saAsk('What\'s Tyler been up to recently?')">Recent work?</button>
                 <button class="sa-chip" onclick="saAsk('Tell me about his data engineering work')">Data engineering?</button>
-                <button class="sa-chip" onclick="saAsk('What makes Tyler unique?')">What\'s unique?</button>
+                <button class="sa-chip" onclick="saAsk('What makes Tyler unique?')">What's Unique?</button>
+                <button class="sa-chip" onclick="saAsk('What\'s Tyler\'s tech stack?')">Tyler's Tech Stack?</button>
                 <button class="sa-chip" onclick="saAsk('What\'s Tyler learning now?')">Learning now?</button>
             </div>
             <div id="sa-input-row">
@@ -4447,20 +4417,6 @@
                     metrics: ['Full economic model', 'Risk analysis included'],
                 },
                 {
-                    title: 'Industrial Design Projects',
-                    company: 'AutoCAD & SolidWorks',
-                    mapLabel: 'AutoCAD / SW', mapSub: '/ CAD Projects',
-                    skills: ['Product', 'Optimization'],
-                    skillNotes: {
-                        'Product': 'Designed 3D part and assembly models to accelerate conceptual product development.',
-                        'Optimization': 'Iterated on designs to meet form, fit, and function requirements with minimal material waste.',
-                    },
-                    problem: 'Product concepts needed high-fidelity 3D models for rapid evaluation and iteration.',
-                    approach: 'Created detailed part and assembly models in AutoCAD and SolidWorks for conceptual development.',
-                    outcome: 'Delivered production-ready 3D assets supporting fast design iteration and concept validation.',
-                    metrics: ['CAD-ready deliverables'],
-                },
-                {
                     title: 'Junior Expedition Guide',
                     company: 'Canadian Wilderness',
                     mapLabel: 'Canadian Wild.', mapSub: '/ Junior Guide',
@@ -4988,18 +4944,26 @@
                     exclusions: 'Unquantified long-term organizational value; commercially sensitive revenue figures from government AI deployments; downstream compounding effects.',
                 },
                 {
-                    value: '11,000+', label: 'Annual Hours Saved',
-                    how: 'Projected from scaling a system that saved 600+ hours/year locally to ~11,000 hours/year across 23+ sites. This is a single data product - total including other projects is 20,000+ hours/year.',
+                    value: '15,000+', label: 'Annual Hours Saved',
+                    how: 'Delivered outcome across 23+ GxP-regulated global sites — not a projection scaled from one site. Measured at the team level across documented deployments of governed, automated pipelines that replaced manual cross-functional reporting.',
                     context: 'Driven primarily by replacing manual cross-functional reporting with governed, automated Power BI pipelines. Savings are measured at the team level, then extrapolated across documented deployment scope.',
                     inclusions: 'Power BI dashboards replacing manual reporting cycles, satellite scheduling automation, CCTV analytics removing manual video review across 8 global deployments.',
                     exclusions: 'Overhead for adoption and training; hours saved by indirect or downstream users not counted; one-time project hours excluded.',
                 },
                 {
-                    value: '15M+', label: 'Records Modeled Daily for Teams',
-                    how: 'Records modeled with full business context — semantic models, row-level security, and governed pipelines serving daily business decisions across hundreds of users and cross-site deployments.',
+                    value: '100M+', label: 'Source Records Processed',
+                    subtitle: 'Distilled into 15M rows with business context daily for users.',
+                    how: 'Large operational source systems — ERP, MES, LMS, LIMS — are consolidated into performant, RLS-governed semantic models. Cardinality is intentionally reduced through SQL transformations and grain-appropriate modeling, eliminating noise without losing business context.',
                     context: 'Built with row-level security and SQL transformations to reduce cardinality and data load issues - keeping models performant at scale without compromising governance.',
                     inclusions: 'Manufacturing KPI pipelines (Takeda), enterprise training analytics, CCTV event streams across 8 global sites, satellite contact scheduling datasets.',
                     exclusions: 'Transient intermediate pipeline records not persisted to a governed model; data outside direct engineering scope.',
+                },
+                {
+                    value: '$6.5M+', label: 'Business Opportunity Identified',
+                    how: 'Uncovered during a site-wide sprint by translating event-based production data into digital value stream maps and manufacturing analytics. Validated with stakeholders and presented to site leadership.',
+                    context: 'Opportunity surfaced through structured analysis of production event data, not from pre-existing financial reporting. Value was scoped and validated before presentation to leadership.',
+                    inclusions: 'Process improvement opportunities identified through digital value stream mapping and manufacturing analytics across site operations.',
+                    exclusions: 'Downstream realized value pending implementation; commercially sensitive figures outside direct analytical scope.',
                 },
                 {
                     value: '65+', label: 'Data Products Shipped',
@@ -5357,15 +5321,16 @@
 
             var KB = [
                 // KPIs
-                { keys: ['hours saved','hours','annual hours','time saved'], answer: 'Over 11,000 hours saved annually - projected from scaling a single data product that saved 600+ hours/year locally across 23+ sites. Including other projects, the total is 20,000+ hours/year. That\'s real time returned to people doing meaningful work.' },
-                { keys: ['records','data modeled','records modeled','15m','15 million'], answer: '15M+ records modeled with full business context — semantic models, row-level security, and governed pipelines serving daily business decisions across hundreds of users and cross-site deployments. Built with SQL transformations to maintain performance at scale.' },
+                { keys: ['hours saved','hours','annual hours','time saved'], answer: '15,000+ hours of manual reconciliation and out-of-compliance risk eliminated annually — a delivered outcome across 23+ GxP-regulated global sites, not a projection. Achieved by engineering the enterprise training qualification system with renewal-logic windowing across 15M+ records and RLS-governed semantic models.' },
+                { keys: ['records','data modeled','records modeled','15m','15 million','100m','source records'], answer: '100M+ source records processed daily — ERP, MES, LMS, LIMS systems consolidated and distilled into 15M rows with full business context for users. RLS-governed semantic models reduce cardinality without losing business context, keeping models performant at scale.' },
+                { keys: ['6.5m','business opportunity','value stream','sprint','opportunity identified'], answer: 'Tyler uncovered $6.5M in business opportunity during a site-wide sprint at Takeda by translating event-based production data into digital value stream maps and manufacturing analytics — tracking throughput, float, and process drift using validated Lean Six Sigma metrics (Cpk, float) in SQL, DAX, and QlikScript. Validated with stakeholders and presented to site leadership.' },
                 { keys: ['data products','products shipped','dashboards','65'], answer: '65+ data products shipped: 40+ datasets, 25+ dashboards, 10 apps, 3 AI agents (training compliance, process drift detection, manpower resource leveling), and 7 Computer Vision deployments with custom-trained algorithms.' },
                 { keys: ['coached','trained','mentored','people coached','37'], answer: '37+ people directly coached in Power BI, SQL, and data modeling - 24 at Takeda, 6 at Chewy, 4 at General Dynamics, and others across sites. This doesn\'t count coaching during product rollouts. Tyler believes data literacy compounds - teaching one person multiplies impact.' },
                 { keys: ['region','regions','international','global','country','countries','japan','singapore','vietnam','malaysia','canada'], answer: '6 regions: USA (LA + Groton CT), Singapore, Malaysia, Vietnam, Canada, and Japan - covering manufacturing evaluations, government AI deployments, and international stakeholder relationships. Countries Tyler has interfaced with through international teams is roughly double.' },
 
                 // Projects
                 { keys: ['satellite','aerospace','algorithm','traveling salesman','antenna','scheduling'], answer: 'At the Aerospace Corporation, Tyler created a "Time Position Matrix" tracking 100+ satellites every minute of the day - azimuth and elevation for each antenna dish, for every satellite, at every moment. From this he built a multi-step optimization (similar to the Traveling Salesman Problem) to schedule the shortest path connecting all satellite contacts in a 24-hour window. Deployed on a Raspberry Pi. 100,000+ cell matrix.' },
-                { keys: ['takeda','pharma','pharmaceutical','manufacturing analytics','throughput','bottleneck','distribution'], answer: 'At Takeda, Tyler built governed SQL/Databricks pipelines feeding Power BI semantic models for fractionation and downstream manufacturing operations. He replaced average-based reporting with P20/P50/P90 distribution metrics and common- vs special-cause separation - making real performance signals visible instead of buried in noise. Also built system-level throughput and bottleneck logic using critical-path modeling in SQL and DAX.' },
+                { keys: ['takeda','pharma','pharmaceutical','manufacturing analytics','throughput','bottleneck','distribution'], answer: 'At Takeda, Tyler built governed SQL/Databricks pipelines feeding Power BI semantic models for fractionation and downstream manufacturing operations. He replaced average-based reporting with P20/P50/P90 distribution metrics and common- vs special-cause separation. He reduced cycle times 27% (30→22 min) by building a Flask-based Databricks writeback app to surface, Pareto, and target production delays — capturing technician inputs with prepopulated batch context and writing records to Delta tables. He also established AI-ready data foundations with semantic-model instruction layers, synonym mappings, and Copilot guardrails serving hundreds of users daily.' },
                 { keys: ['chewy','dual monitor','ergonomics','e-commerce'], answer: 'At Chewy, Tyler ran a controlled ergonomics study to answer a real business question: do dual monitors actually improve productivity for fast-paced e-commerce operations agents? He designed the measurement protocol, ran the statistical analysis, and delivered quantified workspace recommendations. Evidence-based decision-making applied to workspace design.' },
                 { keys: ['electric boat','general dynamics','submarine','six sigma','nuclear','security clearance'], answer: 'At Electric Boat (General Dynamics), Tyler held a security clearance and applied Six Sigma Black Belt methods to nuclear submarine industrial sites. He redesigned work center layouts to maximize throughput, built a knowledge base for welders and machinists, and bridged engineering and floor teams - working directly with the people doing the physical work.' },
                 { keys: ['saas','startup','computer vision','cctv','ai program manager','deployments'], answer: 'As AI Program Manager at a Singaporean SaaS startup, Tyler led Computer Vision programs using object recognition on CCTV footage for real-time analytics - delivered across 8 international deployments for commercial and government clients on 3+ continents. He coordinated cross-cultural engineering and delivery teams across Singapore, Malaysia, Vietnam, and beyond.' },
@@ -5373,7 +5338,8 @@
                 { keys: ['wilderness','expedition','guide','canada','canoe','leadership'], answer: 'Tyler spent seasons as a Senior Expedition Guide leading 9–12 day canoe treks into remote Canadian wilderness. He trained 15 employees in outdoor education, crisis management, and team development. In his junior role, he also reduced operational costs by $15k+ through equipment lifecycle management. Leadership under real stakes - no signal, no backup.' },
 
                 // Skills / approach
-                { keys: ['skill','skills','tech stack','tools','technologies'], answer: 'Core: Power BI (semantic models, DAX, RLS), SQL/Databricks (Delta Lake, transformations), Python (optimization, algorithms). Also: Computer Vision (trained CV models), Six Sigma Black Belt, SolidWorks/AutoCAD, product management, statistical analysis. Tyler moves across the full stack from raw data to executive dashboard.' },
+                { keys: ['skill','skills','technologies'], answer: 'Core: Power BI (semantic models, DAX, RLS, VertiPaq optimization, incremental refresh), SQL/Databricks (Delta Lake, Delta tables, pipeline orchestration, Unity Catalog, transformations), Python, Flask, Azure, Snowflake, ETL/ELT, star schema modeling, QlikSense, QlikScript, Tableau, LLMs/AI (MCP, Ollama, Claude, DeepSeek, Mistral), macOS (M4 Mac Mini Ollama environment). Also: Lean Six Sigma Black Belt, SPC/variation analysis, A/B testing, statistical analysis. Certifications: Six Sigma Black Belt, Agile PM (Microsoft Project), Model Context Protocol, CPR/First Aid. Tyler moves across the full stack from raw data to executive dashboard.' },
+                { keys: ['tech stack','tyler\'s tech stack','tools','stack'], answer: 'Tyler\'s stack ranked by depth of experience:<br><br>1. SQL<br>Daily driver across every role. Complex CTEs, window functions, event sequencing, performance tuning at scale.<br><br>2. Power BI<br>Semantic model design, DAX, RLS, Copilot instruction layers, VertiPaq optimization, incremental refresh.<br><br>3. Databricks / Delta Lake<br>Pipeline engineering, medallion architecture, Unity Catalog, pipeline orchestration, Delta writeback applications.<br><br>4. Python<br>Optimization algorithms, statistical analysis, automation scripts, Databricks notebooks.<br><br>5. Flask<br>Web applications for data entry and analytics writeback. Databricks-integrated apps for technician delay tracking with prepopulated batch context.<br><br>6. LLMs / AI Tooling<br>Hub-and-spoke multi-agent system (OpenClaw) built on M4 Mac with MCP, Ollama, Claude, DeepSeek, Mistral, and Qwen. Copilot instruction layers, semantic guardrails, Discord as control surface.<br><br>7. macOS<br>Dedicated standard-profile agent environment on M4 Mac Mini running local models via Ollama with sandboxed MCP servers and no-sudo security design.<br><br>8. Azure<br>Cloud data platform, enterprise integrations.<br><br>9. Snowflake<br>Data warehousing and query layer.<br><br>10. QlikSense / QlikScript<br>Manufacturing analytics, value stream mapping, process drift analysis.<br><br>11. Tableau<br>Prior deployments and legacy migrations.<br><br>12. HTML / CSS / JavaScript<br>This portfolio is proof.<br><br>13. ETL / ELT<br>Data pipeline design and orchestration patterns.<br><br>14. Star Schema Modeling<br>Dimensional modeling and semantic model design.<br><br>Certifications: Six Sigma Black Belt, Agile PM, Model Context Protocol, CPR/First Aid' },
                 { keys: ['data engineering','engineering','databricks','delta lake','pipelines','transformations','etl','data pipeline','sql'], answer: 'Tyler is a Data Engineering builder - not just dashboards, but the pipelines and data models behind them. At Takeda, he designed governed SQL/Databricks pipelines feeding Power BI semantic models with row-level security and real-time transformations. He replaced average-based metrics with distribution-driven analysis (P20/P50/P90 percentiles). At Chewy and across 6 regions, he built and governed data architectures handling 15M+ records with business context across hundreds of users and cross-site deployments. He uses Delta Lake for ACID compliance, builds semantic models with DAX for the business logic, and obsesses over data quality at scale. The principle: clean pipelines enable good decisions.' },
                 { keys: ['recent work','what he been','up to','lately','ai council','automation','workflow','constraints','creative'], answer: 'Most recently, Tyler built an AI Council to help automate routine workflows and increase productivity across teams. The constraint: work within existing systems, no greenfield tooling. That\'s where creativity comes in - identifying high-value automations that fit the system, sequencing them for maximum impact. It\'s been great to work within constraints and get creative building solutions that actually compound. The goal is turning routine work into decision-focused time so teams can focus on what matters.' },
                 { keys: ['strength','strengths','working style','approach','how do you work'], answer: 'Tyler is self-driven, intellectually curious, and builds for the "so what" - not just technically correct answers but insights that change decisions. He\'s a chameleon communicator: comfortable with welders, data engineers, and C-suite in the same day. He comes prepared, thinks independently, and thrives in ambiguous, cross-functional environments.' },
@@ -5428,7 +5394,7 @@
                 if (!msgs) return;
                 var div = document.createElement('div');
                 div.className = 'sa-msg ' + cls;
-                div.textContent = text;
+                div.innerHTML = text;
                 msgs.appendChild(div);
                 msgs.scrollTop = msgs.scrollHeight;
             }
