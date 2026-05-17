@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="icon" type="image/png"     href="favicon.png">
-    <link rel="apple-touch-icon"          href="favicon.png">
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <style>
@@ -84,8 +82,22 @@
             padding: 8px 20px; color: var(--text-secondary); text-decoration: none;
             font-size: 0.85rem; font-weight: 500; letter-spacing: 0.3px;
             border-radius: 100px; transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            bottom: 4px;
+            height: 1px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.28s var(--transition-smooth);
         }
         .nav-link:hover, .nav-link.active { color: var(--text-primary); background: rgba(255,255,255,0.06); }
+        .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
 
         .nav-cta {
             padding: 10px 24px; background: var(--text-primary); color: var(--bg-primary);
@@ -93,6 +105,17 @@
             border-radius: 100px; transition: all 0.3s var(--transition-smooth); margin-left: 12px;
         }
         .nav-cta:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(255,255,255,0.15); }
+        .nav-cta i,
+        .footer-socials a i,
+        .footer-col a i,
+        .edu-card i,
+        .timeline-content i {
+            transition: transform 0.24s var(--transition-smooth);
+        }
+        .nav-cta:hover i,
+        .footer-col a:hover i { transform: translateX(3px); }
+        .edu-card:hover i,
+        .timeline-content:hover i { transform: translateY(-2px); }
 
         .nav-toggle { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.4rem; cursor: pointer; }
 
@@ -842,6 +865,23 @@
         const navMenu = document.getElementById('nav-menu');
         const navIcon = document.getElementById('nav-toggle-icon');
         const navOverlay = document.getElementById('nav-overlay');
+
+        function setActiveNav() {
+            const path = window.location.pathname.split('/').pop() || 'index.html';
+            const hash = window.location.hash;
+            navMenu.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+
+            let target = 'index.html';
+            if (path === 'about.html') target = 'about.html';
+            else if (path === 'education.html') target = 'education.html';
+            else if (hash === '#experiments') target = 'index.html#experiments';
+
+            const active = navMenu.querySelector(`.nav-link[href="${target}"]`);
+            if (active) active.classList.add('active');
+        }
+
+        setActiveNav();
+        window.addEventListener('hashchange', setActiveNav);
 
         function closeMenu() {
             navMenu.classList.remove('open');
