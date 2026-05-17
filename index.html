@@ -64,8 +64,8 @@
             z-index: 10000;
             display: grid;
             place-items: center;
-            background: #f7f8fa;
-            color: #0b0d10;
+            background: #050607;
+            color: #f8fafc;
             transition: opacity 0.42s ease, visibility 0.42s ease;
         }
 
@@ -86,12 +86,12 @@
             letter-spacing: -0.04em;
             line-height: 1;
             margin-bottom: 16px;
-            color: #05070a;
+            color: #ffffff;
         }
 
         .loader-descriptor {
             height: 28px;
-            color: #6b7280;
+            color: #a7adb7;
             font-size: clamp(0.95rem, 2vw, 1.15rem);
             font-weight: 500;
             letter-spacing: 0.01em;
@@ -117,7 +117,7 @@
         .loader-line {
             width: 100%;
             height: 1px;
-            background: #e5e7eb;
+            background: rgba(255,255,255,0.12);
             margin-top: 28px;
             overflow: hidden;
         }
@@ -127,7 +127,7 @@
             display: block;
             width: 36%;
             height: 100%;
-            background: #111827;
+            background: #ffffff;
             animation: loaderLine 1.2s ease-in-out infinite;
         }
 
@@ -2569,7 +2569,7 @@
         <div class="loader-inner">
             <div class="loader-name">Tyler Vincent.</div>
             <div class="loader-descriptor">
-                <span>Analytics Engineering</span>
+                <span>Data/Analytics Engineering.</span>
                 <span>Data Pipelines</span>
                 <span>Operational Intelligence</span>
                 <span>Lean Six Sigma</span>
@@ -4864,12 +4864,14 @@
 
                 function setView(v) {
                     var isP = v === 'projects';
+                    var bubbleMap = document.getElementById('mobile-skills-bubble-map');
                     btnP.classList.toggle('active', isP);
                     btnS.classList.toggle('active', !isP);
                     btnP.setAttribute('aria-pressed', String(isP));
                     btnS.setAttribute('aria-pressed', String(!isP));
                     pgw.style.display = isP ? '' : 'none';
                     sm.classList.toggle('active', !isP);
+                    if (bubbleMap) bubbleMap.classList.toggle('show', !isP);
                     if (!isP && !mapBuilt) { buildSkillsMap(); mapBuilt = true; }
                 }
 
@@ -5972,18 +5974,11 @@
                 });
             }
 
-            // Show/hide dial when Skills Map button toggled
+            var projectBtn = document.getElementById('btn-projects');
             var skillsBtn = document.getElementById('btn-skills');
-            if (skillsBtn) {
-                skillsBtn.addEventListener('click', function() {
-                    var mapSection = document.getElementById('skills-map-section');
-                    var bubbleMap  = document.getElementById('mobile-skills-bubble-map');
-                    var pgw        = document.getElementById('pgw');
-                    var isActive   = mapSection && mapSection.classList.contains('active');
-                    bubbleMap.classList.toggle('show', isActive);
-                    if (pgw) pgw.style.display = isActive ? 'none' : 'block';
-                });
-            }
+            var bubbleMap = document.getElementById('mobile-skills-bubble-map');
+            if (projectBtn && bubbleMap) projectBtn.addEventListener('click', function() { bubbleMap.classList.remove('show'); });
+            if (skillsBtn && bubbleMap) skillsBtn.addEventListener('click', function() { bubbleMap.classList.add('show'); });
         })();
 
     </script>
