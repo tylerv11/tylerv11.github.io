@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="icon" type="image/png"     href="favicon.png">
-    <link rel="apple-touch-icon"          href="favicon.png">
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <style>
@@ -84,8 +82,22 @@
             padding: 8px 20px; color: var(--text-secondary); text-decoration: none;
             font-size: 0.85rem; font-weight: 500; letter-spacing: 0.3px;
             border-radius: 100px; transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            bottom: 4px;
+            height: 1px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.28s var(--transition-smooth);
         }
         .nav-link:hover, .nav-link.active { color: var(--text-primary); background: rgba(255,255,255,0.06); }
+        .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
 
         .nav-cta {
             padding: 10px 24px; background: var(--text-primary); color: var(--bg-primary);
@@ -93,6 +105,13 @@
             border-radius: 100px; transition: all 0.3s var(--transition-smooth); margin-left: 12px;
         }
         .nav-cta:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(255,255,255,0.15); }
+        .nav-cta i,
+        .about-tag i,
+        .footer-socials a i,
+        .footer-col a i {
+            transition: transform 0.24s var(--transition-smooth);
+        }
+        .nav-cta:hover i { transform: translateX(3px); }
 
         .nav-toggle { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.4rem; cursor: pointer; }
 
@@ -197,9 +216,11 @@
             background: rgba(0,255,135,0.06);
             border-color: rgba(0,255,135,0.2);
             color: var(--accent);
+            transform: translateY(-2px);
         }
 
         .about-tag i { font-size: 0.85rem; }
+        .about-tag:hover i { transform: translateY(-1px); }
 
         /* Footer */
         .footer {
@@ -232,6 +253,7 @@
             font-size: 0.9rem; padding: 4px 0; transition: color 0.2s ease;
         }
         .footer-col a:hover { color: var(--text-primary); }
+        .footer-col a:hover i { transform: translateX(3px); }
 
         .footer-bottom {
             display: flex; justify-content: space-between; align-items: center;
@@ -442,15 +464,10 @@
                 </div>
             </div>
             <div class="about-text reveal reveal-delay-1">
-                <p>Hi, I'm Tyler. I've always loved learning outside of class—in fact,
-                    I taught myself how to make this website by reverse-engineering an open-source template I found online.
-                    Growing up in Dallas in a single parent household, I made the move to LA to broaden my horizons and treat the moment as a trampoline into a better future for myself.</p>
-                <p>I studied engineering and writing at the University of Southern California. Some of my favorite memories include going stargazing with our astronomy professor in the Anza Borrego desert, grilling burgers with my fraternity to hand out to the homeless every Friday night, and learning how to paddleboard for the first time outside of Santa Barbara (and falling at least 6 times in the first hour).
-                    I felt incredibly supported by a group of young men that helped me find purpose, belonging and resilience as an individual and as a leader.</p>
-                <p>I enjoy the outdoors and helping people learn. I love fishing, video-editing, off-roading and surfing, but I'm still learning the latter. Including everyone and learning from those around me is important.
-                    I'm also excited for this next chapter in my life. Thanks for checking out my portfolio!</p>
-
-                <p>Lately I've gotten into 3D printing and graphic design — I've been making pieces for friends and family, which has been a fun creative outlet that blends the technical and artistic sides of how I think. It turns out engineering and design have more in common than most people realize.</p>
+                <p>Hi, I'm Tyler. I think best in systems: how data moves, where trust breaks down, and what has to be true before a team can make a better decision. I taught myself how to build this site the same way I approach analytics work: by taking the system apart, understanding the pieces, and rebuilding it into something clearer.</p>
+                <p>I grew up in Dallas in a single-parent household and moved to Los Angeles to study Industrial &amp; Systems Engineering at the University of Southern California. USC gave me a technical foundation, but it also taught me how much good engineering depends on writing, listening, and translating complex ideas for people with different priorities.</p>
+                <p>Some of my favorite memories came from moments of connection: stargazing with an astronomy professor in the Anza-Borrego desert, grilling burgers with my Christian fraternity to serve people experiencing homelessness on Friday nights, and learning from people whose backgrounds and daily realities were very different from mine. That community helped me build purpose, belonging, and resilience as both an individual and a leader.</p>
+                <p>Outside work, I like fishing, video editing, off-roading, cooking, and surfing. Lately I've also gotten into 3D printing and graphic design, making pieces for friends and family as a creative outlet that blends the technical and artistic sides of how I think.</p>
 
                 <div class="about-tags">
                     <span class="about-tag"><i class="fas fa-fish"></i> Fishing</span>
@@ -582,6 +599,23 @@
         const navMenu = document.getElementById('nav-menu');
         const navIcon = document.getElementById('nav-toggle-icon');
         const navOverlay = document.getElementById('nav-overlay');
+
+        function setActiveNav() {
+            const path = window.location.pathname.split('/').pop() || 'index.html';
+            const hash = window.location.hash;
+            navMenu.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+
+            let target = 'index.html';
+            if (path === 'about.html') target = 'about.html';
+            else if (path === 'education.html') target = 'education.html';
+            else if (hash === '#experiments') target = 'index.html#experiments';
+
+            const active = navMenu.querySelector(`.nav-link[href="${target}"]`);
+            if (active) active.classList.add('active');
+        }
+
+        setActiveNav();
+        window.addEventListener('hashchange', setActiveNav);
 
         function closeMenu() {
             navMenu.classList.remove('open');

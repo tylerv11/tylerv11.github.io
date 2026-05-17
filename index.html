@@ -6,10 +6,7 @@
     <title>Tyler Vincent - Engineer. Builder. Creator.</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <!-- Favicon: swap favicon.png with any image you upload to the repo root -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="icon" type="image/png"     href="favicon.png">
-    <link rel="apple-touch-icon"          href="favicon.png">
     <!-- Calendly -->
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
@@ -24,22 +21,23 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #111111;
-            --bg-card: #161616;
-            --bg-card-hover: #1a1a1a;
+            --bg-primary: #08090a;
+            --bg-secondary: #0f1115;
+            --bg-card: #14171c;
+            --bg-card-hover: #181c22;
             --text-primary: #ffffff;
-            --text-secondary: #999999;
-            --text-muted: #555555;
+            --text-secondary: #a7adb7;
+            --text-muted: #68707c;
             --accent: #00ff87;
             --accent-blue: #4a9eff;
-            --accent-purple: #a855f7;
-            --accent-warm: #ff6b35;
+            --accent-purple: #c4b5fd;
+            --accent-warm: #f6ad55;
             --border-subtle: rgba(255,255,255,0.06);
             --border-hover: rgba(255,255,255,0.12);
             --glass-bg: rgba(255,255,255,0.03);
             --glass-border: rgba(255,255,255,0.08);
             --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-card: 0 18px 52px rgba(0,0,0,0.28);
         }
 
         html {
@@ -52,11 +50,96 @@
             color: var(--text-primary);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='2.2' fill='%2300ff87' fill-opacity='0.92'/%3E%3Cline x1='10' y1='1' x2='10' y2='7' stroke='%2300ff87' stroke-width='1.3' stroke-opacity='0.55'/%3E%3Cline x1='10' y1='13' x2='10' y2='19' stroke='%2300ff87' stroke-width='1.3' stroke-opacity='0.55'/%3E%3Cline x1='1' y1='10' x2='7' y2='10' stroke='%2300ff87' stroke-width='1.3' stroke-opacity='0.55'/%3E%3Cline x1='13' y1='10' x2='19' y2='10' stroke='%2300ff87' stroke-width='1.3' stroke-opacity='0.55'/%3E%3C/svg%3E") 10 10, crosshair;
+            cursor: default;
         }
 
         a, button, .project-card, input, select, textarea, [role="button"], [onclick], label {
-            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='11' stroke='%2300ff87' stroke-width='1.5' fill='none' stroke-opacity='0.85'/%3E%3Ccircle cx='14' cy='14' r='2' fill='%2300ff87' fill-opacity='0.9'/%3E%3C/svg%3E") 14 14, pointer;
+            cursor: pointer;
+        }
+
+        /* ===== INITIAL LOAD ===== */
+        .loader {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: grid;
+            place-items: center;
+            background: #f7f8fa;
+            color: #0b0d10;
+            transition: opacity 0.42s ease, visibility 0.42s ease;
+        }
+
+        .loader.loaded {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loader-inner {
+            width: min(520px, calc(100vw - 48px));
+        }
+
+        .loader-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.1rem, 8vw, 4.8rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 16px;
+            color: #05070a;
+        }
+
+        .loader-descriptor {
+            height: 28px;
+            color: #6b7280;
+            font-size: clamp(0.95rem, 2vw, 1.15rem);
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loader-descriptor span {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transform: translateY(14px);
+            animation: descriptorCycle 8.4s infinite;
+        }
+
+        .loader-descriptor span:nth-child(2) { animation-delay: 1.2s; }
+        .loader-descriptor span:nth-child(3) { animation-delay: 2.4s; }
+        .loader-descriptor span:nth-child(4) { animation-delay: 3.6s; }
+        .loader-descriptor span:nth-child(5) { animation-delay: 4.8s; }
+        .loader-descriptor span:nth-child(6) { animation-delay: 6s; }
+        .loader-descriptor span:nth-child(7) { animation-delay: 7.2s; }
+
+        .loader-line {
+            width: 100%;
+            height: 1px;
+            background: #e5e7eb;
+            margin-top: 28px;
+            overflow: hidden;
+        }
+
+        .loader-line::after {
+            content: '';
+            display: block;
+            width: 36%;
+            height: 100%;
+            background: #111827;
+            animation: loaderLine 1.2s ease-in-out infinite;
+        }
+
+        @keyframes descriptorCycle {
+            0%, 9% { opacity: 0; transform: translateY(14px); }
+            13%, 23% { opacity: 1; transform: translateY(0); }
+            28%, 100% { opacity: 0; transform: translateY(-14px); }
+        }
+
+        @keyframes loaderLine {
+            from { transform: translateX(-110%); }
+            to { transform: translateX(310%); }
         }
 
         /* ===== MATRIX CURSOR CANVAS ===== */
@@ -65,6 +148,7 @@
             top: 0; left: 0;
             pointer-events: none;
             z-index: 9998;
+            display: none;
         }
 
         /* ===== HEADING MATRIX BG ===== */
@@ -134,9 +218,26 @@
             position: relative;
         }
 
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            bottom: 4px;
+            height: 1px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.28s var(--transition-smooth);
+        }
+
         .nav-link:hover, .nav-link.active {
             color: var(--text-primary);
-            background: rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.045);
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            transform: scaleX(1);
         }
 
         .nav-cta {
@@ -201,7 +302,7 @@
             height: 800px;
             border-radius: 50%;
             filter: blur(120px);
-            opacity: 0.15;
+            opacity: 0.08;
             pointer-events: none;
         }
 
@@ -295,7 +396,7 @@
             font-size: clamp(0.95rem, 1.8vw, 1.15rem);
             color: var(--text-secondary);
             text-align: center;
-            max-width: 580px;
+            max-width: 700px;
             line-height: 1.75;
             font-weight: 400;
             margin-bottom: 44px;
@@ -330,6 +431,22 @@
         .btn-primary:hover {
             transform: translateY(-2px) scale(1.02);
             box-shadow: 0 8px 30px rgba(0,255,135,0.25);
+        }
+
+        .btn-primary:hover i,
+        .btn-secondary:hover i,
+        .card-link:hover i,
+        .card-cta:hover i,
+        .nav-cta:hover i {
+            transform: translateX(3px);
+        }
+
+        .btn-primary i,
+        .btn-secondary i,
+        .card-link i,
+        .card-cta i,
+        .nav-cta i {
+            transition: transform 0.24s var(--transition-smooth);
         }
 
         .btn-secondary {
@@ -430,6 +547,69 @@
         .section {
             padding: 120px 48px;
             position: relative;
+        }
+
+        .section-kicker {
+            max-width: 760px;
+            margin-top: 18px;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+
+        /* ===== SYSTEMS FOCUS ===== */
+        .systems-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .system-card {
+            min-height: 220px;
+            padding: 24px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.012));
+            transition: transform 0.32s var(--transition-smooth), border-color 0.32s ease, box-shadow 0.32s ease;
+        }
+
+        .system-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0,255,135,0.24);
+            box-shadow: var(--shadow-card);
+        }
+
+        .system-icon {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: rgba(0,255,135,0.08);
+            color: var(--accent);
+            margin-bottom: 22px;
+        }
+
+        .system-card:hover .system-icon i {
+            transform: translateY(-2px);
+        }
+
+        .system-icon i {
+            transition: transform 0.28s var(--transition-smooth);
+        }
+
+        .system-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            line-height: 1.25;
+            letter-spacing: -0.01em;
+            margin-bottom: 10px;
+        }
+
+        .system-card p {
+            color: var(--text-secondary);
+            font-size: 0.86rem;
+            line-height: 1.65;
         }
 
         .section-header {
@@ -626,8 +806,8 @@
 
         .project-card:hover {
             transform: translateY(-6px);
-            border-color: rgba(0,255,135,0.22);
-            box-shadow: 0 0 0 1px rgba(0,255,135,0.1), 0 16px 40px rgba(0,0,0,0.45), 0 0 32px rgba(0,255,135,0.07);
+            border-color: rgba(0,255,135,0.24);
+            box-shadow: var(--shadow-card);
         }
 
         .project-card.featured {
@@ -786,6 +966,33 @@
             font-size: 0.9rem;
             color: var(--text-secondary);
             line-height: 1.6;
+        }
+
+        .project-meta {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            margin: 18px 0 0;
+        }
+
+        .project-meta span {
+            min-height: 62px;
+            padding: 10px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.025);
+            color: var(--text-secondary);
+            font-size: 0.68rem;
+            line-height: 1.35;
+        }
+
+        .project-meta strong {
+            display: block;
+            color: var(--text-primary);
+            font-size: 0.62rem;
+            letter-spacing: 1.1px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
         }
 
         .card-link {
@@ -1192,6 +1399,7 @@
             .experiments-grid-row2 { grid-template-columns: 1fr; }
             .stats-bar { grid-template-columns: repeat(2, 1fr); }
             .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+            .systems-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
 
         /* Mobile nav overlay */
@@ -1234,6 +1442,17 @@
             .hero { padding: 100px 24px 60px; }
             .hero-photo-wrapper { width: 180px; height: 180px; }
             .hero-name { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+            .hero-title {
+                flex-direction: column;
+                gap: 5px;
+                letter-spacing: 1.4px;
+                line-height: 1.45;
+            }
+            .hero-title .sep { display: none; }
+            .hero-title .outline {
+                -webkit-text-stroke: 0;
+                color: var(--text-secondary);
+            }
             .section { padding: 60px 20px; }
             .navbar { padding: 0 20px; }
             .experiments-grid { grid-template-columns: 1fr; }
@@ -1244,12 +1463,15 @@
             .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
             #matrix-cursor-canvas { display: none; }
             .project-card:hover { transform: translateY(-4px); }
+            .project-meta { grid-template-columns: 1fr; }
+            .systems-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 480px) {
             .stats-bar { grid-template-columns: 1fr; }
             .hero-actions { flex-direction: column; align-items: center; }
             .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+            .loader-inner { width: calc(100vw - 32px); }
         }
 
         /* ===== SMOOTH VISIBILITY TRANSITIONS ===== */
@@ -2343,6 +2565,22 @@
 </head>
 <body>
 
+    <div class="loader" id="site-loader" aria-live="polite" aria-label="Loading portfolio">
+        <div class="loader-inner">
+            <div class="loader-name">Tyler Vincent.</div>
+            <div class="loader-descriptor">
+                <span>Analytics Engineering</span>
+                <span>Data Pipelines</span>
+                <span>Operational Intelligence</span>
+                <span>Lean Six Sigma</span>
+                <span>Manufacturing Analytics</span>
+                <span>AI / ML</span>
+                <span>Data Systems</span>
+            </div>
+            <div class="loader-line"></div>
+        </div>
+    </div>
+
     <!-- Matrix cursor canvas -->
     <canvas id="matrix-cursor-canvas"></canvas>
 
@@ -2379,14 +2617,14 @@
         </div>
         <h1 class="hero-name">Hi, I'm Tyler Vincent.</h1>
         <p class="hero-title">
-            <span class="line">Engineer.</span>
+            <span class="line">Analytics Engineering.</span>
             <span class="sep">/</span>
-            <span class="line outline">Builder.</span>
+            <span class="line outline">Data Systems.</span>
             <span class="sep">/</span>
-            <span class="line gradient">Creator.</span>
+            <span class="line gradient">Operational Intelligence.</span>
         </p>
         <p class="hero-subtitle">
-            Data Visualization &amp; Analytics Engineer - I've built data products, dashboards, and tools across SaaS, AI, e-commerce, defense, and pharmaceuticals. I help teams work faster and make better decisions.
+            Analytics and data systems engineer building governed pipelines, semantic models, and operational intelligence platforms across manufacturing, AI, e-commerce, defense, and aerospace.
         </p>
         <div class="hero-scroll">
             <span>Scroll</span>
@@ -2397,20 +2635,22 @@
     <!-- ===== MARQUEE ===== -->
     <div class="marquee-section">
         <div class="marquee-track">
-            <div class="marquee-item">Data Visualization <span class="sep"></span></div>
+            <div class="marquee-item">Analytics Engineering <span class="sep"></span></div>
+            <div class="marquee-item">Operational Intelligence <span class="sep"></span></div>
+            <div class="marquee-item">Data Pipelines <span class="sep"></span></div>
             <div class="marquee-item">Six Sigma Black Belt <span class="sep"></span></div>
             <div class="marquee-item">AI / ML Programs <span class="sep"></span></div>
-            <div class="marquee-item">Computer Vision <span class="sep"></span></div>
-            <div class="marquee-item">Product Management <span class="sep"></span></div>
+            <div class="marquee-item">Manufacturing Analytics <span class="sep"></span></div>
+            <div class="marquee-item">Semantic Modeling <span class="sep"></span></div>
             <div class="marquee-item">USC Alum <span class="sep"></span></div>
-            <div class="marquee-item">Los Angeles, CA <span class="sep"></span></div>
-            <div class="marquee-item">Data Visualization <span class="sep"></span></div>
+            <div class="marquee-item">Analytics Engineering <span class="sep"></span></div>
+            <div class="marquee-item">Operational Intelligence <span class="sep"></span></div>
+            <div class="marquee-item">Data Pipelines <span class="sep"></span></div>
             <div class="marquee-item">Six Sigma Black Belt <span class="sep"></span></div>
             <div class="marquee-item">AI / ML Programs <span class="sep"></span></div>
-            <div class="marquee-item">Computer Vision <span class="sep"></span></div>
-            <div class="marquee-item">Product Management <span class="sep"></span></div>
+            <div class="marquee-item">Manufacturing Analytics <span class="sep"></span></div>
+            <div class="marquee-item">Semantic Modeling <span class="sep"></span></div>
             <div class="marquee-item">USC Alum <span class="sep"></span></div>
-            <div class="marquee-item">Los Angeles, CA <span class="sep"></span></div>
         </div>
     </div>
 
@@ -2420,6 +2660,37 @@
             <!-- tiles injected by JS -->
         </div>
     </div>
+
+    <!-- ===== SYSTEMS FOCUS ===== -->
+    <section class="section" id="systems" style="padding-top: 40px;">
+        <div class="section-header reveal">
+            <div class="section-label">What I Work On</div>
+            <h2 class="section-heading">Data products that make operations <span class="muted">measurable, governed, and easier to improve.</span></h2>
+            <p class="section-kicker">My strongest work sits between engineering, operations, and decision-making: source-system logic, reliable transformation layers, semantic models, and analytics products that stand up to audit, scale, and real production constraints.</p>
+        </div>
+        <div class="systems-grid">
+            <article class="system-card reveal reveal-delay-1">
+                <div class="system-icon"><i class="fas fa-code-branch"></i></div>
+                <h3>Pipeline Architecture</h3>
+                <p>CTE-driven SQL, Databricks/lakehouse patterns, event sequencing, deduplication, and gold-layer outputs designed for trusted reporting.</p>
+            </article>
+            <article class="system-card reveal reveal-delay-2">
+                <div class="system-icon"><i class="fas fa-industry"></i></div>
+                <h3>Manufacturing Intelligence</h3>
+                <p>Batch timing, workforce qualification, movement/session analytics, process variation, and Lean Six Sigma measurement systems.</p>
+            </article>
+            <article class="system-card reveal reveal-delay-3">
+                <div class="system-icon"><i class="fas fa-shield-halved"></i></div>
+                <h3>Governed BI Design</h3>
+                <p>Power BI semantic models, row-level security, identity enrichment, business definitions, and recruiter-readable architecture documentation.</p>
+            </article>
+            <article class="system-card reveal reveal-delay-4">
+                <div class="system-icon"><i class="fas fa-microchip"></i></div>
+                <h3>AI / Data Platform Fluency</h3>
+                <p>Practical AI systems, model orchestration, semantic guardrails, automation workflows, and analytics foundations ready for intelligent agents.</p>
+            </article>
+        </div>
+    </section>
 
     <!-- ===== WORK / PROJECTS ===== -->
     <section class="section" id="work">
@@ -2489,7 +2760,12 @@
                     </div>
                     <h3>Data and Analytics Engineer III</h3>
                     <div class="card-company">Takeda Pharmaceuticals - Los Angeles, CA</div>
-                    <p>Building enterprise data products for manufacturing and operations. Designing Power BI dashboards and data pipelines across Databricks and SQL. Driving performance insights and standardizing data for cross-functional decision-making.</p>
+                    <p>Building governed operational intelligence platforms for manufacturing: source-system transformation, gold-layer SQL, semantic models, and reporting products that turn process and workforce data into trusted decisions.</p>
+                    <div class="project-meta" aria-label="Project metadata">
+                        <span><strong>Grain</strong>Assignment, session, batch, and process-step outputs</span>
+                        <span><strong>Stack</strong>SQL, Databricks, Delta, Power BI, DAX</span>
+                        <span><strong>Impact</strong>15M+ modeled rows and 100M+ source records processed daily</span>
+                    </div>
                     <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06);">
                         <div style="font-size:0.65rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:10px;"><a href="https://github.com/tylerv11/data-engineering-pipelines" target="_blank" style="color:rgba(255,255,255,0.3);text-decoration:none;">Pipeline Samples <i class="fas fa-arrow-right" style="font-size:0.6rem;"></i></a></div>
                         <div style="display:flex;flex-direction:column;gap:8px;">
@@ -2518,7 +2794,12 @@
                     <span class="card-tag warm">Research</span>
                     <h3>Chewy Dual Monitor Study</h3>
                     <div class="card-company">Chewy, Inc</div>
-                    <p>Ergonomics and productivity research on dual monitor setups in a fast-paced e-commerce environment. Findings and recommendations for workspace optimization.</p>
+                    <p>Designed and analyzed an ergonomics/productivity study in a fast-paced e-commerce environment, translating measurement design into workspace recommendations.</p>
+                    <div class="project-meta" aria-label="Project metadata">
+                        <span><strong>Method</strong>Study design and comparative analysis</span>
+                        <span><strong>Focus</strong>Productivity, ergonomics, user workflow</span>
+                        <span><strong>Output</strong>Decision-ready recommendation report</span>
+                    </div>
                     <a href="files/DualMonitor.pdf" class="card-link" target="_blank">Read the study <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <img src="assets/logos/chewy-logo.svg" alt="Chewy, Inc" class="card-logo" />
@@ -2536,7 +2817,12 @@
                     <span class="card-tag">Engineering</span>
                     <h3>Process Engineer II</h3>
                     <div class="card-company">Electric Boat - General Dynamics</div>
-                    <p>Built work center layouts and a knowledge base for nuclear submarine industrial sites with a security clearance. Six Sigma Black Belt. Bridged theory and practice, working with welders and machinists.</p>
+                    <p>Applied industrial engineering and Six Sigma methods to high-stakes manufacturing environments, connecting shop-floor constraints with process design and knowledge systems.</p>
+                    <div class="project-meta" aria-label="Project metadata">
+                        <span><strong>Domain</strong>Industrial operations and process engineering</span>
+                        <span><strong>Method</strong>Lean Six Sigma, layout design, knowledge capture</span>
+                        <span><strong>Role</strong>Bridge between technical teams and operators</span>
+                    </div>
                     <a href="https://youtu.be/n--isQ2pwJc" class="card-link" target="_blank">See the work <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <img src="assets/logos/gd-electric-boat-logo.png" alt="General Dynamics Electric Boat" class="card-logo" />
@@ -2554,7 +2840,12 @@
                     <span class="card-tag purple">AI / ML</span>
                     <h3>AI Program Manager</h3>
                     <div class="card-company">Graymatics</div>
-                    <p>Led Computer Vision projects using object recognition in CCTV footage for real-time analytics. Managed 8 international deployments for commercial and government clients worldwide.</p>
+                    <p>Led computer vision analytics deployments across international teams, translating CCTV-derived object recognition into operational reporting and delivery programs.</p>
+                    <div class="project-meta" aria-label="Project metadata">
+                        <span><strong>Scope</strong>8 international deployments</span>
+                        <span><strong>Stack</strong>Computer vision, analytics, client delivery</span>
+                        <span><strong>Focus</strong>AI program management and rollout governance</span>
+                    </div>
                     <a href="assets/diagrams/system-architecture.png" class="card-link" target="_blank">View architecture <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <img src="assets/logos/graymatics-logo.svg" alt="Graymatics" class="card-logo" />
@@ -2571,8 +2862,13 @@
                 <div class="card-info">
                     <span class="card-tag blue">Aerospace</span>
                     <h3>Senior Thesis - Algorithm Optimization</h3>
-                    <div class="card-company">Aerospace Corporation</div>
-                    <p>Developed a Python algorithm scheduling military antenna dishes worldwide to 100+ satellites. A multi-step optimization running on a Raspberry Pi, similar to the Traveling Salesman problem.</p>
+                    <div class="card-company">An anonymized version is available for your review</div>
+                    <p>Built a Python optimization workflow for satellite-contact scheduling, converting a time-position matrix into an executable routing problem for antenna operations.</p>
+                    <div class="project-meta" aria-label="Project metadata">
+                        <span><strong>Method</strong>Optimization and matrix modeling</span>
+                        <span><strong>Scale</strong>100+ satellites across minute-level windows</span>
+                        <span><strong>Output</strong>Deployable scheduling algorithm</span>
+                    </div>
                     <a href="files/Genetic Algorithm.pdf" class="card-link" target="_blank">Read the paper <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <img src="assets/logos/aerospace-logo.svg" alt="Aerospace Corporation" class="card-logo" />
@@ -2639,7 +2935,8 @@
     <section class="section" id="experiments">
         <div class="section-header reveal">
             <div class="section-label">Experiments</div>
-            <h2 class="section-heading">Playing with code, <br><span class="muted">because why not.</span></h2>
+            <h2 class="section-heading">Non-work projects, <br><span class="muted">built to explore unusual use cases.</span></h2>
+            <p class="section-kicker">This section is where I showcase side projects that let me test ideas outside my day-to-day work, try atypical use cases, and practice thinking about problems from a different angle.</p>
         </div>
 
         <!-- ===== AI COUNCIL FEATURED CARD ===== -->
@@ -3481,10 +3778,30 @@
     </script>
 
     <script>
+        // Premium initial loader: short, deterministic, and removable for performance.
+        (function() {
+            var loader = document.getElementById('site-loader');
+            if (!loader) return;
+
+            function hideLoader() {
+                window.setTimeout(function() {
+                    loader.classList.add('loaded');
+                    window.setTimeout(function() {
+                        if (loader && loader.parentNode) loader.parentNode.removeChild(loader);
+                    }, 500);
+                }, 520);
+            }
+
+            if (document.readyState === 'complete') hideLoader();
+            else window.addEventListener('load', hideLoader, { once: true });
+        })();
+
         // ===== MATRIX CURSOR TRAIL =====
         (function() {
             const mc = document.getElementById('matrix-cursor-canvas');
             if (!mc) return;
+            if (window.matchMedia('(pointer: coarse), (prefers-reduced-motion: reduce)').matches) return;
+            if (window.getComputedStyle(mc).display === 'none') return;
             const ctx = mc.getContext('2d');
             const chars = '01アイウエカキクサシスタチツナニネノ';
             let trails = [];
@@ -3538,6 +3855,24 @@
         const navMenu = document.getElementById('nav-menu');
         const navIcon = document.getElementById('nav-toggle-icon');
         const navOverlay = document.getElementById('nav-overlay');
+
+        function setActiveNav() {
+            const path = window.location.pathname.split('/').pop() || 'index.html';
+            const hash = window.location.hash;
+            navMenu.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+
+            let target = 'index.html';
+            if (path === 'about.html') target = 'about.html';
+            else if (path === 'education.html') target = 'education.html';
+            else if (hash === '#experiments') target = '#experiments';
+
+            const active = navMenu.querySelector(`.nav-link[href="${target}"]`) ||
+                navMenu.querySelector(`.nav-link[href="index.html${target}"]`);
+            if (active) active.classList.add('active');
+        }
+
+        setActiveNav();
+        window.addEventListener('hashchange', setActiveNav);
 
         function closeMenu() {
             navMenu.classList.remove('open');
