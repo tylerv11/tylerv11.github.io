@@ -12,6 +12,14 @@
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <!-- Tyler's Portfolio Assistant - Enhanced Fuzzy Matching -->
     <script src="portfolio-assistant.js" type="text/javascript" defer></script>
+    <!-- Service Worker: cache-first for static assets, stale-while-revalidate for pages -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js').catch(function() {});
+            });
+        }
+    </script>
     <style>
         /* ============================================
            PREMIUM BRAND THEME - Tyler Vincent
@@ -1065,6 +1073,222 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 24px;
             margin-top: 24px;
+        }
+
+        /* ===== EXPANDABLE EXPERIMENT TILES ===== */
+        .exp-tiles {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 28px;
+        }
+
+        .exp-tile {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: border-color 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .exp-tile:hover { border-color: var(--border-hover); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+        .exp-tile.open { border-color: rgba(74,158,255,0.28); }
+
+        .exp-tile-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 20px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .exp-tile-icon-wrap {
+            flex: 0 0 auto;
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .exp-tile-meta { flex: 1; min-width: 0; }
+
+        .exp-tile-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+        }
+
+        .exp-tile-tagline {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .exp-tile-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; }
+
+        .exp-tag {
+            font-size: 0.58rem;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 2px 7px;
+            border-radius: 100px;
+            background: rgba(74,158,255,0.1);
+            border: 1px solid rgba(74,158,255,0.22);
+            color: var(--accent-blue);
+        }
+
+        .exp-tag.green { background: rgba(0,255,135,0.08); border-color: rgba(0,255,135,0.2); color: var(--accent); }
+        .exp-tag.warm  { background: rgba(246,173,85,0.1); border-color: rgba(246,173,85,0.25); color: var(--accent-warm); }
+
+        .exp-tile-arrow {
+            flex: 0 0 auto;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            transition: transform 0.3s ease, color 0.2s;
+        }
+
+        .exp-tile.open .exp-tile-arrow { transform: rotate(180deg); color: var(--accent-blue); }
+
+        /* Grid-rows trick: smooth height animation without JS measurement */
+        .exp-tile-body {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.38s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        .exp-tile.open .exp-tile-body { grid-template-rows: 1fr; }
+        .exp-tile-body-inner { overflow: hidden; }
+
+        .exp-tile-content {
+            padding: 0 20px 20px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .exp-tile-desc-text {
+            font-size: 0.83rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            margin-bottom: 16px;
+            padding-top: 16px;
+        }
+
+        .exp-tile-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+
+        .exp-btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 18px;
+            border-radius: 8px;
+            background: var(--accent-blue);
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.15s;
+        }
+
+        .exp-btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+        .exp-btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 18px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: border-color 0.2s, color 0.2s, transform 0.15s;
+        }
+
+        .exp-btn-ghost:hover { border-color: var(--border-hover); color: var(--text-primary); transform: translateY(-1px); }
+
+        .exp-tile-close-row {
+            padding: 10px 20px 4px;
+            text-align: right;
+        }
+
+        .exp-tile-close-btn {
+            background: none;
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        .exp-tile-close-btn:hover { color: var(--text-primary); border-color: var(--border-hover); }
+
+        /* Satellite stats preview strip */
+        .exp-sat-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+            padding-top: 16px;
+        }
+
+        .exp-sat-stat {
+            background: rgba(74,158,255,0.06);
+            border: 1px solid rgba(74,158,255,0.15);
+            border-radius: 9px;
+            padding: 10px 8px;
+            text-align: center;
+        }
+
+        .exp-sat-stat-val {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            display: block;
+        }
+
+        .exp-sat-stat-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+        }
+
+        /* Tile window wrap (existing .window inside tile) */
+        .exp-tile-window-wrap { padding: 0 0 4px; }
+        .exp-tile-window-wrap .window { margin: 0; border-radius: 0 0 10px 10px; }
+
+        @media (max-width: 860px) {
+            .exp-tiles { grid-template-columns: 1fr; }
+            .exp-sat-stats { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .exp-sat-stats { grid-template-columns: 1fr 1fr; }
+            .exp-tile-tagline { white-space: normal; }
         }
 
         /* Weather */
@@ -3523,155 +3747,306 @@
         </div>
         <!-- ===== END AI COUNCIL ===== -->
 
-        <div class="experiments-grid">
+        <!-- ===== EXPANDABLE EXPERIMENT TILES ===== -->
+        <div class="exp-tiles">
+
+            <!-- Satellite Fleet Dashboard -->
+            <div class="exp-tile reveal" id="exp-tile-satellite">
+                <div class="exp-tile-header" onclick="toggleExpTile('satellite')" role="button" aria-expanded="false" aria-controls="exp-body-satellite">
+                    <div class="exp-tile-icon-wrap">
+                        <i class="fas fa-satellite" style="color:var(--accent-blue)"></i>
+                    </div>
+                    <div class="exp-tile-meta">
+                        <div class="exp-tile-name">Satellite Fleet Dashboard</div>
+                        <div class="exp-tile-tagline">7,560 real satellites &middot; interactive 3D globe</div>
+                        <div class="exp-tile-tags">
+                            <span class="exp-tag">React</span>
+                            <span class="exp-tag">TypeScript</span>
+                            <span class="exp-tag">WebGL</span>
+                            <span class="exp-tag green">UCS Data</span>
+                        </div>
+                    </div>
+                    <div class="exp-tile-arrow"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="exp-tile-body" id="exp-body-satellite">
+                    <div class="exp-tile-body-inner">
+                        <div class="exp-tile-content">
+                            <div class="exp-sat-stats">
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">7,560</span>
+                                    <span class="exp-sat-stat-label">Tracked Assets</span>
+                                </div>
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">5</span>
+                                    <span class="exp-sat-stat-label">Mission Types</span>
+                                </div>
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">4</span>
+                                    <span class="exp-sat-stat-label">Orbit Classes</span>
+                                </div>
+                            </div>
+                            <p class="exp-tile-desc-text" style="padding-top:0;">Fleet operations dashboard built on the <strong style="color:var(--text-primary)">UCS Satellite Database</strong> (May 2023). Features a WebGL 3D globe where every dot is a real satellite at its approximate orbit altitude, colored by LEO / MEO / GEO / Elliptical class. Hover any point for operator, altitude, and mission detail. Stacked bar chart breaks down the fleet by mission purpose, and a paginated sortable table covers all 7,560 assets. All four filters cascade together.</p>
+                            <div class="exp-tile-actions">
+                                <a href="https://tylerv11.github.io/satellite-fleet-dashboard/" target="_blank" rel="noopener" class="exp-btn-primary">
+                                    <i class="fas fa-external-link-alt"></i> Open Dashboard
+                                </a>
+                                <a href="https://github.com/tylerv11/satellite-fleet-dashboard" target="_blank" rel="noopener" class="exp-btn-ghost">
+                                    <i class="fab fa-github"></i> View Source
+                                </a>
+                            </div>
+                        </div>
+                        <div class="exp-tile-close-row">
+                            <button class="exp-tile-close-btn" onclick="toggleExpTile('satellite')"><i class="fas fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Weather Widget -->
-            <div class="window reveal reveal-delay-1" id="weather-window">
-                <div class="window-bar">
-                    <div class="window-dots">
-                        <span class="window-dot red" title="Close" onclick="windowAction(this, 'close')"><i class="fas fa-times"></i></span>
-                        <span class="window-dot yellow" title="Minimize" onclick="windowAction(this, 'minimize')"><i class="fas fa-minus"></i></span>
-                        <span class="window-dot green" title="Maximize" onclick="windowAction(this, 'maximize')"><i class="fas fa-expand"></i></span>
+            <div class="exp-tile reveal reveal-delay-1" id="exp-tile-weather">
+                <div class="exp-tile-header" onclick="toggleExpTile('weather')" role="button" aria-expanded="false" aria-controls="exp-body-weather">
+                    <div class="exp-tile-icon-wrap">
+                        <i class="fas fa-cloud-sun" style="color:#ffd700"></i>
                     </div>
-                    <span class="window-bar-title">weather.app - Los Angeles, CA</span>
+                    <div class="exp-tile-meta">
+                        <div class="exp-tile-name">Live Weather</div>
+                        <div class="exp-tile-tagline">Real-time conditions for Los Angeles, CA</div>
+                        <div class="exp-tile-tags">
+                            <span class="exp-tag green">Live API</span>
+                            <span class="exp-tag">Open-Meteo</span>
+                        </div>
+                    </div>
+                    <div class="exp-tile-arrow"><i class="fas fa-chevron-down"></i></div>
                 </div>
-                <div class="window-content">
-                    <div class="weather-content">
-                        <div class="weather-icon-large"><i class="fas fa-sun"></i></div>
-                        <div class="weather-location">Los Angeles, CA</div>
-                        <div class="weather-temp" id="weather-temp">--&deg;F</div>
-                        <div class="weather-desc" id="weather-desc">Loading weather...</div>
-                        <div class="weather-grid">
-                            <div class="weather-stat"><i class="fas fa-wind"></i> <span id="weather-wind">--</span></div>
-                            <div class="weather-stat"><i class="fas fa-droplet"></i> <span id="weather-humidity">--</span></div>
-                            <div class="weather-stat"><i class="fas fa-temperature-arrow-up"></i> <span id="weather-high">--</span></div>
-                            <div class="weather-stat"><i class="fas fa-temperature-arrow-down"></i> <span id="weather-low">--</span></div>
+                <div class="exp-tile-body" id="exp-body-weather">
+                    <div class="exp-tile-body-inner">
+                        <div class="exp-tile-window-wrap">
+                            <div class="window" id="weather-window">
+                                <div class="window-bar">
+                                    <div class="window-dots">
+                                        <span class="window-dot red" title="Close" onclick="windowAction(this,'close')"><i class="fas fa-times"></i></span>
+                                        <span class="window-dot yellow" title="Minimize" onclick="windowAction(this,'minimize')"><i class="fas fa-minus"></i></span>
+                                        <span class="window-dot green" title="Maximize" onclick="windowAction(this,'maximize')"><i class="fas fa-expand"></i></span>
+                                    </div>
+                                    <span class="window-bar-title">weather.app - Los Angeles, CA</span>
+                                </div>
+                                <div class="window-content">
+                                    <div class="weather-content">
+                                        <div class="weather-icon-large"><i class="fas fa-sun"></i></div>
+                                        <div class="weather-location">Los Angeles, CA</div>
+                                        <div class="weather-temp" id="weather-temp">--&deg;F</div>
+                                        <div class="weather-desc" id="weather-desc">Loading weather...</div>
+                                        <div class="weather-grid">
+                                            <div class="weather-stat"><i class="fas fa-wind"></i> <span id="weather-wind">--</span></div>
+                                            <div class="weather-stat"><i class="fas fa-droplet"></i> <span id="weather-humidity">--</span></div>
+                                            <div class="weather-stat"><i class="fas fa-temperature-arrow-up"></i> <span id="weather-high">--</span></div>
+                                            <div class="weather-stat"><i class="fas fa-temperature-arrow-down"></i> <span id="weather-low">--</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="window-restore-btn" id="weather-restore" onclick="windowRestore('weather-window')"><i class="fas fa-undo"></i> Restore Weather</button>
+                            </div>
+                        </div>
+                        <div class="exp-tile-close-row">
+                            <button class="exp-tile-close-btn" onclick="toggleExpTile('weather')"><i class="fas fa-times"></i> Close</button>
                         </div>
                     </div>
                 </div>
-                <button class="window-restore-btn" id="weather-restore" onclick="windowRestore('weather-window')"><i class="fas fa-undo"></i> Restore Weather</button>
             </div>
-
-
-        </div>
-
-        <div class="experiments-grid-row2">
 
             <!-- Signal Sweep (Minesweeper) -->
-            <div class="window reveal reveal-delay-1" id="signal-sweep-window">
-                <div class="window-bar">
-                    <div class="window-dots">
-                        <span class="window-dot red" title="Close" onclick="windowAction(this, 'close')"><i class="fas fa-times"></i></span>
-                        <span class="window-dot yellow" title="Minimize" onclick="windowAction(this, 'minimize')"><i class="fas fa-minus"></i></span>
-                        <span class="window-dot green" title="Maximize" onclick="windowAction(this, 'maximize')"><i class="fas fa-expand"></i></span>
+            <div class="exp-tile reveal reveal-delay-1" id="exp-tile-signal-sweep">
+                <div class="exp-tile-header" onclick="toggleExpTile('signal-sweep')" role="button" aria-expanded="false" aria-controls="exp-body-signal-sweep">
+                    <div class="exp-tile-icon-wrap">
+                        <i class="fas fa-radiation" style="color:#f59e0b"></i>
                     </div>
-                    <span class="window-bar-title">signal-sweep.exe</span>
-                </div>
-                <div class="window-content">
-                    <div class="sweep-hud">
-                        <div class="sweep-stat">💣 <span id="sweep-mine-count">10</span></div>
-                        <div style="display:flex;gap:4px;">
-                            <button class="game-btn" onclick="sweepNewGame('easy')">Easy</button>
-                            <button class="game-btn" onclick="sweepNewGame('medium')">Med</button>
-                            <button class="game-btn" onclick="sweepNewGame('hard')">Hard</button>
+                    <div class="exp-tile-meta">
+                        <div class="exp-tile-name">Signal Sweep</div>
+                        <div class="exp-tile-tagline">Minesweeper re-skinned for the signal domain</div>
+                        <div class="exp-tile-tags">
+                            <span class="exp-tag warm">Game</span>
+                            <span class="exp-tag">Vanilla JS</span>
+                            <span class="exp-tag">Canvas</span>
                         </div>
-                        <div class="sweep-stat" id="sweep-timer">⏱ 0s</div>
                     </div>
-                    <div id="sweep-grid"></div>
-                    <div id="sweep-status" style="text-align:center;margin-top:8px;font-size:0.78rem;font-weight:700;min-height:20px;"></div>
-                    <div style="font-size:0.62rem;color:var(--text-muted);text-align:center;margin-top:4px;">Left-click reveal · Right-click flag</div>
+                    <div class="exp-tile-arrow"><i class="fas fa-chevron-down"></i></div>
                 </div>
-                <button class="window-restore-btn" id="signal-sweep-restore" onclick="windowRestore('signal-sweep-window')"><i class="fas fa-undo"></i> Restore Signal Sweep</button>
+                <div class="exp-tile-body" id="exp-body-signal-sweep">
+                    <div class="exp-tile-body-inner">
+                        <div class="exp-tile-window-wrap">
+                            <div class="window" id="signal-sweep-window">
+                                <div class="window-bar">
+                                    <div class="window-dots">
+                                        <span class="window-dot red" title="Close" onclick="windowAction(this,'close')"><i class="fas fa-times"></i></span>
+                                        <span class="window-dot yellow" title="Minimize" onclick="windowAction(this,'minimize')"><i class="fas fa-minus"></i></span>
+                                        <span class="window-dot green" title="Maximize" onclick="windowAction(this,'maximize')"><i class="fas fa-expand"></i></span>
+                                    </div>
+                                    <span class="window-bar-title">signal-sweep.exe</span>
+                                </div>
+                                <div class="window-content">
+                                    <div class="sweep-hud">
+                                        <div class="sweep-stat">&#x1F4A3; <span id="sweep-mine-count">10</span></div>
+                                        <div style="display:flex;gap:4px;">
+                                            <button class="game-btn" onclick="sweepNewGame('easy')">Easy</button>
+                                            <button class="game-btn" onclick="sweepNewGame('medium')">Med</button>
+                                            <button class="game-btn" onclick="sweepNewGame('hard')">Hard</button>
+                                        </div>
+                                        <div class="sweep-stat" id="sweep-timer">&#x23F1; 0s</div>
+                                    </div>
+                                    <div id="sweep-grid"></div>
+                                    <div id="sweep-status" style="text-align:center;margin-top:8px;font-size:0.78rem;font-weight:700;min-height:20px;"></div>
+                                    <div style="font-size:0.62rem;color:var(--text-muted);text-align:center;margin-top:4px;">Left-click reveal &middot; Right-click flag</div>
+                                </div>
+                                <button class="window-restore-btn" id="signal-sweep-restore" onclick="windowRestore('signal-sweep-window')"><i class="fas fa-undo"></i> Restore Signal Sweep</button>
+                            </div>
+                        </div>
+                        <div class="exp-tile-close-row">
+                            <button class="exp-tile-close-btn" onclick="toggleExpTile('signal-sweep')"><i class="fas fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Blackjack Game -->
-            <div class="window reveal reveal-delay-2" id="blackjack-window">
-                <div class="window-bar">
-                    <div class="window-dots">
-                        <span class="window-dot red" title="Close" onclick="windowAction(this, 'close')"><i class="fas fa-times"></i></span>
-                        <span class="window-dot yellow" title="Minimize" onclick="windowAction(this, 'minimize')"><i class="fas fa-minus"></i></span>
-                        <span class="window-dot green" title="Maximize" onclick="windowAction(this, 'maximize')"><i class="fas fa-expand"></i></span>
+            <!-- Blackjack -->
+            <div class="exp-tile reveal reveal-delay-2" id="exp-tile-blackjack">
+                <div class="exp-tile-header" onclick="toggleExpTile('blackjack')" role="button" aria-expanded="false" aria-controls="exp-body-blackjack">
+                    <div class="exp-tile-icon-wrap">
+                        <i class="fas fa-dice" style="color:#a78bfa"></i>
                     </div>
-                    <span class="window-bar-title">blackjack.app</span>
+                    <div class="exp-tile-meta">
+                        <div class="exp-tile-name">Blackjack</div>
+                        <div class="exp-tile-tagline">Classic card game, Vegas rules, in-browser</div>
+                        <div class="exp-tile-tags">
+                            <span class="exp-tag warm">Game</span>
+                            <span class="exp-tag">Vanilla JS</span>
+                        </div>
+                    </div>
+                    <div class="exp-tile-arrow"><i class="fas fa-chevron-down"></i></div>
                 </div>
-                <div class="window-content">
-                    <div class="bj-table" id="bj-table">
-                        <div class="bj-label">Dealer</div>
-                        <div class="bj-hand" id="dealer-hand"></div>
-                        <div class="bj-score" id="dealer-score"></div>
-                        <hr class="bj-divider">
-                        <div class="bj-label">Your Hand</div>
-                        <div class="bj-hand" id="player-hand"></div>
-                        <div class="bj-score" id="player-score"></div>
-                        <div id="bj-result"></div>
-                        <div class="game-controls" id="bj-controls">
-                            <button class="game-btn" id="bj-deal" onclick="bjDeal()"><i class="fas fa-play"></i> Deal</button>
-                            <button class="game-btn" id="bj-hit" onclick="bjHit()" style="display:none;"><i class="fas fa-plus"></i> Hit</button>
-                            <button class="game-btn" id="bj-stand" onclick="bjStand()" style="display:none;"><i class="fas fa-hand"></i> Stand</button>
+                <div class="exp-tile-body" id="exp-body-blackjack">
+                    <div class="exp-tile-body-inner">
+                        <div class="exp-tile-window-wrap">
+                            <div class="window" id="blackjack-window">
+                                <div class="window-bar">
+                                    <div class="window-dots">
+                                        <span class="window-dot red" title="Close" onclick="windowAction(this,'close')"><i class="fas fa-times"></i></span>
+                                        <span class="window-dot yellow" title="Minimize" onclick="windowAction(this,'minimize')"><i class="fas fa-minus"></i></span>
+                                        <span class="window-dot green" title="Maximize" onclick="windowAction(this,'maximize')"><i class="fas fa-expand"></i></span>
+                                    </div>
+                                    <span class="window-bar-title">blackjack.app</span>
+                                </div>
+                                <div class="window-content">
+                                    <div class="bj-table" id="bj-table">
+                                        <div class="bj-label">Dealer</div>
+                                        <div class="bj-hand" id="dealer-hand"></div>
+                                        <div class="bj-score" id="dealer-score"></div>
+                                        <hr class="bj-divider">
+                                        <div class="bj-label">Your Hand</div>
+                                        <div class="bj-hand" id="player-hand"></div>
+                                        <div class="bj-score" id="player-score"></div>
+                                        <div id="bj-result"></div>
+                                        <div class="game-controls" id="bj-controls">
+                                            <button class="game-btn" id="bj-deal" onclick="bjDeal()"><i class="fas fa-play"></i> Deal</button>
+                                            <button class="game-btn" id="bj-hit" onclick="bjHit()" style="display:none;"><i class="fas fa-plus"></i> Hit</button>
+                                            <button class="game-btn" id="bj-stand" onclick="bjStand()" style="display:none;"><i class="fas fa-hand"></i> Stand</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="window-restore-btn" id="blackjack-restore" onclick="windowRestore('blackjack-window')"><i class="fas fa-undo"></i> Restore Blackjack</button>
+                            </div>
+                        </div>
+                        <div class="exp-tile-close-row">
+                            <button class="exp-tile-close-btn" onclick="toggleExpTile('blackjack')"><i class="fas fa-times"></i> Close</button>
                         </div>
                     </div>
                 </div>
-                <button class="window-restore-btn" id="blackjack-restore" onclick="windowRestore('blackjack-window')"><i class="fas fa-undo"></i> Restore Blackjack</button>
             </div>
 
             <!-- Catapult Optimization Lab -->
-            <div class="window reveal reveal-delay-3" id="catapult-window">
-                <div class="window-bar">
-                    <div class="window-dots">
-                        <span class="window-dot red" title="Close" onclick="windowAction(this, 'close')"><i class="fas fa-times"></i></span>
-                        <span class="window-dot yellow" title="Minimize" onclick="windowAction(this, 'minimize')"><i class="fas fa-minus"></i></span>
-                        <span class="window-dot green" title="Maximize" onclick="windowAction(this, 'maximize')"><i class="fas fa-expand"></i></span>
+            <div class="exp-tile reveal reveal-delay-3" id="exp-tile-catapult" style="grid-column: 1 / -1;">
+                <div class="exp-tile-header" onclick="toggleExpTile('catapult')" role="button" aria-expanded="false" aria-controls="exp-body-catapult">
+                    <div class="exp-tile-icon-wrap">
+                        <i class="fas fa-flask" style="color:var(--accent)"></i>
                     </div>
-                    <span class="window-bar-title">catapult-lab.exe</span>
-                </div>
-                <div class="window-content" style="padding:14px;">
-                    <div class="catapult-layout">
-                        <div class="catapult-controls">
-                            <div class="cat-mode-row">
-                                <div class="cat-slider-label" style="margin-bottom:4px;"><span>Mode</span></div>
-                                <select id="cat-mode" onchange="catRun()">
-                                    <option value="distance">Max Distance</option>
-                                    <option value="height">Max Height</option>
-                                    <option value="accuracy">Target Accuracy</option>
-                                    <option value="variability">Min Variability</option>
-                                </select>
-                            </div>
-                            <div class="cat-slider-row">
-                                <div class="cat-slider-label"><span>Rotation</span><span id="lbl-rotation">45°</span></div>
-                                <input class="cat-slider" type="range" id="cat-rotation" min="10" max="80" value="45" oninput="catRun()">
-                            </div>
-                            <div class="cat-slider-row">
-                                <div class="cat-slider-label"><span>Bend Back</span><span id="lbl-bendb">50</span></div>
-                                <input class="cat-slider" type="range" id="cat-bendb" min="0" max="100" value="50" oninput="catRun()">
-                            </div>
-                            <div class="cat-slider-row">
-                                <div class="cat-slider-label"><span>Tension</span><span id="lbl-tension">60</span></div>
-                                <input class="cat-slider" type="range" id="cat-tension" min="10" max="100" value="60" oninput="catRun()">
-                            </div>
-                            <div class="cat-slider-row">
-                                <div class="cat-slider-label"><span>Pin Height</span><span id="lbl-pin">50</span></div>
-                                <input class="cat-slider" type="range" id="cat-pin" min="20" max="80" value="50" oninput="catRun()">
-                            </div>
-                            <div class="cat-slider-row">
-                                <div class="cat-slider-label"><span>Cup Pos.</span><span id="lbl-cup">50</span></div>
-                                <input class="cat-slider" type="range" id="cat-cup" min="20" max="80" value="50" oninput="catRun()">
-                            </div>
-                            <div class="cat-slider-row">
-                                <div class="cat-slider-label"><span>Pull-Back °</span><span id="lbl-pullback">90°</span></div>
-                                <input class="cat-slider" type="range" id="cat-pullback" min="30" max="150" value="90" oninput="catRun()">
-                            </div>
-                            <button class="game-btn" style="width:100%;margin-top:8px;" onclick="catAutoOptimize()"><i class="fas fa-magic"></i> Auto-Optimize</button>
-                        </div>
-                        <div class="catapult-outputs">
-                            <div style="font-size:0.58rem;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;">Mechanism Preview</div>
-                            <canvas id="catapult-diagram" width="260" height="120" style="display:block;width:100%;border-radius:8px 8px 0 0;background:#050505;border:1px solid var(--border-subtle);border-bottom:none;"></canvas>
-                            <div style="font-size:0.58rem;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin:6px 0 3px;">Trajectory</div>
-                            <canvas id="catapult-canvas" width="260" height="110" style="display:block;width:100%;border-radius:8px;background:#050505;border:1px solid var(--border-subtle);"></canvas>
-                            <div class="cat-metrics" id="cat-metrics"></div>
+                    <div class="exp-tile-meta">
+                        <div class="exp-tile-name">Catapult Optimization Lab</div>
+                        <div class="exp-tile-tagline">Physics simulation with real-time parameter optimization</div>
+                        <div class="exp-tile-tags">
+                            <span class="exp-tag green">Physics</span>
+                            <span class="exp-tag">Optimization</span>
+                            <span class="exp-tag">Canvas</span>
+                            <span class="exp-tag">Vanilla JS</span>
                         </div>
                     </div>
+                    <div class="exp-tile-arrow"><i class="fas fa-chevron-down"></i></div>
                 </div>
-                <button class="window-restore-btn" id="catapult-restore" onclick="windowRestore('catapult-window')"><i class="fas fa-undo"></i> Restore Catapult Lab</button>
+                <div class="exp-tile-body" id="exp-body-catapult">
+                    <div class="exp-tile-body-inner">
+                        <div class="exp-tile-window-wrap">
+                            <div class="window" id="catapult-window">
+                                <div class="window-bar">
+                                    <div class="window-dots">
+                                        <span class="window-dot red" title="Close" onclick="windowAction(this,'close')"><i class="fas fa-times"></i></span>
+                                        <span class="window-dot yellow" title="Minimize" onclick="windowAction(this,'minimize')"><i class="fas fa-minus"></i></span>
+                                        <span class="window-dot green" title="Maximize" onclick="windowAction(this,'maximize')"><i class="fas fa-expand"></i></span>
+                                    </div>
+                                    <span class="window-bar-title">catapult-lab.exe</span>
+                                </div>
+                                <div class="window-content" style="padding:14px;">
+                                    <div class="catapult-layout">
+                                        <div class="catapult-controls">
+                                            <div class="cat-mode-row">
+                                                <div class="cat-slider-label" style="margin-bottom:4px;"><span>Mode</span></div>
+                                                <select id="cat-mode" onchange="catRun()">
+                                                    <option value="distance">Max Distance</option>
+                                                    <option value="height">Max Height</option>
+                                                    <option value="accuracy">Target Accuracy</option>
+                                                    <option value="variability">Min Variability</option>
+                                                </select>
+                                            </div>
+                                            <div class="cat-slider-row">
+                                                <div class="cat-slider-label"><span>Rotation</span><span id="lbl-rotation">45&deg;</span></div>
+                                                <input class="cat-slider" type="range" id="cat-rotation" min="10" max="80" value="45" oninput="catRun()">
+                                            </div>
+                                            <div class="cat-slider-row">
+                                                <div class="cat-slider-label"><span>Bend Back</span><span id="lbl-bendb">50</span></div>
+                                                <input class="cat-slider" type="range" id="cat-bendb" min="0" max="100" value="50" oninput="catRun()">
+                                            </div>
+                                            <div class="cat-slider-row">
+                                                <div class="cat-slider-label"><span>Tension</span><span id="lbl-tension">60</span></div>
+                                                <input class="cat-slider" type="range" id="cat-tension" min="10" max="100" value="60" oninput="catRun()">
+                                            </div>
+                                            <div class="cat-slider-row">
+                                                <div class="cat-slider-label"><span>Pin Height</span><span id="lbl-pin">50</span></div>
+                                                <input class="cat-slider" type="range" id="cat-pin" min="20" max="80" value="50" oninput="catRun()">
+                                            </div>
+                                            <div class="cat-slider-row">
+                                                <div class="cat-slider-label"><span>Cup Pos.</span><span id="lbl-cup">50</span></div>
+                                                <input class="cat-slider" type="range" id="cat-cup" min="20" max="80" value="50" oninput="catRun()">
+                                            </div>
+                                            <div class="cat-slider-row">
+                                                <div class="cat-slider-label"><span>Pull-Back &deg;</span><span id="lbl-pullback">90&deg;</span></div>
+                                                <input class="cat-slider" type="range" id="cat-pullback" min="30" max="150" value="90" oninput="catRun()">
+                                            </div>
+                                            <button class="game-btn" style="width:100%;margin-top:8px;" onclick="catAutoOptimize()"><i class="fas fa-magic"></i> Auto-Optimize</button>
+                                        </div>
+                                        <div class="catapult-outputs">
+                                            <div style="font-size:0.58rem;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;">Mechanism Preview</div>
+                                            <canvas id="catapult-diagram" width="260" height="120" style="display:block;width:100%;border-radius:8px 8px 0 0;background:#050505;border:1px solid var(--border-subtle);border-bottom:none;"></canvas>
+                                            <div style="font-size:0.58rem;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin:6px 0 3px;">Trajectory</div>
+                                            <canvas id="catapult-canvas" width="260" height="110" style="display:block;width:100%;border-radius:8px;background:#050505;border:1px solid var(--border-subtle);"></canvas>
+                                            <div class="cat-metrics" id="cat-metrics"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="window-restore-btn" id="catapult-restore" onclick="windowRestore('catapult-window')"><i class="fas fa-undo"></i> Restore Catapult Lab</button>
+                            </div>
+                        </div>
+                        <div class="exp-tile-close-row">
+                            <button class="exp-tile-close-btn" onclick="toggleExpTile('catapult')"><i class="fas fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -3945,6 +4320,34 @@
             const restoreBtn = document.getElementById(winId.replace('-window', '-restore'));
             win.classList.remove('closed', 'minimized', 'maximized');
             if (restoreBtn) restoreBtn.classList.remove('visible');
+        }
+
+        // ===== EXPANDABLE EXPERIMENT TILES =====
+        function toggleExpTile(id) {
+            var tile = document.getElementById('exp-tile-' + id);
+            var header = tile.querySelector('.exp-tile-header');
+            var isOpen = tile.classList.contains('open');
+
+            // Close all other tiles first
+            document.querySelectorAll('.exp-tile.open').forEach(function(t) {
+                if (t !== tile) {
+                    t.classList.remove('open');
+                    var h = t.querySelector('.exp-tile-header');
+                    if (h) h.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            if (isOpen) {
+                tile.classList.remove('open');
+                header.setAttribute('aria-expanded', 'false');
+            } else {
+                tile.classList.add('open');
+                header.setAttribute('aria-expanded', 'true');
+                // Scroll tile into view smoothly after animation starts
+                window.setTimeout(function() {
+                    tile.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 80);
+            }
         }
 
         // ===== WEATHER - Los Angeles (Open-Meteo free API) =====
