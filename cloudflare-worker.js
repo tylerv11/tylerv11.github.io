@@ -1,16 +1,7 @@
 /**
  * Cloudflare Worker — OpenRouter API Proxy
  *
- * This Worker proxies requests to OpenRouter, keeping your API key secure server-side.
- *
- * Setup:
- * 1. Create account at https://workers.cloudflare.com (free tier available)
- * 2. Create new Worker
- * 3. Paste this code
- * 4. Add environment variable: OPENROUTER_API_KEY = your-key
- * 5. Deploy
- * 6. Get your Worker URL (e.g., https://tyler-portfolio.your-subdomain.workers.dev)
- * 7. Set in index.html: window.CLOUDFLARE_WORKER_URL = 'your-worker-url'
+ * This Worker proxies requests to OpenRouter
  */
 
 export default {
