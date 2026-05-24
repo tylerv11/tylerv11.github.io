@@ -44,7 +44,7 @@ Training qualification tracking was fragmented-reliant on static exports, site-s
 - Consolidated 15M+ training records (from 100M+ source records across ERP, MES, LMS, LIMS) into a single authoritative dashboard
 - Designed business logic that goes beyond basic "qualified/not qualified" flags-it correctly identifies employees whose status has lapsed due to duplicates, overlapping curricula, or delayed source-system cleanup
 - Built parent-child curriculum rollup logic so managers see both individual task status and overall compliance
-- Implemented row-level security so each manager sees only their direct reports
+- Implemented dynamic row-level security so each manager sees only their direct reports
 - Added an AI instruction layer (Copilot for Power BI) so users can ask free-form questions like "Who's overdue for lab safety training?"
 - Optimized the semantic model for performance (reduced cardinality, star-schema design, incremental refresh)
 
@@ -57,7 +57,7 @@ Training qualification tracking was fragmented-reliant on static exports, site-s
 **Technical Highlights:**
 - 200–350 hours of development; single developer leading design
 - Version-controlled release cycle with staged rollouts
-- Handles complex edge cases: qualification renewal logic, multi-site data consolidation, role-based access control
+- Handles complex edge cases: CTE-based renewal logic, multi-site data consolidation, role-based access control
 
 ---
 
@@ -158,7 +158,7 @@ Tyler has contributed to enterprise-wide pipeline design and data governance sta
 - Migrated legacy delay data from unsupported storage patterns into governed Databricks Delta structures
 - Flagged governance and lifecycle risks when undocumented tables threatened to become embedded in critical workflows
 - Submitted demand requests to integrate legacy process control data into enterprise platforms
-- Created 15 dataflows for a site-wide datathon; several evolved into operational projects (scrap analysis, work order review, manpower resource leveling)
+- Created 17 reusable modular pipelines for a site-wide datathon; several evolved into operational projects (scrap analysis, work order review, manpower resource leveling)
 - Ensured compliance with enterprise data governance standards (Unity Catalog, SOP alignment)
 
 **Philosophy:**
