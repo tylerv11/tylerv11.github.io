@@ -3801,6 +3801,58 @@
                 </div>
             </div>
 
+            <!-- SurfTime -->
+            <div class="exp-tile reveal reveal-delay-1" id="exp-tile-surftime">
+                <div class="exp-tile-header" onclick="toggleExpTile('surftime')" role="button" aria-expanded="false" aria-controls="exp-body-surftime">
+                    <div class="exp-tile-icon-wrap">
+                        <i class="fas fa-water" style="color:#38bdf8"></i>
+                    </div>
+                    <div class="exp-tile-meta">
+                        <div class="exp-tile-name">SurfTime: California Break Intelligence</div>
+                        <div class="exp-tile-tagline">Live surf conditions &middot; Supabase database &middot; deployed on Vercel</div>
+                        <div class="exp-tile-tags">
+                            <span class="exp-tag">Next.js</span>
+                            <span class="exp-tag">Supabase</span>
+                            <span class="exp-tag">Python</span>
+                            <span class="exp-tag green">Live Data</span>
+                        </div>
+                    </div>
+                    <div class="exp-tile-arrow"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="exp-tile-body" id="exp-body-surftime">
+                    <div class="exp-tile-body-inner">
+                        <div class="exp-tile-content">
+                            <div class="exp-sat-stats">
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">20</span>
+                                    <span class="exp-sat-stat-label">Live Breaks</span>
+                                </div>
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">4</span>
+                                    <span class="exp-sat-stat-label">CA Regions</span>
+                                </div>
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">3</span>
+                                    <span class="exp-sat-stat-label">Daypart Views</span>
+                                </div>
+                            </div>
+                            <p class="exp-tile-desc-text" style="padding-top:0;">SurfTime is a live coastal conditions application built with <strong style="color:var(--text-primary)">Next.js on Vercel</strong>, backed by a <strong style="color:var(--text-primary)">Supabase Postgres database</strong>, and refreshed by a Python pipeline that pulls buoy, wind, and tide inputs before scoring each break. The interface covers California from San Diego through San Francisco, supports dawn / morning / afternoon windows, and pairs a navigable map with sortable spot cards so the best break is visible fast.</p>
+                            <div class="exp-tile-actions">
+                                <a href="https://surftimeca.vercel.app" target="_blank" rel="noopener" class="exp-btn-primary">
+                                    <i class="fas fa-external-link-alt"></i> Open SurfTime
+                                </a>
+                                <a href="https://github.com/tylerv11" target="_blank" rel="noopener" class="exp-btn-ghost">
+                                    <i class="fab fa-github"></i> Private Repo
+                                </a>
+                            </div>
+                        </div>
+                        <div class="exp-tile-close-row">
+                            <button class="exp-tile-close-btn" onclick="toggleExpTile('surftime')"><i class="fas fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Weather Widget -->
             <div class="exp-tile reveal reveal-delay-1" id="exp-tile-weather">
                 <div class="exp-tile-header" onclick="toggleExpTile('weather')" role="button" aria-expanded="false" aria-controls="exp-body-weather">
