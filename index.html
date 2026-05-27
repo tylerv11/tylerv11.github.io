@@ -3163,8 +3163,27 @@
             <p class="section-kicker">This section is where I showcase side projects that let me test ideas outside my day-to-day work, try atypical use cases, and practice thinking about problems from a different angle.</p>
         </div>
 
-        <!-- ===== AI COUNCIL FEATURED CARD ===== -->
-        <div class="ai-council-card reveal">
+        <!-- ===== AI COUNCIL EXP TILE (collapsed by default) ===== -->
+        <div class="exp-tile reveal" id="exp-tile-openclaw" style="margin-bottom:28px;">
+            <div class="exp-tile-header" onclick="toggleExpTile('openclaw')" role="button" aria-expanded="false" aria-controls="exp-body-openclaw">
+                <div class="exp-tile-icon-wrap">
+                    <i class="fas fa-robot" style="color:var(--accent-warm)"></i>
+                </div>
+                <div class="exp-tile-meta">
+                    <div class="exp-tile-name">Personal AI Council: Hub-and-Spoke Agent System</div>
+                    <div class="exp-tile-tagline">Zeus orchestrates &middot; 8 agents &middot; M4 Mac &middot; Discord control surface</div>
+                    <div class="exp-tile-tags">
+                        <span class="exp-tag">Multi-Agent</span>
+                        <span class="exp-tag">MCP</span>
+                        <span class="exp-tag">Ollama</span>
+                        <span class="exp-tag green">Live System</span>
+                    </div>
+                </div>
+                <div class="exp-tile-arrow"><i class="fas fa-chevron-down"></i></div>
+            </div>
+            <div class="exp-tile-body" id="exp-body-openclaw">
+                <div class="exp-tile-body-inner">
+        <div class="ai-council-card-inner">
 
             <div class="ai-council-header">
                 <div class="ai-council-badge">&#9679; Personal AI Project</div>
@@ -3743,6 +3762,12 @@
 
                 <p style="margin-top:32px;font-size:0.78rem;color:var(--text-muted);">Private repo, available on request. <a href="https://github.com/tylerv11/" target="_blank" style="color:var(--accent-blue);text-decoration:none;">github.com/tylerv11</a></p>
 
+            </div>
+        </div>
+                    <div class="exp-tile-close-row">
+                        <button class="exp-tile-close-btn" onclick="toggleExpTile('openclaw')"><i class="fas fa-times"></i> Close</button>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- ===== END AI COUNCIL ===== -->
