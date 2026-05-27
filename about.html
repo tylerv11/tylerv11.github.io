@@ -389,6 +389,156 @@
             color: var(--text-muted);
         }
 
+        /* ===== PERSONALITY CAROUSEL ===== */
+        .about-carousel {
+            margin-top: 36px;
+        }
+
+        .carousel__wrap {
+            position: relative;
+            padding: 0 56px;
+        }
+
+        .carousel__inner {
+            /* image area (150px) + text below (~118px) = 268px */
+            height: 268px;
+            position: relative;
+            width: 100%;
+        }
+
+        .carousel__container {
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+
+        /* width + left set dynamically by JS */
+        .carousel__slide-list {
+            height: 100%;
+            left: 50%;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            transform: translateX(-50%);
+        }
+
+        .carousel__slide-item {
+            display: inline-block;
+            height: 150px;
+            margin: 0;
+            padding: 0 6px;
+            position: absolute;
+            transition: all 0.3s ease;
+            /* width set by JS */
+        }
+
+        .carousel__slide-item-img-link {
+            display: block;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            border-radius: 6px;
+        }
+
+        .carousel__slide-item-img-link img {
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            width: 100%;
+            display: block;
+        }
+
+        .carousel__slide-item:hover .carousel__slide-item-img-link img {
+            transform: scale(1.07);
+        }
+
+        .carousel-slide-item__body {
+            position: absolute;
+            bottom: -112px;
+            width: 100%;
+            padding: 0 6px;
+        }
+
+        .carousel-slide-item__body h4 {
+            margin: 10px 0 5px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: var(--text-primary);
+        }
+
+        .carousel-slide-item__body p {
+            font-size: 0.72rem;
+            line-height: 1.5;
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        .carousel__btn {
+            align-items: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-80%);
+            z-index: 10;
+            padding: 8px;
+            opacity: 0.65;
+            transition: opacity 0.25s;
+        }
+
+        .carousel__btn:hover { opacity: 1; }
+        .carousel__btn:disabled { opacity: 0.15; cursor: default; }
+        .carousel__btn--prev { left: 0; }
+        .carousel__btn--next { right: 0; }
+
+        .carousel__btn-arrow {
+            border: solid var(--text-primary);
+            border-width: 0 2.5px 2.5px 0;
+            height: 22px;
+            width: 22px;
+            display: block;
+        }
+
+        .carousel__btn-arrow--left  { transform: rotate(135deg); margin-left:  5px; }
+        .carousel__btn-arrow--right { transform: rotate(-45deg);  margin-right: 5px; }
+
+        .carousel__dots {
+            display: flex;
+            justify-content: center;
+            gap: 7px;
+            margin-top: 16px;
+        }
+
+        .carousel__dots .c-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.18);
+            border: none;
+            cursor: pointer;
+            transition: all 0.28s ease;
+            padding: 0;
+        }
+
+        .carousel__dots .c-dot.active {
+            background: var(--text-primary);
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .carousel__wrap { padding: 0 44px; }
+            .carousel__btn-arrow { height: 16px; width: 16px; }
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .section { padding: 80px 32px; }
@@ -459,8 +609,7 @@
             <div class="about-photo-wrapper reveal">
                 <img src="images/ABOUTME.jpg" alt="Tyler Vincent" class="about-photo" />
                 <div class="about-photo-caption">
-                    <span class="dot"></span>
-                    Los Angeles, California
+                    Yangmingshan Park, Taiwan
                 </div>
             </div>
             <div class="about-text reveal reveal-delay-1">
@@ -479,6 +628,25 @@
                     <span class="about-tag"><i class="fas fa-cube"></i> 3D Printing</span>
                     <span class="about-tag"><i class="fas fa-pen-ruler"></i> Graphic Design</span>
                     <span class="about-tag"><i class="fas fa-graduation-cap"></i> USC Alum</span>
+                </div>
+
+                <!-- Personality carousel — sits in the right column below the tags -->
+                <div class="about-carousel">
+                    <p style="font-size:0.75rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--text-muted);margin:32px 0 14px 0;">A few other things about me</p>
+                    <div class="carousel__wrap">
+                        <button class="carousel__btn carousel__btn--prev" id="pc-prev" aria-label="Previous slide">
+                            <div class="carousel__btn-arrow carousel__btn-arrow--left"></div>
+                        </button>
+                        <div class="carousel__inner">
+                            <div class="carousel__container">
+                                <ul class="carousel__slide-list" id="pc-slide-list"></ul>
+                            </div>
+                        </div>
+                        <button class="carousel__btn carousel__btn--next" id="pc-next" aria-label="Next slide">
+                            <div class="carousel__btn-arrow carousel__btn-arrow--right"></div>
+                        </button>
+                    </div>
+                    <div class="carousel__dots" id="pc-dots"></div>
                 </div>
             </div>
         </div>
@@ -753,6 +921,90 @@
                 window.addEventListener('resize', resize);
                 setInterval(draw, 140);
             });
+        })();
+
+        // ===== PERSONALITY CAROUSEL =====
+        (function() {
+            var slideData = [
+                {
+                    img: 'images/jesko.jpg',
+                    title: 'Koenigsegg Jesko',
+                    desc: "My dream car. Can't wait to drive one some day.",
+                    bg: '#100806'
+                },
+                {
+                    img: 'https://images.unsplash.com/photo-1630811348348-3eb5eee640b9?fm=jpg&q=60&w=800&auto=format&fit=crop',
+                    title: 'Provincetown, Cape Cod',
+                    desc: "I loved taking summer road trips here and camping on the beach.",
+                    bg: '#041018'
+                },
+                {
+                    img: 'https://images.unsplash.com/photo-1553697388-94e804e2f0f6?fm=jpg&q=60&w=800&auto=format&fit=crop',
+                    title: '15+ Countries',
+                    desc: "Every trip changes how I see the world — and the problems in it.",
+                    bg: '#04100a'
+                }
+            ];
+
+            var N = slideData.length;
+            var current = 0;
+
+            var list    = document.getElementById('pc-slide-list');
+            var dotsEl  = document.getElementById('pc-dots');
+            var prevBtn = document.getElementById('pc-prev');
+            var nextBtn = document.getElementById('pc-next');
+            if (!list) return;
+
+            // Build slides + dots
+            slideData.forEach(function(s, i) {
+                var li = document.createElement('li');
+                li.className = 'carousel__slide-item';
+                li.innerHTML =
+                    '<a class="carousel__slide-item-img-link" style="background:' + s.bg + '">' +
+                        '<img src="' + s.img + '" alt="' + s.title + '" />' +
+                    '</a>' +
+                    '<div class="carousel-slide-item__body">' +
+                        '<h4>' + s.title + '</h4>' +
+                        '<p>' + s.desc + '</p>' +
+                    '</div>';
+                list.appendChild(li);
+
+                var dot = document.createElement('button');
+                dot.className = 'c-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+                (function(idx) { dot.addEventListener('click', function() { goTo(idx); }); })(i);
+                dotsEl.appendChild(dot);
+            });
+
+            function place() {
+                var container = list.parentElement;
+                var sw = Math.floor(container.offsetWidth / 3);
+                if (sw < 1) return;
+                var listW = Math.ceil((N + 0.5) * sw * 2);
+                list.style.width = listW + 'px';
+                var refOffset = listW / 2 - sw / 2;
+
+                list.querySelectorAll('.carousel__slide-item').forEach(function(item, i) {
+                    item.style.width = sw + 'px';
+                    item.style.left = (refOffset + (i - current) * sw) + 'px';
+                });
+                dotsEl.querySelectorAll('.c-dot').forEach(function(d, i) {
+                    d.classList.toggle('active', i === current);
+                });
+                prevBtn.disabled = current === 0;
+                nextBtn.disabled = current === N - 1;
+            }
+
+            function goTo(n) {
+                current = Math.max(0, Math.min(N - 1, n));
+                place();
+            }
+
+            prevBtn.addEventListener('click', function() { goTo(current - 1); });
+            nextBtn.addEventListener('click', function() { goTo(current + 1); });
+
+            requestAnimationFrame(function() { place(); });
+            window.addEventListener('resize', place);
         })();
     </script>
 
