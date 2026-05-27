@@ -3775,59 +3775,8 @@
         <!-- ===== EXPANDABLE EXPERIMENT TILES ===== -->
         <div class="exp-tiles">
 
-            <!-- Satellite Fleet Dashboard -->
-            <div class="exp-tile reveal" id="exp-tile-satellite">
-                <div class="exp-tile-header" onclick="toggleExpTile('satellite')" role="button" aria-expanded="false" aria-controls="exp-body-satellite">
-                    <div class="exp-tile-icon-wrap">
-                        <i class="fas fa-satellite" style="color:var(--accent-blue)"></i>
-                    </div>
-                    <div class="exp-tile-meta">
-                        <div class="exp-tile-name">Satellite Fleet Dashboard</div>
-                        <div class="exp-tile-tagline">7,560 real satellites &middot; interactive 3D globe</div>
-                        <div class="exp-tile-tags">
-                            <span class="exp-tag">React</span>
-                            <span class="exp-tag">TypeScript</span>
-                            <span class="exp-tag">GL</span>
-                        </div>
-                    </div>
-                    <div class="exp-tile-arrow"><i class="fas fa-chevron-down"></i></div>
-                </div>
-                <div class="exp-tile-body" id="exp-body-satellite">
-                    <div class="exp-tile-body-inner">
-                        <div class="exp-tile-content">
-                            <div class="exp-sat-stats">
-                                <div class="exp-sat-stat">
-                                    <span class="exp-sat-stat-val">7,560</span>
-                                    <span class="exp-sat-stat-label">Tracked Assets</span>
-                                </div>
-                                <div class="exp-sat-stat">
-                                    <span class="exp-sat-stat-val">5</span>
-                                    <span class="exp-sat-stat-label">Mission Types</span>
-                                </div>
-                                <div class="exp-sat-stat">
-                                    <span class="exp-sat-stat-val">4</span>
-                                    <span class="exp-sat-stat-label">Orbit Classes</span>
-                                </div>
-                            </div>
-                            <p class="exp-tile-desc-text" style="padding-top:0;">Fleet operations dashboard built on the <strong style="color:var(--text-primary)">UCS Satellite Database</strong> (May 2023). Features a WebGL 3D globe where every dot is a real satellite at its approximate orbit altitude, colored by LEO / MEO / GEO / Elliptical class. Hover any point for operator, altitude, and mission detail. Stacked bar chart breaks down the fleet by mission purpose, and a paginated sortable table covers all 7,560 assets. All four filters cascade together.</p>
-                            <div class="exp-tile-actions">
-                                <a href="https://tylerv11.github.io/satellite-fleet-dashboard/" target="_blank" rel="noopener" class="exp-btn-primary">
-                                    <i class="fas fa-external-link-alt"></i> Open Dashboard
-                                </a>
-                                <a href="https://github.com/tylerv11/satellite-fleet-dashboard" target="_blank" rel="noopener" class="exp-btn-ghost">
-                                    <i class="fab fa-github"></i> View Source
-                                </a>
-                            </div>
-                        </div>
-                        <div class="exp-tile-close-row">
-                            <button class="exp-tile-close-btn" onclick="toggleExpTile('satellite')"><i class="fas fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- SurfTime -->
-            <div class="exp-tile reveal reveal-delay-1" id="exp-tile-surftime">
+            <div class="exp-tile reveal" id="exp-tile-surftime">
                 <div class="exp-tile-header" onclick="toggleExpTile('surftime')" role="button" aria-expanded="false" aria-controls="exp-body-surftime">
                     <div class="exp-tile-icon-wrap">
                         <i class="fas fa-water" style="color:#38bdf8"></i>
@@ -3873,6 +3822,57 @@
                         </div>
                         <div class="exp-tile-close-row">
                             <button class="exp-tile-close-btn" onclick="toggleExpTile('surftime')"><i class="fas fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Satellite Fleet Dashboard -->
+            <div class="exp-tile reveal reveal-delay-1" id="exp-tile-satellite">
+                <div class="exp-tile-header" onclick="toggleExpTile('satellite')" role="button" aria-expanded="false" aria-controls="exp-body-satellite">
+                    <div class="exp-tile-icon-wrap">
+                        <i class="fas fa-satellite" style="color:var(--accent-blue)"></i>
+                    </div>
+                    <div class="exp-tile-meta">
+                        <div class="exp-tile-name">Satellite Fleet Dashboard</div>
+                        <div class="exp-tile-tagline">7,560 real satellites &middot; interactive 3D globe</div>
+                        <div class="exp-tile-tags">
+                            <span class="exp-tag">React</span>
+                            <span class="exp-tag">TypeScript</span>
+                            <span class="exp-tag">GL</span>
+                        </div>
+                    </div>
+                    <div class="exp-tile-arrow"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="exp-tile-body" id="exp-body-satellite">
+                    <div class="exp-tile-body-inner">
+                        <div class="exp-tile-content">
+                            <div class="exp-sat-stats">
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">7,560</span>
+                                    <span class="exp-sat-stat-label">Tracked Assets</span>
+                                </div>
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">5</span>
+                                    <span class="exp-sat-stat-label">Mission Types</span>
+                                </div>
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">4</span>
+                                    <span class="exp-sat-stat-label">Orbit Classes</span>
+                                </div>
+                            </div>
+                            <p class="exp-tile-desc-text" style="padding-top:0;">Fleet operations dashboard built on the <strong style="color:var(--text-primary)">UCS Satellite Database</strong> (May 2023). Features a WebGL 3D globe where every dot is a real satellite at its approximate orbit altitude, colored by LEO / MEO / GEO / Elliptical class. Hover any point for operator, altitude, and mission detail. Stacked bar chart breaks down the fleet by mission purpose, and a paginated sortable table covers all 7,560 assets. All four filters cascade together.</p>
+                            <div class="exp-tile-actions">
+                                <a href="https://tylerv11.github.io/satellite-fleet-dashboard/" target="_blank" rel="noopener" class="exp-btn-primary">
+                                    <i class="fas fa-external-link-alt"></i> Open Dashboard
+                                </a>
+                                <a href="https://github.com/tylerv11/satellite-fleet-dashboard" target="_blank" rel="noopener" class="exp-btn-ghost">
+                                    <i class="fab fa-github"></i> View Source
+                                </a>
+                            </div>
+                        </div>
+                        <div class="exp-tile-close-row">
+                            <button class="exp-tile-close-btn" onclick="toggleExpTile('satellite')"><i class="fas fa-times"></i> Close</button>
                         </div>
                     </div>
                 </div>
