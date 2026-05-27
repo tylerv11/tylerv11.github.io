@@ -538,6 +538,11 @@
         @media (max-width: 768px) {
             .carousel__wrap { padding: 0 44px; }
             .carousel__btn-arrow { height: 16px; width: 16px; }
+            .carousel__inner { height: 340px; }
+            .carousel__slide-item { height: 200px; }
+            .carousel-slide-item__body { bottom: -130px; }
+            .carousel-slide-item__body h4 { font-size: 0.82rem; }
+            .carousel-slide-item__body p { font-size: 0.76rem; }
         }
 
         /* Responsive */
@@ -688,7 +693,8 @@
                 <div>&nbsp;</div>
                 <div><span class="t-muted">## Version History</span></div>
                 <div>&nbsp;</div>
-                <div><span class="t-label">v3.1</span> <span class="t-muted">May 2026</span> &nbsp;— Dual-mode assistant: fuzzy matching + RAG (Deepseek via OpenRouter), security guardrails, rate limiting</div>
+                <div><span class="t-label">v3.2</span> <span class="t-muted">May 2026</span> &nbsp;— Personality carousel, SurfTime + OpenClaw experiment tiles, RAG turned off (saving LLM costs), about page refresh</div>
+                <div><span class="t-label">v3.1</span> <span class="t-muted">Apr 2026</span> &nbsp;— Dual-mode assistant: fuzzy matching + RAG (Deepseek via OpenRouter), security guardrails, rate limiting</div>
                 <div><span class="t-label">v3.0</span> <span class="t-muted">Apr 2026</span> &nbsp;— 3D tile hover, matrix cat easter egg, crosshair cursor, Mario runner</div>
                 <div><span class="t-label">v2.1</span> <span class="t-muted">Mar 2026</span> &nbsp;— Matrix rain banners, Takeda + Chewy tiles, Learning Journey section</div>
                 <div><span class="t-label">v2.0</span> <span class="t-muted">Feb–Mar 2026</span> &nbsp;— Full redesign: dark premium theme, interactive experiments, retro about</div>
@@ -698,7 +704,7 @@
                 <div><span class="t-label">v1.1</span> <span class="t-muted">Apr 2023</span> &nbsp;— Content refresh, updated education and about pages</div>
                 <div><span class="t-label">v1.0</span> <span class="t-muted">Jul 2021</span> &nbsp;— Initial launch: portfolio, resume, project grid</div>
                 <div>&nbsp;</div>
-                <div><span class="t-muted">// last updated: Apr 2026 &nbsp;·&nbsp; always a work in progress</span></div>
+                <div><span class="t-muted">// last updated: May 2026 &nbsp;·&nbsp; always a work in progress</span></div>
                 <div>&nbsp;</div>
                 <div><span class="prompt">$</span><span style="animation: blink 1s step-end infinite; color: var(--accent);">▌</span></div>
             </div>
@@ -997,7 +1003,8 @@
 
             function place() {
                 var container = list.parentElement;
-                var sw = Math.floor(container.offsetWidth / 3);
+                var cols = window.innerWidth <= 768 ? 1 : 3;
+                var sw = Math.floor(container.offsetWidth / cols);
                 if (sw < 1) return;
                 var listW = Math.ceil((N + 0.5) * sw * 2);
                 list.style.width = listW + 'px';
