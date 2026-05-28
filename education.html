@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -34,7 +32,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(to bottom, rgba(8,9,10,0.97) 0%, rgba(8,9,10,0.88) 60%, rgba(8,9,10,0.05) 100%);
+            background: var(--bg-primary);
             color: var(--text-primary);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
@@ -575,7 +573,7 @@
 
     <!-- Education Section -->
     <section class="section" style="padding-top: 140px;">
-        <div class="section-header" style="animation: fadeInUp 0.8s var(--transition-smooth) both; position: relative; overflow: hidden; background: linear-gradient(to bottom, rgba(8,9,10,0.97) 0%, rgba(8,9,10,0.88) 60%, rgba(8,9,10,0.05) 100%);">
+        <div class="section-header" style="animation: fadeInUp 0.8s var(--transition-smooth) both; position: relative; overflow: hidden; background: var(--bg-primary);">
             <canvas class="heading-matrix-bg"></canvas>
             <div class="section-label">Education</div>
             <h2 class="section-heading">Always learning, <br><span class="muted">always growing.</span></h2>
@@ -723,7 +721,7 @@
 
     <!-- Learning Journey Section -->
     <section class="section" style="padding-top: 0;">
-        <div class="section-header" style="animation: fadeInUp 0.8s var(--transition-smooth) both; position: relative; overflow: hidden; background: linear-gradient(to bottom, rgba(8,9,10,0.97) 0%, rgba(8,9,10,0.88) 60%, rgba(8,9,10,0.05) 100%);">
+        <div class="section-header" style="animation: fadeInUp 0.8s var(--transition-smooth) both; position: relative; overflow: hidden; background: var(--bg-primary);">
             <canvas class="heading-matrix-bg"></canvas>
             <div class="section-label">Learning Journey</div>
             <h2 class="section-heading">Every role, <br><span class="muted">a new lesson learned.</span></h2>
@@ -888,21 +886,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Calendly -->
-    <script type="text/javascript">
-        window.addEventListener('load', function() {
-            if (typeof Calendly !== 'undefined') {
-                Calendly.initBadgeWidget({
-                    url: 'https://calendly.com/tylervincent/30min?hide_event_type_details=1&hide_gdpr_banner=1&background_color=1a1a1a&text_color=ffffff&primary_color=7f7f7e',
-                    text: 'Schedule time with me',
-                    color: '#00ff87',
-                    textColor: '#000000',
-                    branding: true
-                });
-            }
-        });
-    </script>
 
     <script>
         // Navbar scroll
@@ -1094,7 +1077,7 @@
                 { keys: ['why hire','why tyler','why should','differentiator','unique'], answer: 'What makes Tyler unique: (1) He moves across the full stack - from raw data pipelines to executive dashboards, from SQL to Python to Power BI to product design. (2) He has credibility in high-stakes fields - nuclear defense, pharma manufacturing, aerospace - where technical mistakes matter. (3) He\'s a translator - equally comfortable with engineers, operators, and C-suite. (4) He builds systems people actually use and trust, not just technically correct systems. (5) He teaches (37+ people trained), so his impact compounds. (6) He thinks independently and asks the questions nobody else is asking - the "so what" questions that change decisions.' },
 
                 // Contact / next steps
-                { keys: ['contact','email','phone','hire','reach','talk','connect','schedule','calendly','interview'], answer: 'Reach Tyler at tylervincent@alumni.usc.edu or (469) 243-0073. Schedule a call via Calendly. Also on LinkedIn: linkedin.com/in/tyler-vincent11' },
+                { keys: ['contact','email','phone','hire','reach','talk','connect','schedule','calendly','interview'], answer: 'Reach Tyler at tylervincent@alumni.usc.edu or (469) 243-0073. Also on LinkedIn: linkedin.com/in/tyler-vincent11' },
                 { keys: ['resume','cv'], answer: 'Tyler\'s resume isn\'t linked directly here, but his full work history is available - each project and role shows context and outcomes. For the full PDF resume, reach out at tylervincent@alumni.usc.edu.' },
                 { keys: ['education','usc','university','degree','southern california'], answer: 'Tyler is a USC (University of Southern California) Trojan - Industrial & Systems Engineering, with coursework spanning optimization, product design, economics, and human factors.' },
 

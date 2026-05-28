@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <!-- Calendly -->
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <!-- Tyler's Portfolio Assistant - Enhanced Fuzzy Matching -->
     <script src="portfolio-assistant.js" type="text/javascript" defer></script>
     <!-- Service Worker: cache-first for static assets, stale-while-revalidate for pages -->
@@ -2402,11 +2399,6 @@
             #sa-input { font-size: 0.9rem; padding: 10px 14px; }
             #sa-send { width: 40px; height: 40px; font-size: 1rem; }
 
-            /* Calendly badge styling for mobile */
-            .calendly-badge { bottom: 100px !important; left: 20px !important; right: auto !important; }
-            .calendly-badge-content { background: #555555 !important; color: #ffffff !important; }
-            .calendly-badge-content:hover { background: #666666 !important; }
-            .calendly-badge-outer-wrapper { width: 280px !important; }
         }
 
         /* ===== AI COUNCIL SECTION ===== */
@@ -4352,23 +4344,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Calendly badge widget (not shown on index page) -->
-    <script type="text/javascript">
-        window.addEventListener('load', function() {
-            // Only show Calendly on non-index pages (portfolio has dedicated assistant)
-            var isIndexPage = window.location.pathname === '/' || window.location.pathname.endsWith('index.html');
-            if (!isIndexPage && typeof Calendly !== 'undefined') {
-                Calendly.initBadgeWidget({
-                    url: 'https://calendly.com/tylervincent/30min?hide_event_type_details=1&hide_gdpr_banner=1&background_color=1a1a1a&text_color=ffffff&primary_color=7f7f7e',
-                    text: 'Schedule time with me',
-                    color: '#00ff87',
-                    textColor: '#000000',
-                    branding: true
-                });
-            }
-        });
-    </script>
 
     <script>
         function toggleAgent(el) {
@@ -6386,7 +6361,7 @@
                 { keys: ['why hire tyler','hire him','should i hire','hire','recruit','candidate'], answer: 'Hire Tyler because: (1) He solves real problems, not just technically interesting ones. (2) He brings credibility across teams - he\'s fluent in both shop-floor constraints and C-suite language. (3) He ships systems that scale and systems people trust. (4) He teaches (37+ people trained), so the impact compounds beyond just his code. (5) He\'s curious about systems - he\'ll ask the questions nobody else is asking. (6) He comes prepared and thinks independently. He\'s not the loudest person in the room, but the person who asks "so what do we actually need to decide?" - and that person is worth 10 performers who execute without thinking.' },
 
                 // Contact / next steps
-                { keys: ['contact','email','phone','hire','reach','talk','connect','schedule','calendly','interview'], answer: 'Reach Tyler at tylervincent@alumni.usc.edu or (469) 243-0073. Schedule a call via the Calendly widget (bottom-right corner of this page). Also on LinkedIn: linkedin.com/in/tyler-vincent11' },
+                { keys: ['contact','email','phone','hire','reach','talk','connect','schedule','calendly','interview'], answer: 'Reach Tyler at tylervincent@alumni.usc.edu or (469) 243-0073. Also on LinkedIn: linkedin.com/in/tyler-vincent11' },
                 { keys: ['resume','cv'], answer: 'Tyler\'s resume isn\'t linked directly here, but his full work history is on the page - each project card shows the role, problem, approach, and outcomes. For the full PDF resume, reach out at tylervincent@alumni.usc.edu.' },
                 { keys: ['education','usc','university','degree','southern california'], answer: 'Tyler is a USC (University of Southern California) Trojan - Industrial & Systems Engineering, with coursework spanning optimization, product design, economics, and human factors.' },
 
