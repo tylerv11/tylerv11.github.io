@@ -352,49 +352,6 @@
             position: relative;
         }
 
-        .binary-canvas-wrap {
-            width: 100%;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--border-subtle);
-            position: relative;
-            background: #080808;
-            height: 200px;
-        }
-
-        #binary-canvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-            opacity: 0.85;
-        }
-
-        .binary-overlay-text {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-        }
-
-        .binary-overlay-text span {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(1.4rem, 3vw, 2.2rem);
-            font-weight: 800;
-            letter-spacing: -1px;
-            color: rgba(255,255,255,0.9);
-            text-shadow: 0 0 30px rgba(0,255,135,0.6);
-        }
-
-        .binary-overlay-text small {
-            font-family: monospace;
-            font-size: 0.72rem;
-            color: rgba(0,255,135,0.6);
-            letter-spacing: 2px;
-            margin-top: 6px;
-        }
 
         /* ===== ABOUT THIS SITE TERMINAL ===== */
         .site-terminal {
@@ -729,15 +686,6 @@
     <!-- Digital Art + About This Site -->
     <div class="digital-art-section">
 
-        <!-- Binary / Matrix art banner -->
-        <div class="binary-canvas-wrap">
-            <canvas id="binary-canvas"></canvas>
-            <div class="binary-overlay-text">
-                <span>Tyler Vincent.</span>
-                <small>// engineer · builder · creator</small>
-            </div>
-        </div>
-
         <!-- About this site terminal -->
         <div class="site-terminal reveal">
             <div class="site-terminal-bar">
@@ -886,40 +834,6 @@
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // ===== BINARY CANVAS ART =====
-        (function() {
-            const canvas = document.getElementById('binary-canvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const chars = '01';
-            let cols, drops;
-
-            function resize() {
-                canvas.width = canvas.offsetWidth;
-                canvas.height = canvas.offsetHeight;
-                cols = Math.floor(canvas.width / 14);
-                drops = Array(cols).fill(0).map(() => Math.floor(Math.random() * canvas.height / 14));
-            }
-
-            function draw() {
-                ctx.fillStyle = 'rgba(8,8,8,0.18)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.font = '12px monospace';
-                for (let i = 0; i < drops.length; i++) {
-                    const ch = chars[Math.floor(Math.random() * chars.length)];
-                    const alpha = 0.15 + Math.random() * 0.35;
-                    ctx.fillStyle = `rgba(0,255,135,${alpha})`;
-                    ctx.fillText(ch, i * 14, drops[i] * 14);
-                    if (drops[i] * 14 > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                    drops[i]++;
-                }
-            }
-
-            resize();
-            window.addEventListener('resize', resize);
-            setInterval(draw, 80);
-        })();
 
         // Blink cursor animation
         const style = document.createElement('style');
