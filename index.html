@@ -3270,44 +3270,96 @@
                 </div>
             </div>
 
-            <!-- Senior Guide -->
-            <div class="project-card reveal reveal-delay-2">
-                <div class="card-media">
-                    <iframe src="https://www.youtube.com/embed/Ee7PgJgc0hA" title="Senior Expedition Guide" allowfullscreen loading="lazy"></iframe>
-                    <div class="card-overlay">
-                        <a href="https://youtu.be/Ee7PgJgc0hA" class="card-cta" target="_blank">Watch Expedition <i class="fas fa-play"></i></a>
-                    </div>
-                </div>
-                <div class="card-info">
-                    <span class="card-tag">Leadership</span>
-                    <h3>Senior Expedition Guide</h3>
-                    <div class="card-company">Canadian Wilderness</div>
-                    <p>Guided 9-12 day canoe treks into remote Canadian wilderness. Outdoor educator in history, fishing, and ecology. Trained 15 employees in team development and crisis management.</p>
-                    <a href="https://youtu.be/Ee7PgJgc0hA" class="card-link" target="_blank">Watch expedition <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-
-            <!-- Economic Analysis -->
-            <div class="project-card reveal reveal-delay-3">
-                <div class="card-media">
-                    <img src="images/EconomicAnalysis.jpg" alt="Economic Analysis" loading="lazy" />
-                    <div class="card-overlay">
-                        <a href="files/EconomicAnalysisReport.pdf" class="card-cta" target="_blank">Full Report <i class="fas fa-file-pdf"></i></a>
-                    </div>
-                </div>
-                <div class="card-info">
-                    <span class="card-tag blue">Analysis</span>
-                    <h3>Business Case Analysis</h3>
-                    <div class="card-company">University Project</div>
-                    <p>Economic evaluation with cash flow analysis, choice among economic alternatives, effects of depreciation and taxation, replacement analysis, and dealing with risk and uncertainty.</p>
-                    <a href="files/EconomicAnalysisReport.pdf" class="card-link" target="_blank">Full report <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-
-
 
         </div>
         </div><!-- /pgw -->
+
+        <!-- Collapsible secondary tiles -->
+        <div class="exp-tiles" style="margin-top:20px;">
+
+            <!-- Senior Expedition Guide -->
+            <div class="exp-tile reveal" id="exp-tile-expedition">
+                <div class="exp-tile-header" onclick="toggleExpTile('expedition')" role="button" aria-expanded="false" aria-controls="exp-body-expedition">
+                    <div class="exp-tile-icon-wrap">
+                        <i class="fas fa-campground" style="color:#4ade80"></i>
+                    </div>
+                    <div class="exp-tile-meta">
+                        <div class="exp-tile-name">Senior Expedition Guide</div>
+                        <div class="exp-tile-tagline">Canadian wilderness &middot; 9–12 day canoe treks &middot; 15 employees trained</div>
+                        <div class="exp-tile-tags">
+                            <span class="exp-tag">Leadership</span>
+                            <span class="exp-tag">Education</span>
+                            <span class="exp-tag">Wilderness</span>
+                        </div>
+                    </div>
+                    <div class="exp-tile-arrow"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="exp-tile-body" id="exp-body-expedition">
+                    <div class="exp-tile-body-inner">
+                        <div class="exp-tile-content">
+                            <div class="exp-sat-stats">
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">15</span>
+                                    <span class="exp-sat-stat-label">Staff Trained</span>
+                                </div>
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">9–12</span>
+                                    <span class="exp-sat-stat-label">Day Treks</span>
+                                </div>
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">Remote</span>
+                                    <span class="exp-sat-stat-label">Canadian Wilderness</span>
+                                </div>
+                            </div>
+                            <p class="exp-tile-desc-text" style="padding-top:0;">Guided 9–12 day canoe expeditions into remote Canadian wilderness with no external backup. Served as outdoor educator covering history, fishing, and ecology. Trained 15 employees in team development, equipment standards, and crisis management — establishing and enforcing safety protocols under genuine backcountry pressure.</p>
+                            <div class="exp-tile-actions">
+                                <a href="https://youtu.be/Ee7PgJgc0hA" target="_blank" rel="noopener" class="exp-btn-primary">
+                                    <i class="fas fa-play"></i> Watch Expedition
+                                </a>
+                            </div>
+                        </div>
+                        <div class="exp-tile-close-row">
+                            <button class="exp-tile-close-btn" onclick="toggleExpTile('expedition')"><i class="fas fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Business Case Analysis -->
+            <div class="exp-tile reveal reveal-delay-1" id="exp-tile-bizcase">
+                <div class="exp-tile-header" onclick="toggleExpTile('bizcase')" role="button" aria-expanded="false" aria-controls="exp-body-bizcase">
+                    <div class="exp-tile-icon-wrap">
+                        <i class="fas fa-chart-bar" style="color:var(--accent-blue)"></i>
+                    </div>
+                    <div class="exp-tile-meta">
+                        <div class="exp-tile-name">Business Case Analysis</div>
+                        <div class="exp-tile-tagline">Cash flow modeling &middot; economic alternatives &middot; depreciation &amp; tax &middot; risk analysis</div>
+                        <div class="exp-tile-tags">
+                            <span class="exp-tag">Analysis</span>
+                            <span class="exp-tag">Finance</span>
+                            <span class="exp-tag">University</span>
+                        </div>
+                    </div>
+                    <div class="exp-tile-arrow"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="exp-tile-body" id="exp-body-bizcase">
+                    <div class="exp-tile-body-inner">
+                        <div class="exp-tile-content">
+                            <p class="exp-tile-desc-text">Full economic evaluation covering cash flow analysis, choice among economic alternatives, effects of depreciation and taxation, replacement analysis, and quantified risk and uncertainty. Built as a decision-ready report for capital investment scenarios.</p>
+                            <div class="exp-tile-actions">
+                                <a href="files/EconomicAnalysisReport.pdf" target="_blank" rel="noopener" class="exp-btn-primary">
+                                    <i class="fas fa-file-pdf"></i> Full Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="exp-tile-close-row">
+                            <button class="exp-tile-close-btn" onclick="toggleExpTile('bizcase')"><i class="fas fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </section>
 
     <!-- ===== EXPERIMENTS SECTION ===== -->
@@ -3969,9 +4021,6 @@
                             <div class="exp-tile-actions">
                                 <a href="https://surftimeca.vercel.app" target="_blank" rel="noopener" class="exp-btn-primary">
                                     <i class="fas fa-external-link-alt"></i> Live SurfTime
-                                </a>
-                                <a href="https://github.com/tylerv11/SurfTime" target="_blank" rel="noopener" class="exp-btn-ghost">
-                                    <i class="fab fa-github"></i> View Source
                                 </a>
                             </div>
                         </div>
