@@ -4067,6 +4067,122 @@
                                 </div>
                             </div>
                             <p class="exp-tile-desc-text" style="padding-top:0;">Plutus Markets is a personal investing intelligence platform built with <strong style="color:var(--text-primary)">Next.js</strong>, <strong style="color:var(--text-primary)">Supabase Postgres</strong>, and <strong style="color:var(--text-primary)">Vercel</strong>. A Python pipeline ingests FRED macro data (Fed funds rate, CPI, yield curve, VIX) to classify the current market regime — Expansion, Slowdown, Contraction, or Recovery — and drives sector rotation signals. ETFs and individual stocks are scored 0–100 from fundamentals, momentum, and macro alignment across three risk tiers: <strong style="color:var(--text-primary)">Conservative</strong>, <strong style="color:var(--text-primary)">Moderate</strong>, and <strong style="color:var(--text-primary)">Aggressive</strong>. Portfolio performance is tracked via Sharpe/Sortino ratios, alpha/beta vs SPY, and max drawdown.</p>
+
+                            <!-- Architecture diagram -->
+                            <div class="ai-council-section-title" style="margin-top:28px;">Architecture: How Plutus + FinWave Connect</div>
+                            <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+                            <svg viewBox="0 0 860 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plutus and FinWave architecture: local OpenClaw machine runs market intel producers feeding DuckDB, a bridge pushes to Supabase, FinWave Python pipeline writes all tables to Supabase, and Vercel Next.js reads via API routes." style="width:100%;max-width:860px;display:block;font-family:'Space Grotesk',sans-serif;">
+                              <defs>
+                                <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#4a9eff" opacity="0.7"/></marker>
+                                <marker id="arr-purple" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#a78bfa" opacity="0.8"/></marker>
+                                <marker id="arr-green" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#34d399" opacity="0.8"/></marker>
+                              </defs>
+
+                              <!-- LOCAL MACHINE box -->
+                              <rect x="12" y="12" width="310" height="370" rx="10" fill="rgba(30,35,50,0.7)" stroke="rgba(74,158,255,0.25)" stroke-width="1.5"/>
+                              <text x="167" y="34" text-anchor="middle" font-size="9" font-weight="700" fill="#4a9eff" letter-spacing="2" opacity="0.8">LOCAL MACHINE (OpenClaw)</text>
+
+                              <!-- Market Intel Platform sub-box -->
+                              <rect x="24" y="44" width="194" height="215" rx="7" fill="rgba(74,158,255,0.06)" stroke="rgba(74,158,255,0.18)" stroke-width="1"/>
+                              <text x="121" y="60" text-anchor="middle" font-size="8" font-weight="700" fill="#4a9eff" letter-spacing="1.5" opacity="0.7">MARKET INTEL PLATFORM</text>
+                              <text x="36" y="80"  font-size="10" fill="#94a3b8">fred_producer.py</text>
+                              <text x="36" y="97"  font-size="10" fill="#94a3b8">price_producer.py</text>
+                              <text x="36" y="114" font-size="10" fill="#94a3b8">reddit_producer.py</text>
+                              <text x="36" y="131" font-size="10" fill="#94a3b8">sec_producer.py</text>
+                              <text x="36" y="148" font-size="10" fill="#94a3b8">insider_producer.py</text>
+                              <text x="36" y="165" font-size="10" fill="#94a3b8">trends_producer.py</text>
+                              <!-- DuckDB -->
+                              <rect x="130" y="174" width="80" height="38" rx="5" fill="rgba(74,158,255,0.12)" stroke="rgba(74,158,255,0.3)" stroke-width="1"/>
+                              <text x="170" y="189" text-anchor="middle" font-size="9.5" font-weight="700" fill="#4a9eff">DuckDB</text>
+                              <text x="170" y="203" text-anchor="middle" font-size="8" fill="#64748b">bronze/silver/gold</text>
+                              <!-- arrows from producers to DuckDB -->
+                              <line x1="118" y1="80"  x2="132" y2="180" stroke="#4a9eff" stroke-width="0.8" opacity="0.35" marker-end="url(#arr)"/>
+                              <line x1="118" y1="97"  x2="132" y2="180" stroke="#4a9eff" stroke-width="0.8" opacity="0.35" marker-end="url(#arr)"/>
+                              <line x1="118" y1="114" x2="132" y2="180" stroke="#4a9eff" stroke-width="0.8" opacity="0.35" marker-end="url(#arr)"/>
+                              <line x1="118" y1="131" x2="132" y2="183" stroke="#4a9eff" stroke-width="0.8" opacity="0.35"/>
+                              <line x1="118" y1="148" x2="132" y2="186" stroke="#4a9eff" stroke-width="0.8" opacity="0.35"/>
+                              <line x1="118" y1="165" x2="132" y2="189" stroke="#4a9eff" stroke-width="0.8" opacity="0.35"/>
+
+                              <!-- Plutus Agent sub-box -->
+                              <rect x="24" y="270" width="194" height="96" rx="7" fill="rgba(167,139,250,0.06)" stroke="rgba(167,139,250,0.2)" stroke-width="1"/>
+                              <text x="121" y="287" text-anchor="middle" font-size="8" font-weight="700" fill="#a78bfa" letter-spacing="1.5" opacity="0.8">PLUTUS AGENT</text>
+                              <text x="36" y="307" font-size="10" fill="#94a3b8">market-watch.py</text>
+                              <text x="36" y="323" font-size="10" fill="#94a3b8">macro-watch.py</text>
+                              <text x="36" y="339" font-size="10" fill="#94a3b8">supabase_brief_enrich.py</text>
+
+                              <!-- bridge box -->
+                              <rect x="230" y="193" width="80" height="38" rx="5" fill="rgba(52,211,153,0.08)" stroke="rgba(52,211,153,0.28)" stroke-width="1"/>
+                              <text x="270" y="208" text-anchor="middle" font-size="8.5" font-weight="700" fill="#34d399">bridge/</text>
+                              <text x="270" y="221" text-anchor="middle" font-size="7.5" fill="#64748b">push_to_supabase.py</text>
+                              <!-- DuckDB → bridge -->
+                              <line x1="210" y1="193" x2="232" y2="203" stroke="#34d399" stroke-width="1" opacity="0.55" marker-end="url(#arr-green)"/>
+
+                              <!-- FinWave Pipeline box -->
+                              <rect x="24" y="383" width="294" height="168" rx="7" fill="rgba(167,139,250,0.06)" stroke="rgba(167,139,250,0.18)" stroke-width="1"/>
+                              <text x="171" y="400" text-anchor="middle" font-size="8" font-weight="700" fill="#a78bfa" letter-spacing="1.5" opacity="0.8">FINWAVE PYTHON PIPELINE</text>
+                              <text x="36" y="418" font-size="10" fill="#94a3b8">fetch_prices.py</text>
+                              <text x="36" y="434" font-size="10" fill="#94a3b8">fetch_macro.py</text>
+                              <text x="36" y="450" font-size="10" fill="#94a3b8">fetch_fundamentals.py</text>
+                              <text x="36" y="466" font-size="10" fill="#94a3b8">fetch_political.py</text>
+                              <text x="36" y="482" font-size="10" fill="#94a3b8">regime_classifier.py</text>
+                              <text x="36" y="498" font-size="10" fill="#94a3b8">score_stocks.py</text>
+                              <text x="170" y="418" font-size="10" fill="#94a3b8">portfolio_snapshots.py</text>
+                              <text x="170" y="434" font-size="10" fill="#94a3b8">backtest.py</text>
+                              <text x="170" y="452" font-size="8.5" fill="#64748b" font-style="italic">(5:30 PM daily)</text>
+
+                              <!-- SUPABASE box -->
+                              <rect x="370" y="140" width="210" height="310" rx="10" fill="rgba(30,35,50,0.7)" stroke="rgba(52,211,153,0.3)" stroke-width="1.5"/>
+                              <text x="475" y="162" text-anchor="middle" font-size="9" font-weight="700" fill="#34d399" letter-spacing="2" opacity="0.9">SUPABASE</text>
+                              <text x="390" y="185" font-size="10" fill="#64748b">price_history</text>
+                              <text x="390" y="202" font-size="10" fill="#64748b">macro_indicators</text>
+                              <text x="390" y="219" font-size="10" fill="#64748b">macro_regime</text>
+                              <text x="390" y="236" font-size="10" fill="#64748b">fundamentals</text>
+                              <text x="390" y="253" font-size="10" fill="#64748b">stock_picks</text>
+                              <text x="390" y="270" font-size="10" fill="#64748b">political_signals</text>
+                              <text x="390" y="287" font-size="10" fill="#64748b">backtest_results</text>
+                              <text x="390" y="304" font-size="10" fill="#64748b">portfolio_snapshots</text>
+                              <rect x="381" y="316" width="188" height="22" rx="4" fill="rgba(167,139,250,0.1)" stroke="rgba(167,139,250,0.25)" stroke-width="0.8"/>
+                              <text x="475" y="331" text-anchor="middle" font-size="9.5" fill="#a78bfa">market_briefs</text>
+                              <text x="539" y="331" font-size="8" fill="#64748b" font-style="italic"> ← Plutus writes</text>
+                              <rect x="381" y="343" width="188" height="22" rx="4" fill="rgba(52,211,153,0.08)" stroke="rgba(52,211,153,0.2)" stroke-width="0.8"/>
+                              <text x="475" y="358" text-anchor="middle" font-size="9.5" fill="#34d399">market_intel_signals</text>
+                              <text x="539" y="358" font-size="8" fill="#64748b" font-style="italic"> ← bridge</text>
+                              <text x="390" y="384" font-size="10" fill="#64748b">sharpe / sortino / alpha</text>
+                              <text x="390" y="400" font-size="10" fill="#64748b">drawdown / beta vs SPY</text>
+                              <text x="390" y="428" font-size="8" fill="#64748b" font-style="italic">+ 6 MCP tools for local read</text>
+
+                              <!-- bridge → Supabase -->
+                              <line x1="310" y1="212" x2="368" y2="260" stroke="#34d399" stroke-width="1.2" opacity="0.6" marker-end="url(#arr-green)"/>
+
+                              <!-- Plutus agent → market_briefs (Supabase) -->
+                              <line x1="218" y1="323" x2="368" y2="327" stroke="#a78bfa" stroke-width="1" opacity="0.5" stroke-dasharray="4,3" marker-end="url(#arr-purple)"/>
+
+                              <!-- FinWave → Supabase -->
+                              <line x1="318" y1="450" x2="368" y2="295" stroke="#a78bfa" stroke-width="1.2" opacity="0.55" marker-end="url(#arr-purple)"/>
+
+                              <!-- VERCEL box -->
+                              <rect x="636" y="140" width="210" height="310" rx="10" fill="rgba(30,35,50,0.7)" stroke="rgba(74,158,255,0.25)" stroke-width="1.5"/>
+                              <text x="741" y="162" text-anchor="middle" font-size="9" font-weight="700" fill="#4a9eff" letter-spacing="2" opacity="0.9">VERCEL (Next.js)</text>
+                              <text x="656" y="190" font-size="10" fill="#64748b">/api/briefs</text>
+                              <text x="656" y="210" font-size="10" fill="#64748b">/api/stocks</text>
+                              <text x="656" y="230" font-size="10" fill="#64748b">/api/macro</text>
+                              <text x="656" y="250" font-size="10" fill="#64748b">/api/backtest</text>
+                              <text x="656" y="270" font-size="10" fill="#64748b">/api/political</text>
+                              <text x="656" y="290" font-size="10" fill="#64748b">/api/portfolio</text>
+                              <text x="656" y="310" font-size="10" fill="#64748b">/api/prices</text>
+                              <!-- Supabase → Vercel -->
+                              <line x1="580" y1="295" x2="634" y2="295" stroke="#4a9eff" stroke-width="1.5" opacity="0.55" marker-end="url(#arr)"/>
+
+                              <!-- legend -->
+                              <line x1="24" y1="550" x2="44" y2="550" stroke="#4a9eff" stroke-width="1.5" opacity="0.7" marker-end="url(#arr)"/>
+                              <text x="48" y="554" font-size="9" fill="#64748b">data flow</text>
+                              <line x1="110" y1="550" x2="130" y2="550" stroke="#a78bfa" stroke-width="1.2" opacity="0.7" stroke-dasharray="4,3" marker-end="url(#arr-purple)"/>
+                              <text x="134" y="554" font-size="9" fill="#64748b">agent write</text>
+                              <line x1="204" y1="550" x2="224" y2="550" stroke="#34d399" stroke-width="1.2" opacity="0.7" marker-end="url(#arr-green)"/>
+                              <text x="228" y="554" font-size="9" fill="#64748b">bridge push</text>
+                            </svg>
+                            </div>
+
                             <div class="exp-tile-actions">
                                 <a href="https://plutus-markets.vercel.app" target="_blank" rel="noopener" class="exp-btn-primary">
                                     <i class="fas fa-external-link-alt"></i> Live Plutus Markets
