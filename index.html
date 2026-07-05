@@ -2970,7 +2970,7 @@
             <a href="index.html" class="nav-link active">Work</a>
             <a href="about.html" class="nav-link">About</a>
             <a href="education.html" class="nav-link">Education</a>
-            <a href="#experiments" class="nav-link">Experiments</a>
+            <a href="#projects" class="nav-link">Projects</a>
             <a href="https://www.linkedin.com/in/tyler-vincent11/" class="nav-cta" target="_blank">Let's Connect <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></a>
         </div>
     </nav>
@@ -3113,6 +3113,40 @@
         <!-- Projects Grid Wrapper (hideable for Skills Map toggle) -->
         <div id="pgw">
         <div class="projects-grid">
+
+            <!-- Hermes Events -->
+            <div class="project-card reveal reveal-delay-1">
+                <div class="card-media" style="background:linear-gradient(145deg,#2b2019 0%,#3d2f22 35%,#2b2019 70%,#1a130d 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+                    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(224,172,82,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(224,172,82,0.03) 1px,transparent 1px);background-size:36px 36px;"></div>
+                    <div style="position:absolute;top:20%;right:15%;width:120px;height:120px;border-radius:50%;background:rgba(224,172,82,0.08);border:1px solid rgba(224,172,82,0.12);"></div>
+                    <div style="position:absolute;bottom:20%;left:15%;width:100px;height:100px;border-radius:50%;background:rgba(193,80,46,0.06);border:1px solid rgba(193,80,46,0.1);"></div>
+                    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(224,172,82,0.09) 0%,transparent 50%);"></div>
+                    <div style="position:relative;z-index:2;text-align:center;">
+                        <div style="width:64px;height:64px;margin:0 auto 12px;background:rgba(224,172,82,0.08);border:1px solid rgba(224,172,82,0.25);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:#e0ac52;">
+                            <i class="fas fa-calendar-days"></i>
+                        </div>
+                        <div style="font-size:0.65rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.22);">LA Events Platform &middot; Live Data</div>
+                    </div>
+                    <div class="card-overlay">
+                        <a href="https://hermes-events.vercel.app" class="card-cta" target="_blank">View Live Platform <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                        <span class="card-tag warm">Events Platform</span>
+                        <span style="display:inline-block;padding:3px 10px;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;font-size:0.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#34d399;">Live</span>
+                    </div>
+                    <h3>Hermes: LA Events Scout &amp; Newsletter</h3>
+                    <div class="card-company">Personal Project &middot; Next.js, Supabase, Python</div>
+                    <p>A five-source scouting pipeline that ingests, dedupes, geocodes, and editorially tiers hundreds of LA-area events daily, surfacing them through a filterable web app and a weekly newsletter — built end-to-end from ingestion to admin review to public delivery.</p>
+                    <div class="project-meta" aria-label="Project metadata">
+                        <span><strong>Scale</strong>700+ active events across 6 LA/OC/SD regions</span>
+                        <span><strong>Stack</strong>Next.js, Supabase Postgres, Python, Vercel</span>
+                        <span><strong>Pipeline</strong>Ingestion &middot; LLM tiering &middot; image backfill &middot; admin review</span>
+                    </div>
+                    <a href="#exp-tile-hermes" class="card-link" onclick="document.getElementById('exp-tile-hermes')?.scrollIntoView({behavior:'smooth'});" style="margin-top:16px;">See architecture &amp; details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
 
             <!-- Takeda - Current -->
             <div class="project-card reveal reveal-delay-1">
@@ -3397,9 +3431,9 @@
     </section>
 
     <!-- ===== EXPERIMENTS SECTION ===== -->
-    <section class="section" id="experiments">
+    <section class="section" id="projects">
         <div class="section-header reveal">
-            <div class="section-label">Experiments</div>
+            <div class="section-label">Projects</div>
             <h2 class="section-heading">Non-work projects, <br><span class="muted">built to explore unusual use cases.</span></h2>
             <p class="section-kicker">This section is where I showcase side projects that let me test ideas outside my day-to-day work, try atypical use cases, and practice thinking about problems from a different angle.</p>
         </div>
@@ -4181,6 +4215,56 @@
                 </div>
             </div>
 
+            <!-- Hermes Events -->
+            <div class="exp-tile reveal" id="exp-tile-hermes">
+                <div class="exp-tile-header" onclick="toggleExpTile('hermes')" role="button" aria-expanded="false" aria-controls="exp-body-hermes">
+                    <div class="exp-tile-icon-wrap">
+                        <i class="fas fa-calendar-days" style="color:#e0ac52"></i>
+                    </div>
+                    <div class="exp-tile-meta">
+                        <div class="exp-tile-name">Hermes: LA Events Scout &amp; Newsletter</div>
+                        <div class="exp-tile-tagline">Five-source ingestion &middot; LLM editorial tiering &middot; weekly newsletter</div>
+                        <div class="exp-tile-tags">
+                            <span class="exp-tag">Next.js</span>
+                            <span class="exp-tag">Supabase</span>
+                            <span class="exp-tag">Python</span>
+                            <span class="exp-tag green">Live Data</span>
+                        </div>
+                    </div>
+                    <div class="exp-tile-arrow"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="exp-tile-body" id="exp-body-hermes">
+                    <div class="exp-tile-body-inner">
+                        <div class="exp-tile-content">
+                            <div class="exp-sat-stats">
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">5</span>
+                                    <span class="exp-sat-stat-label">Ingestion Sources</span>
+                                </div>
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">700+</span>
+                                    <span class="exp-sat-stat-label">Active Events</span>
+                                </div>
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">6</span>
+                                    <span class="exp-sat-stat-label">LA/OC/SD Regions</span>
+                                </div>
+                            </div>
+                            <p class="exp-tile-desc-text" style="padding-top:0;">Hermes is a personal LA-area events platform built with <strong style="color:var(--text-primary)">Next.js</strong>, <strong style="color:var(--text-primary)">Supabase Postgres</strong>, and <strong style="color:var(--text-primary)">Vercel</strong>. A Python scouting pipeline pulls from five sources (RSS feeds, source connectors, Gmail newsletter parsing, and direct venue/API integrations), geocodes and dedupes each event, then runs an LLM editorial tiering pass (Can't Miss / Worth It / FYI) plus category classification. The public app offers region/category/time filtering, a "this weekend" flyer carousel, and free-text search with a typewriter placeholder, while an admin panel handles image review/backfill, sponsored placements, source health monitoring, and newsletter drafting — all served from a shared Supabase project with row-level security on every table.</p>
+
+                            <div class="exp-tile-actions">
+                                <a href="https://hermes-events.vercel.app" target="_blank" rel="noopener" class="exp-btn-primary">
+                                    <i class="fas fa-external-link-alt"></i> Live Hermes Events
+                                </a>
+                            </div>
+                        </div>
+                        <div class="exp-tile-close-row">
+                            <button class="exp-tile-close-btn" onclick="toggleExpTile('hermes')"><i class="fas fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- SurfTime -->
             <div class="exp-tile reveal" id="exp-tile-surftime">
                 <div class="exp-tile-header" onclick="toggleExpTile('surftime')" role="button" aria-expanded="false" aria-controls="exp-body-surftime">
@@ -4538,7 +4622,7 @@
                 <a href="index.html">Work</a>
                 <a href="about.html">About</a>
                 <a href="education.html">Education</a>
-                <a href="#experiments">Experiments</a>
+                <a href="#projects">Projects</a>
             </div>
             <div class="footer-col">
                 <h4>Contact</h4>
@@ -4696,7 +4780,7 @@
             let target = 'index.html';
             if (path === 'about.html') target = 'about.html';
             else if (path === 'education.html') target = 'education.html';
-            else if (hash === '#experiments') target = '#experiments';
+            else if (hash === '#projects') target = '#projects';
 
             const active = navMenu.querySelector(`.nav-link[href="${target}"]`) ||
                 navMenu.querySelector(`.nav-link[href="index.html${target}"]`);
@@ -5484,6 +5568,53 @@
                     approach: 'Built hub-and-spoke agent system with Zeus orchestrator routing tasks to specialized agents, each using optimal model for their role.',
                     outcome: 'Deployed personal multi-agent system combining local (Ollama) and cloud (Deepseek, Claude) models with MCP tool integration and Discord control surface.',
                     metrics: ['8 specialized agents', 'Cost-efficient stratification', 'Discord control'],
+                },
+                {
+                    title: 'Hermes: LA Events Scout & Newsletter',
+                    company: 'Hermes Events',
+                    mapLabel: 'Hermes', mapSub: '/ Events Platform',
+                    skills: ['Analytics', 'AI / ML', 'Product', 'Operations'],
+                    skillNotes: {
+                        'Analytics': 'Built Supabase/Postgres pipelines to geocode, dedupe, and rank 700+ LA-area events across 6 regions.',
+                        'AI / ML': 'LLM-driven editorial tiering (Can’t Miss / Worth It / FYI) and category classification with a keyword-rule fallback layer.',
+                        'Product': 'Shipped a public filterable web app, admin review dashboard, and weekly newsletter from a single Supabase-backed product.',
+                        'Operations': 'Built source health monitoring, image backfill, and rate-limited public endpoints to keep a 5-source pipeline running unattended.',
+                    },
+                    problem: 'LA event listings are scattered across five+ disconnected sources with no unified, editorially-ranked view.',
+                    approach: 'Built a Python ingestion pipeline (geocoding, dedupe, LLM tiering) feeding a Next.js/Supabase app and a weekly newsletter.',
+                    outcome: 'Live platform surfacing 700+ active events with public filtering, an admin review panel, and automated newsletter delivery.',
+                    metrics: ['700+ active events', '5 ingestion sources', '6 regions covered'],
+                },
+                {
+                    title: 'Plutus Markets: Investing Intelligence',
+                    company: 'Plutus Markets',
+                    mapLabel: 'Plutus', mapSub: '/ Investing Intel',
+                    skills: ['Analytics', 'AI / ML', 'Optimization', 'Product'],
+                    skillNotes: {
+                        'Analytics': 'Ingests FRED macro data (Fed funds rate, CPI, yield curve, VIX) to score market regime and sector rotation signals.',
+                        'AI / ML': 'Classifies the current macro regime (Expansion, Slowdown, Contraction, Recovery) to drive downstream scoring.',
+                        'Optimization': 'Scores ETFs and stocks 0–100 across three risk tiers, tracked via Sharpe/Sortino, alpha/beta vs SPY, and max drawdown.',
+                        'Product': 'Shipped a live Next.js/Supabase investing intelligence platform end-to-end, from data pipeline to production UI.',
+                    },
+                    problem: 'Retail investors lack a systematic, regime-aware way to score and tier individual investment decisions.',
+                    approach: 'Built a Python macro-regime classifier feeding a 0–100 scoring model across three risk tiers, served via Next.js/Supabase.',
+                    outcome: 'Live platform tracking portfolio performance (Sharpe/Sortino, alpha/beta, drawdown) against a real-time market regime signal.',
+                    metrics: ['4 macro regimes', '3 risk tiers', '0–100 score model'],
+                },
+                {
+                    title: 'SurfTime: California Surf Conditions',
+                    company: 'SurfTime',
+                    mapLabel: 'SurfTime', mapSub: '/ Surf Conditions',
+                    skills: ['Analytics', 'Visualization', 'Operations'],
+                    skillNotes: {
+                        'Analytics': 'Pulls buoy, wind, and tide data via a Python pipeline and scores each break for current conditions.',
+                        'Visualization': 'Renders a live map, ranked list, and time-of-day views from one canonical production URL.',
+                        'Operations': 'Fully automated pipeline writes the latest conditions into Supabase with no manual refresh step.',
+                    },
+                    problem: 'Surfers need a single, ranked view of current conditions across California breaks instead of checking scattered buoy/tide sources.',
+                    approach: 'Built a Python pipeline scoring live buoy, wind, and tide data, served through a Next.js/Supabase map and ranked list.',
+                    outcome: 'Live production dashboard (surftimeca.vercel.app) ranking California surf breaks by real-time conditions.',
+                    metrics: ['Live buoy/wind/tide data', 'Map + ranked list views'],
                 },
                 {
                     title: 'Sr. Data and Analytics Engineer',
