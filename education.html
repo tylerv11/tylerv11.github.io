@@ -565,7 +565,7 @@
             <a href="index.html" class="nav-link">Work</a>
             <a href="about.html" class="nav-link">About</a>
             <a href="education.html" class="nav-link active">Education</a>
-            <a href="index.html#experiments" class="nav-link">Experiments</a>
+            <a href="index.html#projects" class="nav-link">Projects</a>
             <a href="https://www.linkedin.com/in/tyler-vincent11/" class="nav-cta" target="_blank">Let's Connect <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></a>
         </div>
     </nav>
@@ -872,7 +872,7 @@
                 <a href="index.html">Work</a>
                 <a href="about.html">About</a>
                 <a href="education.html">Education</a>
-                <a href="index.html#experiments">Experiments</a>
+                <a href="index.html#projects">Projects</a>
             </div>
             <div class="footer-col">
                 <h4>Contact</h4>
@@ -916,7 +916,7 @@
             let target = 'index.html';
             if (path === 'about.html') target = 'about.html';
             else if (path === 'education.html') target = 'education.html';
-            else if (hash === '#experiments') target = 'index.html#experiments';
+            else if (hash === '#projects') target = 'index.html#projects';
 
             const active = navMenu.querySelector(`.nav-link[href="${target}"]`);
             if (active) active.classList.add('active');
