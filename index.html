@@ -5842,6 +5842,7 @@
                             if (e.target.closest('.pao')) return;
                             if (e.target.closest('a')) return;
                             if (e.target.closest('iframe')) return;
+                            if (e.target.closest('.yt-facade')) return;
                             if (card.classList.contains('pao-open')) { togglePao(false); return; }
                             window.open(primaryHref, primaryTarget);
                         });
