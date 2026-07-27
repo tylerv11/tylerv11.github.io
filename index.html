@@ -1043,6 +1043,40 @@
             transform: scale(1.05);
         }
 
+        .yt-facade {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+            display: block;
+            width: 100%;
+        }
+
+        .yt-facade .yt-play-btn {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.55);
+            border: 2px solid rgba(255,255,255,0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.3rem;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .yt-facade:hover .yt-play-btn {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: rgba(0,0,0,0.75);
+        }
+
         .card-overlay {
             position: absolute;
             bottom: 0; left: 0; right: 0;
@@ -3255,7 +3289,9 @@
             <!-- AI Program Manager -->
             <div class="project-card reveal reveal-delay-2">
                 <div class="card-media">
-                    <iframe src="https://www.youtube.com/embed/K_zY6VuuR1I?start=2" title="AI Program Manager" allowfullscreen loading="lazy"></iframe>
+                    <button type="button" class="yt-facade" aria-label="Play video: AI Program Manager overview" style="background-image: url('images/thumbnails/graymatics-thumbnail.png');" onclick="this.outerHTML = '&lt;iframe src=&quot;https://www.youtube.com/embed/K_zY6VuuR1I?start=2&amp;autoplay=1&quot; title=&quot;AI Program Manager&quot; allow=&quot;autoplay; encrypted-media&quot; allowfullscreen loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;'">
+                        <span class="yt-play-btn"><i class="fas fa-play" aria-hidden="true"></i></span>
+                    </button>
                     <div class="card-overlay">
                         <a href="https://youtu.be/K_zY6VuuR1I?t=2" class="card-cta" target="_blank">Watch Overview <i class="fas fa-play"></i></a>
                     </div>
