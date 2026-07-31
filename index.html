@@ -366,10 +366,11 @@
         .hero-col-main { text-align: left; min-width: 0; }
         .hero-col-side { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
 
-        /* photo as masthead, above the greeting */
+        /* photo as masthead, above the greeting. Sizes dynamically with
+           viewport (clamp) rather than one fixed size for every screen. */
         .hero-col-main .hero-photo-wrapper {
-            width: clamp(96px, 15vw, 132px);
-            height: clamp(96px, 15vw, 132px);
+            width: clamp(108px, 16vw, 168px);
+            height: clamp(108px, 16vw, 168px);
             margin-bottom: 22px;
             border-width: 2px;
         }
@@ -3115,21 +3116,27 @@
             .hero { padding: 96px 22px 60px; min-height: auto; }
             /* base .hero-title goes column here; keep it flush left with the rest */
             .hero-col-main .hero-title { align-items: flex-start; }
+            /* the proof strip (records/products/regions) sits right under the CTAs
+               and reads as clutter on a phone; desktop keeps it. */
+            .hero-proof { display: none; }
         }
 
         @media (max-width: 640px) {
             .hero { padding: 88px 18px 56px; }
             .hero-grid { gap: 24px; }
+            /* photo becomes the centered masthead on phones, not a small
+               left-aligned thumbnail */
             .hero-col-main .hero-photo-wrapper {
-                width: 88px; height: 88px; margin-bottom: 16px;
+                width: clamp(120px, 34vw, 160px);
+                height: clamp(120px, 34vw, 160px);
+                margin: 0 auto 18px;
+                display: block;
             }
             .hero-col-main .hero-subtitle { font-size: 0.95rem; line-height: 1.65; }
             .hero-spec { padding: 15px 16px; }
             .hero-spec-row { grid-template-columns: 50px 1fr; gap: 10px; padding: 5px 0; }
             .hero-spec-val { font-size: 0.8rem; }
             .hero-stack span { font-size: 0.62rem; padding: 3px 7px; }
-            .hero-proof { margin-top: 24px; padding-top: 16px; }
-            .hero-proof-item { flex: 1 1 auto; }
             /* the one CTA must never be hidden on a phone */
             .hero-actions { display: flex !important; }
         }
@@ -4875,7 +4882,7 @@
     </section>
 
     <!-- ===== FOOTER ===== -->
-    <footer class="footer">
+    <footer class="footer" id="contact">
         <div class="footer-grid">
             <div>
                 <div class="footer-brand">Tyler Vincent<span>.</span></div>
