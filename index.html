@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Tyler Vincent - Engineer. Builder. Creator.</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <!-- Tyler's Portfolio Assistant - Enhanced Fuzzy Matching -->
     <script src="portfolio-assistant.js" type="text/javascript" defer></script>
@@ -18,31 +19,74 @@
         }
     </script>
     <style>
-        /* ============================================
-           PREMIUM BRAND THEME - Tyler Vincent
-           Inspired by Nike, Apple, top-tier portfolios
-           ============================================ */
+        /* Portfolio design system. Built from the work, not from brand references. */
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        /* ============================================
+           MATRIX / GROUNDED
+           The neon stays. It now sits on the film's real
+           palette - desaturated green-black, brass, rust,
+           slate - instead of pure black + the blue/purple
+           triad. Crimson is the red pill: used almost
+           never, so it lands when it does.
+           ============================================ */
+
         :root {
-            --bg-primary: #08090a;
-            --bg-secondary: #0f1115;
-            --bg-card: #14171c;
-            --bg-card-hover: #181c22;
-            --text-primary: #ffffff;
-            --text-secondary: #a7adb7;
-            --text-muted: #68707c;
+            /* --- Type: two families, five weights total --- */
+            --font-sans:    'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-display: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono:    'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+
+            /* --- Surface: green-cast near-black, not blue-black --- */
+            --bg-primary: #080D0A;
+            --bg-secondary: #0C1310;
+            --bg-card: #101815;
+            --bg-card-hover: #16211C;
+
+            /* --- Text: pale sage, not pure white --- */
+            --text-primary: #E6EFE6;
+            --text-secondary: #A0B0A2;
+            --text-muted: #6C7D70;
+
+            /* --- The neon. Primary action + live state only. --- */
             --accent: #00ff87;
-            --accent-blue: #4a9eff;
-            --accent-purple: #c4b5fd;
-            --accent-warm: #f6ad55;
-            --border-subtle: rgba(255,255,255,0.06);
-            --border-hover: rgba(255,255,255,0.12);
-            --glass-bg: rgba(255,255,255,0.03);
-            --glass-border: rgba(255,255,255,0.08);
+            --accent-soft: rgba(0,255,135,0.10);
+            --accent-line: rgba(0,255,135,0.28);
+
+            /* --- Grounded greens: what the neon used to do at scale --- */
+            --green-deep: #3C6B44;
+            --green-moss: #5F7F38;
+            --green-lime: #A3BC3F;
+            --green-sage: #8CA391;
+
+            /* --- Secondary accents (replacing blue/purple/orange) --- */
+            --accent-blue: #7E8E9B;    /* slate */
+            --accent-purple: #B06A3E;  /* rust */
+            --accent-warm: #C79A4F;    /* brass */
+            --accent-crimson: #C0272D; /* the red dress. sparingly. */
+
+            --border-subtle: rgba(160,176,162,0.09);
+            --border-hover: rgba(0,255,135,0.22);
+
+            /* Glass survives on exactly one surface: the floating nav. */
+            --glass-bg: rgba(12,19,16,0.72);
+            --glass-border: rgba(160,176,162,0.12);
+
+            /* --- Radius hierarchy: shape carries meaning --- *
+               pill = live status ONLY (open to work, live, current)
+               tag  = metadata chips
+               btn  = actions
+               card = content containers                        */
+            --r-pill: 100px;
+            --r-tag: 6px;
+            --r-btn: 8px;
+            --r-card: 10px;
+            --r-panel: 14px;
+            --r-sm: 4px;
+
             --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
-            --shadow-card: 0 18px 52px rgba(0,0,0,0.28);
+            --shadow-card: 0 18px 52px rgba(0,0,0,0.38);
         }
 
         html {
@@ -50,7 +94,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: var(--font-sans);
             background: var(--bg-primary);
             color: var(--text-primary);
             overflow-x: hidden;
@@ -85,7 +129,7 @@
         }
 
         .loader-name {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: clamp(2.1rem, 8vw, 4.8rem);
             font-weight: 700;
             letter-spacing: -0.04em;
@@ -122,7 +166,7 @@
         .loader-line {
             width: 100%;
             height: 1px;
-            background: rgba(255,255,255,0.12);
+            background: rgba(160,176,162,0.14);
             margin-top: 28px;
             overflow: hidden;
         }
@@ -167,7 +211,7 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
             pointer-events: none;
             z-index: 9999;
-            opacity: 0.5;
+            opacity: 0.18;
         }
 
         /* ===== NAVBAR ===== */
@@ -180,24 +224,24 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(8,9,10,0.45);
+            background: rgba(8,13,10,0.45);
             backdrop-filter: blur(28px) saturate(1.8) brightness(1.06);
             -webkit-backdrop-filter: blur(28px) saturate(1.8) brightness(1.06);
             border-bottom: 1px solid rgba(0,255,135,0.07);
-            box-shadow: 0 1px 0 rgba(255,255,255,0.03), inset 0 1px 0 rgba(255,255,255,0.04);
+            box-shadow: 0 1px 0 rgba(160,176,162,0.045), inset 0 1px 0 rgba(160,176,162,0.055);
             transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
         }
 
         .navbar.scrolled {
-            background: rgba(8,9,10,0.82);
+            background: rgba(8,13,10,0.82);
             backdrop-filter: blur(36px) saturate(2) brightness(1.0);
             -webkit-backdrop-filter: blur(36px) saturate(2) brightness(1.0);
             border-bottom-color: rgba(0,255,135,0.14);
-            box-shadow: 0 1px 0 rgba(255,255,255,0.04), 0 8px 48px rgba(0,0,0,0.55), 0 0 120px rgba(0,255,135,0.02);
+            box-shadow: 0 1px 0 rgba(160,176,162,0.055), 0 8px 48px rgba(0,0,0,0.55), 0 0 120px rgba(0,255,135,0.02);
         }
 
         .nav-brand {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: 1.3rem;
             font-weight: 700;
             color: var(--text-primary);
@@ -222,7 +266,7 @@
             font-size: 0.85rem;
             font-weight: 500;
             letter-spacing: 0.3px;
-            border-radius: 100px;
+            border-radius: var(--r-sm);
             transition: all 0.3s ease;
             position: relative;
         }
@@ -256,7 +300,7 @@
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 600;
-            border-radius: 100px;
+            border-radius: var(--r-btn);
             transition: all 0.3s var(--transition-smooth);
             margin-left: 12px;
         }
@@ -305,6 +349,108 @@
             overflow: hidden;
         }
 
+        /* ===== ASYMMETRIC HERO =====
+           Same content as before, no longer stacked down the centreline.
+           Photo sits above the name (masthead), spec panel rides alongside. */
+        .hero-grid {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1180px;
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+            gap: clamp(28px, 5vw, 68px);
+            align-items: center;
+        }
+
+        .hero-col-main { text-align: left; min-width: 0; }
+        .hero-col-side { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+
+        /* photo as masthead, above the greeting */
+        .hero-col-main .hero-photo-wrapper {
+            width: clamp(96px, 15vw, 132px);
+            height: clamp(96px, 15vw, 132px);
+            margin-bottom: 22px;
+            border-width: 2px;
+        }
+
+        /* Spec panel: the metadata the ticker was scrolling, held still
+           so it can actually be read. */
+        .hero-spec {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--r-card);
+            padding: 18px 20px;
+            animation: fadeInUp 0.8s 0.42s var(--transition-smooth) both;
+        }
+        .hero-spec-head {
+            display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+            padding-bottom: 11px; margin-bottom: 13px;
+            border-bottom: 1px solid var(--border-subtle);
+            font-family: var(--font-mono);
+            font-size: 0.6rem; letter-spacing: 1.3px; text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .hero-spec-row { display: grid; grid-template-columns: 58px 1fr; gap: 12px; padding: 6px 0; }
+        .hero-spec-key {
+            font-family: var(--font-mono);
+            font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase;
+            color: var(--text-muted); padding-top: 4px;
+        }
+        .hero-spec-val { font-size: 0.84rem; color: var(--text-primary); line-height: 1.55; }
+        .hero-spec-val .hl { color: var(--accent); }
+
+        /* stack chips - mono, tag-radius, wrap freely */
+        .hero-stack { display: flex; flex-wrap: wrap; gap: 5px; }
+        .hero-stack span {
+            font-family: var(--font-mono);
+            font-size: 0.66rem;
+            padding: 3px 8px;
+            border-radius: var(--r-tag);
+            background: var(--accent-soft);
+            border: 1px solid var(--accent-line);
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+        .hero-stack span.alt {
+            background: rgba(160,176,162,0.06);
+            border-color: var(--border-subtle);
+            color: var(--text-secondary);
+        }
+
+        /* proof strip - tabular figures, hairline dividers */
+        .hero-proof {
+            display: flex; flex-wrap: wrap; gap: 0;
+            margin-top: 30px; padding-top: 18px;
+            border-top: 1px solid var(--border-subtle);
+            animation: fadeInUp 0.8s 0.4s var(--transition-smooth) both;
+        }
+        .hero-proof-item {
+            padding-right: clamp(14px, 3vw, 26px);
+            margin-right: clamp(14px, 3vw, 26px);
+            border-right: 1px solid var(--border-subtle);
+        }
+        .hero-proof-item:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
+        .hero-proof-num {
+            font-family: var(--font-display);
+            font-size: clamp(1.05rem, 3.4vw, 1.32rem); font-weight: 600;
+            color: var(--text-primary); letter-spacing: -0.5px;
+            font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1;
+        }
+        .hero-proof-label {
+            font-family: var(--font-mono);
+            font-size: 0.58rem; letter-spacing: 1px; text-transform: uppercase;
+            color: var(--text-muted); margin-top: 3px;
+        }
+
+        /* un-centre the pieces that were built for a centred stack */
+        .hero-col-main .hero-name,
+        .hero-col-main .hero-subtitle { text-align: left; }
+        .hero-col-main .hero-title { justify-content: flex-start; flex-wrap: wrap; }
+        .hero-col-main .hero-actions { justify-content: flex-start; }
+        .hero-col-main .hero-subtitle { max-width: 52ch; margin-left: 0; }
+
+
         /* ===== AURORA BACKGROUND ===== */
         .hero-aurora {
             position: absolute;
@@ -323,27 +469,27 @@
         .aurora-orb-1 {
             width: 900px; height: 900px;
             top: -280px; right: -180px;
-            background: var(--accent);
-            filter: blur(110px);
-            opacity: 0.18;
+            background: var(--green-deep);
+            filter: blur(130px);
+            opacity: 0.09;
             animation: aurora-drift-1 16s ease-in-out infinite alternate;
         }
 
         .aurora-orb-2 {
             width: 650px; height: 650px;
             top: 15%; left: 5%;
-            background: var(--accent-blue);
-            filter: blur(90px);
-            opacity: 0.14;
+            background: var(--green-moss);
+            filter: blur(110px);
+            opacity: 0.055;
             animation: aurora-drift-2 20s ease-in-out infinite alternate;
         }
 
         .aurora-orb-3 {
             width: 550px; height: 550px;
             bottom: -120px; left: -80px;
-            background: var(--accent-purple);
-            filter: blur(85px);
-            opacity: 0.16;
+            background: var(--accent-warm);
+            filter: blur(105px);
+            opacity: 0.045;
             animation: aurora-drift-3 13s ease-in-out infinite alternate;
         }
 
@@ -374,7 +520,7 @@
             padding: 8px 20px;
             background: rgba(0,255,135,0.08);
             border: 1px solid rgba(0,255,135,0.2);
-            border-radius: 100px;
+            border-radius: var(--r-pill);
             color: var(--accent);
             font-size: 0.8rem;
             font-weight: 600;
@@ -398,7 +544,7 @@
 
         /* Main greeting */
         .hero-name {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: clamp(1.9rem, 4.5vw, 3.2rem);
             font-weight: 800;
             text-align: center;
@@ -410,7 +556,7 @@
 
         /* Small inline tagline */
         .hero-title {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: clamp(0.72rem, 1.1vw, 0.9rem);
             font-weight: 700;
             letter-spacing: 2.5px;
@@ -436,10 +582,7 @@
         }
 
         .hero-title .gradient {
-            background: linear-gradient(135deg, var(--accent), var(--accent-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--accent);
             opacity: 1;
         }
 
@@ -472,7 +615,7 @@
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 700;
-            border-radius: 100px;
+            border-radius: var(--r-btn);
             border: none;
             cursor: pointer;
             transition: all 0.4s var(--transition-smooth);
@@ -510,14 +653,14 @@
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 600;
-            border-radius: 100px;
+            border-radius: var(--r-btn);
             border: 1px solid var(--border-hover);
             cursor: pointer;
             transition: all 0.4s var(--transition-smooth);
         }
 
         .btn-secondary:hover {
-            background: rgba(255,255,255,0.05);
+            background: rgba(160,176,162,0.065);
             border-color: rgba(255,255,255,0.25);
             transform: translateY(-2px);
         }
@@ -532,17 +675,16 @@
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 600;
-            border-radius: 100px;
+            border-radius: var(--r-btn);
             border: 1px solid transparent;
             cursor: pointer;
-            backdrop-filter: blur(18px) saturate(1.7);
-            -webkit-backdrop-filter: blur(18px) saturate(1.7);
+            /* glass removed - reserved for the floating nav */
             background:
-                linear-gradient(rgba(8,9,10,0.5), rgba(8,9,10,0.5)) padding-box,
+                linear-gradient(rgba(8,13,10,0.5), rgba(8,13,10,0.5)) padding-box,
                 linear-gradient(135deg,
                     rgba(0,255,135,0.45),
-                    rgba(74,158,255,0.35),
-                    rgba(196,181,253,0.35),
+                    rgba(126,142,155,0.35),
+                    rgba(199,154,79,0.35),
                     rgba(0,255,135,0.45)
                 ) border-box;
             position: relative;
@@ -574,12 +716,11 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 36px rgba(0,255,135,0.14), 0 0 0 1px rgba(0,255,135,0.08);
             background:
-                linear-gradient(rgba(8,9,10,0.42), rgba(8,9,10,0.42)) padding-box,
+                linear-gradient(rgba(8,13,10,0.42), rgba(8,13,10,0.42)) padding-box,
                 linear-gradient(135deg,
-                    rgba(0,255,135,0.75),
-                    rgba(74,158,255,0.55),
-                    rgba(196,181,253,0.55),
-                    rgba(0,255,135,0.75)
+                    rgba(0,255,135,0.55),
+                    rgba(60,107,68,0.45),
+                    rgba(0,255,135,0.55)
                 ) border-box;
         }
 
@@ -642,7 +783,7 @@
             align-items: center;
             gap: 16px;
             padding: 0 48px;
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--text-muted);
@@ -718,7 +859,7 @@
         }
 
         .system-card h3 {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: 1rem;
             line-height: 1.25;
             letter-spacing: -0.01em;
@@ -755,7 +896,7 @@
         }
 
         .section-heading {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: clamp(2rem, 4vw, 3.5rem);
             font-weight: 800;
             letter-spacing: -2px;
@@ -886,7 +1027,7 @@
         .window-restore-btn {
             display: none;
             padding: 8px 16px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(160,176,162,0.065);
             border: 1px solid var(--border-subtle);
             border-radius: 8px;
             color: var(--text-secondary);
@@ -897,7 +1038,7 @@
         }
 
         .window-restore-btn:hover {
-            background: rgba(255,255,255,0.1);
+            background: rgba(160,176,162,0.12);
             color: var(--text-primary);
         }
 
@@ -944,11 +1085,10 @@
             background: conic-gradient(
                 from var(--border-angle),
                 transparent 0%,
-                transparent 35%,
-                rgba(0, 255, 135, 0.45) 50%,
-                rgba(74, 158, 255, 0.32) 62%,
-                rgba(196, 181, 253, 0.28) 72%,
-                transparent 87%,
+                transparent 38%,
+                rgba(0, 255, 135, 0.38) 50%,
+                rgba(60, 107, 68, 0.30) 64%,
+                transparent 84%,
                 transparent 100%
             );
             -webkit-mask:
@@ -1100,7 +1240,7 @@
             text-decoration: none;
             font-size: 0.8rem;
             font-weight: 700;
-            border-radius: 100px;
+            border-radius: var(--r-btn);
             transition: transform 0.3s ease;
         }
 
@@ -1117,7 +1257,7 @@
             padding: 4px 12px;
             background: rgba(0,255,135,0.08);
             border: 1px solid rgba(0,255,135,0.15);
-            border-radius: 100px;
+            border-radius: var(--r-tag);
             color: var(--accent);
             font-size: 0.7rem;
             font-weight: 600;
@@ -1127,25 +1267,25 @@
         }
 
         .card-tag.purple {
-            background: rgba(168,85,247,0.08);
-            border-color: rgba(168,85,247,0.15);
+            background: rgba(176,106,62,0.08);
+            border-color: rgba(176,106,62,0.15);
             color: var(--accent-purple);
         }
 
         .card-tag.blue {
-            background: rgba(74,158,255,0.08);
-            border-color: rgba(74,158,255,0.15);
+            background: rgba(126,142,155,0.08);
+            border-color: rgba(126,142,155,0.15);
             color: var(--accent-blue);
         }
 
         .card-tag.warm {
-            background: rgba(255,107,53,0.08);
-            border-color: rgba(255,107,53,0.15);
+            background: rgba(176,106,62,0.08);
+            border-color: rgba(176,106,62,0.15);
             color: var(--accent-warm);
         }
 
         .card-info h3 {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: 1.3rem;
             font-weight: 700;
             letter-spacing: -0.5px;
@@ -1231,14 +1371,13 @@
         }
 
         .stat-number {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: 2.8rem;
             font-weight: 800;
             letter-spacing: -2px;
-            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text-primary);
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "tnum" 1;
         }
 
         .stat-label {
@@ -1280,7 +1419,7 @@
         }
 
         .exp-tile:hover { border-color: var(--border-hover); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
-        .exp-tile.open { border-color: rgba(74,158,255,0.28); }
+        .exp-tile.open { border-color: rgba(126,142,155,0.28); }
 
         .exp-tile-header {
             display: flex;
@@ -1296,7 +1435,7 @@
             width: 42px;
             height: 42px;
             border-radius: 10px;
-            background: rgba(255,255,255,0.04);
+            background: rgba(160,176,162,0.055);
             border: 1px solid var(--border-subtle);
             display: flex;
             align-items: center;
@@ -1307,7 +1446,7 @@
         .exp-tile-meta { flex: 1; min-width: 0; }
 
         .exp-tile-name {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: 0.92rem;
             font-weight: 700;
             color: var(--text-primary);
@@ -1330,9 +1469,9 @@
             letter-spacing: 0.8px;
             text-transform: uppercase;
             padding: 2px 7px;
-            border-radius: 100px;
-            background: rgba(74,158,255,0.1);
-            border: 1px solid rgba(74,158,255,0.22);
+            border-radius: var(--r-tag);
+            background: rgba(126,142,155,0.1);
+            border: 1px solid rgba(126,142,155,0.22);
             color: var(--accent-blue);
         }
 
@@ -1344,7 +1483,7 @@
             width: 26px;
             height: 26px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.03);
+            background: rgba(160,176,162,0.045);
             border: 1px solid var(--border-subtle);
             display: flex;
             align-items: center;
@@ -1403,7 +1542,7 @@
             gap: 7px;
             padding: 9px 18px;
             border-radius: 8px;
-            background: rgba(255,255,255,0.04);
+            background: rgba(160,176,162,0.055);
             border: 1px solid var(--border-subtle);
             color: var(--text-secondary);
             font-size: 0.8rem;
@@ -1444,15 +1583,15 @@
         }
 
         .exp-sat-stat {
-            background: rgba(74,158,255,0.06);
-            border: 1px solid rgba(74,158,255,0.15);
+            background: rgba(126,142,155,0.06);
+            border: 1px solid rgba(126,142,155,0.15);
             border-radius: 9px;
             padding: 10px 8px;
             text-align: center;
         }
 
         .exp-sat-stat-val {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: 1.25rem;
             font-weight: 800;
             color: var(--accent-blue);
@@ -1488,10 +1627,7 @@
         .weather-icon-large {
             font-size: 3.5rem;
             margin-bottom: 8px;
-            background: linear-gradient(135deg, #ffd700, #ff8c00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--accent-warm);
         }
 
         .weather-location {
@@ -1504,7 +1640,7 @@
         }
 
         .weather-temp {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: 3rem;
             font-weight: 800;
             letter-spacing: -2px;
@@ -1525,7 +1661,7 @@
 
         .weather-stat {
             padding: 10px;
-            background: rgba(255,255,255,0.03);
+            background: rgba(160,176,162,0.045);
             border-radius: 10px;
             border: 1px solid var(--border-subtle);
             font-size: 0.8rem;
@@ -1544,14 +1680,13 @@
         }
 
         .clock-time-large {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: 3rem;
             font-weight: 800;
             letter-spacing: -2px;
-            background: linear-gradient(135deg, var(--text-primary), var(--text-muted));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text-primary);
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "tnum" 1;
         }
 
         .clock-date-text {
@@ -1566,7 +1701,7 @@
             gap: 6px;
             padding: 6px 14px;
             background: rgba(0,255,135,0.06);
-            border-radius: 100px;
+            border-radius: var(--r-pill);
             color: var(--accent);
             font-size: 0.7rem;
             font-weight: 600;
@@ -1589,7 +1724,7 @@
         }
 
         .footer-brand {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 12px;
@@ -1697,7 +1832,7 @@
 
         .game-btn {
             padding: 8px 20px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(160,176,162,0.065);
             border: 1px solid var(--border-subtle);
             border-radius: 8px;
             color: var(--text-secondary);
@@ -1715,7 +1850,7 @@
 
         .game-score {
             text-align: center;
-            font-family: 'Space Grotesk', monospace;
+            font-family: var(--font-mono);
             font-size: 1.2rem;
             font-weight: 700;
             color: var(--text-primary);
@@ -1756,7 +1891,7 @@
         .bj-card.hidden-card {
             background: linear-gradient(135deg, #1a1a6e, #2d2d9e);
             color: transparent;
-            background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.05) 5px, rgba(255,255,255,0.05) 10px);
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(160,176,162,0.065) 5px, rgba(160,176,162,0.065) 10px);
         }
 
         @keyframes dealCard {
@@ -1774,7 +1909,7 @@
         }
 
         .bj-score {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: 1.5rem;
             font-weight: 700;
             margin: 4px 0;
@@ -1833,7 +1968,7 @@
                 flex-direction: column;
                 position: fixed;
                 top: 72px; left: 0; right: 0; bottom: 0;
-                background: rgba(10,10,10,0.97);
+                background: rgba(8,13,10,0.97);
                 border-top: 1px solid var(--border-subtle);
                 padding: 32px;
                 gap: 4px;
@@ -1926,7 +2061,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 8px;
-            font-family: 'Space Grotesk', monospace;
+            font-family: var(--font-mono);
             font-size: 0.8rem;
             font-weight: 700;
             color: var(--accent);
@@ -1983,7 +2118,7 @@
         .kpi-tile:hover { border-color: rgba(0,255,135,0.2); box-shadow: 0 0 28px rgba(0,255,135,0.06), 0 8px 32px rgba(0,0,0,0.3); }
         .kpi-tile:hover::after { opacity: 1; }
         .kpi-value {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: 2.4rem; font-weight: 800; letter-spacing: -2px;
             color: var(--accent); line-height: 1; margin-bottom: 8px;
         }
@@ -1997,8 +2132,8 @@
         .kpi-info-btn {
             position: absolute; top: 14px; right: 14px;
             width: 26px; height: 26px; border-radius: 50%;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(160,176,162,0.065);
+            border: 1px solid rgba(160,176,162,0.12);
             color: var(--text-muted); font-size: 0.65rem;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; transition: all 0.2s ease;
@@ -2007,8 +2142,7 @@
         .kpi-tile.kpi-open .kpi-info-btn { background: rgba(0,255,135,0.18); border-color: rgba(0,255,135,0.5); color: var(--accent); }
         .kpi-panel {
             position: absolute; inset: 0;
-            background: rgba(7,7,7,0.97);
-            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            background: #070B09;
             padding: 18px 20px; opacity: 0; pointer-events: none;
             transition: opacity 0.25s ease; overflow-y: auto;
             border-radius: inherit; z-index: 5;
@@ -2030,7 +2164,7 @@
             display: flex; align-items: center; gap: 9px;
         }
         .kpi-conf-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
-        .kpi-conf-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+        .kpi-conf-bar { flex: 1; height: 3px; background: rgba(160,176,162,0.10); border-radius: 2px; overflow: hidden; }
         .kpi-conf-fill { height: 100%; background: var(--accent); border-radius: 2px; }
         .kpi-conf-pct { font-size: 0.6rem; color: var(--text-muted); white-space: nowrap; }
 
@@ -2049,11 +2183,11 @@
         .cat-mode-row { margin-bottom: 12px; }
         .cat-mode-row select { width: 100%; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; color: var(--text-primary); padding: 6px 10px; font-size: 0.72rem; cursor: pointer; }
         .catapult-outputs { flex: 1; min-width: 200px; }
-        #catapult-canvas { display: block; width: 100%; border-radius: 8px; background: #050505; border: 1px solid var(--border-subtle); }
+        #catapult-canvas { display: block; width: 100%; border-radius: 8px; background: #060A08; border: 1px solid var(--border-subtle); }
         .cat-metrics { margin-top: 10px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
         .cat-metric { background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 8px 10px; }
         .cat-metric-label { font-size: 0.57rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; }
-        .cat-metric-val { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--accent); letter-spacing: -0.5px; }
+        .cat-metric-val { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--accent); letter-spacing: -0.5px; }
 
         /* ===== VIEW TOGGLE ===== */
         .view-toggle-wrap { margin-bottom: 28px; }
@@ -2061,11 +2195,11 @@
             display: inline-flex;
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
-            border-radius: 100px;
+            border-radius: var(--r-btn);
             padding: 3px;
         }
         .view-btn {
-            padding: 8px 22px; border-radius: 100px;
+            padding: 8px 22px; border-radius: var(--r-btn);
             font-size: 0.78rem; font-weight: 600; letter-spacing: 0.3px;
             color: var(--text-muted); background: none; border: none;
             cursor: pointer; transition: all 0.25s ease;
@@ -2077,8 +2211,7 @@
         /* ===== PROJECT ACTION OVERLAY ===== */
         .pao {
             position: absolute; inset: 0;
-            background: rgba(7, 7, 7, 0.94);
-            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+            background: #070B09;
             opacity: 0; pointer-events: none;
             transition: opacity 0.26s ease;
             z-index: 10; padding: 20px 22px;
@@ -2089,7 +2222,7 @@
         .project-card.pao-open .pao { opacity: 1; pointer-events: auto; }
         .pao-skill-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
         .pao-skill-tag {
-            padding: 2px 9px; border-radius: 100px;
+            padding: 2px 9px; border-radius: var(--r-tag);
             font-size: 0.6rem; font-weight: 700; letter-spacing: 0.5px;
             border: 1px solid;
         }
@@ -2107,7 +2240,7 @@
             border-top: 1px solid rgba(255,255,255,0.07);
         }
         .pao-pill {
-            padding: 3px 9px; border-radius: 100px;
+            padding: 3px 9px; border-radius: var(--r-tag);
             font-size: 0.64rem; font-weight: 600;
             background: rgba(0,255,135,0.07); border: 1px solid rgba(0,255,135,0.2);
             color: var(--accent);
@@ -2119,12 +2252,11 @@
         .pao-info-btn {
             position: absolute; top: 10px; right: 10px; z-index: 15;
             width: 28px; height: 28px; border-radius: 50%;
-            background: rgba(10,10,10,0.75);
-            border: 1px solid rgba(255,255,255,0.14);
+            background: var(--bg-card-hover);
+            border: 1px solid rgba(160,176,162,0.16);
             color: rgba(255,255,255,0.45); font-size: 0.68rem;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; transition: all 0.2s ease;
-            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
         }
         .pao-info-btn:hover { background: rgba(0,255,135,0.15); border-color: rgba(0,255,135,0.4); color: var(--accent); }
         .project-card.pao-open .pao-info-btn { background: rgba(0,255,135,0.2); border-color: rgba(0,255,135,0.55); color: var(--accent); }
@@ -2188,7 +2320,7 @@
                 top: 50%; left: 50%;
                 width: 290px; height: 290px;
                 border-radius: 50%;
-                border: 1px solid rgba(255,255,255,0.03);
+                border: 1px solid rgba(160,176,162,0.045);
                 transform: translate(-50%, -50%);
             }
 
@@ -2232,7 +2364,7 @@
             }
 
             .skill-info-title {
-                font-family: 'Space Grotesk', sans-serif;
+                font-family: var(--font-display);
                 font-size: 1.1rem;
                 font-weight: 700;
                 color: var(--accent);
@@ -2263,9 +2395,9 @@
 
             .skill-job-tag {
                 padding: 6px 13px;
-                background: rgba(255,255,255,0.04);
-                border: 1px solid rgba(255,255,255,0.08);
-                border-radius: 100px;
+                background: rgba(160,176,162,0.055);
+                border: 1px solid rgba(160,176,162,0.10);
+                border-radius: var(--r-tag);
                 font-size: 0.72rem;
                 font-weight: 500;
                 color: var(--text-secondary);
@@ -2310,13 +2442,12 @@
         .sm-tooltip em { color: var(--text-muted); font-style: normal; font-size: 0.67rem; }
         .sm-lock-bubble {
             position: absolute;
-            background: rgba(8,8,8,0.93);
+            background: #070B09;
             border: 1px solid rgba(0,255,135,0.2);
             border-radius: 8px; padding: 8px 11px;
             font-size: 0.67rem; color: var(--text-secondary);
             max-width: 155px; line-height: 1.5;
             pointer-events: none; z-index: 18;
-            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             box-shadow: 0 4px 16px rgba(0,0,0,0.4);
             animation: bubbleIn 0.2s ease both;
         }
@@ -2352,8 +2483,8 @@
         .skill-cluster-name { font-size: 0.76rem; font-weight: 700; color: var(--text-primary); }
         .skill-cluster-projects { display: flex; flex-wrap: wrap; gap: 6px; }
         .skill-cluster-chip {
-            padding: 3px 11px; border-radius: 100px; font-size: 0.67rem;
-            color: var(--text-muted); background: rgba(255,255,255,0.04);
+            padding: 3px 11px; border-radius: var(--r-tag); font-size: 0.67rem;
+            color: var(--text-muted); background: rgba(160,176,162,0.055);
             border: 1px solid var(--border-subtle);
         }
 
@@ -2367,7 +2498,8 @@
         }
         @media (max-width: 480px) {
             .kpi-grid { grid-template-columns: 1fr; }
-            .hero-actions { display: none; }
+            .hero-actions { display: flex; flex-direction: column; align-items: stretch; gap: 10px; }
+            .hero-actions > a { width: 100%; justify-content: center; }
         }
 
         /* ===== SITE ASSISTANT ===== */
@@ -2403,13 +2535,13 @@
             display: flex; flex-direction: column; gap: 10px;
         }
         .sa-msg { font-size: 0.76rem; line-height: 1.55; padding: 9px 12px; border-radius: 10px; max-width: 90%; }
-        .sa-msg.bot { background: rgba(255,255,255,0.05); border: 1px solid var(--border-subtle); color: var(--text-secondary); align-self: flex-start; }
+        .sa-msg.bot { background: rgba(160,176,162,0.065); border: 1px solid var(--border-subtle); color: var(--text-secondary); align-self: flex-start; }
         .sa-msg.user { background: rgba(0,255,135,0.1); border: 1px solid rgba(0,255,135,0.2); color: var(--text-primary); align-self: flex-end; }
         #sa-suggestions { display: flex; flex-wrap: wrap; gap: 5px; padding: 8px 14px; border-top: 1px solid var(--border-subtle); }
-        .sa-chip { padding: 4px 10px; border-radius: 100px; font-size: 0.63rem; background: rgba(255,255,255,0.04); border: 1px solid var(--border-subtle); color: var(--text-muted); cursor: pointer; transition: all 0.15s ease; }
+        .sa-chip { padding: 4px 10px; border-radius: var(--r-btn); font-size: 0.63rem; background: rgba(160,176,162,0.055); border: 1px solid var(--border-subtle); color: var(--text-muted); cursor: pointer; transition: all 0.15s ease; }
         .sa-chip:hover { background: rgba(0,255,135,0.08); border-color: rgba(0,255,135,0.25); color: var(--accent); }
         #sa-input-row { display: flex; gap: 6px; padding: 10px 12px; border-top: 1px solid var(--border-subtle); }
-        #sa-input { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid var(--border-subtle); border-radius: 8px; color: var(--text-primary); padding: 7px 10px; font-size: 0.75rem; outline: none; }
+        #sa-input { flex: 1; background: rgba(160,176,162,0.055); border: 1px solid var(--border-subtle); border-radius: 8px; color: var(--text-primary); padding: 7px 10px; font-size: 0.75rem; outline: none; }
         #sa-input:focus { border-color: rgba(0,255,135,0.3); }
         #sa-send { background: var(--accent); border: none; border-radius: 8px; color: #000; width: 32px; height: 32px; cursor: pointer; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.15s ease; }
         #sa-send:hover { transform: scale(1.08); }
@@ -2438,29 +2570,29 @@
         /* ===== AI COUNCIL SECTION ===== */
         .ai-council-card {
             background: linear-gradient(160deg, rgba(8,10,30,0.95), rgba(10,10,18,0.97));
-            border: 1px solid rgba(74,158,255,0.18);
+            border: 1px solid rgba(126,142,155,0.18);
             border-radius: 20px;
             overflow: hidden;
             margin-bottom: 48px;
             transition: all 0.5s var(--transition-smooth);
         }
         .ai-council-card:hover {
-            border-color: rgba(74,158,255,0.35);
-            box-shadow: 0 24px 80px rgba(74,158,255,0.07);
+            border-color: rgba(126,142,155,0.35);
+            box-shadow: 0 24px 80px rgba(126,142,155,0.07);
         }
         .ai-council-header {
             padding: 44px 52px 36px;
-            background: linear-gradient(135deg, rgba(74,158,255,0.07), rgba(168,85,247,0.04));
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: linear-gradient(135deg, rgba(126,142,155,0.07), rgba(176,106,62,0.04));
+            border-bottom: 1px solid rgba(160,176,162,0.065);
         }
         .ai-council-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             padding: 5px 15px;
-            background: rgba(74,158,255,0.1);
-            border: 1px solid rgba(74,158,255,0.25);
-            border-radius: 100px;
+            background: rgba(126,142,155,0.1);
+            border: 1px solid rgba(126,142,155,0.25);
+            border-radius: var(--r-tag);
             color: var(--accent-blue);
             font-size: 0.7rem;
             font-weight: 700;
@@ -2469,16 +2601,13 @@
             margin-bottom: 22px;
         }
         .ai-council-title {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: clamp(1.5rem, 2.6vw, 2.3rem);
             font-weight: 800;
             letter-spacing: -1px;
             line-height: 1.15;
             margin-bottom: 14px;
-            background: linear-gradient(135deg, #ffffff 40%, var(--accent-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text-primary);
         }
         .ai-council-subtitle {
             font-size: 0.95rem;
@@ -2500,7 +2629,7 @@
         .ai-council-diagram-wrap {
             margin: 36px 0 32px;
             background: rgba(0,0,0,0.35);
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(160,176,162,0.065);
             border-radius: 16px;
             padding: 36px 24px 28px;
             text-align: center;
@@ -2538,7 +2667,7 @@
             text-transform: uppercase;
         }
         .ai-council-section-title {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: 0.78rem;
             font-weight: 700;
             letter-spacing: 2.5px;
@@ -2573,7 +2702,7 @@
         }
         .agent-table td {
             padding: 14px 16px;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(160,176,162,0.045);
             color: var(--text-secondary);
             vertical-align: top;
             line-height: 1.6;
@@ -2584,7 +2713,7 @@
             display: inline-flex;
             align-items: center;
             gap: 7px;
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-weight: 700;
             font-size: 0.83rem;
             color: var(--text-primary);
@@ -2596,9 +2725,9 @@
             flex-shrink: 0;
         }
         .dot-green { background: var(--accent); box-shadow: 0 0 6px rgba(0,255,135,0.5); }
-        .dot-blue { background: var(--accent-blue); box-shadow: 0 0 6px rgba(74,158,255,0.5); }
-        .dot-purple { background: var(--accent-purple); box-shadow: 0 0 6px rgba(168,85,247,0.5); }
-        .dot-warm { background: var(--accent-warm); box-shadow: 0 0 6px rgba(255,107,53,0.5); }
+        .dot-blue { background: var(--accent-blue); box-shadow: 0 0 6px rgba(126,142,155,0.5); }
+        .dot-purple { background: var(--accent-purple); box-shadow: 0 0 6px rgba(176,106,62,0.5); }
+        .dot-warm { background: var(--accent-warm); box-shadow: 0 0 6px rgba(176,106,62,0.5); }
         .dot-cyan { background: #00d4ff; box-shadow: 0 0 6px rgba(0,212,255,0.5); }
         .dot-pink { background: #ff4d8d; box-shadow: 0 0 6px rgba(255,77,141,0.5); }
         .ai-council-2col {
@@ -2609,12 +2738,12 @@
         }
         .council-block {
             background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid rgba(160,176,162,0.075);
             border-radius: 12px;
             padding: 22px 24px;
         }
         .council-block-title {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: 0.78rem;
             font-weight: 700;
             letter-spacing: 1.5px;
@@ -2629,7 +2758,7 @@
         }
         .council-code {
             background: rgba(0,0,0,0.55);
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid rgba(160,176,162,0.075);
             border-left: 3px solid var(--accent-blue);
             border-radius: 8px;
             padding: 16px 20px;
@@ -2652,15 +2781,15 @@
             margin: 8px 0;
         }
         .gov-pill {
-            background: rgba(168,85,247,0.05);
-            border: 1px solid rgba(168,85,247,0.15);
+            background: rgba(176,106,62,0.05);
+            border: 1px solid rgba(176,106,62,0.15);
             border-radius: 12px;
             padding: 20px 16px;
             text-align: center;
         }
         .gov-pill-icon { font-size: 1.5rem; margin-bottom: 10px; }
         .gov-pill-label {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: 0.75rem;
             font-weight: 700;
             color: var(--accent-purple);
@@ -2679,25 +2808,25 @@
         }
         .skill-tag {
             padding: 6px 14px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 100px;
+            background: rgba(160,176,162,0.055);
+            border: 1px solid rgba(160,176,162,0.10);
+            border-radius: var(--r-tag);
             font-size: 0.75rem;
             font-weight: 600;
             color: var(--text-secondary);
         }
         .skill-tag.g { background: rgba(0,255,135,0.06); border-color: rgba(0,255,135,0.2); color: var(--accent); }
-        .skill-tag.b { background: rgba(74,158,255,0.06); border-color: rgba(74,158,255,0.2); color: var(--accent-blue); }
-        .skill-tag.p { background: rgba(168,85,247,0.06); border-color: rgba(168,85,247,0.2); color: var(--accent-purple); }
+        .skill-tag.b { background: rgba(126,142,155,0.06); border-color: rgba(126,142,155,0.2); color: var(--accent-blue); }
+        .skill-tag.p { background: rgba(176,106,62,0.06); border-color: rgba(176,106,62,0.2); color: var(--accent-purple); }
         .constraint-card {
-            background: rgba(255,107,53,0.04);
-            border: 1px solid rgba(255,107,53,0.14);
+            background: rgba(176,106,62,0.04);
+            border: 1px solid rgba(176,106,62,0.14);
             border-radius: 12px;
             padding: 20px 24px;
             margin: 12px 0;
         }
         .constraint-title {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-weight: 700;
             font-size: 0.83rem;
             color: var(--accent-warm);
@@ -2722,23 +2851,23 @@
             align-items: center;
             gap: 6px;
             padding: 6px 13px;
-            border-radius: 100px;
+            border-radius: var(--r-tag);
             font-size: 0.72rem;
             font-weight: 600;
         }
         .sbadge.live { background: rgba(0,255,135,0.07); border: 1px solid rgba(0,255,135,0.22); color: var(--accent); }
-        .sbadge.staged { background: rgba(74,158,255,0.07); border: 1px solid rgba(74,158,255,0.22); color: var(--accent-blue); }
-        .sbadge.planned { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.09); color: var(--text-muted); }
+        .sbadge.staged { background: rgba(126,142,155,0.07); border: 1px solid rgba(126,142,155,0.22); color: var(--accent-blue); }
+        .sbadge.planned { background: rgba(160,176,162,0.045); border: 1px solid rgba(255,255,255,0.09); color: var(--text-muted); }
         .sbadge .dot-sm { width: 5px; height: 5px; border-radius: 50%; }
         .recruiting-callout {
-            background: linear-gradient(135deg, rgba(0,255,135,0.04), rgba(74,158,255,0.03));
+            background: linear-gradient(135deg, rgba(0,255,135,0.04), rgba(126,142,155,0.03));
             border: 1px solid rgba(0,255,135,0.14);
             border-radius: 16px;
             padding: 30px 36px;
             margin-top: 44px;
         }
         .recruiting-title {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: 0.92rem;
             font-weight: 700;
             color: var(--accent);
@@ -2775,9 +2904,9 @@
             transition: border-color 0.2s ease, background 0.2s ease;
             user-select: none;
         }
-        .agent-card:hover { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.12); }
-        .agent-card.open { border-color: rgba(74,158,255,0.22); background: rgba(74,158,255,0.02); }
-        .agent-card.hub-card.open { border-color: rgba(240,160,80,0.25); background: rgba(240,160,80,0.02); }
+        .agent-card:hover { background: rgba(160,176,162,0.045); border-color: rgba(160,176,162,0.14); }
+        .agent-card.open { border-color: rgba(126,142,155,0.22); background: rgba(126,142,155,0.02); }
+        .agent-card.hub-card.open { border-color: rgba(199,154,79,0.25); background: rgba(199,154,79,0.02); }
         .agent-card.advisor-card.open { border-color: rgba(0,200,150,0.22); background: rgba(0,200,150,0.02); }
         .agent-card-header {
             display: flex;
@@ -2786,7 +2915,7 @@
             padding: 13px 18px;
         }
         .agent-card-name {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-weight: 700;
             font-size: 0.9rem;
             color: var(--text-primary);
@@ -2798,11 +2927,11 @@
             letter-spacing: 1.5px;
             text-transform: uppercase;
             padding: 2px 9px;
-            border-radius: 100px;
+            border-radius: var(--r-tag);
         }
-        .type-hub { background: rgba(240,160,80,0.1); border: 1px solid rgba(240,160,80,0.25); color: #f0a050; }
+        .type-hub { background: rgba(199,154,79,0.1); border: 1px solid rgba(199,154,79,0.25); color: #C79A4F; }
         .type-advisor { background: rgba(0,200,150,0.08); border: 1px solid rgba(0,200,150,0.22); color: #00c896; }
-        .type-exec { background: rgba(74,158,255,0.08); border: 1px solid rgba(74,158,255,0.22); color: #6ab0ff; }
+        .type-exec { background: rgba(126,142,155,0.08); border: 1px solid rgba(126,142,155,0.22); color: #8EA0AD; }
         .agent-card-summary {
             flex: 1;
             font-size: 0.81rem;
@@ -2819,14 +2948,14 @@
         .agent-card-detail {
             display: none;
             padding: 4px 18px 16px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid rgba(160,176,162,0.065);
         }
         .agent-detail-row {
             display: grid;
             grid-template-columns: 110px 1fr;
             gap: 10px;
             padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(160,176,162,0.055);
             font-size: 0.82rem;
         }
         .agent-detail-row:last-child { border-bottom: none; }
@@ -2842,9 +2971,9 @@
         .agent-skill-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
         .agent-skill-tag {
             padding: 3px 10px;
-            background: rgba(255,255,255,0.04);
+            background: rgba(160,176,162,0.055);
             border: 1px solid rgba(255,255,255,0.07);
-            border-radius: 100px;
+            border-radius: var(--r-tag);
             font-size: 0.7rem;
             font-weight: 600;
             color: var(--text-muted);
@@ -2863,7 +2992,7 @@
             padding: 20px 22px;
         }
         .security-block-title {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-weight: 700;
             font-size: 0.8rem;
             letter-spacing: 1px;
@@ -2968,6 +3097,70 @@
             .agent-detail-row { grid-template-columns: 1fr; gap: 4px; }
             .agent-detail-label { margin-bottom: 2px; }
         }
+        /* =========================================================
+           HERO RESPONSIVE (last in the sheet on purpose - the older
+           .hero / .hero-title mobile rules above would otherwise win)
+           ========================================================= */
+
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                max-width: 640px;
+            }
+            .hero-col-side { order: 2; }
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 96px 22px 60px; min-height: auto; }
+            /* base .hero-title goes column here; keep it flush left with the rest */
+            .hero-col-main .hero-title { align-items: flex-start; }
+        }
+
+        @media (max-width: 640px) {
+            .hero { padding: 88px 18px 56px; }
+            .hero-grid { gap: 24px; }
+            .hero-col-main .hero-photo-wrapper {
+                width: 88px; height: 88px; margin-bottom: 16px;
+            }
+            .hero-col-main .hero-subtitle { font-size: 0.95rem; line-height: 1.65; }
+            .hero-spec { padding: 15px 16px; }
+            .hero-spec-row { grid-template-columns: 50px 1fr; gap: 10px; padding: 5px 0; }
+            .hero-spec-val { font-size: 0.8rem; }
+            .hero-stack span { font-size: 0.62rem; padding: 3px 7px; }
+            .hero-proof { margin-top: 24px; padding-top: 16px; }
+            .hero-proof-item { flex: 1 1 auto; }
+            /* the one CTA must never be hidden on a phone */
+            .hero-actions { display: flex !important; }
+        }
+
+        /* proof strip stops being a row on the narrowest phones */
+        @media (max-width: 420px) {
+            .hero-proof { flex-direction: column; gap: 0; }
+            .hero-proof-item {
+                width: 100%;
+                border-right: 0; margin-right: 0; padding-right: 0;
+                padding-bottom: 10px; margin-bottom: 10px;
+                border-bottom: 1px solid var(--border-subtle);
+            }
+            .hero-proof-item:last-child {
+                border-bottom: 0; padding-bottom: 0; margin-bottom: 0;
+            }
+        }
+
+        /* landscape phones: don't force a full viewport of hero */
+        @media (max-height: 560px) and (orientation: landscape) {
+            .hero { min-height: auto; padding-top: 92px; padding-bottom: 48px; }
+            .hero-scroll { display: none; }
+        }
+
+        /* tap targets + no accidental horizontal scroll */
+        @media (max-width: 768px) {
+            body { overflow-x: hidden; }
+            .hero-actions > a { min-height: 44px; align-items: center; }
+            .nav-menu.open .nav-link { min-height: 44px; }
+        }
+
     </style>
 </head>
 <body>
@@ -3018,14 +3211,16 @@
             <div class="aurora-orb aurora-orb-3"></div>
         </div>
         <canvas class="heading-matrix-bg" id="hero-matrix-bg"></canvas>
-        <div class="hero-photo-wrapper" style="animation: fadeInUp 0.6s var(--transition-smooth) both;">
-            <img src="images/ABOUTME.jpg" alt="Tyler Vincent" class="hero-photo" />
-        </div>
-        <div class="hero-badge">
-            <span class="dot"></span>
-            Open to opportunities
-        </div>
-        <h1 class="hero-name">Hi, I'm Tyler Vincent.</h1>
+        <div class="hero-grid">
+            <div class="hero-col hero-col-main">
+                <div class="hero-photo-wrapper" style="animation: fadeInUp 0.6s var(--transition-smooth) both;">
+                    <img src="images/ABOUTME.jpg" alt="Tyler Vincent" class="hero-photo" />
+                </div>
+                <div class="hero-badge">
+                    <span class="dot"></span>
+                    Open to opportunities
+                </div>
+                <h1 class="hero-name">Hi, I'm Tyler Vincent.</h1>
         <p class="hero-title">
             <span class="line">Analytics Engineering.</span>
             <span class="sep">/</span>
@@ -3038,6 +3233,61 @@
         </p>
         <div class="hero-actions" style="animation: fadeInUp 0.8s 0.35s var(--transition-smooth) both;">
             <a href="#work" class="btn-glass">See My Work <i class="fas fa-arrow-down"></i></a>
+                    <a href="#contact" class="btn-secondary">Get in touch</a>
+                </div>
+
+                <div class="hero-proof">
+                    <div class="hero-proof-item">
+                        <div class="hero-proof-num">100M+</div>
+                        <div class="hero-proof-label">Records / day</div>
+                    </div>
+                    <div class="hero-proof-item">
+                        <div class="hero-proof-num">65+</div>
+                        <div class="hero-proof-label">Products shipped</div>
+                    </div>
+                    <div class="hero-proof-item">
+                        <div class="hero-proof-num">6</div>
+                        <div class="hero-proof-label">Regions</div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="hero-col hero-col-side">
+                <div class="hero-spec">
+                    <div class="hero-spec-head">
+                        <span>Current</span>
+                        <span>Los Angeles, CA</span>
+                    </div>
+                    <div class="hero-spec-row">
+                        <div class="hero-spec-key">Role</div>
+                        <div class="hero-spec-val">Sr. Data &amp; Analytics Engineer, <span class="hl">Takeda</span></div>
+                    </div>
+                    <div class="hero-spec-row">
+                        <div class="hero-spec-key">Stack</div>
+                        <div class="hero-spec-val">
+                            <div class="hero-stack">
+                                <span>SQL</span>
+                                <span>Databricks</span>
+                                <span>Python</span>
+                                <span>JavaScript</span>
+                                <span>HTML / CSS</span>
+                                <span class="alt">Delta Lake</span>
+                                <span class="alt">Power BI</span>
+                                <span class="alt">DAX</span>
+                                <span class="alt">Git</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-spec-row">
+                        <div class="hero-spec-key">Method</div>
+                        <div class="hero-spec-val">Lean Six Sigma Black Belt</div>
+                    </div>
+                    <div class="hero-spec-row">
+                        <div class="hero-spec-key">Domains</div>
+                        <div class="hero-spec-val">Manufacturing, AI, defense, aerospace</div>
+                    </div>
+                </div>
+            </aside>
         </div>
         <div class="hero-scroll">
             <span>Scroll</span>
@@ -3168,7 +3418,7 @@
                 <div class="card-info">
                     <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
                         <span class="card-tag warm">Events Platform</span>
-                        <span style="display:inline-block;padding:3px 10px;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;font-size:0.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#34d399;">Live</span>
+                        <span style="display:inline-block;padding:3px 10px;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius: var(--r-pill);font-size:0.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#34d399;">Live</span>
                     </div>
                     <h3>Hermes: LA Events Scout &amp; Newsletter</h3>
                     <div class="card-company">Personal Project &middot; Next.js, Supabase, Python</div>
@@ -3194,7 +3444,7 @@
                 <div class="card-info">
                     <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
                         <span class="card-tag">Analytics</span>
-                        <span style="display:inline-block;padding:3px 10px;background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.25);border-radius:100px;font-size:0.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);">Current</span>
+                        <span style="display:inline-block;padding:3px 10px;background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.25);border-radius: var(--r-pill);font-size:0.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);">Current</span>
                     </div>
                     <h3>Sr. Data and Analytics Engineer</h3>
                     <div class="card-company">Takeda Pharmaceuticals - Los Angeles, CA</div>
@@ -3204,7 +3454,7 @@
                         <span><strong>Stack</strong>SQL, Databricks, Delta, Power BI, DAX</span>
                         <span><strong>Impact</strong>15M+ modeled rows and 100M+ source records processed daily</span>
                     </div>
-                    <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06);">
+                    <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(160,176,162,0.075);">
                         <div style="font-size:0.65rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:10px;"><a href="https://github.com/tylerv11/data-engineering-pipelines" target="_blank" style="color:rgba(255,255,255,0.3);text-decoration:none;">Pipeline Samples <i class="fas fa-arrow-right" style="font-size:0.6rem;"></i></a></div>
                         <div style="display:flex;flex-direction:column;gap:8px;">
                             <a href="https://github.com/tylerv11/data-engineering-pipelines/tree/main/workforce-qualification-intelligence" class="card-link" target="_blank" style="margin-top:0;font-size:0.8rem;">Workforce Qualification Intelligence <i class="fas fa-arrow-right"></i></a>
@@ -3227,7 +3477,7 @@
                 <div class="card-info">
                     <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
                         <span class="card-tag purple">Investing Intelligence</span>
-                        <span style="display:inline-block;padding:3px 10px;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;font-size:0.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#34d399;">Live</span>
+                        <span style="display:inline-block;padding:3px 10px;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius: var(--r-pill);font-size:0.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#34d399;">Live</span>
                     </div>
                     <h3>Plutus Markets: Investing Intelligence</h3>
                     <div class="card-company">Personal Project &middot; Next.js, Supabase, Python</div>
@@ -3503,14 +3753,14 @@
                         </defs>
 
                         <!-- Tyler → Zeus command arrow -->
-                        <line x1="350" y1="73" x2="355" y2="120" stroke="rgba(168,85,247,0.55)" stroke-width="2" marker-end="url(#tyler-arrow)"/>
+                        <line x1="350" y1="73" x2="355" y2="120" stroke="rgba(176,106,62,0.55)" stroke-width="2" marker-end="url(#tyler-arrow)"/>
 
                         <!-- Zeus → Execution agents (command flow, solid) -->
-                        <line x1="340" y1="182" x2="83" y2="330" stroke="rgba(200,130,50,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
-                        <line x1="348" y1="182" x2="216" y2="330" stroke="rgba(200,130,50,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
-                        <line x1="360" y1="182" x2="350" y2="330" stroke="rgba(200,130,50,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
-                        <line x1="372" y1="182" x2="487" y2="330" stroke="rgba(200,130,50,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
-                        <line x1="380" y1="182" x2="617" y2="330" stroke="rgba(200,130,50,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
+                        <line x1="340" y1="182" x2="83" y2="330" stroke="rgba(176,106,62,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
+                        <line x1="348" y1="182" x2="216" y2="330" stroke="rgba(176,106,62,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
+                        <line x1="360" y1="182" x2="350" y2="330" stroke="rgba(176,106,62,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
+                        <line x1="372" y1="182" x2="487" y2="330" stroke="rgba(176,106,62,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
+                        <line x1="380" y1="182" x2="617" y2="330" stroke="rgba(176,106,62,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
 
                         <!-- Advisor dashed lines (advisory consultation → Zeus) -->
                         <line x1="171" y1="129" x2="253" y2="148" stroke="rgba(0,190,140,0.5)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#adv-arrow)"/>
@@ -3518,64 +3768,64 @@
                         <line x1="171" y1="261" x2="253" y2="163" stroke="rgba(0,190,140,0.5)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#adv-arrow)"/>
 
                         <!-- Tyler box (purple) -->
-                        <rect x="258" y="18" width="184" height="55" rx="10" fill="rgba(80,50,170,0.38)" stroke="rgba(168,85,247,0.65)" stroke-width="1.5"/>
-                        <text x="350" y="43" text-anchor="middle" font-size="17" font-weight="800" fill="#d4b0ff" font-family="Space Grotesk, sans-serif">Tyler</text>
-                        <text x="350" y="62" text-anchor="middle" font-size="10.5" fill="rgba(200,175,255,0.65)" font-family="Inter, sans-serif">Vision + final decisions</text>
+                        <rect x="258" y="18" width="184" height="55" rx="10" fill="rgba(80,50,170,0.38)" stroke="rgba(176,106,62,0.65)" stroke-width="1.5"/>
+                        <text x="350" y="43" text-anchor="middle" font-size="17" font-weight="800" fill="#D8B072" font-family="IBM Plex Sans, sans-serif">Tyler</text>
+                        <text x="350" y="62" text-anchor="middle" font-size="10.5" fill="rgba(199,154,79,0.65)" font-family="IBM Plex Sans, sans-serif">Vision + final decisions</text>
 
                         <!-- Zeus box (amber/warm) -->
-                        <rect x="252" y="120" width="216" height="62" rx="10" fill="rgba(110,60,10,0.5)" stroke="rgba(220,130,45,0.7)" stroke-width="1.5"/>
-                        <text x="360" y="146" text-anchor="middle" font-size="17" font-weight="800" fill="#f0a050" font-family="Space Grotesk, sans-serif">Zeus &#x26A1;</text>
-                        <text x="360" y="166" text-anchor="middle" font-size="10" fill="rgba(220,155,70,0.7)" font-family="Inter, sans-serif">Hub &nbsp;&middot;&nbsp; routes &nbsp;&middot;&nbsp; owns task queue</text>
+                        <rect x="252" y="120" width="216" height="62" rx="10" fill="rgba(110,60,10,0.5)" stroke="rgba(176,106,62,0.7)" stroke-width="1.5"/>
+                        <text x="360" y="146" text-anchor="middle" font-size="17" font-weight="800" fill="#C79A4F" font-family="IBM Plex Sans, sans-serif">Zeus &#x26A1;</text>
+                        <text x="360" y="166" text-anchor="middle" font-size="10" fill="rgba(199,154,79,0.7)" font-family="IBM Plex Sans, sans-serif">Hub &nbsp;&middot;&nbsp; routes &nbsp;&middot;&nbsp; owns task queue</text>
 
                         <!-- Advisors label -->
-                        <text x="90" y="94" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.28)" font-family="Inter, sans-serif" letter-spacing="1.5" font-style="italic">Advisors</text>
+                        <text x="90" y="94" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.28)" font-family="IBM Plex Sans, sans-serif" letter-spacing="1.5" font-style="italic">Advisors</text>
 
                         <!-- Prometheus box (teal) -->
                         <rect x="14" y="104" width="157" height="50" rx="8" fill="rgba(12,65,52,0.65)" stroke="rgba(0,175,125,0.6)" stroke-width="1.5"/>
-                        <text x="92" y="127" text-anchor="middle" font-size="13.5" font-weight="700" fill="#00c896" font-family="Space Grotesk, sans-serif">Prometheus</text>
-                        <text x="92" y="144" text-anchor="middle" font-size="9.5" fill="rgba(0,195,145,0.6)" font-family="Inter, sans-serif">Memory + strategy</text>
+                        <text x="92" y="127" text-anchor="middle" font-size="13.5" font-weight="700" fill="#00c896" font-family="IBM Plex Sans, sans-serif">Prometheus</text>
+                        <text x="92" y="144" text-anchor="middle" font-size="9.5" fill="rgba(0,195,145,0.6)" font-family="IBM Plex Sans, sans-serif">Memory + strategy</text>
 
                         <!-- Argus box (teal) -->
                         <rect x="14" y="170" width="157" height="50" rx="8" fill="rgba(12,65,52,0.65)" stroke="rgba(0,175,125,0.6)" stroke-width="1.5"/>
-                        <text x="92" y="193" text-anchor="middle" font-size="13.5" font-weight="700" fill="#00c896" font-family="Space Grotesk, sans-serif">Argus</text>
-                        <text x="92" y="210" text-anchor="middle" font-size="9.5" fill="rgba(0,195,145,0.6)" font-family="Inter, sans-serif">Security + audit</text>
+                        <text x="92" y="193" text-anchor="middle" font-size="13.5" font-weight="700" fill="#00c896" font-family="IBM Plex Sans, sans-serif">Argus</text>
+                        <text x="92" y="210" text-anchor="middle" font-size="9.5" fill="rgba(0,195,145,0.6)" font-family="IBM Plex Sans, sans-serif">Security + audit</text>
 
                         <!-- Hestia box (teal) -->
                         <rect x="14" y="236" width="157" height="50" rx="8" fill="rgba(12,65,52,0.65)" stroke="rgba(0,175,125,0.6)" stroke-width="1.5"/>
-                        <text x="92" y="259" text-anchor="middle" font-size="13.5" font-weight="700" fill="#00c896" font-family="Space Grotesk, sans-serif">Hestia</text>
-                        <text x="92" y="276" text-anchor="middle" font-size="9.5" fill="rgba(0,195,145,0.6)" font-family="Inter, sans-serif">System health</text>
+                        <text x="92" y="259" text-anchor="middle" font-size="13.5" font-weight="700" fill="#00c896" font-family="IBM Plex Sans, sans-serif">Hestia</text>
+                        <text x="92" y="276" text-anchor="middle" font-size="9.5" fill="rgba(0,195,145,0.6)" font-family="IBM Plex Sans, sans-serif">System health</text>
 
                         <!-- Execution agents row (blue) -->
                         <!-- Atlas -->
-                        <rect x="22" y="330" width="122" height="58" rx="8" fill="rgba(12,35,85,0.7)" stroke="rgba(55,115,215,0.6)" stroke-width="1.5"/>
-                        <text x="83" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#6ab0ff" font-family="Space Grotesk, sans-serif">Atlas</text>
-                        <text x="83" y="372" text-anchor="middle" font-size="9.5" fill="rgba(100,165,255,0.6)" font-family="Inter, sans-serif">Job search</text>
+                        <rect x="22" y="330" width="122" height="58" rx="8" fill="rgba(18,30,34,0.7)" stroke="rgba(94,116,130,0.6)" stroke-width="1.5"/>
+                        <text x="83" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Atlas</text>
+                        <text x="83" y="372" text-anchor="middle" font-size="9.5" fill="rgba(142,160,173,0.6)" font-family="IBM Plex Sans, sans-serif">Job search</text>
 
                         <!-- Muse -->
-                        <rect x="155" y="330" width="122" height="58" rx="8" fill="rgba(12,35,85,0.7)" stroke="rgba(55,115,215,0.6)" stroke-width="1.5"/>
-                        <text x="216" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#6ab0ff" font-family="Space Grotesk, sans-serif">Muse</text>
-                        <text x="216" y="372" text-anchor="middle" font-size="9.5" fill="rgba(100,165,255,0.6)" font-family="Inter, sans-serif">Creative</text>
+                        <rect x="155" y="330" width="122" height="58" rx="8" fill="rgba(18,30,34,0.7)" stroke="rgba(94,116,130,0.6)" stroke-width="1.5"/>
+                        <text x="216" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Muse</text>
+                        <text x="216" y="372" text-anchor="middle" font-size="9.5" fill="rgba(142,160,173,0.6)" font-family="IBM Plex Sans, sans-serif">Creative</text>
 
                         <!-- Hermes -->
-                        <rect x="289" y="330" width="122" height="58" rx="8" fill="rgba(12,35,85,0.7)" stroke="rgba(55,115,215,0.6)" stroke-width="1.5"/>
-                        <text x="350" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#6ab0ff" font-family="Space Grotesk, sans-serif">Hermes</text>
-                        <text x="350" y="372" text-anchor="middle" font-size="9.5" fill="rgba(100,165,255,0.6)" font-family="Inter, sans-serif">Research</text>
+                        <rect x="289" y="330" width="122" height="58" rx="8" fill="rgba(18,30,34,0.7)" stroke="rgba(94,116,130,0.6)" stroke-width="1.5"/>
+                        <text x="350" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Hermes</text>
+                        <text x="350" y="372" text-anchor="middle" font-size="9.5" fill="rgba(142,160,173,0.6)" font-family="IBM Plex Sans, sans-serif">Research</text>
 
                         <!-- Hephaestus -->
-                        <rect x="423" y="330" width="128" height="58" rx="8" fill="rgba(12,35,85,0.7)" stroke="rgba(55,115,215,0.6)" stroke-width="1.5"/>
-                        <text x="487" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#6ab0ff" font-family="Space Grotesk, sans-serif">Hephaestus</text>
-                        <text x="487" y="372" text-anchor="middle" font-size="9.5" fill="rgba(100,165,255,0.6)" font-family="Inter, sans-serif">Automation</text>
+                        <rect x="423" y="330" width="128" height="58" rx="8" fill="rgba(18,30,34,0.7)" stroke="rgba(94,116,130,0.6)" stroke-width="1.5"/>
+                        <text x="487" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Hephaestus</text>
+                        <text x="487" y="372" text-anchor="middle" font-size="9.5" fill="rgba(142,160,173,0.6)" font-family="IBM Plex Sans, sans-serif">Automation</text>
 
                         <!-- Plutus -->
-                        <rect x="563" y="330" width="122" height="58" rx="8" fill="rgba(12,35,85,0.7)" stroke="rgba(55,115,215,0.6)" stroke-width="1.5"/>
-                        <text x="624" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#6ab0ff" font-family="Space Grotesk, sans-serif">Plutus</text>
-                        <text x="624" y="372" text-anchor="middle" font-size="9.5" fill="rgba(100,165,255,0.6)" font-family="Inter, sans-serif">Markets</text>
+                        <rect x="563" y="330" width="122" height="58" rx="8" fill="rgba(18,30,34,0.7)" stroke="rgba(94,116,130,0.6)" stroke-width="1.5"/>
+                        <text x="624" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Plutus</text>
+                        <text x="624" y="372" text-anchor="middle" font-size="9.5" fill="rgba(142,160,173,0.6)" font-family="IBM Plex Sans, sans-serif">Markets</text>
 
                         <!-- Legend -->
-                        <line x1="22" y1="416" x2="50" y2="416" stroke="rgba(200,130,50,0.7)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
-                        <text x="64" y="420" font-size="9.5" fill="rgba(255,255,255,0.38)" font-family="Inter, sans-serif">Command flow</text>
+                        <line x1="22" y1="416" x2="50" y2="416" stroke="rgba(176,106,62,0.7)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
+                        <text x="64" y="420" font-size="9.5" fill="rgba(255,255,255,0.38)" font-family="IBM Plex Sans, sans-serif">Command flow</text>
                         <line x1="190" y1="416" x2="218" y2="416" stroke="rgba(0,190,140,0.65)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#adv-arrow)"/>
-                        <text x="232" y="420" font-size="9.5" fill="rgba(255,255,255,0.38)" font-family="Inter, sans-serif">Advisory consultation</text>
+                        <text x="232" y="420" font-size="9.5" fill="rgba(255,255,255,0.38)" font-family="IBM Plex Sans, sans-serif">Advisory consultation</text>
                     </svg>
                     <p class="ai-council-diagram-caption">Agents never communicate directly &mdash; all routing goes through Zeus</p>
                 </div>
@@ -3599,78 +3849,78 @@
                     <svg viewBox="0 0 700 295" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MCP architecture diagram showing agents connecting through the Model Context Protocol to tool servers including file system, shell, memory, Discord, web search, and external APIs">
                         <defs>
                             <marker id="mcp-down" markerWidth="7" markerHeight="5" refX="3.5" refY="5" orient="auto">
-                                <polygon points="0 0, 7 0, 3.5 5" fill="rgba(74,158,255,0.5)"/>
+                                <polygon points="0 0, 7 0, 3.5 5" fill="rgba(126,142,155,0.5)"/>
                             </marker>
                         </defs>
                         <!-- Section labels -->
-                        <text x="12" y="55" font-size="8.5" fill="rgba(255,255,255,0.25)" font-family="Inter,sans-serif" letter-spacing="1" font-weight="700" text-anchor="start">AGENTS</text>
-                        <text x="12" y="128" font-size="8.5" fill="rgba(255,255,255,0.25)" font-family="Inter,sans-serif" letter-spacing="1" font-weight="700" text-anchor="start">PROTOCOL</text>
-                        <text x="12" y="210" font-size="8.5" fill="rgba(255,255,255,0.25)" font-family="Inter,sans-serif" letter-spacing="1" font-weight="700" text-anchor="start">TOOLS</text>
+                        <text x="12" y="55" font-size="8.5" fill="rgba(255,255,255,0.25)" font-family="IBM Plex Sans, sans-serif" letter-spacing="1" font-weight="700" text-anchor="start">AGENTS</text>
+                        <text x="12" y="128" font-size="8.5" fill="rgba(255,255,255,0.25)" font-family="IBM Plex Sans, sans-serif" letter-spacing="1" font-weight="700" text-anchor="start">PROTOCOL</text>
+                        <text x="12" y="210" font-size="8.5" fill="rgba(255,255,255,0.25)" font-family="IBM Plex Sans, sans-serif" letter-spacing="1" font-weight="700" text-anchor="start">TOOLS</text>
 
                         <!-- Agent boxes (3 representative) -->
-                        <rect x="72" y="16" width="148" height="52" rx="8" fill="rgba(110,60,10,0.4)" stroke="rgba(220,130,45,0.55)" stroke-width="1.5"/>
-                        <text x="146" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#f0a050" font-family="Space Grotesk,sans-serif">Zeus</text>
-                        <text x="146" y="55" text-anchor="middle" font-size="9" fill="rgba(220,155,70,0.65)" font-family="Inter,sans-serif">Orchestrator (Claude API)</text>
+                        <rect x="72" y="16" width="148" height="52" rx="8" fill="rgba(110,60,10,0.4)" stroke="rgba(176,106,62,0.55)" stroke-width="1.5"/>
+                        <text x="146" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#C79A4F" font-family="IBM Plex Sans, sans-serif">Zeus</text>
+                        <text x="146" y="55" text-anchor="middle" font-size="9" fill="rgba(199,154,79,0.65)" font-family="IBM Plex Sans, sans-serif">Orchestrator (Claude API)</text>
 
-                        <rect x="276" y="16" width="148" height="52" rx="8" fill="rgba(12,35,85,0.65)" stroke="rgba(55,115,215,0.55)" stroke-width="1.5"/>
-                        <text x="350" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#6ab0ff" font-family="Space Grotesk,sans-serif">Hermes / Hephaestus</text>
-                        <text x="350" y="55" text-anchor="middle" font-size="9" fill="rgba(100,165,255,0.65)" font-family="Inter,sans-serif">Execution agents (local + API)</text>
+                        <rect x="276" y="16" width="148" height="52" rx="8" fill="rgba(18,30,34,0.65)" stroke="rgba(94,116,130,0.55)" stroke-width="1.5"/>
+                        <text x="350" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Hermes / Hephaestus</text>
+                        <text x="350" y="55" text-anchor="middle" font-size="9" fill="rgba(142,160,173,0.65)" font-family="IBM Plex Sans, sans-serif">Execution agents (local + API)</text>
 
                         <rect x="480" y="16" width="148" height="52" rx="8" fill="rgba(12,65,52,0.55)" stroke="rgba(0,175,125,0.55)" stroke-width="1.5"/>
-                        <text x="554" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#00c896" font-family="Space Grotesk,sans-serif">Prometheus / Argus</text>
-                        <text x="554" y="55" text-anchor="middle" font-size="9" fill="rgba(0,195,145,0.65)" font-family="Inter,sans-serif">Advisors (local Ollama)</text>
+                        <text x="554" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#00c896" font-family="IBM Plex Sans, sans-serif">Prometheus / Argus</text>
+                        <text x="554" y="55" text-anchor="middle" font-size="9" fill="rgba(0,195,145,0.65)" font-family="IBM Plex Sans, sans-serif">Advisors (local Ollama)</text>
 
                         <!-- Down lines to MCP bar -->
-                        <line x1="146" y1="68" x2="146" y2="105" stroke="rgba(74,158,255,0.3)" stroke-width="1.5" stroke-dasharray="3 3"/>
-                        <line x1="350" y1="68" x2="350" y2="105" stroke="rgba(74,158,255,0.3)" stroke-width="1.5" stroke-dasharray="3 3"/>
-                        <line x1="554" y1="68" x2="554" y2="105" stroke="rgba(74,158,255,0.3)" stroke-width="1.5" stroke-dasharray="3 3"/>
+                        <line x1="146" y1="68" x2="146" y2="105" stroke="rgba(126,142,155,0.3)" stroke-width="1.5" stroke-dasharray="3 3"/>
+                        <line x1="350" y1="68" x2="350" y2="105" stroke="rgba(126,142,155,0.3)" stroke-width="1.5" stroke-dasharray="3 3"/>
+                        <line x1="554" y1="68" x2="554" y2="105" stroke="rgba(126,142,155,0.3)" stroke-width="1.5" stroke-dasharray="3 3"/>
 
                         <!-- MCP Client protocol bar -->
-                        <rect x="72" y="105" width="556" height="38" rx="8" fill="rgba(30,60,120,0.35)" stroke="rgba(74,158,255,0.35)" stroke-width="1.5"/>
-                        <text x="350" y="120" text-anchor="middle" font-size="10" font-weight="700" fill="rgba(100,165,255,0.8)" font-family="Space Grotesk,sans-serif" letter-spacing="1">MODEL CONTEXT PROTOCOL (MCP)</text>
-                        <text x="350" y="135" text-anchor="middle" font-size="8.5" fill="rgba(100,165,255,0.45)" font-family="Inter,sans-serif">Standardized client/server bridge. Agents call tools without custom integration code.</text>
+                        <rect x="72" y="105" width="556" height="38" rx="8" fill="rgba(30,60,120,0.35)" stroke="rgba(126,142,155,0.35)" stroke-width="1.5"/>
+                        <text x="350" y="120" text-anchor="middle" font-size="10" font-weight="700" fill="rgba(142,160,173,0.8)" font-family="IBM Plex Sans, sans-serif" letter-spacing="1">MODEL CONTEXT PROTOCOL (MCP)</text>
+                        <text x="350" y="135" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.45)" font-family="IBM Plex Sans, sans-serif">Standardized client/server bridge. Agents call tools without custom integration code.</text>
 
                         <!-- Down lines to tool servers -->
-                        <line x1="111" y1="143" x2="111" y2="170" stroke="rgba(74,158,255,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
-                        <line x1="220" y1="143" x2="220" y2="170" stroke="rgba(74,158,255,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
-                        <line x1="329" y1="143" x2="329" y2="170" stroke="rgba(74,158,255,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
-                        <line x1="436" y1="143" x2="436" y2="170" stroke="rgba(74,158,255,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
-                        <line x1="543" y1="143" x2="543" y2="170" stroke="rgba(74,158,255,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
-                        <line x1="627" y1="143" x2="627" y2="170" stroke="rgba(74,158,255,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
+                        <line x1="111" y1="143" x2="111" y2="170" stroke="rgba(126,142,155,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
+                        <line x1="220" y1="143" x2="220" y2="170" stroke="rgba(126,142,155,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
+                        <line x1="329" y1="143" x2="329" y2="170" stroke="rgba(126,142,155,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
+                        <line x1="436" y1="143" x2="436" y2="170" stroke="rgba(126,142,155,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
+                        <line x1="543" y1="143" x2="543" y2="170" stroke="rgba(126,142,155,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
+                        <line x1="627" y1="143" x2="627" y2="170" stroke="rgba(126,142,155,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
 
                         <!-- Tool server boxes -->
-                        <rect x="72" y="170" width="78" height="55" rx="7" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                        <text x="111" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="Space Grotesk,sans-serif">&#128193;</text>
-                        <text x="111" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="Inter,sans-serif">File System</text>
-                        <text x="111" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif">read/write</text>
+                        <rect x="72" y="170" width="78" height="55" rx="7" fill="rgba(160,176,162,0.045)" stroke="rgba(160,176,162,0.12)" stroke-width="1"/>
+                        <text x="111" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="IBM Plex Sans, sans-serif">&#128193;</text>
+                        <text x="111" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="IBM Plex Sans, sans-serif">File System</text>
+                        <text x="111" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="IBM Plex Sans, sans-serif">read/write</text>
 
-                        <rect x="181" y="170" width="78" height="55" rx="7" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                        <text x="220" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="Space Grotesk,sans-serif">&#x1F5A5;</text>
-                        <text x="220" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="Inter,sans-serif">Shell / Bash</text>
-                        <text x="220" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif">sandboxed</text>
+                        <rect x="181" y="170" width="78" height="55" rx="7" fill="rgba(160,176,162,0.045)" stroke="rgba(160,176,162,0.12)" stroke-width="1"/>
+                        <text x="220" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="IBM Plex Sans, sans-serif">&#x1F5A5;</text>
+                        <text x="220" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="IBM Plex Sans, sans-serif">Shell / Bash</text>
+                        <text x="220" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="IBM Plex Sans, sans-serif">sandboxed</text>
 
-                        <rect x="290" y="170" width="78" height="55" rx="7" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                        <text x="329" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="Space Grotesk,sans-serif">&#x1F9E0;</text>
-                        <text x="329" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="Inter,sans-serif">Memory</text>
-                        <text x="329" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif">Prometheus store</text>
+                        <rect x="290" y="170" width="78" height="55" rx="7" fill="rgba(160,176,162,0.045)" stroke="rgba(160,176,162,0.12)" stroke-width="1"/>
+                        <text x="329" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="IBM Plex Sans, sans-serif">&#x1F9E0;</text>
+                        <text x="329" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="IBM Plex Sans, sans-serif">Memory</text>
+                        <text x="329" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="IBM Plex Sans, sans-serif">Prometheus store</text>
 
                         <rect x="397" y="170" width="78" height="55" rx="7" fill="rgba(88,101,242,0.08)" stroke="rgba(88,101,242,0.3)" stroke-width="1"/>
-                        <text x="436" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(180,185,255,0.8)" font-family="Space Grotesk,sans-serif">&#x1F4AC;</text>
-                        <text x="436" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(160,168,255,0.75)" font-family="Inter,sans-serif">Discord</text>
-                        <text x="436" y="219" text-anchor="middle" font-size="7.5" fill="rgba(160,168,255,0.4)" font-family="Inter,sans-serif">in/out channel</text>
+                        <text x="436" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(180,185,255,0.8)" font-family="IBM Plex Sans, sans-serif">&#x1F4AC;</text>
+                        <text x="436" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(160,168,255,0.75)" font-family="IBM Plex Sans, sans-serif">Discord</text>
+                        <text x="436" y="219" text-anchor="middle" font-size="7.5" fill="rgba(160,168,255,0.4)" font-family="IBM Plex Sans, sans-serif">in/out channel</text>
 
-                        <rect x="504" y="170" width="78" height="55" rx="7" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                        <text x="543" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="Space Grotesk,sans-serif">&#x1F50D;</text>
-                        <text x="543" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="Inter,sans-serif">Web Search</text>
-                        <text x="543" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif">Hermes tool</text>
+                        <rect x="504" y="170" width="78" height="55" rx="7" fill="rgba(160,176,162,0.045)" stroke="rgba(160,176,162,0.12)" stroke-width="1"/>
+                        <text x="543" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="IBM Plex Sans, sans-serif">&#x1F50D;</text>
+                        <text x="543" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="IBM Plex Sans, sans-serif">Web Search</text>
+                        <text x="543" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="IBM Plex Sans, sans-serif">Hermes tool</text>
 
-                        <rect x="588" y="170" width="78" height="55" rx="7" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                        <text x="627" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="Space Grotesk,sans-serif">&#x2601;&#xFE0F;</text>
-                        <text x="627" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="Inter,sans-serif">External APIs</text>
-                        <text x="627" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif">jobs, markets</text>
+                        <rect x="588" y="170" width="78" height="55" rx="7" fill="rgba(160,176,162,0.045)" stroke="rgba(160,176,162,0.12)" stroke-width="1"/>
+                        <text x="627" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="IBM Plex Sans, sans-serif">&#x2601;&#xFE0F;</text>
+                        <text x="627" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="IBM Plex Sans, sans-serif">External APIs</text>
+                        <text x="627" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="IBM Plex Sans, sans-serif">jobs, markets</text>
 
                         <!-- Bottom note -->
-                        <text x="350" y="277" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.22)" font-family="Inter,sans-serif" letter-spacing="0.5">Each MCP server is a sandboxed process. Agents call tools via protocol, never via direct import or shell injection.</text>
+                        <text x="350" y="277" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.22)" font-family="IBM Plex Sans, sans-serif" letter-spacing="0.5">Each MCP server is a sandboxed process. Agents call tools via protocol, never via direct import or shell injection.</text>
                     </svg>
                     <p class="ai-council-diagram-caption">MCP replaces custom integrations. Every tool is a standardized server the agent calls the same way.</p>
                 </div>
@@ -3691,19 +3941,19 @@
                     </div>
                     <div class="discord-flow-arrow">&#8594;</div>
                     <div class="discord-flow-step">
-                        <div class="discord-flow-icon" style="background:rgba(110,60,10,0.35);border:1px solid rgba(220,130,45,0.45);">&#x26A1;</div>
+                        <div class="discord-flow-icon" style="background:rgba(110,60,10,0.35);border:1px solid rgba(176,106,62,0.45);">&#x26A1;</div>
                         <div class="discord-flow-label">Zeus parses intent</div>
                         <div class="discord-flow-sub">classifies task<br>consults advisors</div>
                     </div>
                     <div class="discord-flow-arrow">&#8594;</div>
                     <div class="discord-flow-step">
-                        <div class="discord-flow-icon" style="background:rgba(12,35,85,0.5);border:1px solid rgba(55,115,215,0.4);">&#x1F916;</div>
+                        <div class="discord-flow-icon" style="background:rgba(18,30,34,0.5);border:1px solid rgba(94,116,130,0.4);">&#x1F916;</div>
                         <div class="discord-flow-label">Agent executes</div>
                         <div class="discord-flow-sub">Hermes, Muse,<br>Hephaestus, etc.</div>
                     </div>
                     <div class="discord-flow-arrow">&#8594;</div>
                     <div class="discord-flow-step">
-                        <div class="discord-flow-icon" style="background:rgba(110,60,10,0.35);border:1px solid rgba(220,130,45,0.45);">&#x26A1;</div>
+                        <div class="discord-flow-icon" style="background:rgba(110,60,10,0.35);border:1px solid rgba(176,106,62,0.45);">&#x26A1;</div>
                         <div class="discord-flow-label">Zeus formats reply</div>
                         <div class="discord-flow-sub">approval gate<br>if needed</div>
                     </div>
@@ -3722,7 +3972,7 @@
 
                     <div class="agent-card hub-card" onclick="toggleAgent(this)">
                         <div class="agent-card-header">
-                            <span class="agent-dot" style="background:#f0a050;box-shadow:0 0 5px rgba(240,160,80,0.4);flex-shrink:0;"></span>
+                            <span class="agent-dot" style="background:#C79A4F;box-shadow:0 0 5px rgba(199,154,79,0.4);flex-shrink:0;"></span>
                             <span class="agent-card-name">Zeus</span>
                             <span class="agent-type-badge type-hub">Hub</span>
                             <span class="agent-card-summary">Routes all tasks, owns the queue, holds approval gates</span>
@@ -4104,20 +4354,20 @@
                             <!-- Architecture diagram -->
                             <div class="ai-council-section-title" style="margin-top:28px;">Architecture: How Plutus + FinWave Connect</div>
                             <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
-                            <svg viewBox="0 0 860 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plutus and FinWave architecture: local OpenClaw machine runs market intel producers feeding DuckDB, a bridge pushes to Supabase, FinWave Python pipeline writes all tables to Supabase, and Vercel Next.js reads via API routes." style="width:100%;max-width:860px;display:block;font-family:'Space Grotesk',sans-serif;">
+                            <svg viewBox="0 0 860 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plutus and FinWave architecture: local OpenClaw machine runs market intel producers feeding DuckDB, a bridge pushes to Supabase, FinWave Python pipeline writes all tables to Supabase, and Vercel Next.js reads via API routes." style="width:100%;max-width:860px;display:block;font-family:var(--font-display);">
                               <defs>
-                                <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#4a9eff" opacity="0.7"/></marker>
+                                <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#7E8E9B" opacity="0.7"/></marker>
                                 <marker id="arr-purple" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#a78bfa" opacity="0.8"/></marker>
                                 <marker id="arr-green" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#34d399" opacity="0.8"/></marker>
                               </defs>
 
                               <!-- LOCAL MACHINE box -->
-                              <rect x="12" y="12" width="310" height="370" rx="10" fill="rgba(30,35,50,0.7)" stroke="rgba(74,158,255,0.25)" stroke-width="1.5"/>
-                              <text x="167" y="34" text-anchor="middle" font-size="9" font-weight="700" fill="#4a9eff" letter-spacing="2" opacity="0.8">LOCAL MACHINE (OpenClaw)</text>
+                              <rect x="12" y="12" width="310" height="370" rx="10" fill="rgba(30,35,50,0.7)" stroke="rgba(126,142,155,0.25)" stroke-width="1.5"/>
+                              <text x="167" y="34" text-anchor="middle" font-size="9" font-weight="700" fill="#7E8E9B" letter-spacing="2" opacity="0.8">LOCAL MACHINE (OpenClaw)</text>
 
                               <!-- Market Intel Platform sub-box -->
-                              <rect x="24" y="44" width="194" height="215" rx="7" fill="rgba(74,158,255,0.06)" stroke="rgba(74,158,255,0.18)" stroke-width="1"/>
-                              <text x="121" y="60" text-anchor="middle" font-size="8" font-weight="700" fill="#4a9eff" letter-spacing="1.5" opacity="0.7">MARKET INTEL PLATFORM</text>
+                              <rect x="24" y="44" width="194" height="215" rx="7" fill="rgba(126,142,155,0.06)" stroke="rgba(126,142,155,0.18)" stroke-width="1"/>
+                              <text x="121" y="60" text-anchor="middle" font-size="8" font-weight="700" fill="#7E8E9B" letter-spacing="1.5" opacity="0.7">MARKET INTEL PLATFORM</text>
                               <text x="36" y="80"  font-size="10" fill="#94a3b8">fred_producer.py</text>
                               <text x="36" y="97"  font-size="10" fill="#94a3b8">price_producer.py</text>
                               <text x="36" y="114" font-size="10" fill="#94a3b8">reddit_producer.py</text>
@@ -4125,16 +4375,16 @@
                               <text x="36" y="148" font-size="10" fill="#94a3b8">insider_producer.py</text>
                               <text x="36" y="165" font-size="10" fill="#94a3b8">trends_producer.py</text>
                               <!-- DuckDB -->
-                              <rect x="130" y="174" width="80" height="38" rx="5" fill="rgba(74,158,255,0.12)" stroke="rgba(74,158,255,0.3)" stroke-width="1"/>
-                              <text x="170" y="189" text-anchor="middle" font-size="9.5" font-weight="700" fill="#4a9eff">DuckDB</text>
+                              <rect x="130" y="174" width="80" height="38" rx="5" fill="rgba(126,142,155,0.12)" stroke="rgba(126,142,155,0.3)" stroke-width="1"/>
+                              <text x="170" y="189" text-anchor="middle" font-size="9.5" font-weight="700" fill="#7E8E9B">DuckDB</text>
                               <text x="170" y="203" text-anchor="middle" font-size="8" fill="#64748b">bronze/silver/gold</text>
                               <!-- arrows from producers to DuckDB -->
-                              <line x1="118" y1="80"  x2="132" y2="180" stroke="#4a9eff" stroke-width="0.8" opacity="0.35" marker-end="url(#arr)"/>
-                              <line x1="118" y1="97"  x2="132" y2="180" stroke="#4a9eff" stroke-width="0.8" opacity="0.35" marker-end="url(#arr)"/>
-                              <line x1="118" y1="114" x2="132" y2="180" stroke="#4a9eff" stroke-width="0.8" opacity="0.35" marker-end="url(#arr)"/>
-                              <line x1="118" y1="131" x2="132" y2="183" stroke="#4a9eff" stroke-width="0.8" opacity="0.35"/>
-                              <line x1="118" y1="148" x2="132" y2="186" stroke="#4a9eff" stroke-width="0.8" opacity="0.35"/>
-                              <line x1="118" y1="165" x2="132" y2="189" stroke="#4a9eff" stroke-width="0.8" opacity="0.35"/>
+                              <line x1="118" y1="80"  x2="132" y2="180" stroke="#7E8E9B" stroke-width="0.8" opacity="0.35" marker-end="url(#arr)"/>
+                              <line x1="118" y1="97"  x2="132" y2="180" stroke="#7E8E9B" stroke-width="0.8" opacity="0.35" marker-end="url(#arr)"/>
+                              <line x1="118" y1="114" x2="132" y2="180" stroke="#7E8E9B" stroke-width="0.8" opacity="0.35" marker-end="url(#arr)"/>
+                              <line x1="118" y1="131" x2="132" y2="183" stroke="#7E8E9B" stroke-width="0.8" opacity="0.35"/>
+                              <line x1="118" y1="148" x2="132" y2="186" stroke="#7E8E9B" stroke-width="0.8" opacity="0.35"/>
+                              <line x1="118" y1="165" x2="132" y2="189" stroke="#7E8E9B" stroke-width="0.8" opacity="0.35"/>
 
                               <!-- Plutus Agent sub-box -->
                               <rect x="24" y="270" width="194" height="96" rx="7" fill="rgba(167,139,250,0.06)" stroke="rgba(167,139,250,0.2)" stroke-width="1"/>
@@ -4194,8 +4444,8 @@
                               <line x1="318" y1="450" x2="368" y2="295" stroke="#a78bfa" stroke-width="1.2" opacity="0.55" marker-end="url(#arr-purple)"/>
 
                               <!-- VERCEL box -->
-                              <rect x="636" y="140" width="210" height="310" rx="10" fill="rgba(30,35,50,0.7)" stroke="rgba(74,158,255,0.25)" stroke-width="1.5"/>
-                              <text x="741" y="162" text-anchor="middle" font-size="9" font-weight="700" fill="#4a9eff" letter-spacing="2" opacity="0.9">VERCEL (Next.js)</text>
+                              <rect x="636" y="140" width="210" height="310" rx="10" fill="rgba(30,35,50,0.7)" stroke="rgba(126,142,155,0.25)" stroke-width="1.5"/>
+                              <text x="741" y="162" text-anchor="middle" font-size="9" font-weight="700" fill="#7E8E9B" letter-spacing="2" opacity="0.9">VERCEL (Next.js)</text>
                               <text x="656" y="190" font-size="10" fill="#64748b">/api/briefs</text>
                               <text x="656" y="210" font-size="10" fill="#64748b">/api/stocks</text>
                               <text x="656" y="230" font-size="10" fill="#64748b">/api/macro</text>
@@ -4204,10 +4454,10 @@
                               <text x="656" y="290" font-size="10" fill="#64748b">/api/portfolio</text>
                               <text x="656" y="310" font-size="10" fill="#64748b">/api/prices</text>
                               <!-- Supabase → Vercel -->
-                              <line x1="580" y1="295" x2="634" y2="295" stroke="#4a9eff" stroke-width="1.5" opacity="0.55" marker-end="url(#arr)"/>
+                              <line x1="580" y1="295" x2="634" y2="295" stroke="#7E8E9B" stroke-width="1.5" opacity="0.55" marker-end="url(#arr)"/>
 
                               <!-- legend -->
-                              <line x1="24" y1="550" x2="44" y2="550" stroke="#4a9eff" stroke-width="1.5" opacity="0.7" marker-end="url(#arr)"/>
+                              <line x1="24" y1="550" x2="44" y2="550" stroke="#7E8E9B" stroke-width="1.5" opacity="0.7" marker-end="url(#arr)"/>
                               <text x="48" y="554" font-size="9" fill="#64748b">data flow</text>
                               <line x1="110" y1="550" x2="130" y2="550" stroke="#a78bfa" stroke-width="1.2" opacity="0.7" stroke-dasharray="4,3" marker-end="url(#arr-purple)"/>
                               <text x="134" y="554" font-size="9" fill="#64748b">agent write</text>
@@ -4603,9 +4853,9 @@
                                         </div>
                                         <div class="catapult-outputs">
                                             <div style="font-size:0.58rem;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;">Mechanism Preview</div>
-                                            <canvas id="catapult-diagram" width="260" height="120" style="display:block;width:100%;border-radius:8px 8px 0 0;background:#050505;border:1px solid var(--border-subtle);border-bottom:none;"></canvas>
+                                            <canvas id="catapult-diagram" width="260" height="120" style="display:block;width:100%;border-radius:8px 8px 0 0;background:#060A08;border:1px solid var(--border-subtle);border-bottom:none;"></canvas>
                                             <div style="font-size:0.58rem;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin:6px 0 3px;">Trajectory</div>
-                                            <canvas id="catapult-canvas" width="260" height="110" style="display:block;width:100%;border-radius:8px;background:#050505;border:1px solid var(--border-subtle);"></canvas>
+                                            <canvas id="catapult-canvas" width="260" height="110" style="display:block;width:100%;border-radius:8px;background:#060A08;border:1px solid var(--border-subtle);"></canvas>
                                             <div class="cat-metrics" id="cat-metrics"></div>
                                         </div>
                                     </div>
@@ -4732,7 +4982,7 @@
             if (window.matchMedia('(pointer: coarse), (prefers-reduced-motion: reduce)').matches) return;
             if (window.getComputedStyle(mc).display === 'none') return;
             const ctx = mc.getContext('2d');
-            const chars = '01アイウエカキクサシスタチツナニネノ';
+            const chars = '01';
             let trails = [];
             let mx = -200, my = -200;
 
@@ -4762,7 +5012,7 @@
                 trails.forEach(t => {
                     ctx.globalAlpha = t.op;
                     ctx.fillStyle = '#00ff87';
-                    ctx.font = t.sz + 'px monospace';
+                    ctx.font = t.sz + 'px "IBM Plex Mono", monospace';
                     ctx.fillText(t.ch, t.x, t.y);
                     t.y += t.vy;
                     t.op *= 0.92;
@@ -5036,22 +5286,22 @@
                         var cell = document.createElement('div');
                         var sz = cellSz + 'px';
                         cell.style.cssText = 'width:' + sz + ';height:' + sz + ';border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:' + (cellSz * 0.42) + 'px;font-weight:700;cursor:pointer;user-select:none;transition:background 0.1s;';
-                        var numColors = ['','#4a9eff','#00ff87','#ff6b35','#a855f7','#ff5f57','#22d3ee','#ffd700','#aaa'];
+                        var numColors = ['','#7E8E9B','#00ff87','#ff6b35','#a855f7','#ff5f57','#22d3ee','#ffd700','#aaa'];
                         if (revealed[r][c]) {
                             if (grid[r][c] === -1) {
                                 cell.style.background = 'rgba(255,80,80,0.18)'; cell.style.border = '1px solid rgba(255,80,80,0.35)';
                                 cell.textContent = '💣';
                             } else {
-                                cell.style.background = 'rgba(255,255,255,0.04)'; cell.style.border = '1px solid rgba(255,255,255,0.05)';
+                                cell.style.background = 'rgba(160,176,162,0.055)'; cell.style.border = '1px solid rgba(160,176,162,0.065)';
                                 if (grid[r][c] > 0) { cell.textContent = grid[r][c]; cell.style.color = numColors[grid[r][c]] || '#aaa'; }
                             }
                         } else if (flagged[r][c]) {
                             cell.style.background = 'rgba(255,200,0,0.08)'; cell.style.border = '1px solid rgba(255,200,0,0.25)';
                             cell.textContent = '🚩';
                         } else {
-                            cell.style.background = 'rgba(255,255,255,0.05)'; cell.style.border = '1px solid rgba(255,255,255,0.1)';
+                            cell.style.background = 'rgba(160,176,162,0.065)'; cell.style.border = '1px solid rgba(160,176,162,0.12)';
                             cell.addEventListener('mouseover', function() { if (!gameOver && !revealed[r][c]) cell.style.background = 'rgba(0,255,135,0.09)'; });
-                            cell.addEventListener('mouseout', function() { if (!revealed[r][c] && !flagged[r][c]) cell.style.background = 'rgba(255,255,255,0.05)'; });
+                            cell.addEventListener('mouseout', function() { if (!revealed[r][c] && !flagged[r][c]) cell.style.background = 'rgba(160,176,162,0.065)'; });
                         }
                         cell.addEventListener('click', function(e) {
                             if (gameOver || revealed[r][c] || flagged[r][c]) return;
@@ -5306,7 +5556,7 @@
                 ctx.fillStyle = '#0a0a0a';
                 ctx.fillRect(0, 0, W, H);
 
-                ctx.fillStyle = 'rgba(255,255,255,0.12)';
+                ctx.fillStyle = 'rgba(160,176,162,0.14)';
                 for (let i = 0; i < 30; i++) {
                     const sx = ((i * 137 + worldX * 0.05) % W + W) % W;
                     const sy = (i * 53) % (GROUND - 20);
@@ -5328,11 +5578,11 @@
                     ctx.fillStyle = 'rgba(0,0,0,0.6)';
                     ctx.fillRect(0, 0, W, H);
                     ctx.fillStyle = '#00ff87';
-                    ctx.font = 'bold 18px monospace';
+                    ctx.font = 'bold 18px "IBM Plex Mono", monospace';
                     ctx.textAlign = 'center';
                     ctx.fillText('MARIO RUNNER', W / 2, H / 2 - 20);
                     ctx.fillStyle = '#999';
-                    ctx.font = '12px monospace';
+                    ctx.font = '12px "IBM Plex Mono", monospace';
                     ctx.fillText('Press SPACE / ↑ / Button to start', W / 2, H / 2 + 8);
                     return;
                 }
@@ -5371,16 +5621,16 @@
                     ctx.fillStyle = 'rgba(0,0,0,0.75)';
                     ctx.fillRect(0, 0, W, H);
                     ctx.fillStyle = '#ff5f57';
-                    ctx.font = 'bold 20px monospace';
+                    ctx.font = 'bold 20px "IBM Plex Mono", monospace';
                     ctx.textAlign = 'center';
                     ctx.fillText('YOU DIED', W / 2, H / 2 - 14);
                     ctx.fillStyle = '#999';
-                    ctx.font = '12px monospace';
+                    ctx.font = '12px "IBM Plex Mono", monospace';
                     ctx.fillText('Score: ' + score + '  |  Space / ↑ to retry', W / 2, H / 2 + 10);
                 }
 
                 ctx.fillStyle = 'rgba(0,255,135,0.7)';
-                ctx.font = '10px monospace';
+                ctx.font = '10px "IBM Plex Mono", monospace';
                 ctx.textAlign = 'left';
                 ctx.fillText('SCORE ' + score, 10, 16);
             }
@@ -5397,7 +5647,7 @@
 
         // ===== HEADING MATRIX BACKGROUNDS =====
         (function() {
-            const chars = '01アイウカキサシタチナ';
+            const chars = '01';
             document.querySelectorAll('.heading-matrix-bg').forEach(function(canvas) {
                 if (!canvas || !canvas.parentElement) return;
                 const ctx = canvas.getContext('2d');
@@ -5411,7 +5661,7 @@
                 function draw() {
                     ctx.fillStyle = 'rgba(10,10,10,0.14)';
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    ctx.font = '11px monospace';
+                    ctx.font = '11px "IBM Plex Mono", monospace';
                     for (var i = 0; i < drops.length; i++) {
                         var ch = chars[Math.floor(Math.random() * chars.length)];
                         ctx.fillStyle = 'rgba(0,255,135,' + (0.15 + Math.random() * 0.2) + ')';
@@ -5484,7 +5734,7 @@
                 var CAT = FRAMES[SEQ[seqIdx]];
                 ctx.clearRect(0, 0, cv.width, cv.height);
                 ctx.imageSmoothingEnabled = false;
-                ctx.font = 'bold ' + c + 'px monospace';
+                ctx.font = 'bold ' + c + 'px "IBM Plex Mono", monospace';
                 ctx.textBaseline = 'top';
                 ctx.shadowColor = 'rgba(0,255,135,0.5)';
                 ctx.shadowBlur = c < 4 ? 1 : 2;
@@ -5556,7 +5806,7 @@
 
             var SKILL_DEFS = [
                 { id: 'Analytics',     color: '#00ff87' },
-                { id: 'Visualization', color: '#4a9eff' },
+                { id: 'Visualization', color: '#7E8E9B' },
                 { id: 'Optimization',  color: '#a855f7' },
                 { id: 'AI / ML',       color: '#f59e0b' },
                 { id: 'Operations',    color: '#ff6b35' },
@@ -6092,7 +6342,7 @@
 
                     var circ = document.createElementNS(SVG_NS, 'circle');
                     circ.setAttribute('cx', pn.x); circ.setAttribute('cy', pn.y); circ.setAttribute('r', pn.r);
-                    circ.setAttribute('fill', 'rgba(255,255,255,0.06)');
+                    circ.setAttribute('fill', 'rgba(160,176,162,0.075)');
                     circ.setAttribute('stroke', 'rgba(255,255,255,0.35)'); circ.setAttribute('stroke-width', '1');
                     g.appendChild(circ);
 
@@ -6474,7 +6724,7 @@
                 var W = canvas.width, H = canvas.height;
                 ctx.clearRect(0, 0, W, H);
                 // Ground
-                ctx.fillStyle = 'rgba(255,255,255,0.04)';
+                ctx.fillStyle = 'rgba(160,176,162,0.055)';
                 ctx.fillRect(0, H - 20, W, 20);
                 ctx.strokeStyle = 'rgba(0,255,135,0.2)';
                 ctx.setLineDash([]);
@@ -6519,7 +6769,7 @@
                 // Mode annotation
                 var modeLabels = { distance: 'Optimizing: Distance', height: 'Optimizing: Height', accuracy: 'Optimizing: Accuracy', variability: 'Optimizing: Consistency' };
                 ctx.fillStyle = 'rgba(0,255,135,0.45)';
-                ctx.font = '9px Inter, sans-serif';
+                ctx.font = '9px "IBM Plex Sans", sans-serif';
                 ctx.fillText(modeLabels[p.mode] || '', 6, 12);
             }
 
@@ -6533,7 +6783,7 @@
                 var pivotY = groundY - pinH;
 
                 // Ground line
-                dctx.strokeStyle = 'rgba(255,255,255,0.1)';
+                dctx.strokeStyle = 'rgba(160,176,162,0.12)';
                 dctx.lineWidth = 1; dctx.setLineDash([]);
                 dctx.beginPath(); dctx.moveTo(0, groundY); dctx.lineTo(W, groundY); dctx.stroke();
 
@@ -6590,9 +6840,9 @@
                 dctx.beginPath(); dctx.moveTo(pivotX, pivotY); dctx.lineTo(shortEndX, shortEndY); dctx.stroke();
 
                 // Counterweight (purple blob on short end)
-                dctx.fillStyle = 'rgba(168,85,247,0.85)';
+                dctx.fillStyle = 'rgba(176,106,62,0.85)';
                 dctx.beginPath(); dctx.arc(shortEndX, shortEndY, 6, 0, Math.PI*2); dctx.fill();
-                dctx.font = '7px Inter,sans-serif'; dctx.fillStyle = 'rgba(168,85,247,0.6)';
+                dctx.font = '7px "IBM Plex Sans", sans-serif'; dctx.fillStyle = 'rgba(176,106,62,0.6)';
                 dctx.fillText('CW', shortEndX - 7, shortEndY - 9);
 
                 // Cup position on long arm
@@ -6612,7 +6862,7 @@
 
                 // Tension spring coils near long end
                 var tnorm = p.tension / 100;
-                dctx.strokeStyle = 'rgba(74,158,255,' + (tnorm * 0.65 + 0.2) + ')';
+                dctx.strokeStyle = 'rgba(126,142,155,' + (tnorm * 0.65 + 0.2) + ')';
                 dctx.lineWidth = 1.2; dctx.setLineDash([]);
                 var sx0 = longEndX + 4, sy0 = longEndY;
                 for (var si = 0; si < 4; si++) {
@@ -6620,17 +6870,17 @@
                     dctx.arc(sx0 + si * 4, sy0, 2 + tnorm * 1.5, 0, Math.PI * (si % 2 === 0 ? 1 : -1));
                     dctx.stroke();
                 }
-                dctx.font = '7px Inter,sans-serif'; dctx.fillStyle = 'rgba(74,158,255,0.65)';
+                dctx.font = '7px "IBM Plex Sans", sans-serif'; dctx.fillStyle = 'rgba(126,142,155,0.65)';
                 dctx.fillText('T:' + p.tension + '%', sx0 + 18, sy0 + 5);
 
                 // Launch angle arc (from pivot, post-release angle)
                 var launchRad = p.rotation * (Math.PI / 180);
-                dctx.strokeStyle = 'rgba(255,107,53,0.55)';
+                dctx.strokeStyle = 'rgba(176,106,62,0.55)';
                 dctx.lineWidth = 1; dctx.setLineDash([2, 2]);
                 dctx.beginPath(); dctx.arc(pivotX, pivotY, 20, -launchRad, 0); dctx.stroke();
                 dctx.setLineDash([]);
                 // Arrow
-                dctx.strokeStyle = 'rgba(255,107,53,0.7)';
+                dctx.strokeStyle = 'rgba(176,106,62,0.7)';
                 dctx.lineWidth = 1.2;
                 var arrowLen = 24;
                 var arrowEndX = pivotX + Math.cos(launchRad) * arrowLen;
@@ -6644,18 +6894,18 @@
                 dctx.lineTo(arrowEndX - 4 * Math.cos(launchRad + 0.4), arrowEndY + 4 * Math.sin(launchRad + 0.4));
                 dctx.stroke();
                 // Rotation label
-                dctx.fillStyle = 'rgba(255,107,53,0.85)';
+                dctx.fillStyle = 'rgba(176,106,62,0.85)';
                 dctx.font = '7.5px Inter,sans-serif';
                 dctx.fillText(p.rotation + '° launch', arrowEndX + 2, arrowEndY - 3);
 
                 // Pin height label (vertical brace annotation)
                 dctx.fillStyle = 'rgba(200,200,200,0.4)';
-                dctx.font = '7px Inter,sans-serif';
+                dctx.font = '7px "IBM Plex Sans", sans-serif';
                 dctx.fillText('h:' + p.pin + '%', pivotX + 5, pivotY + 12);
 
                 // Pullback label near long end
                 dctx.fillStyle = 'rgba(255,220,80,0.55)';
-                dctx.font = '7px Inter,sans-serif';
+                dctx.font = '7px "IBM Plex Sans", sans-serif';
                 dctx.fillText('↩' + p.pullback + '°', longEndX - 14, longEndY + 14);
             }
 
