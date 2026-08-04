@@ -86,16 +86,30 @@
     document.querySelectorAll('.exp-tile-body').forEach(function (el) { io.observe(el); });
   }
 
+  // "Is the user looking at this?" is two different questions depending on size.
+  // intersectionRatio is the fraction of THE ELEMENT that's visible, so a
+  // section taller than 2x the viewport can never reach 0.5 no matter how it's
+  // scrolled — #work is 5458px against a ~1035px viewport, a ceiling of 0.19,
+  // meaning it could never register dwell on any device. So: small elements
+  // qualify on their own ratio, tall ones qualify by filling the viewport.
+  function isEngaged(entry) {
+    if (!entry.isIntersecting) return false;
+    if (entry.intersectionRatio >= 0.5) return true;
+    var vh = window.innerHeight || document.documentElement.clientHeight || 0;
+    var visible = entry.intersectionRect ? entry.intersectionRect.height : 0;
+    return vh > 0 && visible / vh >= 0.5;
+  }
+
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         var el = entry.target, isTile = el.classList.contains('exp-tile-body');
         var id = isTile ? (el.closest('.exp-tile') ? el.closest('.exp-tile').id.replace('exp-tile-', '') : el.id) : el.id;
         if (!id) return;
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.5 && document.visibilityState === 'visible') startDwell(id, isTile);
+        if (isEngaged(entry) && document.visibilityState === 'visible') startDwell(id, isTile);
         else stopDwell(id);
       });
-    }, { threshold: [0, 0.5, 1] });
+    }, { threshold: [0, 0.1, 0.25, 0.5, 0.75, 1] });
 
     if (document.readyState !== 'loading') observeAll(io);
     else document.addEventListener('DOMContentLoaded', function () { observeAll(io); });
