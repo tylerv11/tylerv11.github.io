@@ -159,6 +159,7 @@ async function handleCollect(request, env, origin) {
   const target = typeof body.target === 'string' ? body.target.slice(0, 300) : null;
   const ms = Number.isFinite(body.ms) ? Math.max(0, Math.min(1000 * 60 * 60 * 6, Math.round(body.ms))) : null;
   const session = typeof body.session === 'string' ? body.session.slice(0, 64) : null;
+  const cid = typeof body.cid === 'string' && body.cid.length <= 64 ? body.cid : null;
 
   const ip = request.headers.get('CF-Connecting-IP') || '0.0.0.0';
   const ua = request.headers.get('User-Agent') || '';
@@ -170,9 +171,26 @@ async function handleCollect(request, env, origin) {
   const ref = refHost(request.headers.get('Referer'));
 
   await env.DB.prepare(
-    `INSERT INTO events (ts, day, type, target, page, ms, ref, visitor, session, device)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-  ).bind(ts, day, type, target, page, ms, ref, visitor, session, device).run();
+    `INSERT INTO events (ts, day, type, target, page, ms, ref, visitor, session, device, cid)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+  ).bind(ts, day, type, target, page, ms, ref, visitor, session, device, cid).run();
+
+  // Every browser that reports a client id shows up in the device list, so it
+  // can be labelled and marked as the owner's. A browser that has declared
+  // itself admin (localStorage.isAdmin, or ?admin=1) is flagged owner on sight
+  // — otherwise the first thing you'd have to do on a new device is go find it
+  // in a list. is_owner is only ever set here, never cleared, so an explicit
+  // un-mark from the dashboard is not undone by the next pageview.
+  if (cid) {
+    await env.DB.prepare(
+      `INSERT INTO devices (cid, label, is_owner, first_seen, last_seen, device)
+       VALUES (?, NULL, ?, ?, ?, ?)
+       ON CONFLICT(cid) DO UPDATE SET
+         last_seen = excluded.last_seen,
+         device    = excluded.device,
+         is_owner  = MAX(devices.is_owner, excluded.is_owner)`
+    ).bind(cid, body.admin === true ? 1 : 0, ts, ts, device).run();
+  }
 
   // Prune old rows on ~1% of writes — cheap, keeps storage flat forever.
   if (Math.random() < 0.01) {
@@ -218,6 +236,13 @@ async function handleStats(request, env) {
   if (typeFilter) {
     baseConds.push(`type IN (${typeFilter.map(() => '?').join(',')})`);
     baseParams.push(...typeFilter);
+  }
+
+  // Your own devices are hidden by default so the numbers mean "other people".
+  // The events are still stored — `include_mine` brings them back rather than
+  // there being nothing to bring back.
+  if (body.include_mine !== true) {
+    baseConds.push('(cid IS NULL OR cid NOT IN (SELECT cid FROM devices WHERE is_owner = 1))');
   }
 
   // Drill-down: clicking a chart element narrows every panel at once.
@@ -300,6 +325,42 @@ async function handleStats(request, env) {
   }, 200);
 }
 
+// GET-ish list of every browser that has ever reported a client id, with enough
+// context (label, platform, event count, last seen) to recognise which is which.
+async function handleDevices(request, env) {
+  let body;
+  try {
+    body = await request.json();
+  } catch (e) {
+    return json({ error: 'bad request' }, 400);
+  }
+  if (!safeEqual(body.password, env.ADMIN_PASSWORD || '')) {
+    return json({ error: 'unauthorized' }, 401);
+  }
+
+  // Mark / rename / unmark, then fall through and return the fresh list.
+  if (body.action === 'update') {
+    const cid = typeof body.cid === 'string' ? body.cid.slice(0, 64) : null;
+    if (!cid) return json({ error: 'cid required' }, 400);
+    const label = typeof body.label === 'string' ? body.label.slice(0, 60) : null;
+    const isOwner = body.is_owner ? 1 : 0;
+    await env.DB.prepare(
+      'UPDATE devices SET label = ?, is_owner = ? WHERE cid = ?'
+    ).bind(label, isOwner, cid).run();
+  }
+
+  const rows = await env.DB.prepare(
+    `SELECT d.cid, d.label, d.is_owner, d.first_seen, d.last_seen, d.device,
+            (SELECT COUNT(*) FROM events e WHERE e.cid = d.cid) AS events,
+            (SELECT COUNT(DISTINCT e.session) FROM events e WHERE e.cid = d.cid) AS visits
+     FROM devices d
+     ORDER BY d.is_owner DESC, d.last_seen DESC
+     LIMIT 100`
+  ).all();
+
+  return json({ devices: rows.results }, 200);
+}
+
 async function handleReset(request, env) {
   let body;
   try {
@@ -345,6 +406,12 @@ export default {
       }
       if (url.pathname === '/stats') {
         const res = await handleStats(request, env);
+        const headers = new Headers(res.headers);
+        Object.entries(cors).forEach(([k, v]) => headers.set(k, v));
+        return new Response(res.body, { status: res.status, headers });
+      }
+      if (url.pathname === '/devices') {
+        const res = await handleDevices(request, env);
         const headers = new Headers(res.headers);
         Object.entries(cors).forEach(([k, v]) => headers.set(k, v));
         return new Response(res.body, { status: res.status, headers });
