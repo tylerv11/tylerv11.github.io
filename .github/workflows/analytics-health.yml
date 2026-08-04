@@ -1,0 +1,68 @@
+name: Analytics health check
+
+# Weekdays at 09:00 UTC = 02:00 PT. The analytics pipeline has no moving parts
+# that run on a schedule — the Worker writes on every event and the dashboard
+# queries live — so this exists to catch silent breakage, which is the failure
+# mode this system actually had: a tracker bug once dropped 100% of events while
+# every request still returned success. A daily probe surfaces that within a day
+# instead of whenever someone next opens the dashboard.
+on:
+  schedule:
+    - cron: '0 9 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Query the analytics Worker
+        env:
+          ADMIN_PASSWORD: ${{ secrets.ANALYTICS_ADMIN_PASSWORD }}
+          WORKER: https://portfolio-analytics.tylervincent-ai.workers.dev
+        run: |
+          set -euo pipefail
+
+          if [ -z "${ADMIN_PASSWORD}" ]; then
+            echo "::error::ANALYTICS_ADMIN_PASSWORD secret is not set on this repo."
+            exit 1
+          fi
+
+          code=$(curl -sS -o /tmp/stats.json -w '%{http_code}' \
+            -X POST "${WORKER}/stats" \
+            -H 'Content-Type: application/json' \
+            -H 'Origin: https://tylerv11.github.io' \
+            --data "$(jq -nc --arg p "$ADMIN_PASSWORD" '{password:$p, range:"7d"}')")
+
+          if [ "$code" != "200" ]; then
+            echo "::error::Worker /stats returned HTTP $code — the analytics endpoint or its D1 binding is down."
+            cat /tmp/stats.json || true
+            exit 1
+          fi
+
+          # Shape check: a 200 with missing aggregates means the handler changed
+          # or a query failed silently, which a status code alone would not catch.
+          jq -e '.kpi and .pages and .daily_visits and .viewers' /tmp/stats.json > /dev/null \
+            || { echo "::error::/stats responded 200 but the payload is missing expected aggregates."; cat /tmp/stats.json; exit 1; }
+
+          visits=$(jq -r '.kpi.site_visits // 0' /tmp/stats.json)
+          views=$(jq -r '.kpi.total_pageviews // 0' /tmp/stats.json)
+          last=$(jq -r '.last_event_ts // 0' /tmp/stats.json)
+
+          {
+            echo "### Analytics pipeline: reachable ✅"
+            echo ""
+            echo "| Metric (last 7 days) | Value |"
+            echo "| --- | --- |"
+            echo "| Site visits | $visits |"
+            echo "| Page views | $views |"
+            echo "| Most recent event | $( [ "$last" != "0" ] && date -u -d "@$((last/1000))" '+%Y-%m-%d %H:%M UTC' || echo 'never' ) |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          # A quiet week on a personal portfolio is normal, not a failure. Warn so
+          # it is visible in the run list, but do not fail the job over real-world
+          # low traffic — a check that cries wolf gets ignored.
+          if [ "$visits" -eq 0 ]; then
+            echo "::warning::No site visits recorded in the last 7 days. Normal for a quiet week, but worth a look if it persists."
+          fi
+
+          echo "Analytics health check passed: $visits visits / $views page views in the last 7 days."
