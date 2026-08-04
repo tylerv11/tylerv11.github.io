@@ -169,6 +169,34 @@
   .toggle button.on { background: var(--series-1); color: var(--text-primary); }
   .card .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
 
+  /* Device drawer — slides in from the right, never reflows the dashboard. */
+  .drawer {
+    position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 92vw);
+    background: var(--surface-1); border-left: 1px solid var(--border);
+    padding: 22px; overflow-y: auto; z-index: 60;
+    box-shadow: -16px 0 40px rgba(0,0,0,.45);
+    transform: translateX(100%); transition: transform .18s ease;
+  }
+  .drawer.open { transform: translateX(0); }
+  .drawer h2 { margin: 0 0 4px; font-size: 16px; }
+  .drawer .sub { font-size: 12px; color: var(--text-muted); margin: 0 0 16px; }
+  .drawer .close { position: absolute; top: 16px; right: 16px; background: none; border: 0; color: var(--text-muted); font-size: 20px; cursor: pointer; }
+  .dev {
+    border: 1px solid var(--border); border-radius: 9px; padding: 11px 12px; margin-bottom: 10px;
+  }
+  .dev.mine { border-color: var(--series-1); }
+  .dev .top { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; margin-bottom: 8px; }
+  .dev .plat { color: var(--text-secondary); font-weight: 600; }
+  .dev .stat { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  .dev .cid { font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--text-muted); margin-bottom: 8px; word-break: break-all; }
+  .dev .row { display: flex; gap: 8px; align-items: center; }
+  .dev input[type=text] {
+    flex: 1; min-width: 0; background: var(--surface-2); border: 1px solid var(--border);
+    color: var(--text-primary); border-radius: 6px; padding: 6px 9px; font-size: 12px;
+  }
+  .dev label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); white-space: nowrap; cursor: pointer; }
+  .drawer-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 55; }
+
   .hidden { display: none !important; }
   .empty { color: var(--text-muted); font-size: 13px; padding: 20px 0; text-align: center; }
 
@@ -215,6 +243,10 @@
         <div class="panel" id="typePanel"></div>
       </details>
       <div class="actions">
+        <label class="btn secondary" style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;" title="Include events from devices marked as yours">
+          <input type="checkbox" id="showMine"> Show my sessions
+        </label>
+        <button class="btn secondary" id="devicesBtn">My Devices</button>
         <button class="btn secondary" id="trackingBtn" title="Whether this browser's own visits are recorded"></button>
         <button class="btn secondary" id="refreshBtn">Refresh Data</button>
         <button class="btn danger" id="resetBtn">Reset Metrics</button>
@@ -272,6 +304,16 @@
   <footer class="datascope" id="dataScope"></footer>
 </div>
 
+<div class="drawer-backdrop hidden" id="devBackdrop"></div>
+<aside class="drawer" id="devDrawer" aria-label="Device list">
+  <button class="close" id="devClose" aria-label="Close">×</button>
+  <h2>My Devices</h2>
+  <p class="sub">Every browser that has visited, newest first. Name the ones that are
+     yours and tick <strong>Mine</strong> — their events stop counting toward your
+     metrics on every device you sign in from, not just this one.</p>
+  <div id="devList"></div>
+</aside>
+
 <div class="modal-backdrop hidden" id="resetModal">
   <div class="modal">
     <h3>Reset Metrics</h3>
@@ -297,7 +339,7 @@
                       'tile_link','outbound','nav','section_dwell','tile_dwell','page_time'];
 
   // drill: one active {dim,value,label} narrowing every panel, or null.
-  var state = { password: null, range: '30d', types: [], data: null, drill: null, pageMode: 'pages' };
+  var state = { password: null, range: '30d', types: [], data: null, drill: null, pageMode: 'pages', includeMine: false, devices: [] };
 
   // ---------------- auth ----------------
   function getStoredPassword() {
@@ -369,6 +411,7 @@
         password: pw,
         range: state.range,
         types: state.types.length ? state.types : undefined,
+        include_mine: state.includeMine || undefined,
         device: state.drill && state.drill.dim === 'device' ? state.drill.value : undefined,
         page: state.drill && state.drill.dim === 'page' ? state.drill.value : undefined,
         visitor: state.drill && state.drill.dim === 'visitor' ? state.drill.value : undefined,
@@ -754,6 +797,75 @@
       });
     });
   }
+
+  // ---------------- device registry drawer ----------------
+  function devicesApi(payload) {
+    payload.password = state.password;
+    return fetch(WORKER_URL + '/devices', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).then(function (res) {
+      if (!res.ok) return Promise.reject(new Error('http_' + res.status));
+      return res.json();
+    });
+  }
+
+  function renderDevices(rows) {
+    var el = document.getElementById('devList');
+    if (!rows || !rows.length) {
+      el.innerHTML = '<div class="empty">No devices recorded yet. They appear here after their first pageview.</div>';
+      return;
+    }
+    var myCid = null;
+    try { myCid = localStorage.getItem('_av_cid'); } catch (e) {}
+    el.innerHTML = rows.map(function (d) {
+      return '<div class="dev' + (d.is_owner ? ' mine' : '') + '" data-cid="' + esc(d.cid) + '">' +
+        '<div class="top"><span class="plat">' + esc(d.device || 'Unknown') +
+          (d.cid === myCid ? ' · this browser' : '') + '</span>' +
+        '<span class="stat">' + d.visits + ' visits · ' + d.events + ' events</span></div>' +
+        '<div class="cid">last seen ' + fmtDate(d.last_seen) + '</div>' +
+        '<div class="row"><input type="text" class="lbl" placeholder="Name this device" value="' +
+          esc(d.label || '') + '">' +
+        '<label><input type="checkbox" class="own"' + (d.is_owner ? ' checked' : '') + '> Mine</label></div>' +
+        '</div>';
+    }).join('');
+
+    el.querySelectorAll('.dev').forEach(function (card) {
+      var cid = card.getAttribute('data-cid');
+      var lbl = card.querySelector('.lbl');
+      var own = card.querySelector('.own');
+      var save = function () {
+        card.classList.toggle('mine', own.checked);
+        devicesApi({ action: 'update', cid: cid, label: lbl.value, is_owner: own.checked })
+          .then(function (r) { state.devices = r.devices; refresh(); })
+          .catch(function () { alert('Could not save that device change.'); });
+      };
+      own.addEventListener('change', save);
+      lbl.addEventListener('change', save);
+    });
+  }
+
+  function openDrawer() {
+    document.getElementById('devDrawer').classList.add('open');
+    document.getElementById('devBackdrop').classList.remove('hidden');
+    devicesApi({}).then(function (r) { state.devices = r.devices; renderDevices(r.devices); })
+      .catch(function () {
+        document.getElementById('devList').innerHTML = '<div class="empty">Could not load devices.</div>';
+      });
+  }
+  function closeDrawer() {
+    document.getElementById('devDrawer').classList.remove('open');
+    document.getElementById('devBackdrop').classList.add('hidden');
+  }
+  document.getElementById('devicesBtn').addEventListener('click', openDrawer);
+  document.getElementById('devClose').addEventListener('click', closeDrawer);
+  document.getElementById('devBackdrop').addEventListener('click', closeDrawer);
+
+  document.getElementById('showMine').addEventListener('change', function (e) {
+    state.includeMine = e.target.checked;
+    refresh();
+  });
 
   function renderFooter(d) {
     document.getElementById('dataScope').innerHTML =

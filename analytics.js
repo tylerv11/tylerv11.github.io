@@ -5,9 +5,17 @@
   var WORKER_URL = 'https://portfolio-analytics.tylervincent-ai.workers.dev';
   var COLLECT_URL = WORKER_URL + '/collect';
 
+  // Self-exclusion moved server-side. It used to be a hard return here, which
+  // meant an admin browser sent nothing at all — and therefore could never
+  // appear in the dashboard's device list to be labelled. Now the browser
+  // declares itself, the Worker flags that client id as owner-owned, and
+  // /stats filters those events out by default. Same effect on the metrics,
+  // except the data still exists behind the "Show my sessions" toggle.
+  var isAdmin = false;
   try {
     if (location.search.indexOf('admin=1') !== -1) localStorage.setItem('isAdmin', 'true');
-    if (localStorage.getItem('isAdmin') === 'true') return; // layer-1 self-exclusion
+    isAdmin = localStorage.getItem('isAdmin') === 'true';
+    if (localStorage.getItem('trackingOff') === 'true') return; // hard opt-out, records nothing
   } catch (e) {}
 
   var session;
@@ -19,10 +27,26 @@
     }
   } catch (e) { session = Math.random().toString(36).slice(2); }
 
+  // Durable per-browser id, so "this is my phone" can be remembered server-side.
+  // The visitor hash can't do that job: it's salted with a salt that rotates
+  // daily, so the same device is a different hash tomorrow and any exclusion
+  // list keyed on it would silently stop working after 24 hours. This is a
+  // random value this browser generated about itself — no fingerprinting, no
+  // cross-site meaning, and clearing site data resets it.
+  var cid;
+  try {
+    cid = localStorage.getItem('_av_cid');
+    if (!cid) {
+      cid = (crypto && crypto.randomUUID) ? crypto.randomUUID()
+        : Math.random().toString(36).slice(2) + Date.now().toString(36) + Math.random().toString(36).slice(2);
+      localStorage.setItem('_av_cid', cid);
+    }
+  } catch (e) { cid = null; }
+
   var page = location.pathname || '/';
 
   function send(type, target, ms) {
-    var payload = JSON.stringify({ type: type, target: target || null, page: page, ms: typeof ms === 'number' ? ms : null, session: session });
+    var payload = JSON.stringify({ type: type, target: target || null, page: page, ms: typeof ms === 'number' ? ms : null, session: session, cid: cid, admin: isAdmin || undefined });
     // fetch+keepalive first, not sendBeacon. sendBeacon returns true for
     // "queued", not "delivered", so a beacon that dies in transit reports
     // success and suppresses any fallback — silent total data loss. Verified
