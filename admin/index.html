@@ -139,6 +139,33 @@
     border-top: 1px solid var(--border); padding-top: 14px; margin-top: 8px;
   }
 
+  .topmeta {
+    display: flex; gap: 20px; flex-wrap: wrap; align-items: center;
+    font-size: 12px; color: var(--text-muted); margin: -6px 0 18px;
+  }
+  .topmeta .drill {
+    display: inline-flex; align-items: center; gap: 8px; color: var(--text-primary);
+    background: var(--series-1); border-radius: 999px; padding: 3px 6px 3px 11px;
+    font-size: 11px; font-weight: 600;
+  }
+  .topmeta .drill button {
+    border: 0; background: rgba(0,0,0,.28); color: inherit; cursor: pointer;
+    border-radius: 999px; width: 17px; height: 17px; line-height: 1; font-size: 12px;
+  }
+
+  /* Anything that narrows the dashboard when clicked advertises it the same way. */
+  .clickable { cursor: pointer; }
+  .clickable:hover { opacity: .78; }
+  rect.clickable:hover, path.clickable:hover { opacity: .78; }
+
+  .toggle { display: inline-flex; border: 1px solid var(--border); border-radius: 7px; overflow: hidden; }
+  .toggle button {
+    border: 0; background: transparent; color: var(--text-muted); cursor: pointer;
+    font-size: 11px; font-weight: 600; padding: 4px 10px;
+  }
+  .toggle button.on { background: var(--series-1); color: var(--text-primary); }
+  .card .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+
   .hidden { display: none !important; }
   .empty { color: var(--text-muted); font-size: 13px; padding: 20px 0; text-align: center; }
 
@@ -192,6 +219,8 @@
     </div>
   </header>
 
+  <div class="topmeta" id="topMeta"></div>
+
   <div class="kpi-grid" id="kpiGrid"></div>
 
   <div class="two-col">
@@ -201,8 +230,14 @@
       <div id="platformChart"></div>
     </div>
     <div class="card">
-      <h2>Page Views</h2>
-      <div class="sub">Unique viewers · views · share of total views</div>
+      <div class="head">
+        <h2 id="pageCardTitle">Page Views</h2>
+        <div class="toggle">
+          <button id="modePages" class="on">Pages</button>
+          <button id="modeViewers">Viewers</button>
+        </div>
+      </div>
+      <div class="sub" id="pageCardSub">Unique viewers · views · share of total views</div>
       <div id="pageChart"></div>
     </div>
   </div>
@@ -258,7 +293,8 @@
   var EVENT_TYPES = ['pageview','resume_view','pdf_view','youtube_click','tile_expand',
                       'tile_link','outbound','nav','section_dwell','tile_dwell','page_time'];
 
-  var state = { password: null, range: '30d', types: [], data: null };
+  // drill: one active {dim,value,label} narrowing every panel, or null.
+  var state = { password: null, range: '30d', types: [], data: null, drill: null, pageMode: 'pages' };
 
   // ---------------- auth ----------------
   function getStoredPassword() {
@@ -326,7 +362,15 @@
     return fetch(WORKER_URL + '/stats', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: pw, range: state.range, types: state.types.length ? state.types : undefined }),
+      body: JSON.stringify({
+        password: pw,
+        range: state.range,
+        types: state.types.length ? state.types : undefined,
+        device: state.drill && state.drill.dim === 'device' ? state.drill.value : undefined,
+        page: state.drill && state.drill.dim === 'page' ? state.drill.value : undefined,
+        visitor: state.drill && state.drill.dim === 'visitor' ? state.drill.value : undefined,
+        target: state.drill && state.drill.dim === 'target' ? state.drill.value : undefined,
+      }),
     }).then(function (res) {
       if (res.status === 401) return Promise.reject(new Error('401'));
       if (!res.ok) return Promise.reject(new Error('http_' + res.status));
@@ -405,6 +449,43 @@
     return d.toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
   }
 
+  // ---------------- drill-down ----------------
+  function setDrill(dim, value, label) {
+    if (!value) return;
+    // Clicking the element that's already active toggles it back off.
+    if (state.drill && state.drill.dim === dim && state.drill.value === value) state.drill = null;
+    else state.drill = { dim: dim, value: value, label: label };
+    refresh();
+  }
+  function clearDrill() { state.drill = null; refresh(); }
+  function isDrilled(dim, value) {
+    return !!(state.drill && state.drill.dim === dim && state.drill.value === value);
+  }
+
+  function fmtRange(a, b) {
+    if (!a || !b) return '—';
+    return fmtDate(a) + ' — ' + fmtDate(b);
+  }
+
+  function renderTopMeta(d) {
+    var el = document.getElementById('topMeta');
+    var html = '<span>Last refreshed: ' + fmtDate(d.refreshed_ts) + '</span>' +
+      '<span>Data range: ' + fmtRange(d.first_event_ts, d.last_event_ts) + '</span>';
+    if (state.drill) {
+      html += '<span class="drill">' + esc(state.drill.label) +
+        '<button type="button" id="clearDrill" title="Clear this filter">×</button></span>';
+    }
+    el.innerHTML = html;
+    var btn = document.getElementById('clearDrill');
+    if (btn) btn.addEventListener('click', clearDrill);
+  }
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
   function renderKPIs(d) {
     var cards = [
       { label: 'Site Visits', value: d.kpi.site_visits.toLocaleString() },
@@ -443,45 +524,96 @@
       var color = SERIES[i % SERIES.length];
       paths += '<path d="M' + cx + ',' + cy + ' L' + x1.toFixed(2) + ',' + y1.toFixed(2) +
         ' A' + r + ',' + r + ' 0 ' + large + ' 1 ' + x2.toFixed(2) + ',' + y2.toFixed(2) +
-        ' Z" fill="' + color + '" stroke="var(--surface-1)" stroke-width="2"><title>' +
-        row.device + ': ' + Math.round(frac * 100) + '%</title></path>';
-      legend += '<span class="item"><span class="swatch" style="background:' + color + '"></span>' +
-        row.device + ' — ' + Math.round(frac * 100) + '%</span>';
+        ' Z" fill="' + color + '" stroke="var(--surface-1)" stroke-width="2" class="clickable"' +
+        ' data-device="' + esc(row.device) + '" opacity="' + (isDrilled('device', row.device) ? 1 : 0.92) + '"><title>' +
+        esc(row.device) + ': ' + Math.round(frac * 100) + '% — click to filter</title></path>';
+      legend += '<span class="item clickable" data-device="' + esc(row.device) + '">' +
+        '<span class="swatch" style="background:' + color + '"></span>' +
+        esc(row.device) + ' — ' + Math.round(frac * 100) + '%</span>';
       start = end;
     });
     el.innerHTML = '<svg viewBox="0 0 180 180" width="180" height="180" role="img" aria-label="Platform breakdown pie chart">' +
       paths + '</svg><div class="legend">' + legend + '</div>';
+    el.querySelectorAll('[data-device]').forEach(function (n) {
+      n.addEventListener('click', function () {
+        var v = n.getAttribute('data-device');
+        setDrill('device', v, 'Platform: ' + v);
+      });
+    });
   }
 
-  // ---------------- render: page views bar list ----------------
-  function renderPageBars(rows) {
+  // ---------------- render: pages / viewers switchable bar list ----------------
+  function pageName(p) {
+    if (p === '/') return 'Index';
+    var n = p.replace(/^\//, '').replace(/\.html$/, '');
+    return n.charAt(0).toUpperCase() + n.slice(1);
+  }
+
+  function renderPageCard(d) {
     var el = document.getElementById('pageChart');
-    if (!rows || !rows.length) { el.innerHTML = '<div class="empty">No pageview data yet.</div>'; return; }
-    var totalViews = rows.reduce(function (s, r) { return s + r.views; }, 0);
-    var max = Math.max.apply(null, rows.map(function (r) { return r.views; }));
+    var viewers = state.pageMode === 'viewers';
+    document.getElementById('pageCardTitle').textContent = viewers ? 'Viewers' : 'Page Views';
+    document.getElementById('pageCardSub').textContent = viewers
+      ? 'Individual visitors — page views · site visits, descending'
+      : 'Unique viewers · views · share of total views';
+    document.getElementById('modePages').className = viewers ? '' : 'on';
+    document.getElementById('modeViewers').className = viewers ? 'on' : '';
+
+    var rows = viewers ? d.viewers : d.pages;
+    if (!rows || !rows.length) {
+      el.innerHTML = '<div class="empty">No ' + (viewers ? 'viewer' : 'pageview') + ' data yet.</div>';
+      return;
+    }
+
+    var valOf = function (r) { return viewers ? r.views : r.views; };
+    var total = rows.reduce(function (s, r) { return s + valOf(r); }, 0);
+    var max = Math.max.apply(null, rows.map(valOf));
     var html = '';
     rows.forEach(function (row) {
-      var pct = totalViews ? Math.round((row.views / totalViews) * 100) : 0;
-      var w = max ? Math.round((row.views / max) * 100) : 0;
-      var name = row.page === '/' ? 'Index' : row.page.replace(/^\//, '').replace(/\.html$/, '');
-      name = name.charAt(0).toUpperCase() + name.slice(1);
-      html += '<div class="bar-row"><div class="label" title="' + row.page + '">' + name + '</div>' +
-        '<div class="track"><div class="fill" style="width:' + w + '%"></div></div>' +
-        '<div class="meta">' + row.uniques + ' unique · ' + row.views + ' views · ' + pct + '%</div></div>';
+      var v = valOf(row);
+      var w = max ? Math.round((v / max) * 100) : 0;
+      var dim = viewers ? 'visitor' : 'page';
+      var key = viewers ? row.visitor : row.page;
+      // Visitor hashes are 16 chars of salted digest and mean nothing to a human;
+      // a short prefix is enough to tell rows apart, full value stays in the tooltip.
+      var name = viewers ? 'Viewer ' + String(row.visitor).slice(0, 6) : pageName(row.page);
+      var meta = viewers
+        ? v + ' page views · ' + row.visits + ' visits'
+        : row.uniques + ' unique · ' + v + ' views · ' + (total ? Math.round((v / total) * 100) : 0) + '%';
+      html += '<div class="bar-row clickable" data-dim="' + dim + '" data-key="' + esc(key) + '" ' +
+        'data-label="' + esc(name) + '">' +
+        '<div class="label" title="' + esc(key) + '">' + esc(name) + '</div>' +
+        '<div class="track"><div class="fill" style="width:' + w + '%;opacity:' +
+        (isDrilled(dim, key) ? 1 : 0.85) + '"></div></div>' +
+        '<div class="meta">' + meta + '</div></div>';
     });
     el.innerHTML = html;
+    el.querySelectorAll('[data-dim]').forEach(function (n) {
+      n.addEventListener('click', function () {
+        setDrill(n.getAttribute('data-dim'), n.getAttribute('data-key'),
+          (n.getAttribute('data-dim') === 'visitor' ? '' : 'Page: ') + n.getAttribute('data-label'));
+      });
+    });
   }
 
   // ---------------- render: pareto (bars + cumulative % line) ----------------
-  function labelFor(row) {
+  var KIND = {
+    resume_view: 'Resume', pdf_view: 'PDF', youtube_click: 'YouTube',
+    tile_expand: 'Tile opened', tile_link: 'Tile link',
+    section_dwell: 'Section', tile_dwell: 'Tile dwell',
+  };
+
+  // The axis label is the thing itself ("hermes"), not the verb ("Tile opened:
+  // …"). Rotated axis labels get truncated around 14 chars, so a shared prefix
+  // ate the only part that identified the row. The verb moves to the tooltip.
+  function shortLabel(row) {
     if (row.type === 'resume_view') return 'Resume';
-    if (row.type === 'pdf_view') return 'PDF: ' + (row.target || '');
-    if (row.type === 'youtube_click') return 'YouTube: ' + (row.target || '');
-    if (row.type === 'tile_expand') return 'Tile opened: ' + (row.target || '');
-    if (row.type === 'tile_link') return 'Tile link: ' + (row.target || '');
-    if (row.type === 'section_dwell') return 'Section: ' + (row.target || '');
-    if (row.type === 'tile_dwell') return 'Tile: ' + (row.target || '');
-    return (row.target || row.type);
+    return String(row.target || row.type);
+  }
+  function labelFor(row) {
+    var kind = KIND[row.type] || row.type;
+    if (row.type === 'resume_view') return 'Resume';
+    return kind + ': ' + (row.target || '');
   }
 
   function renderPareto(containerId, rows, valueKey, valueFmt) {
@@ -504,15 +636,21 @@
       var y = padT + (plotH - barH);
       var color = SERIES[i % SERIES.length];
       bars += '<rect x="' + (x + bw * 0.12).toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + (bw * 0.76).toFixed(1) +
-        '" height="' + barH.toFixed(1) + '" rx="3" fill="' + color + '"><title>' + labelFor(row) + ': ' + valueFmt(v) + '</title></rect>';
+        '" height="' + barH.toFixed(1) + '" rx="3" fill="' + color + '" class="clickable"' +
+        (row.target ? ' data-target="' + esc(row.target) + '"' : '') +
+        ' opacity="' + (row.target && isDrilled('target', row.target) ? 1 : 0.92) + '"><title>' +
+        esc(labelFor(row)) + ' — ' + valueFmt(v) + (row.target ? ' · click to filter' : '') +
+        '</title></rect>';
       var lx = x + bw / 2, ly = padT + plotH - cumPct * plotH;
       linePts.push(lx.toFixed(1) + ',' + ly.toFixed(1));
       dots += '<circle cx="' + lx.toFixed(1) + '" cy="' + ly.toFixed(1) + '" r="2.5" fill="var(--text-primary)"><title>' +
         Math.round(cumPct * 100) + '% cumulative</title></circle>';
-      var lbl = labelFor(row);
-      if (lbl.length > 14) lbl = lbl.slice(0, 13) + '…';
+      var lbl = shortLabel(row);
+      if (lbl.length > 16) lbl = lbl.slice(0, 15) + '…';
       labels += '<text x="' + (x + bw / 2).toFixed(1) + '" y="' + (h - padB + 16) + '" font-size="10" text-anchor="end" ' +
-        'transform="rotate(-40 ' + (x + bw / 2).toFixed(1) + ',' + (h - padB + 16) + ')">' + lbl + '</text>';
+        'class="clickable"' + (row.target ? ' data-target="' + esc(row.target) + '"' : '') +
+        ' transform="rotate(-40 ' + (x + bw / 2).toFixed(1) + ',' + (h - padB + 16) + ')">' + esc(lbl) +
+        '<title>' + esc(labelFor(row)) + ' — ' + valueFmt(v) + '</title></text>';
     });
     var refY = padT + plotH - 0.8 * plotH;
     var svg = '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" height="' + h + '" role="img" aria-label="Pareto chart">' +
@@ -524,6 +662,12 @@
       dots + labels +
       '</svg>';
     el.innerHTML = svg;
+    el.querySelectorAll('[data-target]').forEach(function (n) {
+      n.addEventListener('click', function () {
+        var v = n.getAttribute('data-target');
+        setDrill('target', v, 'Sessions that hit: ' + v);
+      });
+    });
   }
 
   // ---------------- render: daily visits bars + 7d rolling avg ----------------
@@ -579,28 +723,58 @@
   function renderTable(rows) {
     var el = document.getElementById('eventsTable');
     if (!rows || !rows.length) { el.innerHTML = '<div class="empty">No events recorded yet for the current filters.</div>'; return; }
-    var html = '<table><thead><tr><th>Time</th><th>Type</th><th>Target</th><th>Page</th><th>Duration</th><th>Device</th></tr></thead><tbody>';
+    var html = '<table><thead><tr><th>Time</th><th>Type</th><th>Target</th><th>Page</th><th>Duration</th><th>Device</th><th>Viewer</th></tr></thead><tbody>';
     rows.forEach(function (r) {
-      html += '<tr><td>' + fmtDate(r.ts) + '</td><td>' + r.type + '</td><td>' + (r.target || '—') + '</td>' +
-        '<td>' + r.page + '</td><td>' + (r.ms ? fmtMs(r.ms) : '—') + '</td><td>' + (r.device || '—') + '</td></tr>';
+      var cell = function (dim, key, label) {
+        return key
+          ? '<td class="clickable" data-dim="' + dim + '" data-key="' + esc(key) + '" data-label="' + esc(label) + '">' + esc(label) + '</td>'
+          : '<td>—</td>';
+      };
+      html += '<tr><td>' + fmtDate(r.ts) + '</td><td>' + esc(r.type) + '</td>' +
+        cell('target', r.target, r.target || '') +
+        cell('page', r.page, r.page || '') +
+        '<td>' + (r.ms ? fmtMs(r.ms) : '—') + '</td>' +
+        cell('device', r.device, r.device || '') +
+        cell('visitor', r.visitor, r.visitor ? String(r.visitor).slice(0, 6) : '') +
+        '</tr>';
     });
     html += '</tbody></table>';
     el.innerHTML = html;
+    el.querySelectorAll('[data-dim]').forEach(function (n) {
+      n.addEventListener('click', function () {
+        var dim = n.getAttribute('data-dim'), label = n.getAttribute('data-label');
+        var pretty = dim === 'target' ? 'Sessions that hit: ' + label
+          : dim === 'page' ? 'Page: ' + label
+          : dim === 'device' ? 'Platform: ' + label
+          : 'Viewer ' + label;
+        setDrill(dim, n.getAttribute('data-key'), pretty);
+      });
+    });
   }
 
   function renderFooter(d) {
     document.getElementById('dataScope').innerHTML =
-      '<span>Last refreshed: ' + fmtDate(d.refreshed_ts) + '</span>' +
       '<span>First recorded event: ' + fmtDate(d.first_event_ts) + '</span>' +
       '<span>Most recent event: ' + fmtDate(d.last_event_ts) + '</span>';
   }
 
+  // Mode is a pure view switch over data already in hand — no refetch needed.
+  document.getElementById('modePages').addEventListener('click', function () {
+    state.pageMode = 'pages';
+    if (state.data) renderPageCard(state.data);
+  });
+  document.getElementById('modeViewers').addEventListener('click', function () {
+    state.pageMode = 'viewers';
+    if (state.data) renderPageCard(state.data);
+  });
+
   function render() {
     var d = state.data;
     if (!d) return;
+    renderTopMeta(d);
     renderKPIs(d);
     renderPie(d.platform);
-    renderPageBars(d.pages);
+    renderPageCard(d);
     renderPareto('engagementPareto', d.engagement_pareto, 'n', function (v) { return v + ' clicks'; });
     renderPareto('dwellPareto', d.dwell_pareto, 'total_ms', fmtMs);
     renderVisits(d.daily_visits);
