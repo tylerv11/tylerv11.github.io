@@ -220,6 +220,25 @@ async function handleStats(request, env) {
     baseParams.push(...typeFilter);
   }
 
+  // Drill-down: clicking a chart element narrows every panel at once.
+  // device/page/visitor are properties of an individual row, so they filter
+  // row-wise. `target` is not — pageviews and page_time carry no target, so a
+  // row-wise target filter would blank most of the dashboard. The question a
+  // user actually means by clicking "hermes" is "what did the people who
+  // opened hermes do?", so target scopes to those sessions instead.
+  const str = (v) => (typeof v === 'string' && v.length && v.length <= 300 ? v : null);
+  const drillDevice = str(body.device);
+  const drillPage = str(body.page);
+  const drillVisitor = str(body.visitor);
+  const drillTarget = str(body.target);
+  if (drillDevice) { baseConds.push('device = ?'); baseParams.push(drillDevice); }
+  if (drillPage) { baseConds.push('page = ?'); baseParams.push(drillPage); }
+  if (drillVisitor) { baseConds.push('visitor = ?'); baseParams.push(drillVisitor); }
+  if (drillTarget) {
+    baseConds.push('session IN (SELECT session FROM events WHERE target = ? AND session IS NOT NULL)');
+    baseParams.push(drillTarget);
+  }
+
   // q(select, extraConds, tailSql, extraParams) -> SELECT ... WHERE <base+extra> <tailSql>
   const q = (selectSql, extraConds, tailSql, extraParams) => {
     const conds = [...baseConds, ...(extraConds || [])];
@@ -239,6 +258,7 @@ async function handleStats(request, env) {
     dwellRows,
     dailyVisits,
     recentRows,
+    viewerRows,
     firstEvent,
     lastEvent,
   ] = await Promise.all([
@@ -251,9 +271,13 @@ async function handleStats(request, env) {
     q('SELECT type, target, COUNT(*) AS n FROM events', ["type IN ('resume_view','pdf_view','youtube_click','tile_expand','tile_link')"], 'GROUP BY type, target ORDER BY n DESC LIMIT 25'),
     q('SELECT type, target, SUM(ms) AS total_ms FROM events', ["type IN ('section_dwell','tile_dwell')", 'ms IS NOT NULL'], 'GROUP BY type, target ORDER BY total_ms DESC LIMIT 25'),
     q('SELECT day, COUNT(DISTINCT session) AS visits FROM events', ['session IS NOT NULL'], 'GROUP BY day ORDER BY day ASC'),
-    q('SELECT ts, type, target, page, ms, device FROM events', [], 'ORDER BY ts DESC LIMIT 100'),
-    env.DB.prepare('SELECT MIN(ts) AS ts FROM events').all(),
-    env.DB.prepare('SELECT MAX(ts) AS ts FROM events').all(),
+    q('SELECT ts, type, target, page, ms, device, visitor FROM events', [], 'ORDER BY ts DESC LIMIT 100'),
+    q('SELECT visitor, COUNT(DISTINCT session) AS visits, SUM(CASE WHEN type=\'pageview\' THEN 1 ELSE 0 END) AS views FROM events',
+      ['visitor IS NOT NULL'], 'GROUP BY visitor ORDER BY views DESC, visits DESC LIMIT 20'),
+    // Scoped to the active filters, so the header reads as the range of the
+    // data actually on screen rather than the range of the whole table.
+    q('SELECT MIN(ts) AS ts FROM events', []),
+    q('SELECT MAX(ts) AS ts FROM events', []),
   ]);
 
   return json({
@@ -269,6 +293,7 @@ async function handleStats(request, env) {
     dwell_pareto: dwellRows.results,
     daily_visits: dailyVisits.results,
     recent_events: recentRows.results,
+    viewers: viewerRows.results,
     first_event_ts: firstEvent.results[0]?.ts || null,
     last_event_ts: lastEvent.results[0]?.ts || null,
     refreshed_ts: Date.now(),
