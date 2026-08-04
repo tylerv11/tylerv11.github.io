@@ -155,7 +155,11 @@ async function handleCollect(request, env, origin) {
     return new Response(null, { status: 204 });
   }
 
-  const page = typeof body.page === 'string' ? body.page.slice(0, 200) : '/';
+  // '/' and '/index.html' are the same page but arrive as different paths
+  // depending on how the visitor got there, which split the home page into two
+  // rows in every per-page breakdown. Normalize on write so it can't recur.
+  let page = typeof body.page === 'string' ? body.page.slice(0, 200) : '/';
+  page = page.replace(/\/index\.html$/i, '/');
   const target = typeof body.target === 'string' ? body.target.slice(0, 300) : null;
   const ms = Number.isFinite(body.ms) ? Math.max(0, Math.min(1000 * 60 * 60 * 6, Math.round(body.ms))) : null;
   const session = typeof body.session === 'string' ? body.session.slice(0, 64) : null;

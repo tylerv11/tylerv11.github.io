@@ -17,7 +17,7 @@ tylerv11.github.io  ──POST /collect──▶  Cloudflare Worker  ──▶  
 | --- | --- | --- |
 | Tracker | `analytics.js` | ~120 lines, no dependencies, `defer`-loaded |
 | Collector + API | `worker/analytics-worker.js` | Cloudflare Worker |
-| Storage | D1 `portfolio-analytics` | one `events` table, 400-day retention |
+| Storage | D1 `portfolio-analytics` | `events` (400-day retention) + `devices` |
 | Dashboard | `admin/index.html` | served at `/admin`, hand-rolled SVG charts |
 | Health probe | `.github/workflows/analytics-health.yml` | weekdays 02:00 PT |
 
@@ -53,14 +53,37 @@ so the same person on two different days is two different hashes — which is wh
 "unique viewers" over a long range reads high. This is the Plausible approach:
 it makes cross-day tracking of an individual impossible by construction.
 
-## Self-exclusion
+## Self-exclusion — how your own visits are kept out
 
-Your own visits are excluded when `localStorage.isAdmin === 'true'`. Logging
-into `/admin` sets it automatically. The dashboard's **"This browser: tracked /
-not tracked"** button shows and toggles the current state — check it before
-concluding tracking is broken, because logging in silently stops your own
-events from being recorded. To exclude a browser without logging in, visit any
-page with `?admin=1`.
+Exclusion is **server-side**, keyed on a durable client id, so it follows you
+across every browser you sign in from instead of living in one browser's
+localStorage.
+
+Each browser generates a random UUID once and keeps it in
+`localStorage._av_cid`. It's a value the browser made up about itself — not a
+fingerprint, no cross-site meaning, reset by clearing site data. Every event
+carries it, and every client id that shows up lands in the `devices` table.
+
+In the dashboard, **My Devices** opens a drawer listing every browser that has
+ever visited, with platform, visit count and last-seen so you can tell them
+apart. Name one and tick **Mine**, and its events stop counting toward your
+metrics everywhere. **Show my sessions** in the toolbar brings them back into
+view — the data is filtered, not discarded.
+
+A browser that has declared itself admin (logging into `/admin`, or visiting any
+page with `?admin=1`) is flagged as yours automatically on its first event, so
+you normally don't have to touch the drawer at all.
+
+`is_owner` is only ever raised by `/collect`, never lowered — so un-ticking a
+device is not silently undone by its next pageview.
+
+For a genuine hard opt-out that records nothing at all, set
+`localStorage.trackingOff = 'true'` in that browser.
+
+> **Why not key the exclusion on the visitor hash?** Because it's salted with a
+> salt that rotates daily. The same phone is a different hash tomorrow, so an
+> exclusion list keyed on it would appear to work and then quietly stop after 24
+> hours. That's why the durable client id exists.
 
 ## Events collected
 
@@ -94,6 +117,10 @@ wrangler d1 execute portfolio-analytics --remote \
 wrangler d1 execute portfolio-analytics --remote \
   --command "SELECT ts, type, target, page FROM events ORDER BY id DESC LIMIT 20;"
 
+# Who's registered as a device, and which are marked yours
+wrangler d1 execute portfolio-analytics --remote \
+  --command "SELECT cid, label, is_owner, device FROM devices ORDER BY last_seen DESC;"
+
 # Wipe everything (the dashboard's Reset Metrics button does the same)
 wrangler d1 execute portfolio-analytics --remote --command "DELETE FROM events;"
 
@@ -114,8 +141,9 @@ wait ~90s.
 
 **"I clicked around and nothing showed up."** In order of likelihood:
 
-1. **You're excluded.** Check the tracking button on `/admin`. This is the most
-   common cause by a wide margin.
+1. **You're excluded.** Open **My Devices** and check whether this browser is
+   ticked as Mine, or just turn on **Show my sessions**. This is the most common
+   cause by a wide margin.
 2. **Cached script.** GitHub Pages serves `analytics.js` with an HTTP cache;
    after a deploy your browser may hold the old copy. Hard reload:
    `Cmd+Shift+R`.
