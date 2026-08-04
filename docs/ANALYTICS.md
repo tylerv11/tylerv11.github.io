@@ -15,14 +15,26 @@ tylerv11.github.io  ──POST /collect──▶  Cloudflare Worker  ──▶  
 
 | Piece | Where | Notes |
 | --- | --- | --- |
-| Tracker | `analytics.js` | ~120 lines, no dependencies, `defer`-loaded |
-| Collector + API | `worker/analytics-worker.js` | Cloudflare Worker |
+| Tracker | `analytics.js` (this repo) | ~120 lines, no dependencies, `defer`-loaded |
+| Collector + API | `analytics-worker.js` — **separate private repo** [`tylerv11/portfolio-analytics-worker`](https://github.com/tylerv11/portfolio-analytics-worker) | Cloudflare Worker |
 | Storage | D1 `portfolio-analytics` | `events` (400-day retention) + `devices` |
-| Dashboard | `admin/index.html` | served at `/admin`, hand-rolled SVG charts |
-| Health probe | `.github/workflows/analytics-health.yml` | weekdays 02:00 PT |
+| Dashboard | `admin/index.html` (this repo) | served at `/admin`, hand-rolled SVG charts |
+| Health probe | `.github/workflows/analytics-health.yml` (this repo) | weekdays 02:00 PT |
 
 Worker URL: `https://portfolio-analytics.tylervincent-ai.workers.dev`
 Cloudflare account: **tylervincent.ai@gmail.com** (not the account Hermes uses).
+
+**Why the Worker lives in a separate repo:** this site's repo is public. The
+tracker and dashboard have to be public too — a browser has to download them
+to run them, so hiding them here would achieve nothing. The Worker source is
+different: it's deployed independently via `wrangler deploy`, never served to
+a browser, and it's where the actual design lives (self-exclusion, drill-down
+queries, dwell scoring). Splitting it into a private repo hides that without
+touching how anything deploys. Full history was preserved with `git subtree
+split` when it moved (2026-08-04).
+
+Local clone for Worker changes: `~/portfolio-analytics-worker` (sibling to
+this repo, not inside it).
 
 ## Costs
 
@@ -43,7 +55,7 @@ The GitHub secret is the same value as the Worker's `ADMIN_PASSWORD` — the
 health check authenticates against `/stats`. **If you change the password,
 change it in both places** or the daily check starts failing.
 
-`worker/.dev.vars` (local dev only) is gitignored.
+`.dev.vars` (local dev only) is gitignored in the Worker's own repo.
 
 ## Privacy
 
@@ -107,7 +119,7 @@ open in the background does not inflate it.
 ## Common tasks
 
 ```bash
-cd worker
+cd ~/portfolio-analytics-worker
 
 # What's in there right now
 wrangler d1 execute portfolio-analytics --remote \
