@@ -123,10 +123,13 @@
   .legend .swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
 
   .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 12px; }
-  .bar-row .label { width: 190px; flex: 0 0 190px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .bar-row .track { flex: 1; background: var(--grid); border-radius: 4px; height: 16px; position: relative; overflow: hidden; }
+  /* label + meta are fixed-width, so the bar itself only gets what's left. In a
+     half-width card that was ~20px — the chart was effectively invisible. Keep
+     these tight and let min-width:0 allow the track to actually shrink/grow. */
+  .bar-row .label { width: 120px; flex: 0 0 120px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-row .track { flex: 1 1 auto; min-width: 40px; background: var(--grid); border-radius: 4px; height: 16px; position: relative; overflow: hidden; }
   .bar-row .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; background: var(--series-1); }
-  .bar-row .meta { width: 220px; flex: 0 0 220px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  .bar-row .meta { flex: 0 0 auto; color: var(--text-muted); font-variant-numeric: tabular-nums; white-space: nowrap; font-size: 11px; }
 
   table { width: 100%; border-collapse: collapse; font-size: 12px; }
   th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--grid); white-space: nowrap; }
