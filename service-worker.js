@@ -45,6 +45,14 @@ self.addEventListener('fetch', function(event) {
   var req = event.request;
   var url = new URL(req.url);
 
+  // Analytics: never cache. The collector must always hit the network (fresh
+  // beacons, no replay-from-cache), and the admin dashboard must never serve
+  // stale metrics. Both are excluded before any other routing decision.
+  var isAnalyticsWorker = /(^|\.)workers\.dev$/.test(url.hostname) ||
+                           url.hostname === 'portfolio-analytics.workers.dev';
+  var isAdminRoute = url.pathname === '/admin' || url.pathname.indexOf('/admin/') === 0;
+  if (isAnalyticsWorker || isAdminRoute) return;
+
   // Only handle GET requests on our origin or whitelisted CDNs
   if (req.method !== 'GET') return;
 
