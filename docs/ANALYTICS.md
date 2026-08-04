@@ -173,7 +173,8 @@ section taller than 2× the viewport can never reach a 0.5 ratio no matter how
 it's scrolled — `#work` is ~5458px against a ~1035px viewport, a hard ceiling of
 0.19. Dwell would never have fired on it. `isEngaged()` handles both cases:
 small elements qualify on their own ratio, tall ones qualify by filling the
-viewport. Note that dwell tracking has been verified by reasoning and code
-inspection but not by an automated end-to-end run, because headless browsers
-report `visibilityState: 'hidden'` and don't run IntersectionObserver callbacks
-at all.
+viewport. Confirmed working in production — `section_dwell` and `tile_dwell`
+rows arrive from real browsing. Note that it cannot be verified through browser
+automation: an automated tab reports `visibilityState: 'hidden'` permanently,
+and browsers don't run IntersectionObserver callbacks for a hidden tab, so dwell
+will always look broken from a headless check. Test it by hand.
