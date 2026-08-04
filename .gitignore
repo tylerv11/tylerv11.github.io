@@ -36,8 +36,7 @@ Thumbs.db
 portfolio_knowledge_base.raw.md
 portfolio_knowledge_base.backup.md
 
-# Analytics Worker — local dev secrets & state (CRITICAL — never commit)
-worker/.dev.vars
-worker/.wrangler/
-worker/.env
+# Analytics Worker — moved to a private repo (tylerv11/portfolio-analytics-worker).
+# Ignored here so it can never be accidentally re-added to this public repo.
+worker/
 
