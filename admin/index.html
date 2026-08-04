@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Portfolio Analytics — Admin</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<style>
+  :root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page:           #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --grid:           #e1e0d9;
+    --axis:           #c3c2b7;
+    --border:         rgba(11,11,11,0.10);
+    --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a; --series-4: #eda100;
+    --series-5: #e87ba4; --series-6: #008300; --series-7: #4a3aa7; --series-8: #e34948;
+    --good: #0ca30c; --warning: #fab219; --serious: #ec835a; --critical: #d03b3b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --surface-1:      #1a1a19;
+      --page:           #0d0d0d;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --grid:           #2c2c2a;
+      --axis:           #383835;
+      --border:         rgba(255,255,255,0.10);
+      --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --series-4: #c98500;
+      --series-5: #d55181; --series-6: #008300; --series-7: #9085e9; --series-8: #e66767;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface-1: #1a1a19; --page: #0d0d0d; --text-primary: #ffffff; --text-secondary: #c3c2b7;
+    --text-muted: #898781; --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --series-4: #c98500;
+    --series-5: #d55181; --series-6: #008300; --series-7: #9085e9; --series-8: #e66767;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--page);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  a { color: var(--series-1); }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 24px 20px 80px; }
+
+  /* ---- login gate ---- */
+  #loginGate {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  }
+  .login-card {
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px;
+    padding: 32px; width: 320px; text-align: center;
+  }
+  .login-card h1 { font-size: 16px; margin: 0 0 4px; }
+  .login-card p { color: var(--text-secondary); font-size: 13px; margin: 0 0 20px; }
+  .login-card input {
+    width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--page); color: var(--text-primary); font-size: 14px; margin-bottom: 10px;
+  }
+  .login-card button, .btn {
+    width: 100%; padding: 10px 12px; border-radius: 8px; border: none;
+    background: var(--series-1); color: #fff; font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  .btn.secondary { background: transparent; border: 1px solid var(--border); color: var(--text-primary); width: auto; }
+  .btn.danger { background: var(--critical); width: auto; }
+  #loginError { color: var(--critical); font-size: 13px; min-height: 18px; margin-top: 8px; }
+
+  /* ---- header / filters ---- */
+  header.topbar {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    margin-bottom: 20px;
+  }
+  header.topbar h1 { font-size: 18px; margin: 0; }
+  .filters { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  select, .multiselect summary {
+    background: var(--surface-1); color: var(--text-primary); border: 1px solid var(--border);
+    border-radius: 8px; padding: 7px 10px; font-size: 13px; cursor: pointer;
+  }
+  .multiselect { position: relative; }
+  .multiselect summary { list-style: none; }
+  .multiselect summary::-webkit-details-marker { display: none; }
+  .multiselect .panel {
+    position: absolute; top: calc(100% + 4px); left: 0; background: var(--surface-1);
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px; z-index: 20; min-width: 200px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+  .multiselect .panel label { display: flex; gap: 6px; align-items: center; font-size: 13px; padding: 4px 2px; }
+  .actions { display: flex; gap: 8px; }
+
+  /* ---- cards / sections ---- */
+  .card {
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px;
+    padding: 18px; margin-bottom: 16px;
+  }
+  .card h2 { font-size: 14px; margin: 0 0 14px; color: var(--text-primary); }
+  .card .sub { font-size: 12px; color: var(--text-muted); margin: -10px 0 14px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 16px; }
+  .kpi-card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+  .kpi-card .label { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
+  .kpi-card .value { font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  @media (max-width: 820px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-top: 10px; font-size: 12px; color: var(--text-secondary); }
+  .legend .item { display: flex; align-items: center; gap: 6px; }
+  .legend .swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 12px; }
+  .bar-row .label { width: 190px; flex: 0 0 190px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-row .track { flex: 1; background: var(--grid); border-radius: 4px; height: 16px; position: relative; overflow: hidden; }
+  .bar-row .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; background: var(--series-1); }
+  .bar-row .meta { width: 220px; flex: 0 0 220px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--grid); white-space: nowrap; }
+  th { color: var(--text-muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.03em; }
+  td { color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+  .table-scroll { overflow-x: auto; }
+
+  footer.datascope {
+    display: flex; gap: 24px; flex-wrap: wrap; font-size: 12px; color: var(--text-muted);
+    border-top: 1px solid var(--border); padding-top: 14px; margin-top: 8px;
+  }
+
+  .hidden { display: none !important; }
+  .empty { color: var(--text-muted); font-size: 13px; padding: 20px 0; text-align: center; }
+
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center;
+    justify-content: center; z-index: 50;
+  }
+  .modal { background: var(--surface-1); border-radius: 12px; padding: 24px; width: 340px; border: 1px solid var(--border); }
+  .modal h3 { margin: 0 0 8px; font-size: 15px; }
+  .modal p { font-size: 13px; color: var(--text-secondary); margin: 0 0 12px; }
+  .modal input { width: 100%; padding: 9px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--page); color: var(--text-primary); margin-bottom: 12px; }
+  .modal .row { display: flex; gap: 8px; }
+
+  svg text { fill: var(--text-secondary); font-family: inherit; }
+  .axis-line { stroke: var(--axis); stroke-width: 1; }
+  .grid-line { stroke: var(--grid); stroke-width: 1; }
+</style>
+</head>
+<body>
+
+<div id="loginGate">
+  <div class="login-card">
+    <h1>Portfolio Analytics</h1>
+    <p>Enter the admin password to continue.</p>
+    <input type="password" id="pwInput" placeholder="Password" autocomplete="current-password" />
+    <button class="btn" id="loginBtn">View Dashboard</button>
+    <div id="loginError"></div>
+  </div>
+</div>
+
+<div class="wrap hidden" id="dashboard">
+  <header class="topbar">
+    <h1>Portfolio Analytics</h1>
+    <div class="filters">
+      <select id="rangeSelect">
+        <option value="7d">Last 7 days</option>
+        <option value="30d" selected>Last 30 days</option>
+        <option value="90d">Last 90 days</option>
+        <option value="6mo">Last 6 months</option>
+        <option value="all">All time</option>
+      </select>
+      <details class="multiselect" id="typeMultiselect">
+        <summary>Event types</summary>
+        <div class="panel" id="typePanel"></div>
+      </details>
+      <div class="actions">
+        <button class="btn secondary" id="refreshBtn">Refresh Data</button>
+        <button class="btn danger" id="resetBtn">Reset Metrics</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="kpi-grid" id="kpiGrid"></div>
+
+  <div class="two-col">
+    <div class="card">
+      <h2>Platform</h2>
+      <div class="sub">Device + browser family, share of pageviews</div>
+      <div id="platformChart"></div>
+    </div>
+    <div class="card">
+      <h2>Page Views</h2>
+      <div class="sub">Unique viewers · views · share of total views</div>
+      <div id="pageChart"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Most-Clicked Items</h2>
+    <div class="sub">Resume, PDFs, YouTube, tile expands &amp; tile links — ranked by engagement, cumulative % on the right axis</div>
+    <div id="engagementPareto"></div>
+  </div>
+
+  <div class="card">
+    <h2>Time Spent</h2>
+    <div class="sub">Section &amp; tile dwell time — ranked by total engaged seconds</div>
+    <div id="dwellPareto"></div>
+  </div>
+
+  <div class="card">
+    <h2>Visits Over Time</h2>
+    <div class="sub">Daily site visits with a rolling 7-day average trend line</div>
+    <div id="visitsChart"></div>
+  </div>
+
+  <div class="card">
+    <h2>Recent Events</h2>
+    <div class="sub">Last 100 events matching the current filters</div>
+    <div class="table-scroll" id="eventsTable"></div>
+  </div>
+
+  <footer class="datascope" id="dataScope"></footer>
+</div>
+
+<div class="modal-backdrop hidden" id="resetModal">
+  <div class="modal">
+    <h3>Reset Metrics</h3>
+    <p>This permanently deletes all recorded events. Type <strong>RESET</strong> to confirm.</p>
+    <input type="text" id="resetConfirmInput" placeholder="RESET" />
+    <div id="resetError" style="color:var(--critical);font-size:12px;min-height:16px;margin:-6px 0 10px;"></div>
+    <div class="row">
+      <button class="btn secondary" id="resetCancelBtn">Cancel</button>
+      <button class="btn danger" id="resetConfirmBtn">Delete Everything</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var WORKER_URL = 'https://portfolio-analytics.tylervincent-ai.workers.dev';
+
+  var SERIES = ['var(--series-1)','var(--series-2)','var(--series-3)','var(--series-4)',
+                 'var(--series-5)','var(--series-6)','var(--series-7)','var(--series-8)'];
+
+  var EVENT_TYPES = ['pageview','resume_view','pdf_view','youtube_click','tile_expand',
+                      'tile_link','outbound','nav','section_dwell','tile_dwell','page_time'];
+
+  var state = { password: null, range: '30d', types: [], data: null };
+
+  // ---------------- auth ----------------
+  function getStoredPassword() {
+    try { return sessionStorage.getItem('_admin_pw'); } catch (e) { return null; }
+  }
+  function storePassword(pw) {
+    try { sessionStorage.setItem('_admin_pw', pw); } catch (e) {}
+    try { localStorage.setItem('isAdmin', 'true'); } catch (e) {}
+  }
+
+  function showDashboard() {
+    document.getElementById('loginGate').classList.add('hidden');
+    document.getElementById('dashboard').classList.remove('hidden');
+  }
+
+  function attemptLogin(pw, onFail) {
+    fetchStats(pw).then(function (data) {
+      state.password = pw;
+      state.data = data;
+      storePassword(pw);
+      showDashboard();
+      render();
+    }).catch(function (err) {
+      onFail(err);
+    });
+  }
+
+  document.getElementById('loginBtn').addEventListener('click', function () {
+    var pw = document.getElementById('pwInput').value;
+    document.getElementById('loginError').textContent = '';
+    attemptLogin(pw, function (err) {
+      document.getElementById('loginError').textContent = err.message === '401'
+        ? 'Incorrect password.' : 'Could not reach the analytics server.';
+    });
+  });
+  document.getElementById('pwInput').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') document.getElementById('loginBtn').click();
+  });
+
+  // ---------------- data fetch ----------------
+  function fetchStats(pw) {
+    return fetch(WORKER_URL + '/stats', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw, range: state.range, types: state.types.length ? state.types : undefined }),
+    }).then(function (res) {
+      if (res.status === 401) return Promise.reject(new Error('401'));
+      if (!res.ok) return Promise.reject(new Error('http_' + res.status));
+      return res.json();
+    });
+  }
+
+  function refresh() {
+    if (!state.password) return;
+    fetchStats(state.password).then(function (data) {
+      state.data = data;
+      render();
+    }).catch(function () {
+      alert('Could not refresh data. Check that the analytics Worker is reachable.');
+    });
+  }
+
+  // ---------------- filters UI ----------------
+  var panel = document.getElementById('typePanel');
+  EVENT_TYPES.forEach(function (t) {
+    var id = 'type_' + t;
+    var label = document.createElement('label');
+    label.innerHTML = '<input type="checkbox" value="' + t + '" id="' + id + '"> ' + t;
+    panel.appendChild(label);
+  });
+  panel.addEventListener('change', function () {
+    state.types = Array.prototype.slice.call(panel.querySelectorAll('input:checked')).map(function (i) { return i.value; });
+    refresh();
+  });
+  document.getElementById('rangeSelect').addEventListener('change', function (e) {
+    state.range = e.target.value;
+    refresh();
+  });
+  document.getElementById('refreshBtn').addEventListener('click', refresh);
+
+  // ---------------- reset flow ----------------
+  var resetModal = document.getElementById('resetModal');
+  document.getElementById('resetBtn').addEventListener('click', function () {
+    document.getElementById('resetConfirmInput').value = '';
+    document.getElementById('resetError').textContent = '';
+    resetModal.classList.remove('hidden');
+  });
+  document.getElementById('resetCancelBtn').addEventListener('click', function () {
+    resetModal.classList.add('hidden');
+  });
+  document.getElementById('resetConfirmBtn').addEventListener('click', function () {
+    var confirmText = document.getElementById('resetConfirmInput').value;
+    if (confirmText !== 'RESET') {
+      document.getElementById('resetError').textContent = 'Type RESET exactly to confirm.';
+      return;
+    }
+    fetch(WORKER_URL + '/reset', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: state.password, confirm: 'RESET' }),
+    }).then(function (res) {
+      if (!res.ok) throw new Error('reset failed');
+      resetModal.classList.add('hidden');
+      refresh();
+    }).catch(function () {
+      document.getElementById('resetError').textContent = 'Reset failed — check the password / connection.';
+    });
+  });
+
+  // ---------------- render: KPI cards ----------------
+  function fmtMs(ms) {
+    if (!ms) return '0s';
+    var s = Math.round(ms / 1000);
+    if (s < 60) return s + 's';
+    var m = Math.floor(s / 60), rs = s % 60;
+    return m + 'm ' + rs + 's';
+  }
+  function fmtDate(ts) {
+    if (!ts) return '—';
+    var d = new Date(ts);
+    return d.toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
+
+  function renderKPIs(d) {
+    var cards = [
+      { label: 'Site Visits', value: d.kpi.site_visits.toLocaleString() },
+      { label: 'Total Page Views', value: d.kpi.total_pageviews.toLocaleString() },
+      { label: 'Unique Viewers', value: d.kpi.unique_viewers.toLocaleString() },
+      { label: 'Avg Engaged Time', value: fmtMs(d.kpi.avg_engaged_ms) },
+    ];
+    var grid = document.getElementById('kpiGrid');
+    grid.innerHTML = '';
+    cards.forEach(function (c) {
+      var el = document.createElement('div');
+      el.className = 'kpi-card';
+      el.innerHTML = '<div class="label">' + c.label + '</div><div class="value">' + c.value + '</div>';
+      grid.appendChild(el);
+    });
+  }
+
+  // ---------------- render: platform pie ----------------
+  function renderPie(rows) {
+    var el = document.getElementById('platformChart');
+    if (!rows || !rows.length) { el.innerHTML = '<div class="empty">No pageview data yet.</div>'; return; }
+    var total = rows.reduce(function (s, r) { return s + r.n; }, 0);
+    var cx = 90, cy = 90, r = 70, start = -Math.PI / 2;
+    var paths = '';
+    var legend = '';
+    rows.slice(0, 8).forEach(function (row, i) {
+      var frac = row.n / total;
+      // A full-circle slice (frac === 1, i.e. only one category) makes the arc's
+      // start and end points coincide, which is a degenerate SVG arc that renders
+      // as nothing. Clamp just under 100% so the arc always has a visible sweep.
+      var sweepFrac = Math.min(frac, 0.9999);
+      var end = start + sweepFrac * Math.PI * 2;
+      var x1 = cx + r * Math.cos(start), y1 = cy + r * Math.sin(start);
+      var x2 = cx + r * Math.cos(end), y2 = cy + r * Math.sin(end);
+      var large = (end - start) > Math.PI ? 1 : 0;
+      var color = SERIES[i % SERIES.length];
+      paths += '<path d="M' + cx + ',' + cy + ' L' + x1.toFixed(2) + ',' + y1.toFixed(2) +
+        ' A' + r + ',' + r + ' 0 ' + large + ' 1 ' + x2.toFixed(2) + ',' + y2.toFixed(2) +
+        ' Z" fill="' + color + '" stroke="var(--surface-1)" stroke-width="2"><title>' +
+        row.device + ': ' + Math.round(frac * 100) + '%</title></path>';
+      legend += '<span class="item"><span class="swatch" style="background:' + color + '"></span>' +
+        row.device + ' — ' + Math.round(frac * 100) + '%</span>';
+      start = end;
+    });
+    el.innerHTML = '<svg viewBox="0 0 180 180" width="180" height="180" role="img" aria-label="Platform breakdown pie chart">' +
+      paths + '</svg><div class="legend">' + legend + '</div>';
+  }
+
+  // ---------------- render: page views bar list ----------------
+  function renderPageBars(rows) {
+    var el = document.getElementById('pageChart');
+    if (!rows || !rows.length) { el.innerHTML = '<div class="empty">No pageview data yet.</div>'; return; }
+    var totalViews = rows.reduce(function (s, r) { return s + r.views; }, 0);
+    var max = Math.max.apply(null, rows.map(function (r) { return r.views; }));
+    var html = '';
+    rows.forEach(function (row) {
+      var pct = totalViews ? Math.round((row.views / totalViews) * 100) : 0;
+      var w = max ? Math.round((row.views / max) * 100) : 0;
+      var name = row.page === '/' ? 'Index' : row.page.replace(/^\//, '').replace(/\.html$/, '');
+      name = name.charAt(0).toUpperCase() + name.slice(1);
+      html += '<div class="bar-row"><div class="label" title="' + row.page + '">' + name + '</div>' +
+        '<div class="track"><div class="fill" style="width:' + w + '%"></div></div>' +
+        '<div class="meta">' + row.uniques + ' unique · ' + row.views + ' views · ' + pct + '%</div></div>';
+    });
+    el.innerHTML = html;
+  }
+
+  // ---------------- render: pareto (bars + cumulative % line) ----------------
+  function labelFor(row) {
+    if (row.type === 'resume_view') return 'Resume';
+    if (row.type === 'pdf_view') return 'PDF: ' + (row.target || '');
+    if (row.type === 'youtube_click') return 'YouTube: ' + (row.target || '');
+    if (row.type === 'tile_expand') return 'Tile opened: ' + (row.target || '');
+    if (row.type === 'tile_link') return 'Tile link: ' + (row.target || '');
+    if (row.type === 'section_dwell') return 'Section: ' + (row.target || '');
+    if (row.type === 'tile_dwell') return 'Tile: ' + (row.target || '');
+    return (row.target || row.type);
+  }
+
+  function renderPareto(containerId, rows, valueKey, valueFmt) {
+    var el = document.getElementById(containerId);
+    if (!rows || !rows.length) { el.innerHTML = '<div class="empty">No data yet for the current filters.</div>'; return; }
+    var top = rows.slice(0, 12);
+    var total = rows.reduce(function (s, r) { return s + (r[valueKey] || 0); }, 0);
+    var max = Math.max.apply(null, top.map(function (r) { return r[valueKey] || 0; }));
+    var w = 900, h = 260, padL = 40, padR = 40, padB = 70, padT = 16;
+    var plotW = w - padL - padR, plotH = h - padT - padB;
+    var bw = plotW / top.length;
+    var cum = 0;
+    var bars = '', labels = '', linePts = [], dots = '';
+    top.forEach(function (row, i) {
+      var v = row[valueKey] || 0;
+      cum += v;
+      var cumPct = total ? cum / total : 0;
+      var barH = max ? (v / max) * plotH : 0;
+      var x = padL + i * bw;
+      var y = padT + (plotH - barH);
+      var color = SERIES[i % SERIES.length];
+      bars += '<rect x="' + (x + bw * 0.12).toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + (bw * 0.76).toFixed(1) +
+        '" height="' + barH.toFixed(1) + '" rx="3" fill="' + color + '"><title>' + labelFor(row) + ': ' + valueFmt(v) + '</title></rect>';
+      var lx = x + bw / 2, ly = padT + plotH - cumPct * plotH;
+      linePts.push(lx.toFixed(1) + ',' + ly.toFixed(1));
+      dots += '<circle cx="' + lx.toFixed(1) + '" cy="' + ly.toFixed(1) + '" r="2.5" fill="var(--text-primary)"><title>' +
+        Math.round(cumPct * 100) + '% cumulative</title></circle>';
+      var lbl = labelFor(row);
+      if (lbl.length > 14) lbl = lbl.slice(0, 13) + '…';
+      labels += '<text x="' + (x + bw / 2).toFixed(1) + '" y="' + (h - padB + 16) + '" font-size="10" text-anchor="end" ' +
+        'transform="rotate(-40 ' + (x + bw / 2).toFixed(1) + ',' + (h - padB + 16) + ')">' + lbl + '</text>';
+    });
+    var refY = padT + plotH - 0.8 * plotH;
+    var svg = '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" height="' + h + '" role="img" aria-label="Pareto chart">' +
+      '<line class="grid-line" x1="' + padL + '" y1="' + refY.toFixed(1) + '" x2="' + (w - padR) + '" y2="' + refY.toFixed(1) + '" stroke-dasharray="3,3" />' +
+      '<text x="' + (w - padR + 4) + '" y="' + (refY + 3).toFixed(1) + '" font-size="10" fill="var(--text-muted)">80%</text>' +
+      '<line class="axis-line" x1="' + padL + '" y1="' + (padT + plotH) + '" x2="' + (w - padR) + '" y2="' + (padT + plotH) + '" />' +
+      bars +
+      '<polyline points="' + linePts.join(' ') + '" fill="none" stroke="var(--series-7)" stroke-width="2" />' +
+      dots + labels +
+      '</svg>';
+    el.innerHTML = svg;
+  }
+
+  // ---------------- render: daily visits bars + 7d rolling avg ----------------
+  function renderVisits(rows) {
+    var el = document.getElementById('visitsChart');
+    if (!rows || !rows.length) { el.innerHTML = '<div class="empty">No visit data yet.</div>'; return; }
+    var w = 940, h = 260, padL = 40, padR = 20, padB = 30, padT = 16;
+    var plotW = w - padL - padR, plotH = h - padT - padB;
+    var n = rows.length;
+    var bw = plotW / n;
+    var max = Math.max.apply(null, rows.map(function (r) { return r.visits; }));
+    max = max || 1;
+
+    // rolling 7-day average
+    var avgs = rows.map(function (_, i) {
+      var start = Math.max(0, i - 6);
+      var slice = rows.slice(start, i + 1);
+      var sum = slice.reduce(function (s, r) { return s + r.visits; }, 0);
+      return sum / slice.length;
+    });
+
+    var bars = '', linePts = [];
+    rows.forEach(function (row, i) {
+      var barH = (row.visits / max) * plotH;
+      var x = padL + i * bw;
+      var y = padT + (plotH - barH);
+      bars += '<rect x="' + (x + bw * 0.15).toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + (bw * 0.7).toFixed(1) +
+        '" height="' + barH.toFixed(1) + '" rx="2" fill="var(--series-1)"><title>' + row.day + ': ' + row.visits + ' visits</title></rect>';
+      var lx = x + bw / 2, ly = padT + plotH - (avgs[i] / max) * plotH;
+      linePts.push(lx.toFixed(1) + ',' + ly.toFixed(1));
+    });
+
+    var xTickEvery = Math.max(1, Math.ceil(n / 8));
+    var xLabels = '';
+    rows.forEach(function (row, i) {
+      if (i % xTickEvery !== 0 && i !== n - 1) return;
+      var x = padL + i * bw + bw / 2;
+      xLabels += '<text x="' + x.toFixed(1) + '" y="' + (h - padB + 14) + '" font-size="10" text-anchor="middle">' + row.day.slice(5) + '</text>';
+    });
+
+    var svg = '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" height="' + h + '" role="img" aria-label="Daily visits with 7-day rolling average">' +
+      '<line class="axis-line" x1="' + padL + '" y1="' + (padT + plotH) + '" x2="' + (w - padR) + '" y2="' + (padT + plotH) + '" />' +
+      bars +
+      '<polyline points="' + linePts.join(' ') + '" fill="none" stroke="var(--series-2)" stroke-width="2" />' +
+      xLabels +
+      '</svg>' +
+      '<div class="legend"><span class="item"><span class="swatch" style="background:var(--series-1)"></span>Daily visits</span>' +
+      '<span class="item"><span class="swatch" style="background:var(--series-2)"></span>7-day rolling average</span></div>';
+    el.innerHTML = svg;
+  }
+
+  // ---------------- render: recent events table ----------------
+  function renderTable(rows) {
+    var el = document.getElementById('eventsTable');
+    if (!rows || !rows.length) { el.innerHTML = '<div class="empty">No events recorded yet for the current filters.</div>'; return; }
+    var html = '<table><thead><tr><th>Time</th><th>Type</th><th>Target</th><th>Page</th><th>Duration</th><th>Device</th></tr></thead><tbody>';
+    rows.forEach(function (r) {
+      html += '<tr><td>' + fmtDate(r.ts) + '</td><td>' + r.type + '</td><td>' + (r.target || '—') + '</td>' +
+        '<td>' + r.page + '</td><td>' + (r.ms ? fmtMs(r.ms) : '—') + '</td><td>' + (r.device || '—') + '</td></tr>';
+    });
+    html += '</tbody></table>';
+    el.innerHTML = html;
+  }
+
+  function renderFooter(d) {
+    document.getElementById('dataScope').innerHTML =
+      '<span>Last refreshed: ' + fmtDate(d.refreshed_ts) + '</span>' +
+      '<span>First recorded event: ' + fmtDate(d.first_event_ts) + '</span>' +
+      '<span>Most recent event: ' + fmtDate(d.last_event_ts) + '</span>';
+  }
+
+  function render() {
+    var d = state.data;
+    if (!d) return;
+    renderKPIs(d);
+    renderPie(d.platform);
+    renderPageBars(d.pages);
+    renderPareto('engagementPareto', d.engagement_pareto, 'n', function (v) { return v + ' clicks'; });
+    renderPareto('dwellPareto', d.dwell_pareto, 'total_ms', fmtMs);
+    renderVisits(d.daily_visits);
+    renderTable(d.recent_events);
+    renderFooter(d);
+  }
+
+  // ---------------- boot ----------------
+  var stored = getStoredPassword();
+  if (stored) {
+    attemptLogin(stored, function () { /* stored password stale/invalid — show login */ });
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# Local Worker dev secrets. Copy to `.dev.vars` (gitignored, never committed)
+# and fill in real values for `wrangler dev`.
+#
+# In production these are NOT set via .dev.vars — they're set with:
+#   wrangler secret put ADMIN_PASSWORD
+#   wrangler secret put HASH_SALT
+
+ADMIN_PASSWORD=pick-any-password-for-local-dev
+HASH_SALT=change-me-to-any-long-random-string
+ANALYTICS_ALLOW_LOCAL=true
