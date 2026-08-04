@@ -23,10 +23,17 @@
 
   function send(type, target, ms) {
     var payload = JSON.stringify({ type: type, target: target || null, page: page, ms: typeof ms === 'number' ? ms : null, session: session });
+    // fetch+keepalive first, not sendBeacon. sendBeacon returns true for
+    // "queued", not "delivered", so a beacon that dies in transit reports
+    // success and suppresses any fallback — silent total data loss. Verified
+    // against the live Worker: beacons were accepted and never arrived, while
+    // keepalive fetch landed every time. keepalive gives the same
+    // survives-page-unload guarantee at this payload size.
     try {
-      if (navigator.sendBeacon && navigator.sendBeacon(COLLECT_URL, new Blob([payload], { type: 'application/json' }))) return;
+      fetch(COLLECT_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true }).catch(function () {});
+      return;
     } catch (e) {}
-    try { fetch(COLLECT_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true }).catch(function () {}); } catch (e) {}
+    try { navigator.sendBeacon && navigator.sendBeacon(COLLECT_URL, new Blob([payload], { type: 'application/json' })); } catch (e) {}
   }
 
   send('pageview');

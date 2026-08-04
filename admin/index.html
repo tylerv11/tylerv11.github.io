@@ -185,6 +185,7 @@
         <div class="panel" id="typePanel"></div>
       </details>
       <div class="actions">
+        <button class="btn secondary" id="trackingBtn" title="Whether this browser's own visits are recorded"></button>
         <button class="btn secondary" id="refreshBtn">Refresh Data</button>
         <button class="btn danger" id="resetBtn">Reset Metrics</button>
       </div>
@@ -271,6 +272,7 @@
   function showDashboard() {
     document.getElementById('loginGate').classList.add('hidden');
     document.getElementById('dashboard').classList.remove('hidden');
+    renderTrackingBtn();
   }
 
   function attemptLogin(pw, onFail) {
@@ -296,6 +298,28 @@
   document.getElementById('pwInput').addEventListener('keydown', function (e) {
     if (e.key === 'Enter') document.getElementById('loginBtn').click();
   });
+
+  // ---------------- self-exclusion toggle ----------------
+  // Logging in sets isAdmin, which silently stops recording this browser. That
+  // is the desired default, but without a visible control it reads as "the
+  // tracker is broken" the first time you test the site after logging in —
+  // clicks vanish and nothing says why. Surface the state and let it be flipped.
+  function isExcluded() {
+    try { return localStorage.getItem('isAdmin') === 'true'; } catch (e) { return false; }
+  }
+  function renderTrackingBtn() {
+    var b = document.getElementById('trackingBtn');
+    b.textContent = isExcluded() ? 'This browser: not tracked' : 'This browser: TRACKED';
+    b.style.color = isExcluded() ? '' : 'var(--danger, #e5534b)';
+  }
+  document.getElementById('trackingBtn').addEventListener('click', function () {
+    try {
+      if (isExcluded()) localStorage.removeItem('isAdmin');
+      else localStorage.setItem('isAdmin', 'true');
+    } catch (e) {}
+    renderTrackingBtn();
+  });
+  renderTrackingBtn();
 
   // ---------------- data fetch ----------------
   function fetchStats(pw) {
