@@ -12,6 +12,7 @@
          it synchronously as the parser reaches it. -->
     <script src="portfolio-assistant.js" type="text/javascript"></script>
     <script src="analytics.js" defer></script>
+    <script src="contact-info.js" defer></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -882,8 +883,8 @@
             </div>
             <div class="footer-col">
                 <h4>Contact</h4>
-                <a href="mailto:tylervincent@alumni.usc.edu">tylervincent@alumni.usc.edu</a>
-                <a href="tel:4692430073">(469) 243-0073</a>
+                <a data-contact="email" href="#"></a>
+                <a data-contact="phone" href="#"></a>
                 <a>Los Angeles, California</a>
             </div>
             <div class="footer-col">
@@ -1084,9 +1085,15 @@
                 saAddMsg(question, 'user');
                 input.value = '';
 
-                var answer = saAnswer(question);
+                var answer = saResolveContact(saAnswer(question));
                 setTimeout(function() { saAddMsg(answer, 'bot'); }, 200);
             };
+
+            function saResolveContact(text) {
+                if (!window.TVContact) return text;
+                return text.replace(/\{\{EMAIL\}\}/g, window.TVContact.getEmail())
+                            .replace(/\{\{PHONE\}\}/g, window.TVContact.getPhone());
+            }
 
             function saAddMsg(text, cls) {
                 var msgs = document.getElementById('sa-messages');
@@ -1118,7 +1125,7 @@
                         }
                     }
                 }
-                return 'Great question - I\'m not sure I have a canned answer for that one. Try asking about Tyler\'s projects, KPIs, skills, industries, or working style. Or better yet, reach out directly at tylervincent@alumni.usc.edu.';
+                return 'Great question - I\'m not sure I have a canned answer for that one. Try asking about Tyler\'s projects, KPIs, skills, industries, or working style. Or better yet, reach out directly at {{EMAIL}}.';
             }
         })();
     </script>
