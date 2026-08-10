@@ -52,8 +52,8 @@ window.TYLER_KB = [
     { keys: ['why hire tyler','why hire','why tyler','hire him','should i hire','recruit','candidate','differentiator','unique','what makes tyler'], answer: 'What makes Tyler worth hiring: (1) He moves across the full stack — from raw ingestion and pipelines to executive dashboards, from SQL to Python to Power BI to product design. (2) He has credibility in high-stakes fields — nuclear defense, GxP pharma manufacturing, aerospace — where a wrong ingestion or governance call has real consequences. (3) He\'s a translator, equally fluent with welders, data engineers, and C-suite. (4) He builds systems people actually trust and use, not just systems that are technically correct. (5) He teaches (37+ people trained), so his impact compounds past his own output. (6) He asks "so what do we actually need to decide?" before writing a line of code — that question is worth more than 10 people who execute without asking it.' },
 
     // Contact / next steps
-    { keys: ['contact','email','phone','reach','talk','calendly','interview'], answer: 'Reach Tyler at tylervincent@alumni.usc.edu or (469) 243-0073. Also on LinkedIn: linkedin.com/in/tyler-vincent11' },
-    { keys: ['resume','cv'], answer: 'Tyler\'s resume isn\'t linked directly here, but his full work history is on the page - each project card shows the role, problem, approach, and outcomes. For the full PDF resume, reach out at tylervincent@alumni.usc.edu.' },
+    { keys: ['contact','email','phone','reach','talk','calendly','interview'], answer: 'Reach Tyler at {{EMAIL}} or {{PHONE}}. Also on LinkedIn: linkedin.com/in/tyler-vincent11' },
+    { keys: ['resume','cv'], answer: 'Tyler\'s resume isn\'t linked directly here, but his full work history is on the page - each project card shows the role, problem, approach, and outcomes. For the full PDF resume, reach out at {{EMAIL}}.' },
     { keys: ['education','usc','university','degree','southern california'], answer: 'Tyler is a USC (University of Southern California) Trojan - Industrial & Systems Engineering, with coursework spanning optimization, product design, economics, and human factors.' },
 
     // Open-ended fallbacks
@@ -372,7 +372,19 @@ const PortfolioAssistant = (() => {
 
     // Fallback if nothing found
     if (!answer) {
-      answer = 'Great question! I\'m not sure I have a direct answer for that one. Try asking about Tyler\'s projects, KPIs, skills, industries, or working style. Or reach out directly at tylervincent@alumni.usc.edu.';
+      answer = 'Great question! I\'m not sure I have a direct answer for that one. Try asking about Tyler\'s projects, KPIs, skills, industries, or working style. Or reach out directly at {{EMAIL}}.';
+    }
+
+    // Contact details are never stored as plain text (see contact-info.js) -
+    // swap the placeholders in only once we're about to show a human the answer.
+    if (answer.indexOf('{{EMAIL}}') !== -1 || answer.indexOf('{{PHONE}}') !== -1) {
+      if (window.TVContact) {
+        answer = answer.replace(/\{\{EMAIL\}\}/g, window.TVContact.getEmail())
+                        .replace(/\{\{PHONE\}\}/g, window.TVContact.getPhone());
+      } else {
+        answer = answer.replace(/\{\{EMAIL\}\}/g, 'the email in the footer below')
+                        .replace(/\{\{PHONE\}\}/g, 'the phone number in the footer below');
+      }
     }
 
     return {
