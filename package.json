@@ -1,0 +1,10 @@
+{
+  "name": "tylerv11-portfolio",
+  "private": true,
+  "scripts": {
+    "build": "terser portfolio-assistant.src.js -c -m -o portfolio-assistant.js --comments false && terser analytics.src.js -c -m -o analytics.js --comments false"
+  },
+  "devDependencies": {
+    "terser": "^5"
+  }
+}
