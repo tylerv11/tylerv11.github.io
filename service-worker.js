@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'tv-portfolio-v2';
+const CACHE_VERSION = 'tv-portfolio-v3';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 const PAGE_CACHE   = CACHE_VERSION + '-pages';
 
@@ -39,7 +39,7 @@ self.addEventListener('activate', function(event) {
 
 // Fetch strategy:
 //   - Images / fonts / cdn assets  → cache-first
-//   - HTML pages                   → stale-while-revalidate
+//   - HTML pages                   → network-first (offline fallback only)
 //   - Everything else              → network-first
 self.addEventListener('fetch', function(event) {
   var req = event.request;
@@ -74,16 +74,16 @@ self.addEventListener('fetch', function(event) {
   );
 
   if (isPage) {
-    // Stale-while-revalidate for HTML
+    // Network-first for HTML: visitors always get current content;
+    // cache is only a fallback when offline.
     event.respondWith(
-      caches.open(PAGE_CACHE).then(function(cache) {
-        return cache.match(req).then(function(cached) {
-          var fresh = fetch(req).then(function(res) {
-            if (res.ok) cache.put(req, res.clone());
-            return res;
-          }).catch(function() { return cached; });
-          return cached || fresh;
-        });
+      fetch(req).then(function(res) {
+        if (res.ok) {
+          caches.open(PAGE_CACHE).then(function(cache) { cache.put(req, res.clone()); });
+        }
+        return res;
+      }).catch(function() {
+        return caches.open(PAGE_CACHE).then(function(cache) { return cache.match(req); });
       })
     );
   } else if (isStatic || isCDN) {
