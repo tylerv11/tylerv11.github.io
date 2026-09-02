@@ -1650,12 +1650,6 @@
         }
         .tradeoff-item p { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.7; }
 
-        .watch-box {
-            border: 1px solid rgba(199,154,79,0.3); background: rgba(199,154,79,0.06);
-            border-radius: var(--r-panel); padding: 18px 20px;
-        }
-        .watch-box p { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.7; }
-
         /* Project drawer (architecture & diagram links) */
         .drawer-trigger-btn {
             display: inline-flex; align-items: center; gap: 8px;
@@ -4789,12 +4783,6 @@ flowchart LR
                                 </div>
                             </div>
 
-                            <div class="case-block">
-                                <div class="watch-box">
-                                    <p><strong>What I'd watch for:</strong> hospital number 13. The day this network signs a third EHR vendor, the nightly batch plus Auto Loader pattern I built for Epic probably won't fit as is. A different vendor exports on its own schedule with its own quirks, so I'd keep the ingestion layer built per source type from the start rather than assume every future hospital looks like the first three.</p>
-                                </div>
-                            </div>
-
                         </div>
                         <div class="exp-tile-close-row">
                             <button class="exp-tile-close-btn" onclick="toggleExpTile('medpulse')"><i class="fas fa-times"></i> Close</button>
@@ -4876,12 +4864,6 @@ flowchart TB
                                         <div class="tradeoff-fork">Fixed-budget Job Cluster vs. Serverless in the unclassified lane</div>
                                         <p>Here it is a real trade-off. A budget with no mid-year flexibility makes an unpredictable serverless bill an operational risk, not just a cost annoyance. A bad month could mean a frozen account. I'd take the Job Cluster's predictable spend even though it means logistics analysts occasionally wait on cluster startup. In my own work I reach for serverless by default, but this is exactly the case where I switch: a hard per-department budget and real audit exposure, the same combination that pushes me toward job clusters even outside a defense context.</p>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="case-block">
-                                <div class="watch-box">
-                                    <p><strong>What I'd watch for:</strong> sooner or later a contract is going to ask for one blended readiness score spanning both classified and unclassified signals. When that happens, the only correct path is an accredited Cross-Domain Solution with a person reviewing the transfer, never a pipeline quietly reading both metastores. That shortcut would look clean on a whiteboard and be the wrong call every single time.</p>
                                 </div>
                             </div>
 
@@ -4973,12 +4955,6 @@ flowchart LR
                                         <div class="tradeoff-fork">Model Serving as a parallel branch vs. behind Serverless SQL</div>
                                         <p>Recommendation serving has different latency and scaling characteristics than BI queries. Coupling it to the same Serverless SQL layer merchandising uses for ad hoc exploration would mean a merchandiser's exploratory query could contend with production recommendation traffic, so it reads Gold directly through its own endpoint instead.</p>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="case-block">
-                                <div class="watch-box">
-                                    <p><strong>What I'd watch for:</strong> the day GPU procurement clears, I wouldn't just swap the compute type under the same endpoint and call it finished. It's worth checking whether the model itself got shaped by those CPU limits along the way, a smaller architecture, a particular batching pattern, the kind of thing a GPU upgrade should revisit rather than just accelerate.</p>
                                 </div>
                             </div>
 
