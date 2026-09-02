@@ -16,6 +16,7 @@
     <script src="portfolio-assistant.js" type="text/javascript"></script>
     <script src="analytics.js" defer></script>
     <script src="contact-info.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
     <!-- Service Worker: cache-first for static assets, stale-while-revalidate for pages -->
     <script>
         if ('serviceWorker' in navigator) {
@@ -1615,6 +1616,123 @@
         /* Tile window wrap (existing .window inside tile) */
         .exp-tile-window-wrap { padding: 0 0 4px; }
         .exp-tile-window-wrap .window { margin: 0; border-radius: 0 0 10px 10px; }
+
+        /* Case study tiles (Data Pipeline Case Studies, nested under Projects) */
+        .case-block { margin-top: 28px; }
+        .case-block:first-child { margin-top: 0; }
+        .case-block-label {
+            font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--accent-blue); margin-bottom: 12px;
+        }
+        .case-block p { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.75; max-width: 780px; }
+
+        .discovery-list { list-style: none; display: grid; gap: 10px; margin: 0; padding: 0; }
+        .discovery-list li {
+            font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;
+            padding: 12px 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--r-card);
+        }
+
+        .mermaid-card {
+            background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--r-panel);
+            padding: 24px; overflow-x: auto;
+        }
+        .mermaid-card .mermaid { display: flex; justify-content: center; min-width: 560px; }
+
+        .tradeoff-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .tradeoff-item {
+            border: 1px solid var(--border-subtle); border-radius: var(--r-panel); padding: 18px 20px;
+            background: rgba(255,255,255,0.015);
+        }
+        .tradeoff-item:last-child { grid-column: 1 / -1; }
+        .tradeoff-fork {
+            font-family: var(--font-display); font-weight: 700; font-size: 0.95rem;
+            color: var(--text-primary); margin-bottom: 8px;
+        }
+        .tradeoff-item p { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.7; }
+
+        .watch-box {
+            border: 1px solid rgba(199,154,79,0.3); background: rgba(199,154,79,0.06);
+            border-radius: var(--r-panel); padding: 18px 20px;
+        }
+        .watch-box p { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.7; }
+
+        /* Project drawer (architecture & diagram links) */
+        .drawer-trigger-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 18px; border-radius: var(--r-btn);
+            background: var(--accent-soft); border: 1px solid var(--border-hover);
+            color: var(--accent); font-size: 0.82rem; font-weight: 600;
+            font-family: inherit; cursor: pointer; transition: all 0.25s ease;
+        }
+        .drawer-trigger-btn:hover { background: rgba(0,255,135,0.16); transform: translateY(-1px); }
+
+        .project-drawer-overlay {
+            position: fixed; inset: 0; z-index: 2000;
+            background: rgba(0,0,0,0.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .project-drawer-overlay.open { opacity: 1; pointer-events: auto; }
+
+        .project-drawer {
+            position: fixed; top: 0; right: 0; bottom: 0; z-index: 2001;
+            width: min(560px, 92vw); max-width: 100vw;
+            background: var(--bg-secondary); border-left: 1px solid var(--border-hover);
+            box-shadow: -24px 0 64px rgba(0,0,0,0.5);
+            transform: translateX(100%); transition: transform 0.4s var(--transition-smooth);
+            display: flex; flex-direction: column;
+        }
+        .project-drawer.open { transform: translateX(0); }
+
+        .project-drawer-header {
+            display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+            padding: 28px 28px 20px; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0;
+        }
+        .project-drawer-header h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; }
+        .project-drawer-header p { margin-top: 6px; font-size: 0.85rem; color: var(--text-muted); }
+        .project-drawer-close {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border-subtle); color: var(--text-primary);
+            width: 36px; height: 36px; border-radius: var(--r-btn); cursor: pointer; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+        }
+        .project-drawer-close:hover { background: rgba(255,255,255,0.1); border-color: var(--border-hover); }
+
+        .project-drawer-body { padding: 24px 28px 40px; overflow-y: auto; flex: 1; }
+
+        .drawer-section { padding: 20px 0; border-bottom: 1px solid var(--border-subtle); }
+        .drawer-section:last-child { border-bottom: none; }
+        .drawer-section h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+        .drawer-section p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 14px; }
+        .drawer-link-row { display: flex; flex-wrap: wrap; gap: 10px; }
+        .drawer-link {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 8px 16px; border-radius: var(--r-btn);
+            background: rgba(255,255,255,0.04); border: 1px solid var(--border-subtle);
+            color: var(--text-secondary); text-decoration: none; font-size: 0.78rem; font-weight: 600;
+            font-family: inherit; cursor: pointer; transition: all 0.2s ease;
+        }
+        .drawer-link:hover { color: var(--text-primary); border-color: var(--border-hover); background: var(--accent-soft); }
+        .drawer-link i { color: var(--accent); font-size: 0.75rem; }
+        .diagram-btn.active { color: var(--bg-primary); background: var(--accent); border-color: var(--accent); }
+        .diagram-btn.active i { color: var(--bg-primary); }
+
+        .diagram-preview { margin-top: 14px; }
+        .diagram-preview:empty { margin-top: 0; }
+        .diagram-loading {
+            padding: 20px; text-align: center; font-size: 0.8rem; color: var(--text-muted);
+            background: var(--bg-primary); border: 1px solid var(--border-subtle); border-radius: var(--r-card);
+        }
+        .diagram-loading a { color: var(--accent); }
+        .diagram-preview-card {
+            background: var(--bg-primary); border: 1px solid var(--border-subtle); border-radius: var(--r-card);
+            padding: 16px; margin-bottom: 10px; overflow-x: auto;
+        }
+        .diagram-preview-card .mermaid { display: flex; justify-content: center; min-width: 420px; }
+
+        @media (max-width: 640px) {
+            .project-drawer { width: 100vw; }
+            .tradeoff-grid { grid-template-columns: 1fr; }
+            .tradeoff-item:last-child { grid-column: auto; }
+        }
 
         @media (max-width: 860px) {
             .exp-tiles { grid-template-columns: 1fr; }
@@ -3434,12 +3552,9 @@
                         <span><strong>Impact</strong>15M+ modeled rows and 100M+ source records processed daily</span>
                     </div>
                     <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(160,176,162,0.075);">
-                        <div style="font-size:0.65rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:10px;"><a href="https://github.com/tylerv11/data-engineering-pipelines" target="_blank" style="color:rgba(255,255,255,0.3);text-decoration:none;">Pipeline Samples <i class="fas fa-arrow-right" style="font-size:0.6rem;"></i></a></div>
-                        <div style="display:flex;flex-direction:column;gap:8px;">
-                            <a href="https://github.com/tylerv11/data-engineering-pipelines/tree/main/workforce-qualification-intelligence" class="card-link" target="_blank" style="margin-top:0;font-size:0.8rem;">Workforce Qualification Intelligence <i class="fas fa-arrow-right"></i></a>
-                            <a href="https://github.com/tylerv11/data-engineering-pipelines/tree/main/facility-movement-shift-analytics" class="card-link" target="_blank" style="margin-top:0;font-size:0.8rem;">Facility Movement &amp; Shift Analytics <i class="fas fa-arrow-right"></i></a>
-                            <a href="https://github.com/tylerv11/data-engineering-pipelines/tree/main/manufacturing-process-event-modeling" class="card-link" target="_blank" style="margin-top:0;font-size:0.8rem;">Manufacturing Process Event Modeling <i class="fas fa-arrow-right"></i></a>
-                        </div>
+                        <button type="button" class="drawer-trigger-btn" onclick="openProjectDrawer('takeda')">
+                            <i class="fas fa-diagram-project"></i> View Architecture &amp; Diagrams
+                        </button>
                     </div>
                 </div>
                 <img src="assets/logos/takeda-logo.svg" alt="Takeda Pharmaceuticals" class="card-logo" />
@@ -4592,6 +4707,289 @@
                 </div>
             </div>
 
+            <!-- MedPulse Health Network -->
+            <div class="exp-tile reveal" id="exp-tile-medpulse" style="grid-column: 1 / -1;">
+                <div class="exp-tile-header" onclick="toggleExpTile('medpulse')" role="button" aria-expanded="false" aria-controls="exp-body-medpulse">
+                    <div class="exp-tile-icon-wrap">
+                        <i class="fas fa-heart-pulse" style="color:#f87171"></i>
+                    </div>
+                    <div class="exp-tile-meta">
+                        <div class="exp-tile-name">Case Study: MedPulse Health Network</div>
+                        <div class="exp-tile-tagline">12-hospital network &middot; real-time vitals alerting &middot; Day-1 multi-region failover</div>
+                        <div class="exp-tile-tags">
+                            <span class="exp-tag">Healthcare</span>
+                            <span class="exp-tag">Dual-Gold Modeling</span>
+                            <span class="exp-tag green">HIPAA</span>
+                        </div>
+                    </div>
+                    <div class="exp-tile-arrow"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="exp-tile-body" id="exp-body-medpulse">
+                    <div class="exp-tile-body-inner">
+                        <div class="exp-tile-content">
+
+                            <div class="case-block">
+                                <div class="case-block-label">Situation</div>
+                                <p>A 12-hospital network needs one platform to do four different jobs at once: alerting on patient vitals in under a minute for clinicians, standard quality dashboards for administrators, self-service query access for clinical research, and full HIPAA compliance across all of it. Layered on top, they've just acquired a hospital running Cerner instead of Epic, with 60TB of active-patient data that has to land in the platform without a gap in care visibility. Executive leadership has already committed to Day-1 multi-region failover, not a phased rollout, because "the failover isn't ready yet" isn't an acceptable answer when it's patient care on the line.</p>
+                            </div>
+
+                            <div class="case-block">
+                                <div class="case-block-label">Discovery Questions I Would Ask</div>
+                                <ul class="discovery-list">
+                                    <li>What's the actual alerting latency requirement? Under a minute for which specific vitals, and is that network-wide or ICU-only? "Real-time" gets used loosely; I need the number someone will hold me to.</li>
+                                    <li>Is the Day-1 cross-region failover a hard patient-safety requirement or a preference dressed up as one? That answer changes the entire cost model from day one, not something you ease into.</li>
+                                    <li>For the Cerner migration, what data actually has to be live-queryable during cutover versus what just needs to land safely for later? Those are two very different SLAs hiding inside one "60TB migration" ask.</li>
+                                    <li>Has anyone actually confirmed with the billing system's owner that there's no batch export path, or is "CDC only, permanently" an assumption nobody's tested?</li>
+                                    <li>Which Epic fields differ site to site? Are they truly one-off custom fields, or clinically meaningful enough that they deserve a formal schema contract instead of silent auto-evolution?</li>
+                                    <li>Who owns the "minimum necessary" masking rule, and does it mean the same thing for a clinician viewing a chart as it does for a researcher running an aggregate query?</li>
+                                </ul>
+                            </div>
+
+                            <div class="case-block">
+                                <div class="case-block-label">Architecture I'd Propose</div>
+                                <div class="mermaid-card">
+                                    <pre class="mermaid">
+flowchart LR
+    subgraph SRC["Sources"]
+        ICU["ICU Monitors&lt;br/&gt;(continuous)"]
+        EHR["Epic EHR&lt;br/&gt;(nightly batch,&lt;br/&gt;site custom fields)"]
+        CERNER["Cerner, acquired&lt;br/&gt;60TB, active patients"]
+        BILL["Billing / Claims&lt;br/&gt;(continuous)"]
+    end
+    ICU -->|"Structured Streaming"| BRZ["Bronze"]
+    EHR -->|"Auto Loader +&lt;br/&gt;schema evolution"| BRZ
+    CERNER -->|"Offline appliance bulk load&lt;br/&gt;+ CDC sync until cutover"| BRZ
+    BILL -->|"CDC stream, permanent,&lt;br/&gt;no batch export exists"| BRZ
+    BRZ --> SIL["Silver&lt;br/&gt;validated, PHI masked"]
+    SIL -.->|"streaming query,&lt;br/&gt;sub-minute"| ALERT["Real-Time Alerting&lt;br/&gt;(clinicians)"]
+    SIL --> G1["Gold: Clinical Star Schema&lt;br/&gt;patient_id + encounter_date/unit&lt;br/&gt;(Liquid Clustering)"]
+    SIL --> G2["Gold: Billing, alt-Gold&lt;br/&gt;normalized schema"]
+    G1 -->|"Job Cluster"| ADMIN["Governed Dashboards&lt;br/&gt;(hospital admin)"]
+    G1 -->|"Serverless"| RESEARCH["Self-Service&lt;br/&gt;(clinical research)"]
+    G1 -.->|"committed Day-1&lt;br/&gt;cross-region replica"| DR["DR Replica"]
+                                    </pre>
+                                </div>
+                            </div>
+
+                            <div class="case-block">
+                                <div class="case-block-label">Key Trade-offs</div>
+                                <div class="tradeoff-grid">
+                                    <div class="tradeoff-item">
+                                        <div class="tradeoff-fork">Dual-Gold vs. one unified Gold</div>
+                                        <p>Billing has a different grain and a different audience than clinical data: finance, not clinicians, and a different consistency model. Billing's CDC is authoritative and permanent, while clinical data tolerates a mix of nightly batch and streaming alerts. Forcing everything into one star schema means compromising the clinical model's clustering strategy for billing's needs, or the reverse. Two Golds cost more to maintain but let each model actually fit its consumer.</p>
+                                    </div>
+                                    <div class="tradeoff-item">
+                                        <div class="tradeoff-fork">CDC as a bridge (Cerner) vs. CDC as permanent plumbing (billing)</div>
+                                        <p>These look like the same technique but aren't the same commitment. Cerner's CDC exists to survive cutover and then gets decommissioned, so I'd build it deliberately disposable. Billing's CDC has no batch fallback, ever, which means it needs the operational rigor a temporary bridge doesn't: monitoring, replay capability, and a real schema contract with the source system owner.</p>
+                                    </div>
+                                    <div class="tradeoff-item">
+                                        <div class="tradeoff-fork">Alerting off Silver vs. waiting for Gold</div>
+                                        <p>Alerting in under a minute can't wait for a Gold materialization cycle, but it also can't read raw, unmasked Bronze. Reading a streaming query directly off validated, PHI-masked Silver keeps the alert path short while staying inside the same governance boundary as everything else. There's no separate "fast but unmasked" shortcut that becomes a compliance liability later.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="case-block">
+                                <div class="watch-box">
+                                    <p><strong>What I'd watch for:</strong> hospital number 13. The day this network signs a third EHR vendor, the nightly batch plus Auto Loader pattern I built for Epic probably won't fit as is. A different vendor exports on its own schedule with its own quirks, so I'd keep the ingestion layer built per source type from the start rather than assume every future hospital looks like the first three.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="exp-tile-close-row">
+                            <button class="exp-tile-close-btn" onclick="toggleExpTile('medpulse')"><i class="fas fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sentinel Defense Systems -->
+            <div class="exp-tile reveal" id="exp-tile-sentinel" style="grid-column: 1 / -1;">
+                <div class="exp-tile-header" onclick="toggleExpTile('sentinel')" role="button" aria-expanded="false" aria-controls="exp-body-sentinel">
+                    <div class="exp-tile-icon-wrap">
+                        <i class="fas fa-shield-halved" style="color:#4a9eff"></i>
+                    </div>
+                    <div class="exp-tile-meta">
+                        <div class="exp-tile-name">Case Study: Sentinel Defense Systems</div>
+                        <div class="exp-tile-tagline">DoD contractor &middot; classification lanes &middot; air-gapped facilities &middot; fixed annual budget</div>
+                        <div class="exp-tile-tags">
+                            <span class="exp-tag">Public Sector</span>
+                            <span class="exp-tag">Classification Lanes</span>
+                            <span class="exp-tag warm">Air-Gap Boundary</span>
+                        </div>
+                    </div>
+                    <div class="exp-tile-arrow"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="exp-tile-body" id="exp-body-sentinel">
+                    <div class="exp-tile-body-inner">
+                        <div class="exp-tile-content">
+
+                            <div class="case-block">
+                                <div class="case-block-label">Situation</div>
+                                <p>This contractor needs one readiness picture, but the data behind it lives on two sides of a hard classification boundary: unclassified maintenance and parts data that logistics analysts need to query freely, and classified operational sensor telemetry that only cleared commanders can see, from inside facilities that are physically air-gapped, no exceptions. Every dollar of compute is budgeted annually with no mid-year flexibility, so an architecture built around elastic scaling would blow past what finance actually approved. This is the case that leans hardest on time I spent holding a clearance inside a classified manufacturing environment. The constraints here aren't hypothetical to me.</p>
+                            </div>
+
+                            <div class="case-block">
+                                <div class="case-block-label">Discovery Questions I Would Ask</div>
+                                <ul class="discovery-list">
+                                    <li>Is the air-gap a physical network boundary, or a Cross-Domain Solution-mediated transfer with human review? That answer decides whether any automated pipeline can cross it at all, versus every transfer needing a person in the loop.</li>
+                                    <li>What's actually classified: the telemetry values themselves, or the fact that a given asset exists or where it's deployed? That changes whether the unclassified lane can even reference an asset ID.</li>
+                                    <li>Is the Job Cluster requirement in the classified lane a cost choice, or is it mandated because Serverless needs a managed control-plane connection the air-gap policy blocks by definition? I need to know which one it is before I present it as a "trade-off."</li>
+                                    <li>If both lanes report on the same physical equipment from two vantage points, is there an authorized human reconciliation process, or are the two lanes never meant to be reconciled at all?</li>
+                                    <li>Is this single-tenant on one accredited environment, or does the classified lane need to support multiple facilities, each carrying its own independent accreditation?</li>
+                                    <li>What's the data lifecycle when equipment moves from operational (classified) to decommissioned (unclassified) status? Is there a formal declassification process, or does that fall through the cracks today?</li>
+                                </ul>
+                            </div>
+
+                            <div class="case-block">
+                                <div class="case-block-label">Architecture I'd Propose</div>
+                                <div class="mermaid-card">
+                                    <pre class="mermaid">
+flowchart TB
+    subgraph UNCLASS["Unclassified Lane, IL5"]
+        direction TB
+        U1["Maintenance Logs +&lt;br/&gt;Parts Inventory&lt;br/&gt;15TB, one-time bulk copy"] --> U2["Bronze"] --> U3["Silver"] --> U4["Gold&lt;br/&gt;star schema"]
+        U4 -->|"Job Cluster,&lt;br/&gt;fixed-budget predictability"| U5["Self-Service&lt;br/&gt;(logistics analysts)"]
+    end
+    subgraph CLASS["Classified Lane, IL6, air-gapped"]
+        direction TB
+        C1["Sensor Telemetry"] -->|"Structured Streaming"| C2["Bronze"] --> C3["Silver"] --> C4["Gold&lt;br/&gt;clustering flagged provisional"]
+        C4 -->|"Job Cluster, mandatory,&lt;br/&gt;Serverless unavailable,&lt;br/&gt;air-gap blocks control plane"| C5["Governed-Only Reporting&lt;br/&gt;(cleared commanders,&lt;br/&gt;no self-service)"]
+    end
+                                    </pre>
+                                </div>
+                                <p style="margin-top: 14px; font-size: 0.8rem; color: var(--text-muted); font-style: italic;">Note the missing edge between the two subgraphs. That's deliberate. Each lane runs its own Unity Catalog metastore with its own IL5/IL6 tagging; nothing crosses without going through an accredited Cross-Domain Solution outside this diagram.</p>
+                            </div>
+
+                            <div class="case-block">
+                                <div class="case-block-label">Key Trade-offs</div>
+                                <div class="tradeoff-grid">
+                                    <div class="tradeoff-item">
+                                        <div class="tradeoff-fork">Two fully separate lanes vs. one Gold with column-level classification tags</div>
+                                        <p>Column-level security inside a single schema is an accreditation nightmare: one misconfigured grant leaks classified data across the boundary. Physically separate metastores mean the worst case of "someone got a permission wrong" is contained to a single lane, not a cross-boundary incident. I'd rather duplicate some plumbing than share a failure mode this severe.</p>
+                                    </div>
+                                    <div class="tradeoff-item">
+                                        <div class="tradeoff-fork">Job Cluster mandatory in the classified lane: not actually a trade-off</div>
+                                        <p>I want to be honest about this one instead of dressing it up as a choice: Serverless requires a managed control-plane connection, and air-gap policy blocks that by definition. The accreditation boundary decides the compute model before cost or performance ever enter the conversation. Presenting it as an open trade-off would be misleading.</p>
+                                    </div>
+                                    <div class="tradeoff-item">
+                                        <div class="tradeoff-fork">Fixed-budget Job Cluster vs. Serverless in the unclassified lane</div>
+                                        <p>Here it is a real trade-off. A budget with no mid-year flexibility makes an unpredictable serverless bill an operational risk, not just a cost annoyance. A bad month could mean a frozen account. I'd take the Job Cluster's predictable spend even though it means logistics analysts occasionally wait on cluster startup. In my own work I reach for serverless by default, but this is exactly the case where I switch: a hard per-department budget and real audit exposure, the same combination that pushes me toward job clusters even outside a defense context.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="case-block">
+                                <div class="watch-box">
+                                    <p><strong>What I'd watch for:</strong> sooner or later a contract is going to ask for one blended readiness score spanning both classified and unclassified signals. When that happens, the only correct path is an accredited Cross-Domain Solution with a person reviewing the transfer, never a pipeline quietly reading both metastores. That shortcut would look clean on a whiteboard and be the wrong call every single time.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="exp-tile-close-row">
+                            <button class="exp-tile-close-btn" onclick="toggleExpTile('sentinel')"><i class="fas fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RetailPulse Commerce -->
+            <div class="exp-tile reveal" id="exp-tile-retailpulse" style="grid-column: 1 / -1;">
+                <div class="exp-tile-header" onclick="toggleExpTile('retailpulse')" role="button" aria-expanded="false" aria-controls="exp-body-retailpulse">
+                    <div class="exp-tile-icon-wrap">
+                        <i class="fas fa-store" style="color:#c4b5fd"></i>
+                    </div>
+                    <div class="exp-tile-meta">
+                        <div class="exp-tile-name">Case Study: RetailPulse Commerce</div>
+                        <div class="exp-tile-tagline">Post-acquisition retail merger &middot; unified Gold &middot; Model Serving as a parallel branch</div>
+                        <div class="exp-tile-tags">
+                            <span class="exp-tag">Retail Merger</span>
+                            <span class="exp-tag">Schema Mapping</span>
+                            <span class="exp-tag green">Model Serving</span>
+                        </div>
+                    </div>
+                    <div class="exp-tile-arrow"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="exp-tile-body" id="exp-body-retailpulse">
+                    <div class="exp-tile-body-inner">
+                        <div class="exp-tile-content">
+
+                            <div class="case-block">
+                                <div class="case-block-label">Situation</div>
+                                <p>Two e-commerce platforms merged, one built on AWS, one built on Azure (the acquired company), and the combined business wants real-time product recommendations, self-service query access for merchandising, and standard weekly executive reporting, all from a single coherent product catalog. Complication: the GPU compute the recommendation model was designed around is stuck three weeks out in procurement, and both platforms' schemas are fixed and already fully known. Neither one is still drifting, they're just two finished, incompatible shapes that need to become one.</p>
+                            </div>
+
+                            <div class="case-block">
+                                <div class="case-block-label">Discovery Questions I Would Ask</div>
+                                <ul class="discovery-list">
+                                    <li>Is "real-time recommendations" actually latency-sensitive and page-render-blocking, or is "real-time" shorthand for "fresher than the current nightly batch model"? That decides whether Model Serving needs to sit synchronously in the request path at all.</li>
+                                    <li>Since both schemas are already fully known and not evolving, is the mapping layer a one-time reconciliation, or does it need ongoing maintenance because both platforms keep shipping independently after the merger?</li>
+                                    <li>Who's the source of truth for product_id across two previously independent catalogs? Has that crosswalk actually been validated, or is a clean 1:1 join being assumed?</li>
+                                    <li>With GPU procurement stuck for three weeks, is the CPU-backed model actually meeting the latency and accuracy bar today, or is "temporary CPU" quietly masking a gap that only shows up once traffic scales?</li>
+                                    <li>Does merchandising's self-service actually need write access to Gold, or just fast, flexible reads? That's the difference between Serverless SQL being sufficient and needing a full workspace.</li>
+                                    <li>Is DR genuinely optional here, or does "optional, business judgment" just mean nobody has asked finance what an outage costs during a peak sales event yet?</li>
+                                </ul>
+                            </div>
+
+                            <div class="case-block">
+                                <div class="case-block-label">Architecture I'd Propose</div>
+                                <div class="mermaid-card">
+                                    <pre class="mermaid">
+flowchart LR
+    subgraph AWS_SRC["AWS Platform"]
+        A1["Clickstream&lt;br/&gt;(continuous)"]
+        A2["Orders&lt;br/&gt;(nightly)"]
+    end
+    subgraph AZ_SRC["Azure Platform, acquired"]
+        Z1["Clickstream&lt;br/&gt;(continuous)"]
+        Z2["Orders&lt;br/&gt;(nightly)"]
+    end
+    A1 -->|"Structured Streaming"| BA["Bronze (AWS)"]
+    A2 -->|"Auto Loader"| BA
+    Z1 -->|"Structured Streaming"| BZ["Bronze (Azure)"]
+    Z2 -->|"Auto Loader"| BZ
+    BA --> SIL["Silver: Schema Mapping&lt;br/&gt;AWS &#8596; Azure field conformance&lt;br/&gt;(mapping, not evolution,&lt;br/&gt;both schemas already known)"]
+    BZ --> SIL
+    SIL --> GOLD["Unified Gold&lt;br/&gt;star schema: product_id + date"]
+    GOLD -->|"Serverless"| MERCH["Self-Service&lt;br/&gt;(merchandising)"]
+    GOLD -->|"Job Cluster"| EXEC["Governed Weekly&lt;br/&gt;Exec Reports"]
+    GOLD -->|"Model Serving endpoint,&lt;br/&gt;parallel branch,&lt;br/&gt;not via Serverless SQL"| REC["Real-Time Recommendations&lt;br/&gt;CPU-backed now,&lt;br/&gt;GPU pending procurement"]
+                                    </pre>
+                                </div>
+                            </div>
+
+                            <div class="case-block">
+                                <div class="case-block-label">Key Trade-offs</div>
+                                <div class="tradeoff-grid">
+                                    <div class="tradeoff-item">
+                                        <div class="tradeoff-fork">Schema mapping vs. schema evolution</div>
+                                        <p>Evolution assumes a schema that's still moving and you're absorbing drift as it happens. Here both schemas are finished and known, so the right tool is a deliberate, reviewed mapping layer that reconciles two fixed shapes once, not an auto-merge mechanism built for a different problem entirely. Reaching for "schema evolution" out of habit would have been the wrong instinct.</p>
+                                    </div>
+                                    <div class="tradeoff-item">
+                                        <div class="tradeoff-fork">One unified Gold vs. two platform Golds behind a shared view</div>
+                                        <p>Both merchandising's self-service and the recommendation model need one consistent product_id and grain. A shared view over two separate Golds would push the reconciliation logic downstream into every consumer instead of solving it once, upstream, where I actually control it.</p>
+                                    </div>
+                                    <div class="tradeoff-item">
+                                        <div class="tradeoff-fork">Model Serving as a parallel branch vs. behind Serverless SQL</div>
+                                        <p>Recommendation serving has different latency and scaling characteristics than BI queries. Coupling it to the same Serverless SQL layer merchandising uses for ad hoc exploration would mean a merchandiser's exploratory query could contend with production recommendation traffic, so it reads Gold directly through its own endpoint instead.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="case-block">
+                                <div class="watch-box">
+                                    <p><strong>What I'd watch for:</strong> the day GPU procurement clears, I wouldn't just swap the compute type under the same endpoint and call it finished. It's worth checking whether the model itself got shaped by those CPU limits along the way, a smaller architecture, a particular batching pattern, the kind of thing a GPU upgrade should revisit rather than just accelerate.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="exp-tile-close-row">
+                            <button class="exp-tile-close-btn" onclick="toggleExpTile('retailpulse')"><i class="fas fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Satellite Fleet Dashboard -->
             <div class="exp-tile reveal reveal-delay-1" id="exp-tile-satellite">
                 <div class="exp-tile-header" onclick="toggleExpTile('satellite')" role="button" aria-expanded="false" aria-controls="exp-body-satellite">
@@ -4923,6 +5321,54 @@
         </div>
     </footer>
 
+    <!-- ===== PROJECT ARCHITECTURE DRAWER ===== -->
+    <div class="project-drawer-overlay" id="project-drawer-overlay" onclick="closeProjectDrawer()"></div>
+    <div class="project-drawer" id="project-drawer" role="dialog" aria-modal="true" aria-labelledby="project-drawer-title">
+        <div class="project-drawer-header">
+            <div>
+                <h3 id="project-drawer-title">Takeda: Architecture &amp; Diagrams</h3>
+                <p>Three governed pipelines, each with a live diagram rendered directly on GitHub.</p>
+            </div>
+            <button class="project-drawer-close" onclick="closeProjectDrawer()" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="project-drawer-body">
+
+            <div class="drawer-section">
+                <h4>Workforce Qualification Intelligence</h4>
+                <p>Consolidates ERP, MES, LMS, and LIMS training records into one governed qualification model with parent-child curriculum rollups and dynamic row-level security.</p>
+                <div class="drawer-link-row">
+                    <button type="button" class="drawer-link diagram-btn" onclick="toggleDiagramPreview(this, 'workforce', 'https://raw.githubusercontent.com/tylerv11/data-engineering-pipelines/main/workforce-qualification-intelligence/diagrams/pipeline_flow.md', 'https://github.com/tylerv11/data-engineering-pipelines/blob/main/workforce-qualification-intelligence/diagrams/pipeline_flow.md')"><i class="fas fa-diagram-project"></i> Pipeline Flow</button>
+                    <button type="button" class="drawer-link diagram-btn" onclick="toggleDiagramPreview(this, 'workforce', 'https://raw.githubusercontent.com/tylerv11/data-engineering-pipelines/main/workforce-qualification-intelligence/diagrams/platform_architecture.md', 'https://github.com/tylerv11/data-engineering-pipelines/blob/main/workforce-qualification-intelligence/diagrams/platform_architecture.md')"><i class="fas fa-sitemap"></i> Platform Architecture</button>
+                    <a class="drawer-link" href="https://github.com/tylerv11/data-engineering-pipelines/tree/main/workforce-qualification-intelligence" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repo Folder</a>
+                </div>
+                <div class="diagram-preview" id="diagram-preview-workforce"></div>
+            </div>
+
+            <div class="drawer-section">
+                <h4>Facility Movement &amp; Shift Analytics</h4>
+                <p>Badge-based path and staffing analytics: shift-level headcount, movement patterns through the facility, and real-time capacity views for supervisors.</p>
+                <div class="drawer-link-row">
+                    <button type="button" class="drawer-link diagram-btn" onclick="toggleDiagramPreview(this, 'facility', 'https://raw.githubusercontent.com/tylerv11/data-engineering-pipelines/main/facility-movement-shift-analytics/diagrams/platform_architecture.md', 'https://github.com/tylerv11/data-engineering-pipelines/blob/main/facility-movement-shift-analytics/diagrams/platform_architecture.md')"><i class="fas fa-sitemap"></i> Platform Architecture</button>
+                    <a class="drawer-link" href="https://github.com/tylerv11/data-engineering-pipelines/tree/main/facility-movement-shift-analytics" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repo Folder</a>
+                </div>
+                <div class="diagram-preview" id="diagram-preview-facility"></div>
+            </div>
+
+            <div class="drawer-section">
+                <h4>Manufacturing Process Event Modeling</h4>
+                <p>Event framework mapping raw process control data into standardized microsteps, with critical-path analysis and rolling drift detection feeding the shop-floor performance board.</p>
+                <div class="drawer-link-row">
+                    <button type="button" class="drawer-link diagram-btn" onclick="toggleDiagramPreview(this, 'manufacturing', 'https://raw.githubusercontent.com/tylerv11/data-engineering-pipelines/main/manufacturing-process-event-modeling/diagrams/platform_architecture.md', 'https://github.com/tylerv11/data-engineering-pipelines/blob/main/manufacturing-process-event-modeling/diagrams/platform_architecture.md')"><i class="fas fa-sitemap"></i> Platform Architecture</button>
+                    <a class="drawer-link" href="https://github.com/tylerv11/data-engineering-pipelines/tree/main/manufacturing-process-event-modeling" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repo Folder</a>
+                </div>
+                <div class="diagram-preview" id="diagram-preview-manufacturing"></div>
+            </div>
+
+        </div>
+    </div>
+
     <!-- ===== SITE ASSISTANT ===== -->
     <div id="site-assistant">
         <button id="sa-toggle" onclick="toggleAssistant()" aria-label="Ask about Tyler's portfolio">
@@ -5139,6 +5585,104 @@
             const restoreBtn = document.getElementById(winId.replace('-window', '-restore'));
             win.classList.remove('closed', 'minimized', 'maximized');
             if (restoreBtn) restoreBtn.classList.remove('visible');
+        }
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'base',
+                themeVariables: {
+                    darkMode: true,
+                    background: '#080D0A',
+                    mainBkg: '#16211C',
+                    primaryColor: '#16211C',
+                    primaryTextColor: '#E6EFE6',
+                    primaryBorderColor: '#00ff87',
+                    secondaryColor: '#0C1310',
+                    tertiaryColor: '#0C1310',
+                    lineColor: '#4a525c',
+                    textColor: '#A0B0A2',
+                    nodeTextColor: '#E6EFE6',
+                    edgeLabelBackground: '#0C1310',
+                    clusterBkg: '#0C1310',
+                    clusterBorder: 'rgba(160,176,162,0.2)',
+                    fontFamily: 'IBM Plex Sans, sans-serif',
+                    fontSize: '13px'
+                },
+                flowchart: { curve: 'basis', htmlLabels: true, padding: 14 },
+                securityLevel: 'loose'
+            });
+        }
+
+        // ===== PROJECT ARCHITECTURE DRAWER =====
+        var projectDrawerPrevFocus = null;
+        function openProjectDrawer(id) {
+            var overlay = document.getElementById('project-drawer-overlay');
+            var drawer = document.getElementById('project-drawer');
+            projectDrawerPrevFocus = document.activeElement;
+            overlay.classList.add('open');
+            drawer.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            var closeBtn = drawer.querySelector('.project-drawer-close');
+            if (closeBtn) closeBtn.focus();
+        }
+        function closeProjectDrawer() {
+            var overlay = document.getElementById('project-drawer-overlay');
+            var drawer = document.getElementById('project-drawer');
+            overlay.classList.remove('open');
+            drawer.classList.remove('open');
+            document.body.style.overflow = '';
+            if (projectDrawerPrevFocus && projectDrawerPrevFocus.focus) projectDrawerPrevFocus.focus();
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeProjectDrawer();
+        });
+
+        // Fetch a diagram file from GitHub (raw) and render its Mermaid blocks
+        // inline instead of sending the visitor to a new tab to see it.
+        var diagramFileCache = {};
+        function escapeHtml(s) {
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+        async function toggleDiagramPreview(btn, section, rawUrl, githubUrl) {
+            var container = document.getElementById('diagram-preview-' + section);
+            var row = btn.closest('.drawer-link-row');
+            var wasActive = btn.classList.contains('active');
+
+            row.querySelectorAll('.diagram-btn').forEach(function(b) { b.classList.remove('active'); });
+
+            if (wasActive) {
+                container.innerHTML = '';
+                return;
+            }
+            btn.classList.add('active');
+            container.innerHTML = '<div class="diagram-loading">Loading diagram from GitHub&hellip;</div>';
+
+            try {
+                var blocks = diagramFileCache[rawUrl];
+                if (!blocks) {
+                    var res = await fetch(rawUrl);
+                    if (!res.ok) throw new Error('fetch failed');
+                    var text = await res.text();
+                    blocks = [...text.matchAll(/```mermaid\n([\s\S]*?)```/g)].map(function(m) { return m[1].trim(); });
+                    diagramFileCache[rawUrl] = blocks;
+                }
+
+                if (!blocks.length) {
+                    container.innerHTML = '<div class="diagram-loading">Couldn\'t find a diagram in this file. <a href="' + githubUrl + '" target="_blank" rel="noopener">View it on GitHub</a></div>';
+                    return;
+                }
+
+                container.innerHTML = blocks.map(function(code, i) {
+                    return '<div class="diagram-preview-card"><pre class="mermaid" id="dp-' + section + '-' + i + '">' + escapeHtml(code) + '</pre></div>';
+                }).join('') + '<a href="' + githubUrl + '" target="_blank" rel="noopener" style="font-size:0.75rem;color:var(--text-muted);text-decoration:none;">View source on GitHub <i class="fas fa-arrow-up-right-from-square" style="font-size:0.65rem;"></i></a>';
+
+                if (typeof mermaid !== 'undefined') {
+                    mermaid.run({ nodes: container.querySelectorAll('pre.mermaid') });
+                }
+            } catch (err) {
+                container.innerHTML = '<div class="diagram-loading">Couldn\'t load the diagram right now. <a href="' + githubUrl + '" target="_blank" rel="noopener">View it on GitHub</a></div>';
+            }
         }
 
         // ===== EXPANDABLE EXPERIMENT TILES =====
@@ -6106,6 +6650,7 @@
                             if (e.target.closest('.pao-info-btn')) return;
                             if (e.target.closest('.pao')) return;
                             if (e.target.closest('a')) return;
+                            if (e.target.closest('button')) return;
                             if (e.target.closest('iframe')) return;
                             if (e.target.closest('.yt-facade')) return;
                             if (card.classList.contains('pao-open')) { togglePao(false); return; }

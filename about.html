@@ -790,7 +790,7 @@
             const mc = document.getElementById('matrix-cursor-canvas');
             if (!mc) return;
             const ctx = mc.getContext('2d');
-            const chars = '01アイウエカキクサシスタチツナニネノ';
+            const chars = '01';
             let trails = [];
             function resize() { mc.width = window.innerWidth; mc.height = window.innerHeight; }
             resize();
@@ -828,7 +828,7 @@
 
         // ===== HEADING MATRIX BACKGROUNDS =====
         (function() {
-            const chars = '01アイウカキサシタチナ';
+            const chars = '01';
             document.querySelectorAll('.heading-matrix-bg').forEach(function(canvas) {
                 if (!canvas || !canvas.parentElement) return;
                 var ctx = canvas.getContext('2d');
