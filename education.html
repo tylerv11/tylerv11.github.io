@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
     <!-- Shared chatbot knowledge base (window.TYLER_KB) - not deferred, see
          index.html for why: the inline chatbot script later in <body> reads
          it synchronously as the parser reaches it. -->
@@ -554,6 +555,85 @@
             #sa-input { font-size: 0.9rem; padding: 10px 14px; }
             #sa-send { width: 40px; height: 40px; font-size: 1rem; }
         }
+
+        /* Education / Framework view toggle */
+        .view-toggle-wrap { margin: 28px 0 8px; }
+        .view-toggle {
+            display: inline-flex;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 100px;
+            padding: 3px;
+        }
+        .view-btn {
+            padding: 8px 22px; border-radius: 100px;
+            font-size: 0.78rem; font-weight: 600; letter-spacing: 0.3px;
+            color: var(--text-muted); background: none; border: none;
+            cursor: pointer; transition: all 0.25s ease;
+            display: inline-flex; align-items: center; gap: 7px;
+        }
+        .view-btn.active { background: var(--text-primary); color: var(--bg-primary); box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        .view-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        @media (max-width: 640px) {
+            .view-btn { padding: 8px 14px; font-size: 0.72rem; }
+        }
+
+        /* How I Approach Things (optional framework section) */
+        .framework-details {
+            margin-top: 8px; border: 1px solid var(--border-subtle); border-radius: 16px;
+            background: var(--bg-card); overflow: hidden;
+        }
+        .framework-details-body { padding: 24px 28px 32px; }
+        .framework-details-body > p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.8; max-width: 760px; margin-bottom: 28px; }
+
+        .sub-framework {
+            margin-top: 8px; border: 1px solid var(--border-subtle); border-radius: 14px;
+            background: var(--bg-secondary); overflow: hidden;
+        }
+        .sub-framework + .sub-framework { margin-top: 20px; }
+        .sub-framework > summary {
+            list-style: none; cursor: pointer; padding: 16px 20px; display: flex;
+            align-items: center; justify-content: space-between; gap: 12px;
+            font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 700;
+        }
+        .sub-framework > summary::-webkit-details-marker { display: none; }
+        .sub-framework > summary .fw-chevron { transition: transform 0.3s var(--transition-smooth); color: var(--accent); font-size: 0.85rem; }
+        .sub-framework[open] > summary .fw-chevron { transform: rotate(180deg); }
+        .sub-framework-body { padding: 4px 20px 24px; }
+
+        .stage-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 20px; }
+        .stage-card {
+            background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px;
+            padding: 18px 16px;
+        }
+        .stage-num { font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; font-weight: 700; color: var(--accent); letter-spacing: 1px; margin-bottom: 8px; }
+        .stage-card h4 { font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; margin-bottom: 8px; }
+        .stage-card p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.55; }
+
+        .mermaid-card {
+            background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px;
+            padding: 22px; margin-top: 20px; overflow-x: auto;
+        }
+        .mermaid-card .mermaid { display: flex; justify-content: center; min-width: 520px; }
+
+        .tree-block { margin-top: 40px; }
+        .tree-block h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; font-weight: 700; }
+        .tree-note { margin-top: 10px; color: var(--text-secondary); font-size: 0.88rem; line-height: 1.7; max-width: 700px; }
+
+        .fw-callout {
+            margin-top: 20px; padding: 16px 20px; border-radius: 12px;
+            background: rgba(0,255,135,0.04); border: 1px solid rgba(0,255,135,0.16);
+            font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7;
+        }
+        .fw-callout strong { color: var(--text-primary); }
+
+        @media (max-width: 1100px) {
+            .stage-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 640px) {
+            .stage-grid { grid-template-columns: 1fr; }
+            .framework-details-body { padding: 20px 20px 24px; }
+        }
     </style>
 </head>
 <body>
@@ -586,6 +666,20 @@
             <h2 class="section-heading">Always learning, <br><span class="muted">always growing.</span></h2>
         </div>
 
+        <div class="view-toggle-wrap">
+            <div class="view-toggle" role="group" aria-label="Page view">
+                <button class="view-btn active" id="btn-education-view" onclick="setEduView('education')" aria-pressed="true">
+                    <i class="fas fa-graduation-cap"></i> Education
+                </button>
+                <button class="view-btn" id="btn-framework-view" onclick="setEduView('framework')" aria-pressed="false">
+                    <i class="fas fa-route"></i> My Problem-Solving Framework
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div id="education-view">
+    <section class="section" style="padding-top: 0;">
         <div class="timeline">
 
             <!-- Anthropic Model Context Protocol -->
@@ -837,6 +931,187 @@
 
         </div>
     </section>
+    </div><!-- /education-view -->
+
+    <div id="framework-view" style="display:none;">
+    <!-- How I Approach Things (optional framework section) -->
+    <section class="section" style="padding-top: 0;">
+        <div class="section-header reveal" style="position: relative; overflow: hidden;">
+            <canvas class="heading-matrix-bg"></canvas>
+            <div class="section-label">How I Approach Things</div>
+            <h2 class="section-heading">The approach I take <br><span class="muted">for nearly every problem.</span></h2>
+        </div>
+
+        <div class="framework-details reveal">
+            <div class="framework-details-body">
+                <p>In order to decide what's worth building, I usually think through a couple of points detailed below.</p>
+
+                <!-- Analytics Framework -->
+                <details class="sub-framework">
+                    <summary>
+                        <span>Analytics Framework</span>
+                        <span class="fw-chevron"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="sub-framework-body">
+                        <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.75;max-width:720px;">Before any pipeline gets designed, someone has to decide what's actually worth building. This is the process I run to get there.</p>
+
+                        <div class="stage-grid">
+                            <div class="stage-card">
+                                <div class="stage-num">01 / INTAKE</div>
+                                <h4>Understand the ask before touching data</h4>
+                                <p>Who's actually sponsoring this, what resources and budget exist, and does it tie back to a real company initiative or North Star, or is it just someone's pet request? I also check what already exists, decide who owns what once this ships, and set expectations for the sustainment lifecycle. I present alternatives up front, so whatever we commit to is something the team has actually agreed to and will support, not something I picked alone.</p>
+                            </div>
+                            <div class="stage-card">
+                                <div class="stage-num">02 / EVALUATION</div>
+                                <h4>Measure the impact before committing to a build</h4>
+                                <p>Sometimes a small gap closes with a lightweight fix, so I just do it. A bigger effort is a different story: it usually takes real time and resources, so before committing I weigh the trade-offs and look at the true business impact, cost avoidance, immediate benefit, FTE hours, against what it will actually cost to get there.</p>
+                            </div>
+                            <div class="stage-card">
+                                <div class="stage-num">03 / MOCKUP & ITERATE</div>
+                                <h4>Build small, put it in front of real users</h4>
+                                <p>I start with small mockups or MVPs and put them in front of stakeholders, to make sure we're nudging in the right direction before I build anything further. Their reaction shapes the next version.</p>
+                            </div>
+                            <div class="stage-card">
+                                <div class="stage-num">04 / DEPLOY & HYPERCARE</div>
+                                <h4>Launch isn't the finish line</h4>
+                                <p>I stay embedded with the people using it for the first couple of weeks after launch, sometimes on their shift schedule instead of mine, because that's when the real gaps between the tool and how people actually work show up.</p>
+                            </div>
+                            <div class="stage-card">
+                                <div class="stage-num">05 / BEHAVIOR OVER FLASH</div>
+                                <h4>Did this change what someone does?</h4>
+                                <p>I check back on my solutions on a regular cadence. Is engagement still there? Are people running into issues? What does customer satisfaction actually look like? Is the behavior following through, or did it fade after the initial launch excitement wore off? Most abandonment gets caught in these early check-ins, before it becomes a bigger problem. This tends to follow a DMAIC rhythm out of Six Sigma, define, measure, analyze, improve, control, just applied continuously instead of once.</p>
+                            </div>
+                        </div>
+
+                        <div class="mermaid-card">
+                            <pre class="mermaid">
+flowchart LR
+    A["1. Intake&lt;br/&gt;business case, sponsor,&lt;br/&gt;budget, North Star fit"] --> B["2. Evaluation&lt;br/&gt;measure impact,&lt;br/&gt;weigh real alternatives"]
+    B --> C["3. Mockup &amp; Iterate&lt;br/&gt;build small,&lt;br/&gt;get it in front of users"]
+    C --> D["4. Deploy &amp; Hypercare&lt;br/&gt;embed with users,&lt;br/&gt;close the real gaps"]
+    D --> E["5. Behavior Over Flash&lt;br/&gt;did this change&lt;br/&gt;what someone does"]
+    E -.->|"behavior gap found"| A
+                            </pre>
+                        </div>
+
+                        <div class="fw-callout">
+                            <strong>Deciding whether to actually deploy:</strong> this is the step people skip. Before committing further, I ask a few blunt questions: is this a long-standing initiative, or a flavor-of-the-month, flashy thing someone's excited about this quarter? Do we actually have quality data behind it? Is there real user behavior that says this will make a difference, or is it really an ad hoc research project for one person, or a tool that ends up used to police people instead of help them?
+                        </div>
+
+                        <div class="fw-callout">
+                            <strong>In practice:</strong> this is the same loop behind the manufacturing performance board and the global training compliance dashboard described in the timeline above. Mockups before full builds, a couple of weeks embedded with users right after launch, and buy-in earned by showing people the validation behind the numbers instead of asking them to trust a new tool on faith.
+                        </div>
+                    </div>
+                </details>
+
+                <!-- Data Pipeline Framework -->
+                <details class="sub-framework">
+                    <summary>
+                        <span>Data Pipeline Framework: how I design the system</span>
+                        <span class="fw-chevron"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="sub-framework-body">
+                        <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.75;max-width:720px;">Once the Analytics Framework has settled what's worth building, this is what runs before I write a line of code or pick a product.</p>
+
+                        <div class="stage-grid">
+                            <div class="stage-card">
+                                <div class="stage-num">01 / RESTATE</div>
+                                <h4>Say it back in my own words</h4>
+                                <p>I repeat the ask back and name the actual decision it's supposed to support. Most requirements describe a report someone wants, not the decision that report is supposed to change.</p>
+                            </div>
+                            <div class="stage-card">
+                                <div class="stage-num">02 / DISCOVER</div>
+                                <h4>Interrogate the constraints, not the wishlist</h4>
+                                <p>Volume, latency tolerance, who consumes it and how often, what "correct" means to an auditor versus an operator. I'm hunting for the one constraint that eliminates half the design space early.</p>
+                            </div>
+                            <div class="stage-card">
+                                <div class="stage-num">03 / SKELETON</div>
+                                <h4>Boxes and arrows, no vendor names</h4>
+                                <p>I sketch the shape of the system first: sources, a landing zone, a conformance layer, one or more serving layers, consumers. Only then do I decide whether that's Databricks, Snowflake, or a folder of CSVs.</p>
+                            </div>
+                            <div class="stage-card">
+                                <div class="stage-num">04 / TRADE-OFFS</div>
+                                <h4>Name the fork, argue both sides out loud</h4>
+                                <p>Every skeleton has a handful of real forks in it: batch vs. streaming, one gold model vs. two, centralized vs. federated. I say which way I'd go and why. Not "best practice," the specific reason it fits this system.</p>
+                            </div>
+                            <div class="stage-card">
+                                <div class="stage-num">05 / FAILURE MODES</div>
+                                <h4>Design the seams, not just the happy path</h4>
+                                <p>What happens at 10x volume? What happens when a source system changes its schema without warning? I want the answer to be "this seam absorbs it," not "we rebuild."</p>
+                            </div>
+                        </div>
+
+                        <div class="mermaid-card">
+                            <pre class="mermaid">
+flowchart LR
+    A["1. Restate&lt;br/&gt;Name the real decision&lt;br/&gt;this system serves"] --> B["2. Discover&lt;br/&gt;Volume, latency,&lt;br/&gt;consumers, constraints"]
+    B --> C["3. Skeleton&lt;br/&gt;Boxes and arrows,&lt;br/&gt;no vendor names yet"]
+    C --> D["4. Trade-offs&lt;br/&gt;Name each fork,&lt;br/&gt;argue both sides"]
+    D --> E["5. Failure Modes&lt;br/&gt;What breaks this at&lt;br/&gt;10x, or a schema change"]
+    E -.->|"requirements shift"| A
+                            </pre>
+                        </div>
+
+                        <div class="tree-block">
+                            <h3>Batch vs. Streaming</h3>
+                            <p class="tree-note">The question I actually ask first is what the consumer does differently if the data arrives five minutes fresher, not some abstract "how fresh should this be." Most of the time the honest answer is nothing changes, which means batch is correct and streaming is over-engineering with an ongoing operational tax attached to it.</p>
+                            <div class="mermaid-card">
+                                <pre class="mermaid">
+flowchart TD
+    Q1{"Can the consumer tolerate&lt;br/&gt;minutes-to-hours of staleness?"}
+    Q1 -->|"Yes"| Q2{"Is the source a high-write&lt;br/&gt;OLTP system you can't afford&lt;br/&gt;to hit with polling queries?"}
+    Q1 -->|"No, needs seconds"| STREAM["Streaming&lt;br/&gt;event bus + stream processor"]
+    Q2 -->|"Yes"| CDCB["Batch + CDC&lt;br/&gt;log-based capture, scheduled merge"]
+    Q2 -->|"No"| BATCH["Plain Batch&lt;br/&gt;scheduled extract or query"]
+    STREAM --> Q3{"Will you need to&lt;br/&gt;reprocess history later?"}
+    Q3 -->|"Yes"| HYBRID["Streaming + durable replay log&lt;br/&gt;(event store, not just a queue)"]
+    Q3 -->|"No"| STREAM
+                                </pre>
+                            </div>
+                        </div>
+
+                        <div class="tree-block">
+                            <h3>CDC &amp; Schema Evolution</h3>
+                            <p class="tree-note">CDC earns its complexity when the source can't be polled without hurting it. Schema evolution is where I decide how much trust to extend automatically. In my experience, schemas move more than most teams plan for, a new product line adds a field, a reorg renames a department code, a source system you don't own ships an update on its own schedule. That's exactly why additive changes should be cheap to absorb by default. A type change or a dropped column is different: that gets a contract version, not a silent auto-merge, because I've watched a "helpful" auto-merge quietly corrupt three months of a dependent report before anyone noticed.</p>
+                            <div class="mermaid-card">
+                                <pre class="mermaid">
+flowchart TD
+    S1{"Does the change only&lt;br/&gt;add a new nullable column?"}
+    S1 -->|"Yes"| PERMISSIVE["Auto-merge&lt;br/&gt;permissive schema evolution"]
+    S1 -->|"No, type change&lt;br/&gt;or column removed"| S2{"Do existing consumers&lt;br/&gt;depend on the old shape?"}
+    S2 -->|"Yes"| QUAR["Quarantine + version the contract&lt;br/&gt;(new versioned table/topic,&lt;br/&gt;deprecate the old one on a timeline)"]
+    S2 -->|"No"| CONTROLLED["Controlled replace&lt;br/&gt;single-owner migration script"]
+                                </pre>
+                            </div>
+                        </div>
+
+                        <div class="tree-block">
+                            <h3>Serverless vs. Job Cluster (and the override hierarchy)</h3>
+                            <p class="tree-note">The real question here is who gets to override the default, and in what order, more than which option runs faster. Ad hoc and bursty work defaults to serverless so nobody's waiting on cluster spin-up; sustained, tuned workloads get a dedicated job cluster. The part people skip is the hierarchy: a job-level override should always beat a workspace default, or someone's one-off notebook setting quietly becomes the production config.</p>
+                            <p class="tree-note">In my own work, I default to serverless most of the time. It removes a whole category of babysitting: no cluster sizing, no idle spend, no waiting on a spin-up before a query runs. But job clusters earn their keep fast once an organization actually wants predictable, per-department budgets, or once there's real audit risk or GDPR-style compliance pressure that calls for a fixed, reviewable environment instead of elastic infrastructure nobody can fully account for after the fact.</p>
+                            <div class="mermaid-card">
+                                <pre class="mermaid">
+flowchart TD
+    C1{"Is the workload ad hoc,&lt;br/&gt;bursty, or exploratory?"}
+    C1 -->|"Yes"| SERVERLESS["Serverless SQL /&lt;br/&gt;Serverless Jobs"]
+    C1 -->|"No, sustained,&lt;br/&gt;predictable schedule"| C2{"Does it need a tuned&lt;br/&gt;cluster policy: custom libs,&lt;br/&gt;init scripts, GPU?"}
+    C2 -->|"Yes"| JOBCLUSTER["Dedicated Job Cluster"]
+    C2 -->|"No"| SERVERLESS
+    JOBCLUSTER -.->|"still governed by"| H1
+    SERVERLESS -.->|"still governed by"| H1
+    subgraph HIER["Override hierarchy: highest wins"]
+        direction LR
+        H1["Job-level compute override"] --> H2["Cluster policy default"] --> H3["Workspace default"] --> H4["Personal / interactive cluster"]
+    end
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+    </div><!-- /framework-view -->
 
     <!-- ===== SITE ASSISTANT ===== -->
     <div id="site-assistant">
@@ -903,6 +1178,74 @@
     </footer>
 
     <script>
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: 'base',
+                themeVariables: {
+                    darkMode: true,
+                    background: '#08090a',
+                    mainBkg: '#181c22',
+                    primaryColor: '#181c22',
+                    primaryTextColor: '#e7e9ec',
+                    primaryBorderColor: '#00ff87',
+                    secondaryColor: '#0f1115',
+                    tertiaryColor: '#0f1115',
+                    lineColor: '#4a525c',
+                    textColor: '#a7adb7',
+                    nodeTextColor: '#e7e9ec',
+                    edgeLabelBackground: '#0f1115',
+                    clusterBkg: '#0f1115',
+                    clusterBorder: 'rgba(255,255,255,0.16)',
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '13px'
+                },
+                flowchart: { curve: 'basis', htmlLabels: true, padding: 14 },
+                securityLevel: 'loose'
+            });
+        }
+
+        // Education / Framework view toggle
+        function setEduView(view) {
+            var eduView = document.getElementById('education-view');
+            var fwView = document.getElementById('framework-view');
+            var eduBtn = document.getElementById('btn-education-view');
+            var fwBtn = document.getElementById('btn-framework-view');
+            var showFramework = view === 'framework';
+
+            eduView.style.display = showFramework ? 'none' : '';
+            fwView.style.display = showFramework ? '' : 'none';
+            eduBtn.classList.toggle('active', !showFramework);
+            fwBtn.classList.toggle('active', showFramework);
+            eduBtn.setAttribute('aria-pressed', String(!showFramework));
+            fwBtn.setAttribute('aria-pressed', String(showFramework));
+
+            if (showFramework) {
+                // Elements hidden behind display:none never intersected, so the
+                // reveal observer never fired for them. Show them immediately now.
+                fwView.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
+            }
+
+            var toggleWrap = document.querySelector('.view-toggle-wrap');
+            if (toggleWrap) toggleWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Render mermaid diagrams the first time a <details> containing them is opened.
+        // startOnLoad is off because closed <details> content is display:none, so mermaid
+        // can't measure it correctly until the section is actually visible.
+        document.querySelectorAll('details').forEach(function(d) {
+            d.addEventListener('toggle', function() {
+                if (d.open && typeof mermaid !== 'undefined') {
+                    var pending = d.querySelectorAll('pre.mermaid:not([data-processed="true"])');
+                    if (pending.length) {
+                        mermaid.run({ nodes: pending }).then(function() {
+                            pending.forEach(function(el) { el.setAttribute('data-processed', 'true'); });
+                        }).catch(function() {});
+                    }
+                }
+            });
+        });
+
         // Navbar scroll
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
@@ -964,7 +1307,7 @@
             const mc = document.getElementById('matrix-cursor-canvas');
             if (!mc) return;
             const ctx = mc.getContext('2d');
-            const chars = '01アイウエカキクサシスタチツナニネノ';
+            const chars = '01';
             let trails = [];
             function resize() { mc.width = window.innerWidth; mc.height = window.innerHeight; }
             resize();
@@ -1002,7 +1345,7 @@
 
         // ===== HEADING MATRIX BACKGROUNDS =====
         (function() {
-            const chars = '01アイウカキサシタチナ';
+            const chars = '01';
             document.querySelectorAll('.heading-matrix-bg').forEach(function(canvas) {
                 if (!canvas || !canvas.parentElement) return;
                 var ctx = canvas.getContext('2d');
