@@ -210,38 +210,6 @@
             color: var(--accent);
         }
 
-        /* Tags */
-        .about-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 32px;
-        }
-
-        .about-tag {
-            padding: 8px 18px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border-subtle);
-            border-radius: 100px;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .about-tag:hover {
-            background: rgba(0,255,135,0.06);
-            border-color: rgba(0,255,135,0.2);
-            color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        .about-tag i { font-size: 0.85rem; }
-        .about-tag:hover i { transform: translateY(-1px); }
-
         /* Footer */
         .footer {
             border-top: 1px solid var(--border-subtle);
@@ -378,8 +346,8 @@
         }
 
         .carousel__inner {
-            /* image area (150px) + text below (~118px) = 268px */
-            height: 268px;
+            /* image area (180px) + text below (~118px) = 298px */
+            height: 298px;
             position: relative;
             width: 100%;
         }
@@ -404,7 +372,7 @@
 
         .carousel__slide-item {
             display: inline-block;
-            height: 150px;
+            height: 180px;
             margin: 0;
             padding: 0 6px;
             position: absolute;
@@ -515,8 +483,8 @@
         @media (max-width: 768px) {
             .carousel__wrap { padding: 0 44px; }
             .carousel__btn-arrow { height: 16px; width: 16px; }
-            .carousel__inner { height: 340px; }
-            .carousel__slide-item { height: 200px; }
+            .carousel__inner { height: 370px; }
+            .carousel__slide-item { height: 230px; }
             .carousel-slide-item__body { bottom: -130px; }
             .carousel-slide-item__body h4 { font-size: 0.82rem; }
             .carousel-slide-item__body p { font-size: 0.76rem; }
@@ -591,7 +559,7 @@
         <div class="section-header" style="animation: fadeInUp 0.8s var(--transition-smooth) both; position: relative; overflow: hidden;">
             <canvas class="heading-matrix-bg"></canvas>
             <div class="section-label">About Me</div>
-            <h2 class="section-heading">The story behind <br><span class="muted">my work.</span></h2>
+            <h2 class="section-heading">My Life <br><span class="muted">outside of work.</span></h2>
         </div>
 
         <div class="about-grid">
@@ -607,18 +575,6 @@
                 <p>I grew up in Dallas in a single-parent household and moved to Los Angeles to study Industrial &amp; Systems Engineering at the University of Southern California. USC gave me a technical foundation, but it also taught me how much good engineering depends on writing, listening, and translating complex ideas for people with different priorities.</p>
                 <p>Some of my favorite memories came from moments of connection: stargazing with an astronomy professor in the Anza-Borrego desert, grilling burgers with my Christian fraternity to serve people experiencing homelessness on Friday nights, and learning from people whose backgrounds and daily realities were very different from mine. That community helped me build purpose, belonging, and resilience as both an individual and a leader.</p>
                 <p>Outside work, I like fishing, video editing, off-roading, cooking, and surfing. Lately I've also gotten into 3D printing and graphic design, making pieces for friends and family as a creative outlet that blends the technical and artistic sides of how I think.</p>
-
-                <div class="about-tags">
-                    <span class="about-tag"><i class="fas fa-fish"></i> Fishing</span>
-                    <span class="about-tag"><i class="fas fa-film"></i> Video Editing</span>
-                    <span class="about-tag"><i class="fas fa-truck-monster"></i> Off-Roading</span>
-                    <span class="about-tag"><i class="fas fa-water"></i> Surfing</span>
-                    <span class="about-tag"><i class="fas fa-utensils"></i> Cooking</span>
-                    <span class="about-tag"><i class="fas fa-campground"></i> Outdoors</span>
-                    <span class="about-tag"><i class="fas fa-cube"></i> 3D Printing</span>
-                    <span class="about-tag"><i class="fas fa-pen-ruler"></i> Graphic Design</span>
-                    <span class="about-tag"><i class="fas fa-graduation-cap"></i> USC Alum</span>
-                </div>
 
                 <!-- Personality carousel — sits in the right column below the tags -->
                 <div class="about-carousel">
@@ -935,7 +891,9 @@
                 if (sw < 1) return;
                 var listW = Math.ceil((N + 0.5) * sw * 2);
                 list.style.width = listW + 'px';
-                var refOffset = listW / 2 - sw / 2;
+                // Anchor the active slide to the left edge of the visible
+                // area (cols * sw) instead of centering it in the middle.
+                var refOffset = listW / 2 - (cols * sw) / 2;
 
                 list.querySelectorAll('.carousel__slide-item').forEach(function(item, i) {
                     item.style.width = sw + 'px';
