@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="stretchy-footer.css">
+    <link rel="stylesheet" href="shimmer-button.css">
     <!-- Tyler's Portfolio Assistant - Enhanced Fuzzy Matching -->
     <!-- Not deferred: the inline chatbot script later in <body> reads
          window.TYLER_KB synchronously as it parses, which would run before
@@ -3325,7 +3326,7 @@
             <a href="education.html" class="nav-link">Education</a>
             <a href="#projects" class="nav-link">Projects</a>
             <a href="files/TylerVincent-Resume.pdf" class="nav-link" target="_blank" rel="noopener">Resume</a>
-            <a href="https://www.linkedin.com/in/tyler-vincent11/" class="nav-cta" target="_blank">Let's Connect <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></a>
+            <a href="https://www.linkedin.com/in/tyler-vincent11/" class="nav-cta shimmer-btn" target="_blank"><span class="shimmer-spark-wrap"><span class="shimmer-spark"></span></span>Let's Connect <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i><span class="shimmer-highlight"></span><span class="shimmer-backdrop"></span></a>
         </div>
     </nav>
     <div class="nav-overlay" id="nav-overlay"></div>
@@ -7813,8 +7814,19 @@ flowchart LR
     <script src="stretchy-footer.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            var themeStyles = getComputedStyle(document.documentElement);
+            function themeColor(name, fallback) {
+                var value = themeStyles.getPropertyValue(name).trim();
+                return value || fallback;
+            }
             StretchyFooter.init({
-                colors: ["#022B4B", "#5D7E01", "#2A9D62", "#4EE4A3", "#F0CE94"],
+                colors: [
+                    themeColor('--accent-blue', '#7E8E9B'),
+                    themeColor('--green-deep', '#3C6B44'),
+                    themeColor('--accent', '#00ff87'),
+                    themeColor('--green-lime', '#A3BC3F'),
+                    themeColor('--accent-warm', '#C79A4F')
+                ],
                 maxStretch: 220
             });
         });
