@@ -9,6 +9,7 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
     <link rel="stylesheet" href="stretchy-footer.css">
+    <link rel="stylesheet" href="shimmer-button.css">
     <!-- Shared chatbot knowledge base (window.TYLER_KB) - not deferred, see
          index.html for why: the inline chatbot script later in <body> reads
          it synchronously as the parser reaches it. -->
@@ -654,7 +655,7 @@
             <a href="education.html" class="nav-link active">Education</a>
             <a href="index.html#projects" class="nav-link">Projects</a>
             <a href="files/TylerVincent-Resume.pdf" class="nav-link" target="_blank" rel="noopener">Resume</a>
-            <a href="https://www.linkedin.com/in/tyler-vincent11/" class="nav-cta" target="_blank">Let's Connect <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></a>
+            <a href="https://www.linkedin.com/in/tyler-vincent11/" class="nav-cta shimmer-btn" target="_blank"><span class="shimmer-spark-wrap"><span class="shimmer-spark"></span></span>Let's Connect <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i><span class="shimmer-highlight"></span><span class="shimmer-backdrop"></span></a>
         </div>
     </nav>
     <div class="nav-overlay" id="nav-overlay"></div>
@@ -1481,8 +1482,18 @@ flowchart TD
     <script src="stretchy-footer.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            var themeStyles = getComputedStyle(document.documentElement);
+            function themeColor(name, fallback) {
+                var value = themeStyles.getPropertyValue(name).trim();
+                return value || fallback;
+            }
             StretchyFooter.init({
-                colors: ["#022B4B", "#5D7E01", "#2A9D62", "#4EE4A3", "#F0CE94"],
+                colors: [
+                    themeColor('--accent-blue', '#4a9eff'),
+                    themeColor('--accent-purple', '#c4b5fd'),
+                    themeColor('--accent', '#00ff87'),
+                    themeColor('--accent-warm', '#f6ad55')
+                ],
                 maxStretch: 220
             });
         });

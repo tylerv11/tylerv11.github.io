@@ -1,0 +1,93 @@
+/**
+ * Shimmer button — vanilla-CSS port of MagicUI's shimmer-button.
+ * A thin light spark travels endlessly around the button's border.
+ * Apply the `shimmer-btn` class alongside an existing button/anchor class;
+ * it only adds the spark/highlight/backdrop layers, it doesn't replace
+ * the host class's own background, padding, or type styles.
+ *
+ * Markup:
+ *   <a class="nav-cta shimmer-btn" ...>
+ *     <span class="shimmer-spark-wrap"><span class="shimmer-spark"></span></span>
+ *     Let's Connect <i class="fas fa-arrow-right"></i>
+ *     <span class="shimmer-highlight"></span>
+ *     <span class="shimmer-backdrop"></span>
+ *   </a>
+ */
+.shimmer-btn {
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+    --shimmer-color: rgba(255, 255, 255, 0.95);
+    --shimmer-cut: 2px;
+    --shimmer-speed: 2.6s;
+}
+
+.shimmer-btn .shimmer-spark-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: visible;
+    filter: blur(2px);
+    container-type: size;
+}
+
+.shimmer-btn .shimmer-spark {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: 1;
+    height: 100cqh;
+    animation: shimmer-btn-slide var(--shimmer-speed) ease-in-out infinite alternate;
+}
+
+.shimmer-btn .shimmer-spark::before {
+    content: "";
+    position: absolute;
+    inset: -100%;
+    width: auto;
+    background: conic-gradient(from 225deg, transparent 0, var(--shimmer-color) 90deg, transparent 90deg);
+    animation: shimmer-btn-spin calc(var(--shimmer-speed) * 2) infinite linear;
+}
+
+.shimmer-btn .shimmer-highlight {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    box-shadow: inset 0 -8px 10px rgba(255, 255, 255, 0.12);
+    transition: box-shadow 0.3s ease;
+    pointer-events: none;
+}
+
+.shimmer-btn:hover .shimmer-highlight {
+    box-shadow: inset 0 -6px 10px rgba(255, 255, 255, 0.28);
+}
+
+.shimmer-btn:active .shimmer-highlight {
+    box-shadow: inset 0 -10px 10px rgba(255, 255, 255, 0.28);
+}
+
+.shimmer-btn .shimmer-backdrop {
+    position: absolute;
+    inset: var(--shimmer-cut);
+    z-index: -1;
+    border-radius: inherit;
+    background: inherit;
+}
+
+@keyframes shimmer-btn-slide {
+    to { transform: translate(calc(100cqw - 100%), 0); }
+}
+
+@keyframes shimmer-btn-spin {
+    0% { transform: translateZ(0) rotate(0); }
+    15%, 35% { transform: translateZ(0) rotate(90deg); }
+    65%, 85% { transform: translateZ(0) rotate(270deg); }
+    100% { transform: translateZ(0) rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .shimmer-btn .shimmer-spark,
+    .shimmer-btn .shimmer-spark::before {
+        animation: none;
+    }
+}

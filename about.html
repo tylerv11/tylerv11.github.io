@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="stretchy-footer.css">
+    <link rel="stylesheet" href="shimmer-button.css">
     <script src="analytics.js" defer></script>
     <script src="contact-info.js" defer></script>
     <style>
@@ -335,6 +336,57 @@
             color: var(--text-muted);
         }
 
+        /* ===== ASCII LOGO + VERSION HISTORY ROW ===== */
+        .terminal-ascii-row {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .terminal-ascii-row .site-terminal {
+            margin-top: 0;
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .ascii-logo-panel {
+            flex: 0 0 auto;
+            width: 100%;
+            height: 160px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #0a0a0a;
+        }
+
+        .ascii-logo-panel:focus-visible {
+            outline: 1px solid var(--accent-line, var(--accent));
+            outline-offset: 2px;
+        }
+
+        .ascii-logo-canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        @media (min-width: 769px) {
+            .terminal-ascii-row {
+                flex-direction: row-reverse;
+                align-items: stretch;
+                margin-top: 48px;
+            }
+
+            .terminal-ascii-row .site-terminal {
+                margin-top: 0;
+            }
+
+            .ascii-logo-panel {
+                width: 260px;
+                height: auto;
+            }
+        }
+
         /* ===== PERSONALITY CAROUSEL ===== */
         .about-carousel {
             margin-top: 36px;
@@ -550,7 +602,7 @@
             <a href="education.html" class="nav-link">Education</a>
             <a href="index.html#projects" class="nav-link">Projects</a>
             <a href="files/TylerVincent-Resume.pdf" class="nav-link" target="_blank" rel="noopener">Resume</a>
-            <a href="https://www.linkedin.com/in/tyler-vincent11/" class="nav-cta" target="_blank">Let's Connect <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></a>
+            <a href="https://www.linkedin.com/in/tyler-vincent11/" class="nav-cta shimmer-btn" target="_blank"><span class="shimmer-spark-wrap"><span class="shimmer-spark"></span></span>Let's Connect <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i><span class="shimmer-highlight"></span><span class="shimmer-backdrop"></span></a>
         </div>
     </nav>
     <div class="nav-overlay" id="nav-overlay"></div>
@@ -604,6 +656,11 @@
     <!-- Digital Art + About This Site -->
     <div class="digital-art-section">
 
+        <div class="terminal-ascii-row">
+
+        <!-- Interactive ASCII wordmark -->
+        <div class="ascii-logo-panel reveal" id="about-ascii-logo"></div>
+
         <!-- About this site terminal -->
         <div class="site-terminal reveal">
             <div class="site-terminal-bar">
@@ -643,6 +700,8 @@
                 <div>&nbsp;</div>
                 <div><span class="prompt">$</span><span style="animation: blink 1s step-end infinite; color: var(--accent);">▌</span></div>
             </div>
+        </div>
+
         </div>
 
     </div>
@@ -925,12 +984,36 @@
     </script>
 
     <script src="stretchy-footer.js" defer></script>
+    <script src="ascii-logo.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            var themeStyles = getComputedStyle(document.documentElement);
+            function themeColor(name, fallback) {
+                var value = themeStyles.getPropertyValue(name).trim();
+                return value || fallback;
+            }
             StretchyFooter.init({
-                colors: ["#022B4B", "#5D7E01", "#2A9D62", "#4EE4A3", "#F0CE94"],
+                colors: [
+                    themeColor('--accent-blue', '#4a9eff'),
+                    themeColor('--accent-purple', '#c4b5fd'),
+                    themeColor('--accent', '#00ff87'),
+                    themeColor('--accent-warm', '#f6ad55')
+                ],
                 maxStretch: 220
             });
+
+            var asciiLogoRoot = document.getElementById('about-ascii-logo');
+            if (asciiLogoRoot) {
+                AsciiLogo.init(asciiLogoRoot, {
+                    text: 'Tyler',
+                    label: 'Tyler — interactive ASCII logo',
+                    color: themeColor('--accent', '#00ff87'),
+                    backgroundColor: '#0a0a0a',
+                    cellSize: 9,
+                    cellGap: 2,
+                    fit: 0.86
+                });
+            }
         });
     </script>
 
