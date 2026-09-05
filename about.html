@@ -201,14 +201,11 @@
             margin-bottom: 24px;
         }
 
-        .about-text > p:first-child::first-letter {
+        .about-intro-lead {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 3.5rem;
+            font-size: 1.7rem;
             font-weight: 800;
-            float: left;
-            line-height: 1;
-            margin-right: 12px;
-            margin-top: 4px;
+            line-height: 1.3;
             color: var(--accent);
         }
 
@@ -356,7 +353,7 @@
 
         .ascii-logo-panel {
             width: 100%;
-            height: 140px;
+            height: 220px;
             border: 1px solid var(--border-subtle);
             border-radius: 12px;
             overflow: hidden;
@@ -386,14 +383,13 @@
 
         @media (min-width: 769px) {
             .ascii-logo-panel {
-                height: 180px;
+                height: 260px;
             }
         }
 
         /* ===== PERSONALITY CAROUSEL ===== */
         .about-carousel {
             margin-top: 36px;
-            clear: both; /* clears the ::first-letter float from the opening paragraph */
         }
 
         .carousel__wrap {
@@ -628,8 +624,8 @@
                     Yangmingshan Park, Taiwan
                 </div>
             </div>
-            <div class="about-text" data-text-animate data-stagger="0.14">
-                <p>Hi, I'm Tyler. I think best in systems: how data moves, where trust breaks down, and what has to be true before a team can make a better decision. I taught myself how to build this site the same way I approach analytics work: by taking the system apart, understanding the pieces, and rebuilding it into something clearer.</p>
+            <div class="about-text" data-text-animate data-trigger="load" data-stagger="0.14">
+                <p><span class="about-intro-lead">Hi, I'm Tyler.</span> I think best in systems: how data moves, where trust breaks down, and what has to be true before a team can make a better decision. I taught myself how to build this site the same way I approach analytics work: by taking the system apart, understanding the pieces, and rebuilding it into something clearer.</p>
                 <p>I grew up in Dallas in a single-parent household and moved to Los Angeles to study Industrial &amp; Systems Engineering at the University of Southern California. USC gave me a technical foundation, but it also taught me how much good engineering depends on writing, listening, and translating complex ideas for people with different priorities.</p>
                 <p>Some of my favorite memories came from moments of connection: stargazing with an astronomy professor in the Anza-Borrego desert, grilling burgers with my Christian fraternity to serve people experiencing homelessness on Friday nights, and learning from people whose backgrounds and daily realities were very different from mine. That community helped me build purpose, belonging, and resilience as both an individual and a leader.</p>
                 <p>Outside work, I like fishing, video editing, off-roading, cooking, and surfing. Lately I've also gotten into 3D printing and graphic design, making pieces for friends and family as a creative outlet that blends the technical and artistic sides of how I think.</p>
@@ -674,9 +670,10 @@
                 <div>&nbsp;</div>
                 <div><span class="t-muted"># About This Site</span></div>
                 <div>&nbsp;</div>
-                <div>Built entirely from scratch — no templates, no frameworks. Just</div>
-                <div>vanilla HTML, CSS, and JavaScript, shaped over time into something</div>
-                <div>that feels personal and is always evolving.</div>
+                <div>Started from a template back in 2021, but it's changed so much since</div>
+                <div>then that none of it remains: no template, no frameworks anymore.</div>
+                <div>Just vanilla HTML, CSS, and JavaScript, shaped over time into</div>
+                <div>something that feels personal and is always evolving.</div>
                 <div>&nbsp;</div>
                 <div><span class="t-label">Stack:</span> &nbsp;HTML · CSS · JavaScript (vanilla)</div>
                 <div><span class="t-label">Hosted:</span> GitHub Pages &nbsp;·&nbsp; continuous delivery</div>
@@ -684,9 +681,9 @@
                 <div>&nbsp;</div>
                 <div><span class="t-muted">## Version History</span></div>
                 <div>&nbsp;</div>
-                <div><span class="t-label">v3.x</span> <span class="t-muted">2026</span> &nbsp;— Visual polish pass: refreshed project tiles, new interactive experiments, and a smarter site assistant</div>
-                <div><span class="t-label">v2.x</span> <span class="t-muted">2026</span> &nbsp;— Full visual redesign with a dark premium theme and more interactive touches throughout</div>
-                <div><span class="t-label">v1.x</span> <span class="t-muted">2021–2023</span> &nbsp;— Initial launch and steady content growth: projects, education, and work history</div>
+                <div><span class="t-label">v3.x</span> <span class="t-muted">2026</span>: Visual polish pass: refreshed project tiles, new interactive experiments, and a smarter site assistant</div>
+                <div><span class="t-label">v2.x</span> <span class="t-muted">2026</span>: Full visual redesign with a dark premium theme and more interactive touches throughout</div>
+                <div><span class="t-label">v1.x</span> <span class="t-muted">2021–2023</span>: Initial launch and steady content growth: projects, education, and work history</div>
                 <div>&nbsp;</div>
                 <div><span class="t-muted">// last updated: Sep 2026 &nbsp;·&nbsp; always a work in progress</span></div>
                 <div>&nbsp;</div>
@@ -1001,14 +998,14 @@
             var asciiLogoRoot = document.getElementById('about-ascii-message');
             if (asciiLogoRoot) {
                 AsciiLogo.init(asciiLogoRoot, {
-                    text: 'thanks for visiting my portfolio',
-                    maxTextLength: 60,
-                    label: 'Thanks for visiting my portfolio — interactive ASCII message',
+                    text: 'thanks for visiting',
+                    maxTextLength: 30,
+                    label: 'Thanks for visiting: interactive ASCII message',
                     color: themeColor('--accent', '#00ff87'),
                     backgroundColor: '#0a0a0a',
-                    cellSize: 6,
+                    cellSize: 4,
                     cellGap: 1,
-                    fit: 0.9
+                    fit: 0.88
                 });
             }
         });

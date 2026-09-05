@@ -13,6 +13,9 @@
  *
  * `data-text-animate-item` (default "p") picks which direct children count
  * as a "line" — everything else (e.g. a nested widget) is left untouched.
+ *
+ * `data-trigger="load"` reveals the lines as soon as the page loads instead
+ * of waiting for the container to scroll into view (the default).
  */
 (function (global) {
     "use strict";
@@ -37,23 +40,29 @@
 
         var reduceMotion = window.matchMedia &&
             window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (reduceMotion) {
+
+        function reveal() {
             lines.forEach(function (line) { line.classList.add("text-animate-in"); });
+        }
+
+        if (reduceMotion) {
+            reveal();
             return;
         }
 
-        if (!("IntersectionObserver" in window)) {
-            lines.forEach(function (line) { line.classList.add("text-animate-in"); });
+        var onLoad = group.getAttribute("data-trigger") === "load";
+        if (onLoad || !("IntersectionObserver" in window)) {
+            requestAnimationFrame(function () { requestAnimationFrame(reveal); });
             return;
         }
 
         var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (!entry.isIntersecting) return;
-                lines.forEach(function (line) { line.classList.add("text-animate-in"); });
+                reveal();
                 io.disconnect();
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0 });
         io.observe(group);
     }
 
