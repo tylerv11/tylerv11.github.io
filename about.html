@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="stretchy-footer.css">
     <script src="analytics.js" defer></script>
     <script src="contact-info.js" defer></script>
     <style>
@@ -554,6 +555,8 @@
     </nav>
     <div class="nav-overlay" id="nav-overlay"></div>
 
+    <div data-stretchy-page>
+
     <!-- About Section -->
     <section class="section" style="padding-top: 140px;">
         <div class="section-header" style="animation: fadeInUp 0.8s var(--transition-smooth) both; position: relative; overflow: hidden;">
@@ -678,6 +681,8 @@
             </div>
         </div>
     </footer>
+
+    </div>
 
     <script>
         // Navbar scroll
@@ -917,6 +922,16 @@
             requestAnimationFrame(function() { place(); });
             window.addEventListener('resize', place);
         })();
+    </script>
+
+    <script src="stretchy-footer.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            StretchyFooter.init({
+                colors: ["#022B4B", "#5D7E01", "#2A9D62", "#4EE4A3", "#F0CE94"],
+                maxStretch: 220
+            });
+        });
     </script>
 
 </body>
