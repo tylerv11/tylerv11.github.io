@@ -992,18 +992,20 @@
             var asciiLogoRoot = document.getElementById('about-ascii-message');
             if (asciiLogoRoot) {
                 var isMobileViewport = window.innerWidth <= 768;
-                AsciiLogo.init(asciiLogoRoot, {
+                // Mobile: narrow, roughly-square panel -> finer grid, more of the panel filled.
+                // Desktop: wide, short panel -> chunkier cells read better at a glance.
+                var asciiTuning = isMobileViewport
+                    ? { cellSize: 4, cellGap: 1, fit: 0.94 }
+                    : { cellSize: 6, cellGap: 2, fit: 0.85 };
+                AsciiLogo.init(asciiLogoRoot, Object.assign({
                     text: 'thanks for visiting',
                     maxTextLength: 30,
                     label: 'Thanks for visiting: interactive ASCII message',
                     color: themeColor('--accent', '#00ff87'),
                     backgroundColor: '#0a0a0a',
-                    cellSize: isMobileViewport ? 5 : 6,
-                    cellGap: 1,
-                    fit: 0.9,
                     threshold: 0.22,
-                    letterSpacing: 0.04
-                });
+                    letterSpacing: 0.05
+                }, asciiTuning));
             }
         });
     </script>
