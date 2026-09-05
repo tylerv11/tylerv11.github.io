@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="stretchy-footer.css">
     <!-- Tyler's Portfolio Assistant - Enhanced Fuzzy Matching -->
     <!-- Not deferred: the inline chatbot script later in <body> reads
          window.TYLER_KB synchronously as it parses, which would run before
@@ -3329,6 +3330,8 @@
     </nav>
     <div class="nav-overlay" id="nav-overlay"></div>
 
+    <div data-stretchy-page>
+
     <!-- ===== HERO ===== -->
     <section class="hero">
         <div class="hero-aurora" aria-hidden="true">
@@ -5298,6 +5301,8 @@ flowchart LR
             </div>
         </div>
     </footer>
+
+    </div>
 
     <!-- ===== PROJECT ARCHITECTURE DRAWER ===== -->
     <div class="project-drawer-overlay" id="project-drawer-overlay" onclick="closeProjectDrawer()"></div>
@@ -7803,6 +7808,16 @@ flowchart LR
             if (skillsBtn && bubbleMap) skillsBtn.addEventListener('click', function() { bubbleMap.classList.add('show'); });
         })();
 
+    </script>
+
+    <script src="stretchy-footer.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            StretchyFooter.init({
+                colors: ["#022B4B", "#5D7E01", "#2A9D62", "#4EE4A3", "#F0CE94"],
+                maxStretch: 220
+            });
+        });
     </script>
 
 </body>

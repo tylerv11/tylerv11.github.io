@@ -1,0 +1,39 @@
+/* Stretchy Footer — Dia-style rubber overscroll aurora. See stretchy-footer.js */
+.stretchy-footer-root {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.stretchy-footer-field {
+    position: absolute;
+    inset: 0;
+    transform-origin: 50% 100%;
+    will-change: transform;
+}
+
+.stretchy-footer-bars {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: stretch;
+    transform: scaleY(1.08);
+}
+
+.stretchy-footer-bar {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.stretchy-footer-bloom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 50%;
+}

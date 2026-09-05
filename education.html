@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+    <link rel="stylesheet" href="stretchy-footer.css">
     <!-- Shared chatbot knowledge base (window.TYLER_KB) - not deferred, see
          index.html for why: the inline chatbot script later in <body> reads
          it synchronously as the parser reaches it. -->
@@ -658,6 +659,8 @@
     </nav>
     <div class="nav-overlay" id="nav-overlay"></div>
 
+    <div data-stretchy-page>
+
     <!-- Education Section -->
     <section class="section" style="padding-top: 140px; padding-bottom: 0;">
         <div class="section-header" style="animation: fadeInUp 0.8s var(--transition-smooth) both; position: relative; overflow: hidden; background: var(--bg-primary);">
@@ -1177,6 +1180,8 @@ flowchart TD
         </div>
     </footer>
 
+    </div>
+
     <script>
         if (typeof mermaid !== 'undefined') {
             mermaid.initialize({
@@ -1471,6 +1476,16 @@ flowchart TD
                 return 'Great question - I\'m not sure I have a canned answer for that one. Try asking about Tyler\'s projects, KPIs, skills, industries, or working style. Or better yet, reach out directly at {{EMAIL}}.';
             }
         })();
+    </script>
+
+    <script src="stretchy-footer.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            StretchyFooter.init({
+                colors: ["#022B4B", "#5D7E01", "#2A9D62", "#4EE4A3", "#F0CE94"],
+                maxStretch: 220
+            });
+        });
     </script>
 
 </body>
