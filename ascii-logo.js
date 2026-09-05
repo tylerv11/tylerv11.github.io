@@ -138,18 +138,31 @@
             return { w: w, h: h };
         }
 
-        function wrapAndFit(sampler, words, maxW, maxH, lineHeightFactor) {
+        function measureSpaced(sampler, str, gap) {
+            var chars = Array.from(str);
+            var total = 0;
+            var widths = [];
+            for (var i = 0; i < chars.length; i++) {
+                var w = sampler.measureText(chars[i]).width;
+                widths.push(w);
+                total += w + (i < chars.length - 1 ? gap : 0);
+            }
+            return { chars: chars, widths: widths, total: total };
+        }
+
+        function wrapAndFit(sampler, words, maxW, maxH, spacingRatio, lineHeightFactor) {
             lineHeightFactor = lineHeightFactor || 1.3;
             var fontSize = maxH / 2;
             var lines = [words.join(" ")];
 
             for (var attempt = 0; attempt < 8; attempt++) {
                 sampler.font = TEXT_FONT.replace("1px", fontSize + "px");
+                var gap = fontSize * spacingRatio;
                 lines = [];
                 var current = "";
                 for (var i = 0; i < words.length; i++) {
                     var test = current ? current + " " + words[i] : words[i];
-                    var testWidth = sampler.measureText(test).width;
+                    var testWidth = measureSpaced(sampler, test, gap).total;
                     if (testWidth > maxW && current) {
                         lines.push(current);
                         current = words[i];
@@ -161,7 +174,7 @@
 
                 var maxLineWidth = 0;
                 for (var j = 0; j < lines.length; j++) {
-                    var w = sampler.measureText(lines[j]).width;
+                    var w = measureSpaced(sampler, lines[j], gap).total;
                     if (w > maxLineWidth) maxLineWidth = w;
                 }
                 var totalHeight = lines.length * fontSize * lineHeightFactor;
@@ -201,22 +214,29 @@
             var maxW2 = cols * cover;
             var maxH2 = rows * cover;
             var words = word.split(/\s+/).filter(Boolean);
+            var spacingRatio = p.letterSpacing != null ? p.letterSpacing : 0.34;
 
             if (words.length > 1) {
-                sampler.textAlign = "center";
-                var layout = wrapAndFit(sampler, words, maxW2, maxH2);
+                sampler.textAlign = "left";
+                var layout = wrapAndFit(sampler, words, maxW2, maxH2, spacingRatio);
                 sampler.font = TEXT_FONT.replace("1px", layout.fontSize + "px");
+                var gap = layout.fontSize * spacingRatio;
                 var blockHeight = layout.lines.length * layout.fontSize * layout.lineHeightFactor;
                 var startY = rows / 2 - blockHeight / 2 + (layout.fontSize * layout.lineHeightFactor) / 2;
                 for (var li = 0; li < layout.lines.length; li++) {
-                    sampler.fillText(layout.lines[li], cols / 2, startY + li * layout.fontSize * layout.lineHeightFactor);
+                    var spaced = measureSpaced(sampler, layout.lines[li], gap);
+                    var lineY = startY + li * layout.fontSize * layout.lineHeightFactor;
+                    var lineX = cols / 2 - spaced.total / 2;
+                    for (var ci = 0; ci < spaced.chars.length; ci++) {
+                        sampler.fillText(spaced.chars[ci], lineX, lineY);
+                        lineX += spaced.widths[ci] + gap;
+                    }
                 }
                 return;
             }
 
             var letters = Array.from(word);
             sampler.textAlign = "left";
-            var spacingRatio = p.letterSpacing != null ? p.letterSpacing : 0.34;
 
             function layoutWidth(fontSize) {
                 sampler.font = TEXT_FONT.replace("1px", fontSize + "px");
