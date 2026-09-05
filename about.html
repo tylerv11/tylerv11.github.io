@@ -336,23 +336,16 @@
             color: var(--text-muted);
         }
 
-        /* ===== ASCII LOGO + VERSION HISTORY ROW ===== */
+        /* ===== ASCII LOGO + VERSION HISTORY STACK ===== */
         .terminal-ascii-row {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
 
-        .terminal-ascii-row .site-terminal {
-            margin-top: 0;
-            flex: 1 1 auto;
-            min-width: 0;
-        }
-
         .ascii-logo-panel {
-            flex: 0 0 auto;
             width: 100%;
-            height: 160px;
+            height: 260px;
             border: 1px solid var(--border-subtle);
             border-radius: 12px;
             overflow: hidden;
@@ -370,20 +363,19 @@
             height: 100%;
         }
 
+        .terminal-ascii-row .site-terminal {
+            margin-top: 0;
+        }
+
+        .terminal-ascii-row .site-terminal .site-terminal-body {
+            padding: 14px 18px;
+            font-size: 0.68rem;
+            line-height: 1.6;
+        }
+
         @media (min-width: 769px) {
-            .terminal-ascii-row {
-                flex-direction: row-reverse;
-                align-items: stretch;
-                margin-top: 48px;
-            }
-
-            .terminal-ascii-row .site-terminal {
-                margin-top: 0;
-            }
-
             .ascii-logo-panel {
-                width: 260px;
-                height: auto;
+                height: 380px;
             }
         }
 
@@ -1009,9 +1001,10 @@
                     label: 'Tyler — interactive ASCII logo',
                     color: themeColor('--accent', '#00ff87'),
                     backgroundColor: '#0a0a0a',
-                    cellSize: 9,
-                    cellGap: 2,
-                    fit: 0.86
+                    cellSize: 7,
+                    cellGap: 1,
+                    fit: 0.9,
+                    letterSpacing: 0.4
                 });
             }
         });
