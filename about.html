@@ -268,6 +268,17 @@
         .reveal-delay-1 { transition-delay: 0.1s; }
         .reveal-delay-2 { transition-delay: 0.2s; }
 
+        /* Text animate — fade in by line */
+        .text-animate-line {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.7s var(--transition-smooth), transform 0.7s var(--transition-smooth);
+        }
+        .text-animate-line.text-animate-in { opacity: 1; transform: translateY(0); }
+        @media (prefers-reduced-motion: reduce) {
+            .text-animate-line { transition: none; }
+        }
+
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -345,7 +356,7 @@
 
         .ascii-logo-panel {
             width: 100%;
-            height: 260px;
+            height: 140px;
             border: 1px solid var(--border-subtle);
             border-radius: 12px;
             overflow: hidden;
@@ -375,7 +386,7 @@
 
         @media (min-width: 769px) {
             .ascii-logo-panel {
-                height: 380px;
+                height: 180px;
             }
         }
 
@@ -617,7 +628,7 @@
                     Yangmingshan Park, Taiwan
                 </div>
             </div>
-            <div class="about-text reveal reveal-delay-1">
+            <div class="about-text" data-text-animate data-stagger="0.14">
                 <p>Hi, I'm Tyler. I think best in systems: how data moves, where trust breaks down, and what has to be true before a team can make a better decision. I taught myself how to build this site the same way I approach analytics work: by taking the system apart, understanding the pieces, and rebuilding it into something clearer.</p>
                 <p>I grew up in Dallas in a single-parent household and moved to Los Angeles to study Industrial &amp; Systems Engineering at the University of Southern California. USC gave me a technical foundation, but it also taught me how much good engineering depends on writing, listening, and translating complex ideas for people with different priorities.</p>
                 <p>Some of my favorite memories came from moments of connection: stargazing with an astronomy professor in the Anza-Borrego desert, grilling burgers with my Christian fraternity to serve people experiencing homelessness on Friday nights, and learning from people whose backgrounds and daily realities were very different from mine. That community helped me build purpose, belonging, and resilience as both an individual and a leader.</p>
@@ -650,9 +661,6 @@
 
         <div class="terminal-ascii-row">
 
-        <!-- Interactive ASCII wordmark -->
-        <div class="ascii-logo-panel reveal" id="about-ascii-logo"></div>
-
         <!-- About this site terminal -->
         <div class="site-terminal reveal">
             <div class="site-terminal-bar">
@@ -676,23 +684,18 @@
                 <div>&nbsp;</div>
                 <div><span class="t-muted">## Version History</span></div>
                 <div>&nbsp;</div>
-                <div><span class="t-label">v3.3</span> <span class="t-muted">Jul 2026</span> &nbsp;— Real generated thumbnails for Takeda, Plutus, Chewy, and Aerospace tiles; Graymatics click-to-play video facade; Hermes branding overlay</div>
-                <div><span class="t-label">v3.2</span> <span class="t-muted">May 2026</span> &nbsp;— Personality carousel, SurfTime + OpenClaw experiment tiles, RAG turned off (saving LLM costs), about page refresh</div>
-                <div><span class="t-label">v3.1</span> <span class="t-muted">Apr 2026</span> &nbsp;— Dual-mode assistant: fuzzy matching + RAG (Deepseek via OpenRouter), security guardrails, rate limiting</div>
-                <div><span class="t-label">v3.0</span> <span class="t-muted">Apr 2026</span> &nbsp;— 3D tile hover, matrix cat easter egg, crosshair cursor, Mario runner</div>
-                <div><span class="t-label">v2.1</span> <span class="t-muted">Mar 2026</span> &nbsp;— Matrix rain banners, Takeda + Chewy tiles, Learning Journey section</div>
-                <div><span class="t-label">v2.0</span> <span class="t-muted">Feb–Mar 2026</span> &nbsp;— Full redesign: dark premium theme, interactive experiments, retro about</div>
-                <div><span class="t-label">v1.4</span> <span class="t-muted">Jul 2023</span> &nbsp;— SPOT app, new project writeups, updated work history</div>
-                <div><span class="t-label">v1.3</span> <span class="t-muted">Jun 2023</span> &nbsp;— Added AI Program Manager, expanded project descriptions</div>
-                <div><span class="t-label">v1.2</span> <span class="t-muted">May 2023</span> &nbsp;— Electric Boat tile, Aerospace senior thesis, layout expansion</div>
-                <div><span class="t-label">v1.1</span> <span class="t-muted">Apr 2023</span> &nbsp;— Content refresh, updated education and about pages</div>
-                <div><span class="t-label">v1.0</span> <span class="t-muted">Jul 2021</span> &nbsp;— Initial launch: portfolio, resume, project grid</div>
+                <div><span class="t-label">v3.x</span> <span class="t-muted">2026</span> &nbsp;— Visual polish pass: refreshed project tiles, new interactive experiments, and a smarter site assistant</div>
+                <div><span class="t-label">v2.x</span> <span class="t-muted">2026</span> &nbsp;— Full visual redesign with a dark premium theme and more interactive touches throughout</div>
+                <div><span class="t-label">v1.x</span> <span class="t-muted">2021–2023</span> &nbsp;— Initial launch and steady content growth: projects, education, and work history</div>
                 <div>&nbsp;</div>
-                <div><span class="t-muted">// last updated: Jul 2026 &nbsp;·&nbsp; always a work in progress</span></div>
+                <div><span class="t-muted">// last updated: Sep 2026 &nbsp;·&nbsp; always a work in progress</span></div>
                 <div>&nbsp;</div>
                 <div><span class="prompt">$</span><span style="animation: blink 1s step-end infinite; color: var(--accent);">▌</span></div>
             </div>
         </div>
+
+        <!-- Interactive ASCII message -->
+        <div class="ascii-logo-panel reveal" id="about-ascii-message"></div>
 
         </div>
 
@@ -977,6 +980,7 @@
 
     <script src="stretchy-footer.js" defer></script>
     <script src="ascii-logo.js" defer></script>
+    <script src="text-animate.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var themeStyles = getComputedStyle(document.documentElement);
@@ -994,17 +998,17 @@
                 maxStretch: 220
             });
 
-            var asciiLogoRoot = document.getElementById('about-ascii-logo');
+            var asciiLogoRoot = document.getElementById('about-ascii-message');
             if (asciiLogoRoot) {
                 AsciiLogo.init(asciiLogoRoot, {
-                    text: 'Tyler',
-                    label: 'Tyler — interactive ASCII logo',
+                    text: 'thanks for visiting my portfolio',
+                    maxTextLength: 60,
+                    label: 'Thanks for visiting my portfolio — interactive ASCII message',
                     color: themeColor('--accent', '#00ff87'),
                     backgroundColor: '#0a0a0a',
-                    cellSize: 7,
+                    cellSize: 6,
                     cellGap: 1,
-                    fit: 0.9,
-                    letterSpacing: 0.4
+                    fit: 0.9
                 });
             }
         });

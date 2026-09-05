@@ -88,9 +88,10 @@
             resetEase: 0.08,
             staggerFrames: 18,
             interactive: true,
-            theme: "auto"
+            theme: "auto",
+            maxTextLength: MAX_TEXT_LETTERS
         }, initial);
-        options.text = clampText(options.text);
+        options.text = clampText(options.text, options.maxTextLength);
 
         var ctx = canvas.getContext("2d");
         if (!ctx) return null;
@@ -137,6 +138,46 @@
             return { w: w, h: h };
         }
 
+        function wrapAndFit(sampler, words, maxW, maxH, lineHeightFactor) {
+            lineHeightFactor = lineHeightFactor || 1.3;
+            var fontSize = maxH / 2;
+            var lines = [words.join(" ")];
+
+            for (var attempt = 0; attempt < 8; attempt++) {
+                sampler.font = TEXT_FONT.replace("1px", fontSize + "px");
+                lines = [];
+                var current = "";
+                for (var i = 0; i < words.length; i++) {
+                    var test = current ? current + " " + words[i] : words[i];
+                    var testWidth = sampler.measureText(test).width;
+                    if (testWidth > maxW && current) {
+                        lines.push(current);
+                        current = words[i];
+                    } else {
+                        current = test;
+                    }
+                }
+                if (current) lines.push(current);
+
+                var maxLineWidth = 0;
+                for (var j = 0; j < lines.length; j++) {
+                    var w = sampler.measureText(lines[j]).width;
+                    if (w > maxLineWidth) maxLineWidth = w;
+                }
+                var totalHeight = lines.length * fontSize * lineHeightFactor;
+
+                if (maxLineWidth <= maxW + 0.5 && totalHeight <= maxH + 0.5) break;
+
+                var shrinkW = maxLineWidth > 0 ? maxW / maxLineWidth : 1;
+                var shrinkH = totalHeight > 0 ? maxH / totalHeight : 1;
+                var next = fontSize * Math.min(shrinkW, shrinkH) * 0.96;
+                if (next >= fontSize - 0.05) { fontSize = Math.max(4, fontSize - 1); continue; }
+                fontSize = Math.max(4, next);
+            }
+
+            return { fontSize: fontSize, lines: lines, lineHeightFactor: lineHeightFactor };
+        }
+
         function sampleSource(sampler, cols, rows, image, p) {
             sampler.fillStyle = "#000";
             sampler.fillRect(0, 0, cols, rows);
@@ -154,14 +195,28 @@
 
             var word = p.text.trim();
             if (!word) return;
-            var letters = Array.from(word);
             sampler.fillStyle = "#fff";
-            sampler.textAlign = "left";
             sampler.textBaseline = "middle";
 
-            var spacingRatio = p.letterSpacing != null ? p.letterSpacing : 0.34;
             var maxW2 = cols * cover;
             var maxH2 = rows * cover;
+            var words = word.split(/\s+/).filter(Boolean);
+
+            if (words.length > 1) {
+                sampler.textAlign = "center";
+                var layout = wrapAndFit(sampler, words, maxW2, maxH2);
+                sampler.font = TEXT_FONT.replace("1px", layout.fontSize + "px");
+                var blockHeight = layout.lines.length * layout.fontSize * layout.lineHeightFactor;
+                var startY = rows / 2 - blockHeight / 2 + (layout.fontSize * layout.lineHeightFactor) / 2;
+                for (var li = 0; li < layout.lines.length; li++) {
+                    sampler.fillText(layout.lines[li], cols / 2, startY + li * layout.fontSize * layout.lineHeightFactor);
+                }
+                return;
+            }
+
+            var letters = Array.from(word);
+            sampler.textAlign = "left";
+            var spacingRatio = p.letterSpacing != null ? p.letterSpacing : 0.34;
 
             function layoutWidth(fontSize) {
                 sampler.font = TEXT_FONT.replace("1px", fontSize + "px");
@@ -177,18 +232,18 @@
             }
 
             var fontSize = maxH2 * 0.86;
-            var layout = layoutWidth(fontSize);
-            if (layout.total > maxW2 && layout.total > 0) {
-                fontSize *= maxW2 / layout.total;
-                layout = layoutWidth(fontSize);
+            var single = layoutWidth(fontSize);
+            if (single.total > maxW2 && single.total > 0) {
+                fontSize *= maxW2 / single.total;
+                single = layoutWidth(fontSize);
             }
 
-            var startX = cols / 2 - layout.total / 2;
+            var startX = cols / 2 - single.total / 2;
             var y = rows / 2 + fontSize * 0.04;
             var x = startX;
             for (var i = 0; i < letters.length; i++) {
                 sampler.fillText(letters[i], x, y);
-                x += layout.widths[i] + layout.gap;
+                x += single.widths[i] + single.gap;
             }
         }
 
@@ -496,7 +551,7 @@
             setOptions: function (next) {
                 options = Object.assign({}, options, next);
                 if (typeof next.text === "string") {
-                    options.text = clampText(next.text);
+                    options.text = clampText(next.text, options.maxTextLength);
                 }
             },
             destroy: function () {
