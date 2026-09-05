@@ -77,6 +77,7 @@
             cellGap: 2,
             charset: DEFAULT_CHARSET,
             threshold: 0.2,
+            letterSpacing: 0.34,
             hoverRadius: 7,
             hoverPush: 2.6,
             hoverEase: 0.18,
@@ -153,18 +154,42 @@
 
             var word = p.text.trim();
             if (!word) return;
+            var letters = Array.from(word);
             sampler.fillStyle = "#fff";
-            sampler.textAlign = "center";
+            sampler.textAlign = "left";
             sampler.textBaseline = "middle";
-            var fontSize = rows * 0.52;
-            sampler.font = TEXT_FONT.replace("1px", fontSize + "px");
-            var width = sampler.measureText(word).width;
+
+            var spacingRatio = p.letterSpacing != null ? p.letterSpacing : 0.34;
             var maxW2 = cols * cover;
-            if (width > maxW2 && width > 0) {
-                fontSize *= maxW2 / width;
+            var maxH2 = rows * cover;
+
+            function layoutWidth(fontSize) {
                 sampler.font = TEXT_FONT.replace("1px", fontSize + "px");
+                var gap = fontSize * spacingRatio;
+                var total = 0;
+                var widths = [];
+                for (var i = 0; i < letters.length; i++) {
+                    var w = sampler.measureText(letters[i]).width;
+                    widths.push(w);
+                    total += w + (i < letters.length - 1 ? gap : 0);
+                }
+                return { total: total, widths: widths, gap: gap };
             }
-            sampler.fillText(word, cols / 2, rows / 2 + fontSize * 0.04);
+
+            var fontSize = maxH2 * 0.86;
+            var layout = layoutWidth(fontSize);
+            if (layout.total > maxW2 && layout.total > 0) {
+                fontSize *= maxW2 / layout.total;
+                layout = layoutWidth(fontSize);
+            }
+
+            var startX = cols / 2 - layout.total / 2;
+            var y = rows / 2 + fontSize * 0.04;
+            var x = startX;
+            for (var i = 0; i < letters.length; i++) {
+                sampler.fillText(letters[i], x, y);
+                x += layout.widths[i] + layout.gap;
+            }
         }
 
         function buildFromImageData(data, cols, rows, p) {
