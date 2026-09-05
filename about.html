@@ -352,6 +352,7 @@
         }
 
         .ascii-logo-panel {
+            position: relative;
             width: 100%;
             height: 260px;
             border: 1px solid var(--border-subtle);
@@ -363,6 +364,23 @@
         .ascii-logo-panel:focus-visible {
             outline: 1px solid var(--accent-line, var(--accent));
             outline-offset: 2px;
+        }
+
+        .ascii-logo-caption {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+            pointer-events: none;
+            text-align: center;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            font-size: clamp(1.1rem, 4vw, 1.8rem);
+            color: var(--accent, #00ff87);
+            text-shadow: 0 0 18px rgba(0, 255, 135, 0.35);
         }
 
         .ascii-logo-canvas {
@@ -686,7 +704,9 @@
         </div>
 
         <!-- Interactive ASCII message -->
-        <div class="ascii-logo-panel reveal" id="about-ascii-message"></div>
+        <div class="ascii-logo-panel reveal" id="about-ascii-message">
+            <span class="ascii-logo-caption" aria-hidden="true">thanks for visiting</span>
+        </div>
 
         </div>
 

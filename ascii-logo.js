@@ -152,7 +152,7 @@
 
         function wrapAndFit(sampler, words, maxW, maxH, spacingRatio, lineHeightFactor) {
             lineHeightFactor = lineHeightFactor || 1.3;
-            var fontSize = maxH / 2;
+            var fontSize = maxH;
             var lines = [words.join(" ")];
 
             for (var attempt = 0; attempt < 8; attempt++) {
