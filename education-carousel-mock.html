@@ -464,7 +464,6 @@ const CARD_DATA = {
         accent: '#4a9eff',
         bgClass: 'card-education',
         body: `
-            <p class="mock-intro-text">Certifications and coursework, most recent first.</p>
             <div class="mock-entry">
                 <span class="yr">2026</span>
                 <h3>Model Context Protocol Certification</h3>
@@ -512,11 +511,11 @@ const CARD_DATA = {
     analytics: {
         category: 'Analytics',
         title: 'How I build insights that drive strategic action.',
-        subtitle: 'The framework I run before any pipeline gets designed.',
+        subtitle: '',
         accent: '#00ff87',
         bgClass: 'card-analytics',
         body: `
-            <p class="mock-intro-text">Before any pipeline gets designed, someone has to decide what's actually worth building. This is the process I run to get there.</p>
+            <p class="mock-intro-text">Before I design any reports, KPIs, or apps, we first need to decide what's actually worth building, here's how I get there:</p>
             <div class="mock-stage-grid">
                 <div class="mock-stage-card"><div class="mock-stage-num">01 / INTAKE</div><h4>Understand the ask before touching data</h4><p>Who's actually sponsoring this, what resources and budget exist, and does it tie back to a real company initiative or North Star. I present alternatives up front so whatever we commit to is something the team has agreed to.</p></div>
                 <div class="mock-stage-card"><div class="mock-stage-num">02 / EVALUATION</div><h4>Measure the impact before committing to a build</h4><p>A small gap closes with a lightweight fix. A bigger effort gets weighed against true business impact, cost avoidance, and FTE hours before committing.</p></div>
@@ -544,11 +543,11 @@ flowchart LR
     pipelines: {
         category: 'Data Engineering',
         title: 'How I deliver trusted data pipelines for reliable reuse.',
-        subtitle: 'What runs before I write a line of code or pick a product.',
+        subtitle: '',
         accent: '#ff6b35',
         bgClass: 'card-pipelines',
         body: `
-            <p class="mock-intro-text">Once the Analytics Framework has settled what's worth building, this is what runs before I write a line of code or pick a product.</p>
+            <p class="mock-intro-text">Once you've decided on KPIs and a method, the next step is deciding how we are going to get there.</p>
             <div class="mock-stage-grid">
                 <div class="mock-stage-card"><div class="mock-stage-num">01 / RESTATE</div><h4>Say it back in my own words</h4><p>Most requirements describe a report someone wants, not the decision that report is supposed to change.</p></div>
                 <div class="mock-stage-card"><div class="mock-stage-num">02 / DISCOVER</div><h4>Interrogate the constraints, not the wishlist</h4><p>Volume, latency tolerance, who consumes it and how often, what "correct" means to an auditor versus an operator.</p></div>
@@ -640,11 +639,10 @@ flowchart TD
     roles: {
         category: 'Roles',
         title: 'Takeaways from each of my roles.',
-        subtitle: 'Every role, a new lesson learned.',
+        subtitle: '',
         accent: '#f6ad55',
         bgClass: 'card-roles',
         body: `
-            <p class="mock-intro-text">Every role, a new lesson learned.</p>
             <div class="mock-entry">
                 <span class="yr">2023 – Present</span>
                 <h3>Takeda Pharmaceuticals</h3>
@@ -696,7 +694,9 @@ function openCard(key) {
     if (!data) return;
     document.getElementById('expand-category').textContent = data.category;
     document.getElementById('expand-title').textContent = data.title;
-    document.getElementById('expand-subtitle').textContent = data.subtitle;
+    const subtitleEl = document.getElementById('expand-subtitle');
+    subtitleEl.textContent = data.subtitle;
+    subtitleEl.style.display = data.subtitle ? '' : 'none';
     document.getElementById('expand-body').innerHTML = data.body;
     if (typeof mermaid !== 'undefined') {
         const pending = document.querySelectorAll('#expand-body pre.mermaid');
