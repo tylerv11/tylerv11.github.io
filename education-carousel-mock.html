@@ -160,7 +160,7 @@
     .card-lss .apple-card-bg { background: linear-gradient(160deg, rgba(10,13,18,0.15) 0%, rgba(10,13,18,0.65) 100%), url('images/carousel-mock/lss-sigma.jpg') center / cover no-repeat; }
     .card-lss { --card-accent: #c4b5fd; }
 
-    .card-roles .apple-card-bg { background: radial-gradient(circle at 30% 15%, rgba(246,173,85,0.30), transparent 60%), linear-gradient(160deg, #191410 0%, #0a0d12 100%); }
+    .card-roles .apple-card-bg { background: linear-gradient(160deg, rgba(10,13,18,0.25) 0%, rgba(10,13,18,0.78) 100%), url('images/carousel-mock/roles-collage.jpg') center / cover no-repeat; }
     .card-roles { --card-accent: #f6ad55; }
 
     /* expanded hero uses the same gradients directly */
@@ -168,43 +168,7 @@
     .expand-hero.card-analytics { background: linear-gradient(160deg, rgba(10,13,18,0.55) 0%, rgba(10,13,18,0.88) 100%), url('images/carousel-mock/analytics-dashboard.jpg') center / cover no-repeat; }
     .expand-hero.card-pipelines { background: linear-gradient(160deg, rgba(10,13,18,0.15) 0%, rgba(10,13,18,0.6) 100%), url('images/carousel-mock/pipelines-flow.jpg') center / cover no-repeat; }
     .expand-hero.card-lss { background: linear-gradient(160deg, rgba(10,13,18,0.15) 0%, rgba(10,13,18,0.65) 100%), url('images/carousel-mock/lss-sigma.jpg') center / cover no-repeat; }
-    .expand-hero.card-roles { background: radial-gradient(circle at 30% 15%, rgba(246,173,85,0.30), transparent 60%), linear-gradient(160deg, #191410 0%, #0a0d12 100%); }
-
-    /* roles card: company logo conglomerate */
-    .logo-mosaic {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        flex-wrap: wrap;
-        align-content: center;
-        justify-content: center;
-        gap: 12px;
-        padding: 24px;
-        z-index: 1;
-    }
-    .logo-tile {
-        background: #f5f5f5;
-        border-radius: 12px;
-        padding: 12px 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-    }
-    .logo-tile.dark {
-        background: #12151a;
-        border: 1px solid rgba(74,158,255,0.35);
-    }
-    .logo-tile img {
-        display: block;
-        max-width: 92px;
-        max-height: 34px;
-        width: auto;
-        height: auto;
-        object-fit: contain;
-    }
-    .expand-hero .logo-tile img { max-width: 120px; max-height: 44px; }
-    .expand-hero .logo-mosaic { inset: 0 0 84px 0; align-content: center; padding: 20px 32px 4px; }
+    .expand-hero.card-roles { background: linear-gradient(160deg, rgba(10,13,18,0.25) 0%, rgba(10,13,18,0.7) 100%), url('images/carousel-mock/roles-collage.jpg') center / cover no-repeat; }
 
     /* ===== EXPANDED OVERLAY ===== */
     .expand-overlay {
@@ -438,13 +402,6 @@
 
         <div class="apple-card card-roles" data-card="roles">
             <div class="apple-card-bg"></div>
-            <div class="logo-mosaic">
-                <div class="logo-tile"><img src="assets/logos/takeda-logo.svg" alt="Takeda"></div>
-                <div class="logo-tile"><img src="assets/logos/chewy-logo.svg" alt="Chewy"></div>
-                <div class="logo-tile dark"><img src="assets/logos/gd-electric-boat-logo.svg" alt="General Dynamics Electric Boat"></div>
-                <div class="logo-tile"><img src="assets/logos/aerospace-logo.svg" alt="The Aerospace Corporation"></div>
-                <div class="logo-tile"><img src="assets/logos/graymatics-logo.svg" alt="Graymatics"></div>
-            </div>
             <div class="apple-card-scrim"></div>
             <div class="apple-card-content">
                 <span class="apple-card-category">Roles</span>
@@ -459,13 +416,6 @@
 
 <div class="expand-panel" id="expand-panel">
     <div class="expand-hero" id="expand-hero">
-        <div class="logo-mosaic" id="expand-hero-mosaic" style="display:none;">
-            <div class="logo-tile"><img src="assets/logos/takeda-logo.svg" alt="Takeda"></div>
-            <div class="logo-tile"><img src="assets/logos/chewy-logo.svg" alt="Chewy"></div>
-            <div class="logo-tile dark"><img src="assets/logos/gd-electric-boat-logo.svg" alt="General Dynamics Electric Boat"></div>
-            <div class="logo-tile"><img src="assets/logos/aerospace-logo.svg" alt="The Aerospace Corporation"></div>
-            <div class="logo-tile"><img src="assets/logos/graymatics-logo.svg" alt="Graymatics"></div>
-        </div>
         <div class="expand-hero-scrim"></div>
         <button class="expand-close" onclick="closeCard()"><i class="fas fa-times"></i></button>
         <div class="expand-hero-label">
@@ -757,7 +707,6 @@ function openCard(key) {
     hero.className = 'expand-hero ' + data.bgClass;
     hero.style.setProperty('--card-accent', data.accent);
     panel.style.setProperty('--card-accent', data.accent);
-    document.getElementById('expand-hero-mosaic').style.display = (key === 'roles') ? 'flex' : 'none';
 
     overlay.classList.add('active');
     panel.classList.add('active');
