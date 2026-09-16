@@ -281,7 +281,74 @@
         background: rgba(255,255,255,0.05);
         border: 1px solid var(--border-subtle);
         color: var(--text-secondary);
+        transition: all 0.25s ease;
+        cursor: default;
     }
+    .mock-tag.has-tip:hover {
+        background: rgba(0,255,135,0.08);
+        color: var(--accent);
+        border-color: rgba(0,255,135,0.35);
+        box-shadow: 0 0 12px rgba(0,255,135,0.15), 0 0 24px rgba(0,255,135,0.06);
+        transform: translateY(-1px);
+    }
+    .mock-skill-tooltip {
+        position: fixed;
+        top: 0; left: 0;
+        background: #111;
+        border: 1px solid rgba(0,255,135,0.25);
+        border-radius: 12px;
+        padding: 12px 16px;
+        width: 220px;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        line-height: 1.55;
+        box-shadow: 0 0 30px rgba(0,255,135,0.1), 0 8px 32px rgba(0,0,0,0.5);
+        pointer-events: none;
+        opacity: 0;
+        transform: translateY(-50%) scale(0.94);
+        transition: opacity 0.18s ease, transform 0.18s ease;
+        z-index: 4000;
+        white-space: normal;
+    }
+    .mock-skill-tooltip::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 12px; height: 12px;
+        background: #111;
+        transform: translateY(-50%) rotate(45deg);
+    }
+    .mock-skill-tooltip.pos-left::after { right: -7px; border-top: 1px solid rgba(0,255,135,0.25); border-right: 1px solid rgba(0,255,135,0.25); }
+    .mock-skill-tooltip.pos-right::after { left: -7px; border-bottom: 1px solid rgba(0,255,135,0.25); border-left: 1px solid rgba(0,255,135,0.25); }
+    .mock-skill-tooltip strong {
+        display: block;
+        color: var(--accent);
+        font-size: 0.7rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+    }
+    .mock-skill-tooltip.visible { opacity: 1; transform: translateY(-50%) scale(1); }
+
+    .mock-cred-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-decoration: none;
+        border: 1px solid;
+        margin-top: 4px;
+        transition: all 0.25s ease;
+        letter-spacing: 0.2px;
+    }
+    .mock-cred-btn.blue { color: rgba(74,158,255,0.9); border-color: rgba(74,158,255,0.25); background: rgba(74,158,255,0.06); }
+    .mock-cred-btn.blue:hover { background: rgba(74,158,255,0.13); border-color: rgba(74,158,255,0.45); transform: translateY(-1px); }
+    .mock-cred-btn.warm { color: rgba(246,173,85,0.9); border-color: rgba(246,173,85,0.25); background: rgba(246,173,85,0.06); }
+    .mock-cred-btn.warm:hover { background: rgba(246,173,85,0.13); border-color: rgba(246,173,85,0.45); transform: translateY(-1px); }
+    .mock-cred-btn i { font-size: 0.7rem; }
 
     /* reused stage-grid styling (Analytics / Pipeline framework cards) */
     .mock-stage-grid {
@@ -426,6 +493,7 @@
     </div>
     <div class="expand-body" id="expand-body"></div>
 </div>
+<div class="mock-skill-tooltip" id="mock-skill-tooltip"><strong id="mock-tt-title"></strong><span id="mock-tt-desc"></span></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
 <script>
@@ -456,6 +524,71 @@ if (typeof mermaid !== 'undefined') {
     });
 }
 
+const TAG_INFO = {
+    'Prompt Engineering': 'Crafting effective prompts for Claude models, managing context windows, and structuring inputs for reliability and cost efficiency.',
+    'Agentic AI': 'Building multi-agent systems with tool use, orchestration patterns, and governance frameworks for autonomous decision-making.',
+    'Model Context Protocol': 'Standardized client/server bridge for connecting AI agents to tools and data sources without custom integration code.',
+    'Production Thinking': 'Designing AI systems for reliability, observability, failure modes, and human oversight in real-world deployments.',
+    'Governance & Safety': 'Approval gates, audit logging, sandboxing, and escalation protocols for AI systems that operate autonomously.',
+    'Delta Lake': 'ACID transactions, time travel, and unified batch/streaming — building reliable data foundations at scale.',
+    'Data Ingestion': 'Designing patterns for reliable, incremental data movement from diverse sources into unified analytical platforms.',
+    'ETL/ELT Design': 'Modern extract-load-transform strategies for building maintainable, scalable data pipelines that evolve with business needs.',
+    'Data Governance': 'Unity Catalog, access control, and lineage tracking for compliant, auditable data platforms.',
+    'Classification': 'Trained models to predict categorical outcomes using decision trees, random forests, and SVMs — foundational for fraud detection, churn prediction, and labeling pipelines.',
+    'Cross-Validation': 'K-fold and LOOCV techniques to reliably estimate model performance and prevent overfitting — critical for shipping trustworthy ML products.',
+    'Regularization': 'Ridge, Lasso, and Elastic Net methods to reduce model complexity and improve generalization on unseen data.',
+    'Ensemble Methods': 'Boosting and bagging approaches (Random Forests, XGBoost-style) that combine weak learners into highly accurate predictors.',
+    'DMAIC': 'Define → Measure → Analyze → Improve → Control. The Six Sigma backbone for eliminating defects and reducing variation in any process.',
+    'Statistical Process Control': 'Using control charts (X-bar, R, P-charts) to monitor process stability and catch out-of-control signals before they become defects.',
+    'Hypothesis Testing': 'T-tests, ANOVA, and chi-square methods to make data-driven decisions with statistical confidence — separating signal from noise.',
+    'Root Cause Analysis': 'Fishbone diagrams and 5-Why methodology to drill past symptoms and permanently resolve the source of recurring problems.',
+    'Six Sigma & Lean Ops': 'Reduction of process variation and waste elimination — the foundation of every engineering improvement project in manufacturing and beyond.',
+    'Database Systems': 'Relational modeling, SQL, normalization, and query optimization — the backbone of every data pipeline and analytics platform.',
+    'Engineering Statistics': 'Regression, ANOVA, and reliability analysis applied to real engineering problems — turns raw data into decisions.',
+    'Operations Research': 'Linear programming and optimization models to allocate resources, minimize cost, and maximize throughput in constrained systems.',
+    'Power BI': 'End-to-end report and dashboard development with DAX, data modeling, and Row-Level Security — serving decision-makers across enterprise manufacturing.',
+    'SQL': 'Complex query writing, window functions, CTEs, and query optimization across cloud data warehouses — the universal language of data.',
+    'Enterprise Analytics': 'Designing analytics products that serve thousands of users across business units, with governance, documentation, and reliability built in.',
+    'Databricks': "Unified lakehouse platform for large-scale data engineering and ML — processing and transforming data at a scale traditional BI tools can't handle.",
+    'Agile Execution': 'Sprint-based delivery with tight feedback loops — shipping incremental value instead of waiting on a big-bang release.',
+    'Change Management': 'Structured approach to guiding teams through new tools and processes while minimizing disruption to daily operations.',
+    'User Behavior': 'Analyzing engagement and usage patterns to understand how people actually interact with a product, not just how they say they do.',
+    'Validation Frameworks': "Structured test-and-verify protocols for confirming a system meets spec before it's trusted with production data.",
+    'System Design': 'Architecting components and interfaces up front so the pieces fit together predictably as a system scales.',
+    'Six Sigma Black Belt': 'Advanced DMAIC leadership certification for driving cross-functional process improvement projects from data to root cause to fix.',
+    'Python': 'General-purpose scripting and automation — the backbone language for early algorithm and tooling work.',
+    'Algorithm Design': 'Breaking a problem into a correct, efficient sequence of steps before writing a single line of implementation code.',
+    'Optimization': 'Finding the best feasible solution under real-world constraints like time, cost, or scheduling capacity.',
+    'Computer Vision': 'Teaching systems to interpret and act on visual data — images, video, and sensor feeds.',
+    'AI Systems': 'Designing end-to-end intelligent systems, not just individual models — data flow, inference, and feedback loops together.',
+    'International Deployments': 'Rolling out systems across regions with different infrastructure, regulatory, and language constraints.'
+};
+
+function wireTagTooltips() {
+    const tooltip = document.getElementById('mock-skill-tooltip');
+    const titleEl = document.getElementById('mock-tt-title');
+    const descEl = document.getElementById('mock-tt-desc');
+    document.querySelectorAll('#expand-body .mock-tag').forEach(tag => {
+        const info = TAG_INFO[tag.textContent.trim()];
+        if (!info) return;
+        tag.classList.add('has-tip');
+        tag.addEventListener('mouseenter', () => {
+            const rect = tag.getBoundingClientRect();
+            titleEl.textContent = tag.textContent.trim();
+            descEl.textContent = info;
+            const showLeft = rect.left > 250;
+            tooltip.classList.toggle('pos-left', showLeft);
+            tooltip.classList.toggle('pos-right', !showLeft);
+            tooltip.style.top = (rect.top + rect.height / 2) + 'px';
+            tooltip.style.left = showLeft ? (rect.left - 14 - 220) + 'px' : (rect.right + 14) + 'px';
+            tooltip.classList.add('visible');
+        });
+        tag.addEventListener('mouseleave', () => {
+            tooltip.classList.remove('visible');
+        });
+    });
+}
+
 const CARD_DATA = {
     education: {
         category: 'Education',
@@ -472,6 +605,7 @@ const CARD_DATA = {
                 <div class="mock-tags">
                     <span class="mock-tag">Prompt Engineering</span><span class="mock-tag">Agentic AI</span><span class="mock-tag">Model Context Protocol</span><span class="mock-tag">Production Thinking</span><span class="mock-tag">Governance &amp; Safety</span>
                 </div>
+                <a href="https://verify.skilljar.com/c/amt8t2mxxkje" target="_blank" class="mock-cred-btn blue"><i class="fas fa-external-link-alt"></i> Verify credential</a>
             </div>
             <div class="mock-entry">
                 <span class="yr">2024</span>
@@ -481,6 +615,7 @@ const CARD_DATA = {
                 <div class="mock-tags">
                     <span class="mock-tag">Delta Lake</span><span class="mock-tag">Data Ingestion</span><span class="mock-tag">ETL/ELT Design</span><span class="mock-tag">Data Governance</span>
                 </div>
+                <a href="files/DatabricksDataIngestionCert.pdf" target="_blank" class="mock-cred-btn warm"><i class="fas fa-file-pdf"></i> View Certificate</a>
             </div>
             <div class="mock-entry">
                 <span class="yr">2023</span>
@@ -698,6 +833,7 @@ function openCard(key) {
     subtitleEl.textContent = data.subtitle;
     subtitleEl.style.display = data.subtitle ? '' : 'none';
     document.getElementById('expand-body').innerHTML = data.body;
+    wireTagTooltips();
     if (typeof mermaid !== 'undefined') {
         const pending = document.querySelectorAll('#expand-body pre.mermaid');
         if (pending.length) mermaid.run({ nodes: pending });
@@ -717,6 +853,7 @@ function closeCard() {
     overlay.classList.remove('active');
     panel.classList.remove('active');
     document.body.style.overflow = '';
+    document.getElementById('mock-skill-tooltip').classList.remove('visible');
 }
 
 document.addEventListener('keydown', e => {
