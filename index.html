@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="stretchy-footer.css">
     <link rel="stylesheet" href="shimmer-button.css">
     <!-- Tyler's Portfolio Assistant - Enhanced Fuzzy Matching -->
     <!-- Not deferred: the inline chatbot script later in <body> reads
@@ -3307,7 +3306,7 @@
         </p>
         <div class="hero-actions" style="animation: fadeInUp 0.8s 0.35s var(--transition-smooth) both;">
             <a href="#work" class="btn-glass">See My Work <i class="fas fa-arrow-down"></i></a>
-                    <a href="#" class="btn-secondary" id="hero-contact-btn">Get in touch</a>
+                    <a href="#contact" class="btn-secondary">Get in touch</a>
                 </div>
 
                 <div class="hero-proof">
@@ -5129,6 +5128,41 @@ flowchart LR
 
     </section>
 
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer" id="contact">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">Tyler Vincent<span>.</span></div>
+                <p class="footer-desc">Data and Analytics Engineer with a passion for technology, building things, teaching others, solving complex problems, and developing solutions across industries from submarines to satellites.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navigate</h4>
+                <a href="index.html">Work</a>
+                <a href="about.html">About</a>
+                <a href="education.html">Education</a>
+                <a href="#projects">Projects</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a data-contact="email" href="#"></a>
+                <a data-contact="phone" href="#"></a>
+                <a>Los Angeles, California</a>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank">LinkedIn</a>
+                <a href="https://github.com/tylerv11/" target="_blank">GitHub</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span class="footer-copyright">&copy; Tyler Vincent. All rights reserved.</span>
+            <div class="footer-socials">
+                <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/tylerv11/" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+
     </div>
 
     <!-- ===== PROJECT ARCHITECTURE DRAWER ===== -->
@@ -5521,13 +5555,6 @@ flowchart LR
             window.addEventListener('resize', update);
             update();
         })();
-
-        // ===== HERO "GET IN TOUCH" -> MAILTO =====
-        document.addEventListener('DOMContentLoaded', function() {
-            var btn = document.getElementById('hero-contact-btn');
-            if (!btn || !window.TVContact) return;
-            btn.href = 'mailto:' + window.TVContact.getEmail();
-        });
 
 
         // ===== MOBILE MENU =====
@@ -7880,26 +7907,6 @@ flowchart LR
 
     </script>
 
-    <script src="stretchy-footer.js" defer></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var themeStyles = getComputedStyle(document.documentElement);
-            function themeColor(name, fallback) {
-                var value = themeStyles.getPropertyValue(name).trim();
-                return value || fallback;
-            }
-            StretchyFooter.init({
-                colors: [
-                    themeColor('--accent-blue', '#7E8E9B'),
-                    themeColor('--green-deep', '#3C6B44'),
-                    themeColor('--accent', '#00ff87'),
-                    themeColor('--green-lime', '#A3BC3F'),
-                    themeColor('--accent-warm', '#C79A4F')
-                ],
-                maxStretch: 220
-            });
-        });
-    </script>
 
 </body>
 </html>
