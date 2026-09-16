@@ -78,6 +78,15 @@
             box-shadow: 0 1px 0 rgba(255,255,255,0.03), inset 0 1px 0 rgba(255,255,255,0.04);
             transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
         }
+
+        .scroll-progress-track {
+            position: fixed; top: 72px; left: 0; right: 0; height: 3px;
+            background: rgba(160,176,162,0.08); z-index: 999; pointer-events: none;
+        }
+        .scroll-progress-bar {
+            height: 100%; width: 0%; background: var(--accent);
+            box-shadow: 0 0 8px rgba(0,255,135,0.55);
+        }
         .navbar.scrolled {
             background: rgba(8,9,10,0.82);
             backdrop-filter: blur(36px) saturate(2) brightness(1.0);
@@ -658,6 +667,7 @@
             <a href="https://www.linkedin.com/in/tyler-vincent11/" class="nav-cta shimmer-btn" target="_blank"><span class="shimmer-spark-wrap"><span class="shimmer-spark"></span></span>Let's Connect <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i><span class="shimmer-highlight"></span><span class="shimmer-backdrop"></span></a>
         </div>
     </nav>
+    <div class="scroll-progress-track"><div class="scroll-progress-bar" id="scroll-progress-bar"></div></div>
     <div class="nav-overlay" id="nav-overlay"></div>
 
     <div data-stretchy-page>
@@ -1147,40 +1157,6 @@ flowchart TD
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-grid">
-            <div>
-                <div class="footer-brand">Tyler Vincent<span>.</span></div>
-                <p class="footer-desc">Data and Analytics Engineer with a passion for technology, building things, teaching others, solving complex problems, and developing solutions across industries from submarines to satellites.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Navigate</h4>
-                <a href="index.html">Work</a>
-                <a href="about.html">About</a>
-                <a href="education.html">Education</a>
-                <a href="index.html#projects">Projects</a>
-            </div>
-            <div class="footer-col">
-                <h4>Contact</h4>
-                <a data-contact="email" href="#"></a>
-                <a data-contact="phone" href="#"></a>
-                <a>Los Angeles, California</a>
-            </div>
-            <div class="footer-col">
-                <h4>Connect</h4>
-                <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank">LinkedIn</a>
-                <a href="https://github.com/tylerv11/" target="_blank">GitHub</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <span class="footer-copyright">&copy; Tyler Vincent. All rights reserved.</span>
-            <div class="footer-socials">
-                <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://github.com/tylerv11/" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-            </div>
-        </div>
-    </footer>
 
     </div>
 
@@ -1258,6 +1234,22 @@ flowchart TD
         window.addEventListener('scroll', () => {
             navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
+
+        // Scroll progress bar
+        (function() {
+            var bar = document.getElementById('scroll-progress-bar');
+            if (!bar) return;
+            function update() {
+                var doc = document.documentElement;
+                var scrollTop = doc.scrollTop || document.body.scrollTop;
+                var scrollable = (doc.scrollHeight || document.body.scrollHeight) - doc.clientHeight;
+                var pct = scrollable > 0 ? (scrollTop / scrollable) * 100 : 0;
+                bar.style.width = pct + '%';
+            }
+            window.addEventListener('scroll', update, { passive: true });
+            window.addEventListener('resize', update);
+            update();
+        })();
 
         // Mobile menu
         const navToggle = document.getElementById('nav-toggle');

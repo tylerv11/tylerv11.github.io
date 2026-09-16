@@ -241,6 +241,15 @@
             transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
         }
 
+        .scroll-progress-track {
+            position: fixed; top: 72px; left: 0; right: 0; height: 3px;
+            background: rgba(160,176,162,0.08); z-index: 999; pointer-events: none;
+        }
+        .scroll-progress-bar {
+            height: 100%; width: 0%; background: var(--accent);
+            box-shadow: 0 0 8px rgba(0,255,135,0.55);
+        }
+
         .navbar.scrolled {
             background: rgba(8,13,10,0.82);
             backdrop-filter: blur(36px) saturate(2) brightness(1.0);
@@ -1729,12 +1738,19 @@
 
         .drawer-pipeline-intro { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 16px; }
         .diagram-rotate-outer {
-            width: 100%; overflow: hidden; border-radius: var(--r-card);
+            width: 100%; overflow-x: auto; overflow-y: hidden; border-radius: var(--r-card);
             background: var(--bg-primary); border: 1px solid var(--border-subtle);
-            margin-bottom: 14px;
+            margin-bottom: 6px; -webkit-overflow-scrolling: touch;
         }
-        .diagram-rotate-inner { transform-origin: top left; }
-        .diagram-rotate-inner svg { display: block; }
+        .diagram-rotate-inner { display: block; width: max-content; }
+        .diagram-rotate-inner svg { display: block; height: 380px; width: auto; }
+        .diagram-scroll-hint {
+            display: flex; align-items: center; gap: 6px; font-size: 0.68rem;
+            color: var(--text-muted); margin-bottom: 14px;
+        }
+        @media (max-width: 640px) {
+            .diagram-rotate-inner svg { height: 300px; }
+        }
 
         @media (max-width: 640px) {
             .project-drawer { width: 100vw; }
@@ -3256,6 +3272,7 @@
             <a href="https://www.linkedin.com/in/tyler-vincent11/" class="nav-cta shimmer-btn" target="_blank"><span class="shimmer-spark-wrap"><span class="shimmer-spark"></span></span>Let's Connect <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i><span class="shimmer-highlight"></span><span class="shimmer-backdrop"></span></a>
         </div>
     </nav>
+    <div class="scroll-progress-track"><div class="scroll-progress-bar" id="scroll-progress-bar"></div></div>
     <div class="nav-overlay" id="nav-overlay"></div>
 
     <div data-stretchy-page>
@@ -3290,7 +3307,7 @@
         </p>
         <div class="hero-actions" style="animation: fadeInUp 0.8s 0.35s var(--transition-smooth) both;">
             <a href="#work" class="btn-glass">See My Work <i class="fas fa-arrow-down"></i></a>
-                    <a href="#contact" class="btn-secondary">Get in touch</a>
+                    <a href="#" class="btn-secondary" id="hero-contact-btn">Get in touch</a>
                 </div>
 
                 <div class="hero-proof">
@@ -5112,41 +5129,6 @@ flowchart LR
 
     </section>
 
-    <!-- ===== FOOTER ===== -->
-    <footer class="footer" id="contact">
-        <div class="footer-grid">
-            <div>
-                <div class="footer-brand">Tyler Vincent<span>.</span></div>
-                <p class="footer-desc">Data and Analytics Engineer with a passion for technology, building things, teaching others, solving complex problems, and developing solutions across industries from submarines to satellites.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Navigate</h4>
-                <a href="index.html">Work</a>
-                <a href="about.html">About</a>
-                <a href="education.html">Education</a>
-                <a href="#projects">Projects</a>
-            </div>
-            <div class="footer-col">
-                <h4>Contact</h4>
-                <a data-contact="email" href="#"></a>
-                <a data-contact="phone" href="#"></a>
-                <a>Los Angeles, California</a>
-            </div>
-            <div class="footer-col">
-                <h4>Connect</h4>
-                <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank">LinkedIn</a>
-                <a href="https://github.com/tylerv11/" target="_blank">GitHub</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <span class="footer-copyright">&copy; Tyler Vincent. All rights reserved.</span>
-            <div class="footer-socials">
-                <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://github.com/tylerv11/" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-            </div>
-        </div>
-    </footer>
-
     </div>
 
     <!-- ===== PROJECT ARCHITECTURE DRAWER ===== -->
@@ -5319,6 +5301,7 @@ flowchart LR
                             </svg>
                         </div>
                     </div>
+                    <div class="diagram-scroll-hint"><i class="fas fa-arrows-left-right"></i> Scroll to see the full pipeline</div>
                     <div class="drawer-link-row">
                         <a class="drawer-link" href="https://github.com/tylerv11/plutus-markets/blob/main/pipeline-diagram.html" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repo Folder</a>
                     </div>
@@ -5408,6 +5391,7 @@ flowchart LR
                             </svg>
                         </div>
                     </div>
+                    <div class="diagram-scroll-hint"><i class="fas fa-arrows-left-right"></i> Scroll to see the full pipeline</div>
                     <div class="drawer-link-row">
                         <a class="drawer-link" href="https://github.com/tylerv11/hermes-events/blob/main/pipeline-diagram.html" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repo Folder</a>
                     </div>
@@ -5520,6 +5504,29 @@ flowchart LR
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ===== SCROLL PROGRESS BAR =====
+        (function() {
+            var bar = document.getElementById('scroll-progress-bar');
+            if (!bar) return;
+            function update() {
+                var doc = document.documentElement;
+                var scrollTop = doc.scrollTop || document.body.scrollTop;
+                var scrollable = (doc.scrollHeight || document.body.scrollHeight) - doc.clientHeight;
+                var pct = scrollable > 0 ? (scrollTop / scrollable) * 100 : 0;
+                bar.style.width = pct + '%';
+            }
+            window.addEventListener('scroll', update, { passive: true });
+            window.addEventListener('resize', update);
+            update();
+        })();
+
+        // ===== HERO "GET IN TOUCH" -> MAILTO =====
+        document.addEventListener('DOMContentLoaded', function() {
+            var btn = document.getElementById('hero-contact-btn');
+            if (!btn || !window.TVContact) return;
+            btn.href = 'mailto:' + window.TVContact.getEmail();
         });
 
 
@@ -5671,9 +5678,6 @@ flowchart LR
             document.body.style.overflow = 'hidden';
             var closeBtn = drawer.querySelector('.project-drawer-close');
             if (closeBtn) closeBtn.focus();
-            if (id === 'plutus' || id === 'hermes') {
-                window.setTimeout(function() { fitRotatedDiagram(id); }, 350);
-            }
         }
         function closeProjectDrawer() {
             var overlay = document.getElementById('project-drawer-overlay');
@@ -5685,37 +5689,6 @@ flowchart LR
         }
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeProjectDrawer();
-        });
-
-        // Rotates a landscape pipeline SVG 90deg to fit the narrow drawer, scaled to the
-        // outer container's current width so it works at any viewport size.
-        function fitRotatedDiagram(id) {
-            var outer = document.getElementById('diagram-rotate-' + id);
-            if (!outer) return;
-            var inner = outer.querySelector('.diagram-rotate-inner');
-            var svg = outer.querySelector('svg');
-            if (!inner || !svg) return;
-            var vb = svg.viewBox.baseVal;
-            var viewW = vb && vb.width ? vb.width : svg.width.baseVal.value;
-            var viewH = vb && vb.height ? vb.height : svg.height.baseVal.value;
-            var availW = outer.clientWidth;
-            if (!availW) return;
-            var renderedH = availW;
-            var renderedW = availW * (viewW / viewH);
-            svg.style.width = renderedW + 'px';
-            svg.style.height = renderedH + 'px';
-            inner.style.width = renderedW + 'px';
-            inner.style.height = renderedH + 'px';
-            inner.style.transform = 'rotate(90deg) translateY(-100%)';
-            outer.style.height = renderedW + 'px';
-        }
-        window.addEventListener('resize', function() {
-            var drawer = document.getElementById('project-drawer');
-            if (!drawer || !drawer.classList.contains('open')) return;
-            var active = drawer.querySelector('.project-drawer-content.active');
-            if (!active) return;
-            var id = active.getAttribute('data-drawer-content');
-            if (id === 'plutus' || id === 'hermes') fitRotatedDiagram(id);
         });
 
         // Fetch a diagram file from GitHub (raw) and render its Mermaid blocks
