@@ -652,13 +652,13 @@
         font-size: 0.72rem;
         color: var(--text-secondary);
     }
-    .loss-example div {
+    .loss-example > div:not(.loss-thinking-card) {
         border: 1px solid var(--border-subtle);
         border-radius: 10px;
         padding: 9px 10px;
         background: rgba(255,255,255,0.025);
     }
-    .loss-example strong {
+    .loss-example > div:not(.loss-thinking-card) strong {
         display: block;
         color: var(--text-primary);
         font-size: 0.75rem;
@@ -725,6 +725,67 @@
     }
     .loss-dot-label.target { left: 50%; top: -5px; color: #c4b5fd; }
     .loss-dot-label.edge { left: 86%; top: 18px; color: #f6ad55; }
+    .loss-panel.clean {
+        min-height: 0;
+        padding: 22px;
+        background: linear-gradient(180deg, rgba(196,181,253,0.06), rgba(255,255,255,0.025));
+    }
+    .loss-panel.clean h4 {
+        font-size: 1.15rem;
+        margin-bottom: 8px;
+    }
+    .loss-panel.clean h4 span { color: var(--text-primary); }
+    .loss-panel-intro {
+        color: var(--text-secondary);
+        font-size: 0.84rem;
+        line-height: 1.55;
+        margin: 0 0 14px;
+    }
+    .loss-figure {
+        width: 100%;
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 12px;
+        background: rgba(5,7,10,0.26);
+        overflow: hidden;
+    }
+    .loss-figure svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    .loss-thinking-card {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 14px;
+        align-items: center;
+        border: 1px solid var(--border-subtle);
+        border-radius: 12px;
+        padding: 16px 18px;
+        background: rgba(255,255,255,0.03);
+    }
+    .loss-thinking-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        color: var(--card-accent, var(--accent));
+        background: rgba(196,181,253,0.12);
+        border: 1px solid rgba(196,181,253,0.22);
+    }
+    .loss-thinking-icon.gold {
+        color: #f6d365;
+        background: rgba(246,211,101,0.12);
+        border-color: rgba(246,211,101,0.22);
+    }
+    .loss-thinking-title {
+        color: var(--text-primary);
+        font-weight: 800;
+        margin-bottom: 4px;
+    }
+    .loss-thinking-title.purple { color: #c4b5fd; }
+    .loss-thinking-title.gold { color: #f6d365; }
 
     /* Footer */
     .footer { border-top: 1px solid var(--border-subtle); padding: 72px 48px 36px; }
@@ -828,6 +889,8 @@
         .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
         .loss-compare { grid-template-columns: 1fr; }
         .loss-example { grid-template-columns: 1fr; }
+        .loss-panel.clean { padding: 16px; }
+        .loss-thinking-card { grid-template-columns: 1fr; }
         .sigma-chart-row { grid-template-columns: 74px 1fr 78px; gap: 8px; }
     }
 
@@ -1469,39 +1532,71 @@ flowchart TD
                 <h3>Why the target matters</h3>
                 <p class="mock-tree-note">One big reason I like Six Sigma is that it changes the quality philosophy. The old goalpost view says anything inside the lower and upper spec limits is fine. Taguchi's view is more honest: the farther you drift from the target, the more quality loss you create, even if you are technically still inside spec.</p>
                 <div class="loss-compare" role="img" aria-label="Traditional goalpost quality compared with Taguchi quality loss curve">
-                    <div class="loss-panel">
+                    <div class="loss-panel clean">
                         <h4>Goalpost philosophy</h4>
-                        <div class="loss-axis"></div>
-                        <div class="loss-block left">Loss</div>
-                        <div class="loss-limit left"><span>LSL</span></div>
-                        <div class="loss-ok">OK</div>
-                        <div class="loss-limit right"><span>USL</span></div>
-                        <div class="loss-block right">Loss</div>
-                        <p class="loss-caption">Inside the limits looks acceptable, so the process can drift toward the edge without feeling urgent.</p>
-                    </div>
-                    <div class="loss-panel">
-                        <h4>Taguchi philosophy</h4>
-                        <div class="loss-axis"></div>
-                        <svg class="loss-curve-svg" viewBox="0 0 240 132" aria-hidden="true" focusable="false">
-                            <path d="M12 118 Q120 178 228 118 L228 18 Q120 122 12 18 Z" fill="rgba(196,181,253,0.16)" />
-                            <path d="M12 18 Q120 122 228 18" fill="none" stroke="rgba(196,181,253,0.9)" stroke-width="4" />
-                        </svg>
-                        <div class="loss-scale">
-                            <div class="loss-scale-line"></div>
-                            <span class="loss-scale-label lsl">LSL</span>
-                            <span class="loss-scale-label target">Target</span>
-                            <span class="loss-scale-label usl">USL</span>
-                            <span class="loss-dot target"></span>
-                            <span class="loss-dot edge"></span>
-                            <span class="loss-dot-label target">best quality, lowest loss</span>
-                            <span class="loss-dot-label edge">still passes, but loss grows</span>
+                        <p class="loss-panel-intro">Inside the limits looks acceptable, so the process can drift toward the edge without feeling urgent.</p>
+                        <div class="loss-figure">
+                            <svg viewBox="0 0 560 340" aria-hidden="true" focusable="false">
+                                <defs>
+                                    <marker id="goal-arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#b8c0cc"/></marker>
+                                </defs>
+                                <line x1="54" y1="274" x2="522" y2="274" stroke="#b8c0cc" stroke-width="2" marker-end="url(#goal-arrow)"/>
+                                <line x1="62" y1="282" x2="62" y2="58" stroke="#b8c0cc" stroke-width="2" marker-end="url(#goal-arrow)"/>
+                                <text x="28" y="178" transform="rotate(-90 28 178)" fill="#c9ced8" font-size="16">Quality loss</text>
+                                <text x="388" y="306" fill="#c9ced8" font-size="16">Process output</text>
+                                <rect x="62" y="104" width="130" height="170" fill="rgba(196,181,253,0.22)" stroke="rgba(196,181,253,0.65)" stroke-width="2"/>
+                                <rect x="368" y="104" width="130" height="170" fill="rgba(196,181,253,0.22)" stroke="rgba(196,181,253,0.65)" stroke-width="2"/>
+                                <line x1="192" y1="82" x2="192" y2="274" stroke="#f6ad55" stroke-width="4"/>
+                                <line x1="368" y1="82" x2="368" y2="274" stroke="#f6ad55" stroke-width="4"/>
+                                <text x="192" y="72" fill="#f6d365" font-size="18" font-weight="800" text-anchor="middle">LSL</text>
+                                <text x="368" y="72" fill="#f6d365" font-size="18" font-weight="800" text-anchor="middle">USL</text>
+                                <text x="127" y="188" fill="#fff" font-size="29" font-weight="800" text-anchor="middle">Loss</text>
+                                <text x="127" y="224" fill="#f0eaff" font-size="29" font-weight="800" text-anchor="middle">$$</text>
+                                <text x="433" y="188" fill="#fff" font-size="29" font-weight="800" text-anchor="middle">Loss</text>
+                                <text x="433" y="224" fill="#f0eaff" font-size="29" font-weight="800" text-anchor="middle">$$</text>
+                                <line x1="192" y1="274" x2="430" y2="264" stroke="#c4b5fd" stroke-width="4"/>
+                                <circle cx="352" cy="258" r="12" fill="#c4b5fd" stroke="#fff" stroke-width="3"/>
+                                <text x="280" y="240" fill="#fff" font-size="26" font-weight="900" text-anchor="middle">OK</text>
+                                <path d="M322 210 L348 246" stroke="#fff" stroke-width="3" fill="none" marker-end="url(#goal-arrow)"/>
+                                <text x="305" y="198" fill="#fff" font-size="15" text-anchor="middle">still in spec</text>
+                            </svg>
                         </div>
-                        <p class="loss-caption">Example: if a vial fill, machined part, or data field drifts away from target, it may still pass inspection, but the business starts paying for rework, scrap, risk, or customer pain.</p>
+                    </div>
+                    <div class="loss-panel clean">
+                        <h4>Taguchi philosophy</h4>
+                        <p class="loss-panel-intro">The farther you drift from target, the more loss you create, even when the output still passes inspection.</p>
+                        <div class="loss-figure">
+                            <svg viewBox="0 0 560 340" aria-hidden="true" focusable="false">
+                                <defs>
+                                    <marker id="taguchi-arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#b8c0cc"/></marker>
+                                </defs>
+                                <line x1="54" y1="274" x2="522" y2="274" stroke="#b8c0cc" stroke-width="2" marker-end="url(#taguchi-arrow)"/>
+                                <line x1="62" y1="282" x2="62" y2="58" stroke="#b8c0cc" stroke-width="2" marker-end="url(#taguchi-arrow)"/>
+                                <text x="28" y="178" transform="rotate(-90 28 178)" fill="#c9ced8" font-size="16">Quality loss</text>
+                                <text x="392" y="306" fill="#c9ced8" font-size="16">Process output</text>
+                                <line x1="170" y1="82" x2="170" y2="274" stroke="#f6ad55" stroke-width="4"/>
+                                <line x1="430" y1="82" x2="430" y2="274" stroke="#f6ad55" stroke-width="4"/>
+                                <text x="170" y="72" fill="#f6d365" font-size="18" font-weight="800" text-anchor="middle">LSL</text>
+                                <text x="430" y="72" fill="#f6d365" font-size="18" font-weight="800" text-anchor="middle">USL</text>
+                                <path d="M105 112 C175 226 250 246 300 246 C350 246 425 226 495 112 L495 274 L105 274 Z" fill="rgba(196,181,253,0.22)"/>
+                                <path d="M105 112 C175 226 250 246 300 246 C350 246 425 226 495 112" fill="none" stroke="#c4b5fd" stroke-width="5"/>
+                                <line x1="300" y1="246" x2="300" y2="292" stroke="#fff" stroke-width="2" stroke-dasharray="7 7"/>
+                                <circle cx="300" cy="246" r="12" fill="#c4b5fd" stroke="#fff" stroke-width="3"/>
+                                <circle cx="398" cy="205" r="12" fill="#f6ad55" stroke="#fff" stroke-width="3"/>
+                                <text x="300" y="320" fill="#fff" font-size="18" text-anchor="middle">Target</text>
+                                <path d="M300 164 L300 230" stroke="#fff" stroke-width="3" marker-end="url(#taguchi-arrow)"/>
+                                <text x="300" y="137" fill="#d9ccff" font-size="15" font-weight="700" text-anchor="middle">best quality,</text>
+                                <text x="300" y="156" fill="#d9ccff" font-size="15" font-weight="700" text-anchor="middle">lowest loss</text>
+                                <path d="M350 145 L390 192" stroke="#fff" stroke-width="3" marker-end="url(#taguchi-arrow)"/>
+                                <text x="372" y="104" fill="#f6d365" font-size="15" font-weight="800" text-anchor="middle">still passes,</text>
+                                <text x="372" y="123" fill="#f6d365" font-size="15" font-weight="800" text-anchor="middle">but loss grows</text>
+                            </svg>
+                        </div>
                     </div>
                 </div>
                 <div class="loss-example">
-                    <div><strong>Goalpost thinking</strong> "It passed, ship it."</div>
-                    <div><strong>Target thinking</strong> "It passed, but how far from ideal are we and what is that drift costing?"</div>
+                    <div class="loss-thinking-card"><span class="loss-thinking-icon"><i class="fas fa-cube"></i></span><span><strong class="loss-thinking-title purple">Goalpost thinking</strong> "It passed, ship it."</span></div>
+                    <div class="loss-thinking-card"><span class="loss-thinking-icon gold"><i class="fas fa-bullseye"></i></span><span><strong class="loss-thinking-title gold">Target thinking</strong> "It passed, but how far from ideal are we and what is that drift costing?"</span></div>
                 </div>
             </div>
 
