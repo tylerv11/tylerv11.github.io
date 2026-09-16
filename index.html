@@ -1724,6 +1724,18 @@
         }
         .diagram-preview-card .mermaid { display: flex; justify-content: center; min-width: 420px; }
 
+        .project-drawer-content { display: none; }
+        .project-drawer-content.active { display: block; }
+
+        .drawer-pipeline-intro { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 16px; }
+        .diagram-rotate-outer {
+            width: 100%; overflow: hidden; border-radius: var(--r-card);
+            background: var(--bg-primary); border: 1px solid var(--border-subtle);
+            margin-bottom: 14px;
+        }
+        .diagram-rotate-inner { transform-origin: top left; }
+        .diagram-rotate-inner svg { display: block; }
+
         @media (max-width: 640px) {
             .project-drawer { width: 100vw; }
             .tradeoff-grid { grid-template-columns: 1fr; }
@@ -3014,91 +3026,6 @@
             flex-shrink: 0;
             margin-top: 1px;
         }
-        /* ===== AGENT CARDS (CLICKABLE) ===== */
-        .agent-cards-grid { display: flex; flex-direction: column; gap: 5px; }
-        .agent-card {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.07);
-            border-radius: 10px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: border-color 0.2s ease, background 0.2s ease;
-            user-select: none;
-        }
-        .agent-card:hover { background: rgba(160,176,162,0.045); border-color: rgba(160,176,162,0.14); }
-        .agent-card.open { border-color: rgba(126,142,155,0.22); background: rgba(126,142,155,0.02); }
-        .agent-card.hub-card.open { border-color: rgba(199,154,79,0.25); background: rgba(199,154,79,0.02); }
-        .agent-card.advisor-card.open { border-color: rgba(0,200,150,0.22); background: rgba(0,200,150,0.02); }
-        .agent-card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 13px 18px;
-        }
-        .agent-card-name {
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: var(--text-primary);
-            min-width: 108px;
-        }
-        .agent-type-badge {
-            font-size: 0.62rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            padding: 2px 9px;
-            border-radius: var(--r-tag);
-        }
-        .type-hub { background: rgba(199,154,79,0.1); border: 1px solid rgba(199,154,79,0.25); color: #C79A4F; }
-        .type-advisor { background: rgba(0,200,150,0.08); border: 1px solid rgba(0,200,150,0.22); color: #00c896; }
-        .type-exec { background: rgba(126,142,155,0.08); border: 1px solid rgba(126,142,155,0.22); color: #8EA0AD; }
-        .agent-card-summary {
-            flex: 1;
-            font-size: 0.81rem;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
-        .agent-card-chevron {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            transition: transform 0.2s ease;
-            flex-shrink: 0;
-        }
-        .agent-card.open .agent-card-chevron { transform: rotate(180deg); }
-        .agent-card-detail {
-            display: none;
-            padding: 4px 18px 16px;
-            border-top: 1px solid rgba(160,176,162,0.065);
-        }
-        .agent-detail-row {
-            display: grid;
-            grid-template-columns: 110px 1fr;
-            gap: 10px;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(160,176,162,0.055);
-            font-size: 0.82rem;
-        }
-        .agent-detail-row:last-child { border-bottom: none; }
-        .agent-detail-label {
-            font-size: 0.68rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            padding-top: 2px;
-        }
-        .agent-detail-val { color: var(--text-secondary); line-height: 1.65; }
-        .agent-skill-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
-        .agent-skill-tag {
-            padding: 3px 10px;
-            background: rgba(160,176,162,0.055);
-            border: 1px solid rgba(255,255,255,0.07);
-            border-radius: var(--r-tag);
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
         /* ===== SECURITY SECTION ===== */
         .security-grid {
             display: grid;
@@ -3590,7 +3517,14 @@
                         <span><strong>Stack</strong>Next.js, Supabase Postgres, Python, Vercel</span>
                         <span><strong>Pipeline</strong>Ingestion &middot; LLM tiering &middot; image backfill &middot; admin review</span>
                     </div>
-                    <a href="#exp-tile-hermes" class="card-link" onclick="document.getElementById('exp-tile-hermes')?.scrollIntoView({behavior:'smooth'});" style="margin-top:16px;">See architecture &amp; details <i class="fas fa-arrow-right"></i></a>
+                    <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(160,176,162,0.075);display:flex;flex-wrap:wrap;gap:10px;">
+                        <button type="button" class="drawer-trigger-btn" onclick="openProjectDrawer('hermes')">
+                            <i class="fas fa-diagram-project"></i> View Architecture &amp; Diagrams
+                        </button>
+                        <a href="#exp-tile-hermes" class="drawer-trigger-btn" style="text-decoration:none;" onclick="document.getElementById('exp-tile-hermes')?.scrollIntoView({behavior:'smooth'});">
+                            <i class="fas fa-arrow-right"></i> See Full Details
+                        </a>
+                    </div>
                 </div>
                 <img src="assets/logos/hermes-logo.png" alt="Hermes" class="card-logo" />
             </div>
@@ -3616,7 +3550,14 @@
                         <span><strong>Stack</strong>Next.js, Supabase Postgres, Python, Vercel</span>
                         <span><strong>Tracking</strong>Sharpe/Sortino, alpha/beta vs SPY, max drawdown</span>
                     </div>
-                    <a href="#exp-tile-plutus" class="card-link" onclick="document.getElementById('exp-tile-plutus')?.scrollIntoView({behavior:'smooth'});" style="margin-top:16px;">See architecture &amp; details <i class="fas fa-arrow-right"></i></a>
+                    <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(160,176,162,0.075);display:flex;flex-wrap:wrap;gap:10px;">
+                        <button type="button" class="drawer-trigger-btn" onclick="openProjectDrawer('plutus')">
+                            <i class="fas fa-diagram-project"></i> View Architecture &amp; Diagrams
+                        </button>
+                        <a href="#exp-tile-plutus" class="drawer-trigger-btn" style="text-decoration:none;" onclick="document.getElementById('exp-tile-plutus')?.scrollIntoView({behavior:'smooth'});">
+                            <i class="fas fa-arrow-right"></i> See Full Details
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -3839,7 +3780,7 @@
                 </div>
                 <div class="exp-tile-meta">
                     <div class="exp-tile-name">Personal AI Council: Hub-and-Spoke Agent System</div>
-                    <div class="exp-tile-tagline">Zeus orchestrates &middot; 8 agents &middot; M4 Mac &middot; Discord control surface</div>
+                    <div class="exp-tile-tagline">Zeus orchestrates &middot; 8 agents &middot; home lab server &middot; Discord control surface</div>
                     <div class="exp-tile-tags">
                         <span class="exp-tag">Multi-Agent</span>
                         <span class="exp-tag">MCP</span>
@@ -3856,108 +3797,11 @@
             <div class="ai-council-header">
                 <div class="ai-council-badge">&#9679; Personal AI Project</div>
                 <h3 class="ai-council-title">Personal AI Council:<br>Hub-and-Spoke Agent System</h3>
-                <p style="font-size:0.92rem;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:10px;">I had this idea to start working with LLMs on my own machine and host my own on a headless PC to help me with daily work — and put my knowledge to the test. I decided to jump in and build a project making use of my LLM experience, testing out Model Context Protocol and agentic workflows. Here is what I built.</p>
-                <p class="ai-council-subtitle">A personal multi-agent system built with a mix of models: ChatGPT 5.4, DeepSeek v4 Flash, DeepSeek v2.5, Ollama, Mistral, and Qwen, running on a 16GB M4 Mac. Tyler sets the vision. Zeus runs the show.</p>
+                <p style="font-size:0.92rem;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:10px;">I had this idea to start working with LLMs on my own machine and host my own on a headless PC to help me with daily work, and put my knowledge to the test. I decided to jump in and build a project making use of my LLM experience, testing out Model Context Protocol and agentic workflows. Here is what I built.</p>
+                <p class="ai-council-subtitle">A personal multi-agent system built with a mix of models: ChatGPT 5.4, DeepSeek v4 Flash, DeepSeek v2.5, Ollama, Mistral, and Qwen, running on my home lab server.</p>
             </div>
 
             <div class="ai-council-body">
-
-                <p class="ai-council-overview">
-                    A persistent, multi-agent AI council where <strong style="color:var(--accent-warm)">Zeus ⚡ (ChatGPT 5.4)</strong> is the central hub: routing tasks, owning the queue, and enforcing governance. The system uses a diverse mix of models—ChatGPT 5.4, DeepSeek v4 Flash, DeepSeek v2.5, Ollama, Mistral, and Qwen—routing each task to the best-fit model. Three <strong style="color:#00c896">advisors</strong> (Prometheus, Argus, Hestia) consult but never command. Five <strong style="color:var(--accent-blue)">execution agents</strong> receive orders from Zeus only. No agent ever talks to another agent. All routing through Zeus. All goals set by Tyler.
-                </p>
-
-                <!-- Architecture Diagram -->
-                <div class="ai-council-diagram-wrap">
-                    <svg viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI Council architecture: Tyler at top provides vision and final decisions. Zeus is the central hub that routes tasks and owns the task queue. Three advisor agents (Prometheus for memory and strategy, Argus for security and audit, Hestia for system health) provide advisory consultation via dashed lines. Five execution agents (Atlas for job search, Muse for creative tasks, Hermes for research, Hephaestus for automation, Plutus for markets) receive command flow from Zeus. Agents never communicate directly.">
-                        <defs>
-                            <marker id="cmd-arrow" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                                <polygon points="0 0, 9 3.5, 0 7" fill="rgba(210,140,55,0.85)"/>
-                            </marker>
-                            <marker id="adv-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-                                <polygon points="0 0, 8 3, 0 6" fill="rgba(0,190,140,0.75)"/>
-                            </marker>
-                            <marker id="tyler-arrow" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                                <polygon points="0 0, 9 3.5, 0 7" fill="rgba(168,100,255,0.85)"/>
-                            </marker>
-                        </defs>
-
-                        <!-- Tyler → Zeus command arrow -->
-                        <line x1="350" y1="73" x2="355" y2="120" stroke="rgba(176,106,62,0.55)" stroke-width="2" marker-end="url(#tyler-arrow)"/>
-
-                        <!-- Zeus → Execution agents (command flow, solid) -->
-                        <line x1="340" y1="182" x2="83" y2="330" stroke="rgba(176,106,62,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
-                        <line x1="348" y1="182" x2="216" y2="330" stroke="rgba(176,106,62,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
-                        <line x1="360" y1="182" x2="350" y2="330" stroke="rgba(176,106,62,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
-                        <line x1="372" y1="182" x2="487" y2="330" stroke="rgba(176,106,62,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
-                        <line x1="380" y1="182" x2="617" y2="330" stroke="rgba(176,106,62,0.45)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
-
-                        <!-- Advisor dashed lines (advisory consultation → Zeus) -->
-                        <line x1="171" y1="129" x2="253" y2="148" stroke="rgba(0,190,140,0.5)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#adv-arrow)"/>
-                        <line x1="171" y1="195" x2="253" y2="155" stroke="rgba(0,190,140,0.5)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#adv-arrow)"/>
-                        <line x1="171" y1="261" x2="253" y2="163" stroke="rgba(0,190,140,0.5)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#adv-arrow)"/>
-
-                        <!-- Tyler box (purple) -->
-                        <rect x="258" y="18" width="184" height="55" rx="10" fill="rgba(80,50,170,0.38)" stroke="rgba(176,106,62,0.65)" stroke-width="1.5"/>
-                        <text x="350" y="43" text-anchor="middle" font-size="17" font-weight="800" fill="#D8B072" font-family="IBM Plex Sans, sans-serif">Tyler</text>
-                        <text x="350" y="62" text-anchor="middle" font-size="10.5" fill="rgba(199,154,79,0.65)" font-family="IBM Plex Sans, sans-serif">Vision + final decisions</text>
-
-                        <!-- Zeus box (amber/warm) -->
-                        <rect x="252" y="120" width="216" height="62" rx="10" fill="rgba(110,60,10,0.5)" stroke="rgba(176,106,62,0.7)" stroke-width="1.5"/>
-                        <text x="360" y="146" text-anchor="middle" font-size="17" font-weight="800" fill="#C79A4F" font-family="IBM Plex Sans, sans-serif">Zeus &#x26A1;</text>
-                        <text x="360" y="166" text-anchor="middle" font-size="10" fill="rgba(199,154,79,0.7)" font-family="IBM Plex Sans, sans-serif">Hub &nbsp;&middot;&nbsp; routes &nbsp;&middot;&nbsp; owns task queue</text>
-
-                        <!-- Advisors label -->
-                        <text x="90" y="94" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.28)" font-family="IBM Plex Sans, sans-serif" letter-spacing="1.5" font-style="italic">Advisors</text>
-
-                        <!-- Prometheus box (teal) -->
-                        <rect x="14" y="104" width="157" height="50" rx="8" fill="rgba(12,65,52,0.65)" stroke="rgba(0,175,125,0.6)" stroke-width="1.5"/>
-                        <text x="92" y="127" text-anchor="middle" font-size="13.5" font-weight="700" fill="#00c896" font-family="IBM Plex Sans, sans-serif">Prometheus</text>
-                        <text x="92" y="144" text-anchor="middle" font-size="9.5" fill="rgba(0,195,145,0.6)" font-family="IBM Plex Sans, sans-serif">Memory + strategy</text>
-
-                        <!-- Argus box (teal) -->
-                        <rect x="14" y="170" width="157" height="50" rx="8" fill="rgba(12,65,52,0.65)" stroke="rgba(0,175,125,0.6)" stroke-width="1.5"/>
-                        <text x="92" y="193" text-anchor="middle" font-size="13.5" font-weight="700" fill="#00c896" font-family="IBM Plex Sans, sans-serif">Argus</text>
-                        <text x="92" y="210" text-anchor="middle" font-size="9.5" fill="rgba(0,195,145,0.6)" font-family="IBM Plex Sans, sans-serif">Security + audit</text>
-
-                        <!-- Hestia box (teal) -->
-                        <rect x="14" y="236" width="157" height="50" rx="8" fill="rgba(12,65,52,0.65)" stroke="rgba(0,175,125,0.6)" stroke-width="1.5"/>
-                        <text x="92" y="259" text-anchor="middle" font-size="13.5" font-weight="700" fill="#00c896" font-family="IBM Plex Sans, sans-serif">Hestia</text>
-                        <text x="92" y="276" text-anchor="middle" font-size="9.5" fill="rgba(0,195,145,0.6)" font-family="IBM Plex Sans, sans-serif">System health</text>
-
-                        <!-- Execution agents row (blue) -->
-                        <!-- Atlas -->
-                        <rect x="22" y="330" width="122" height="58" rx="8" fill="rgba(18,30,34,0.7)" stroke="rgba(94,116,130,0.6)" stroke-width="1.5"/>
-                        <text x="83" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Atlas</text>
-                        <text x="83" y="372" text-anchor="middle" font-size="9.5" fill="rgba(142,160,173,0.6)" font-family="IBM Plex Sans, sans-serif">Job search</text>
-
-                        <!-- Muse -->
-                        <rect x="155" y="330" width="122" height="58" rx="8" fill="rgba(18,30,34,0.7)" stroke="rgba(94,116,130,0.6)" stroke-width="1.5"/>
-                        <text x="216" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Muse</text>
-                        <text x="216" y="372" text-anchor="middle" font-size="9.5" fill="rgba(142,160,173,0.6)" font-family="IBM Plex Sans, sans-serif">Creative</text>
-
-                        <!-- Hermes -->
-                        <rect x="289" y="330" width="122" height="58" rx="8" fill="rgba(18,30,34,0.7)" stroke="rgba(94,116,130,0.6)" stroke-width="1.5"/>
-                        <text x="350" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Hermes</text>
-                        <text x="350" y="372" text-anchor="middle" font-size="9.5" fill="rgba(142,160,173,0.6)" font-family="IBM Plex Sans, sans-serif">Research</text>
-
-                        <!-- Hephaestus -->
-                        <rect x="423" y="330" width="128" height="58" rx="8" fill="rgba(18,30,34,0.7)" stroke="rgba(94,116,130,0.6)" stroke-width="1.5"/>
-                        <text x="487" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Hephaestus</text>
-                        <text x="487" y="372" text-anchor="middle" font-size="9.5" fill="rgba(142,160,173,0.6)" font-family="IBM Plex Sans, sans-serif">Automation</text>
-
-                        <!-- Plutus -->
-                        <rect x="563" y="330" width="122" height="58" rx="8" fill="rgba(18,30,34,0.7)" stroke="rgba(94,116,130,0.6)" stroke-width="1.5"/>
-                        <text x="624" y="354" text-anchor="middle" font-size="13.5" font-weight="700" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Plutus</text>
-                        <text x="624" y="372" text-anchor="middle" font-size="9.5" fill="rgba(142,160,173,0.6)" font-family="IBM Plex Sans, sans-serif">Markets</text>
-
-                        <!-- Legend -->
-                        <line x1="22" y1="416" x2="50" y2="416" stroke="rgba(176,106,62,0.7)" stroke-width="1.5" marker-end="url(#cmd-arrow)"/>
-                        <text x="64" y="420" font-size="9.5" fill="rgba(255,255,255,0.38)" font-family="IBM Plex Sans, sans-serif">Command flow</text>
-                        <line x1="190" y1="416" x2="218" y2="416" stroke="rgba(0,190,140,0.65)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#adv-arrow)"/>
-                        <text x="232" y="420" font-size="9.5" fill="rgba(255,255,255,0.38)" font-family="IBM Plex Sans, sans-serif">Advisory consultation</text>
-                    </svg>
-                    <p class="ai-council-diagram-caption">Agents never communicate directly &mdash; all routing goes through Zeus</p>
-                </div>
 
                 <!-- Architecture Explanation -->
                 <div class="ai-council-section-title">Architecture</div>
@@ -3972,463 +3816,267 @@
                     </div>
                 </div>
 
-                <!-- MCP SVG -->
-                <div class="ai-council-section-title">How Agents Connect: MCP</div>
-                <div class="ai-council-diagram-wrap" style="padding:28px 20px 20px;">
-                    <svg viewBox="0 0 700 295" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MCP architecture diagram showing agents connecting through the Model Context Protocol to tool servers including file system, shell, memory, Discord, web search, and external APIs">
+                <!-- Combined Hub-and-Spoke + MCP Architecture SVG -->
+                <div class="ai-council-section-title">System Architecture: Hub-and-Spoke via MCP</div>
+                <div class="ai-council-diagram-wrap" style="padding:28px 14px 20px;">
+                    <svg viewBox="0 0 1040 590" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture diagram: Tyler connects to Zeus, the central orchestrator. Zeus consults three advisors, Prometheus, Argus, and Hestia, and commands five execution agents, Atlas, Muse, Hermes, Hephaestus, and Plutus. Every execution agent connects through a shared Model Context Protocol client/server bridge down to shared tools: file system, shell, memory, Discord, web search, and external APIs.">
                         <defs>
-                            <marker id="mcp-down" markerWidth="7" markerHeight="5" refX="3.5" refY="5" orient="auto">
-                                <polygon points="0 0, 7 0, 3.5 5" fill="rgba(126,142,155,0.5)"/>
+                            <marker id="hub-arrow" markerWidth="8" markerHeight="6" refX="7.5" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="rgba(126,142,155,0.55)"/>
                             </marker>
                         </defs>
-                        <!-- Section labels -->
-                        <text x="12" y="55" font-size="8.5" fill="rgba(255,255,255,0.25)" font-family="IBM Plex Sans, sans-serif" letter-spacing="1" font-weight="700" text-anchor="start">AGENTS</text>
-                        <text x="12" y="128" font-size="8.5" fill="rgba(255,255,255,0.25)" font-family="IBM Plex Sans, sans-serif" letter-spacing="1" font-weight="700" text-anchor="start">PROTOCOL</text>
-                        <text x="12" y="210" font-size="8.5" fill="rgba(255,255,255,0.25)" font-family="IBM Plex Sans, sans-serif" letter-spacing="1" font-weight="700" text-anchor="start">TOOLS</text>
 
-                        <!-- Agent boxes (3 representative) -->
-                        <rect x="72" y="16" width="148" height="52" rx="8" fill="rgba(110,60,10,0.4)" stroke="rgba(176,106,62,0.55)" stroke-width="1.5"/>
-                        <text x="146" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#C79A4F" font-family="IBM Plex Sans, sans-serif">Zeus</text>
-                        <text x="146" y="55" text-anchor="middle" font-size="9" fill="rgba(199,154,79,0.65)" font-family="IBM Plex Sans, sans-serif">Orchestrator (Claude API)</text>
+                        <!-- Tyler -->
+                        <rect x="450" y="15" width="140" height="45" rx="8" fill="rgba(80,50,170,0.3)" stroke="rgba(150,120,220,0.5)" stroke-width="1.5"/>
+                        <text x="520" y="43" text-anchor="middle" font-size="13" font-weight="800" fill="#B9A6E8" font-family="IBM Plex Sans, sans-serif">Tyler</text>
 
-                        <rect x="276" y="16" width="148" height="52" rx="8" fill="rgba(18,30,34,0.65)" stroke="rgba(94,116,130,0.55)" stroke-width="1.5"/>
-                        <text x="350" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Hermes / Hephaestus</text>
-                        <text x="350" y="55" text-anchor="middle" font-size="9" fill="rgba(142,160,173,0.65)" font-family="IBM Plex Sans, sans-serif">Execution agents (local + API)</text>
+                        <line x1="520" y1="60" x2="520" y2="83" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#hub-arrow)"/>
 
-                        <rect x="480" y="16" width="148" height="52" rx="8" fill="rgba(12,65,52,0.55)" stroke="rgba(0,175,125,0.55)" stroke-width="1.5"/>
-                        <text x="554" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#00c896" font-family="IBM Plex Sans, sans-serif">Prometheus / Argus</text>
-                        <text x="554" y="55" text-anchor="middle" font-size="9" fill="rgba(0,195,145,0.65)" font-family="IBM Plex Sans, sans-serif">Advisors (local Ollama)</text>
+                        <!-- Zeus -->
+                        <rect x="420" y="85" width="200" height="65" rx="9" fill="rgba(110,60,10,0.4)" stroke="rgba(176,106,62,0.55)" stroke-width="1.5"/>
+                        <text x="520" y="113" text-anchor="middle" font-size="14" font-weight="800" fill="#C79A4F" font-family="IBM Plex Sans, sans-serif">Zeus &#x26A1;</text>
+                        <text x="520" y="131" text-anchor="middle" font-size="9" fill="rgba(199,154,79,0.7)" font-family="IBM Plex Sans, sans-serif">Orchestrator (ChatGPT 5.4)</text>
+
+                        <!-- Advisors column -->
+                        <line x1="420" y1="100" x2="180" y2="70" stroke="rgba(0,200,150,0.4)" stroke-width="1.3" stroke-dasharray="3 4"/>
+                        <line x1="420" y1="117" x2="180" y2="135" stroke="rgba(0,200,150,0.4)" stroke-width="1.3" stroke-dasharray="3 4"/>
+                        <line x1="420" y1="134" x2="180" y2="200" stroke="rgba(0,200,150,0.4)" stroke-width="1.3" stroke-dasharray="3 4"/>
+                        <text x="300" y="52" text-anchor="middle" font-size="9.5" font-style="italic" fill="rgba(0,200,150,0.6)" font-family="IBM Plex Sans, sans-serif">consults</text>
+
+                        <rect x="20" y="45" width="160" height="50" rx="8" fill="rgba(12,65,52,0.55)" stroke="rgba(0,175,125,0.55)" stroke-width="1.5"/>
+                        <text x="100" y="66" text-anchor="middle" font-size="11.5" font-weight="700" fill="#00c896" font-family="IBM Plex Sans, sans-serif">Prometheus</text>
+                        <text x="100" y="82" text-anchor="middle" font-size="8.5" fill="rgba(0,195,145,0.65)" font-family="IBM Plex Sans, sans-serif">memory &amp; context</text>
+
+                        <rect x="20" y="110" width="160" height="50" rx="8" fill="rgba(12,65,52,0.55)" stroke="rgba(0,175,125,0.55)" stroke-width="1.5"/>
+                        <text x="100" y="131" text-anchor="middle" font-size="11.5" font-weight="700" fill="#00c896" font-family="IBM Plex Sans, sans-serif">Argus</text>
+                        <text x="100" y="147" text-anchor="middle" font-size="8.5" fill="rgba(0,195,145,0.65)" font-family="IBM Plex Sans, sans-serif">audit &amp; logging</text>
+
+                        <rect x="20" y="175" width="160" height="50" rx="8" fill="rgba(12,65,52,0.55)" stroke="rgba(0,175,125,0.55)" stroke-width="1.5"/>
+                        <text x="100" y="196" text-anchor="middle" font-size="11.5" font-weight="700" fill="#00c896" font-family="IBM Plex Sans, sans-serif">Hestia</text>
+                        <text x="100" y="212" text-anchor="middle" font-size="8.5" fill="rgba(0,195,145,0.65)" font-family="IBM Plex Sans, sans-serif">system health</text>
+
+                        <!-- Command fan to execution agents -->
+                        <line x1="520" y1="150" x2="210" y2="268" stroke="rgba(126,142,155,0.5)" stroke-width="1.4" marker-end="url(#hub-arrow)"/>
+                        <line x1="520" y1="150" x2="365" y2="268" stroke="rgba(126,142,155,0.5)" stroke-width="1.4" marker-end="url(#hub-arrow)"/>
+                        <line x1="520" y1="150" x2="520" y2="268" stroke="rgba(126,142,155,0.5)" stroke-width="1.4" marker-end="url(#hub-arrow)"/>
+                        <line x1="520" y1="150" x2="675" y2="268" stroke="rgba(126,142,155,0.5)" stroke-width="1.4" marker-end="url(#hub-arrow)"/>
+                        <line x1="520" y1="150" x2="830" y2="268" stroke="rgba(126,142,155,0.5)" stroke-width="1.4" marker-end="url(#hub-arrow)"/>
+                        <text x="520" y="245" text-anchor="middle" font-size="9.5" font-style="italic" fill="rgba(255,255,255,0.4)" font-family="IBM Plex Sans, sans-serif">commands</text>
+
+                        <!-- Execution agents row -->
+                        <rect x="140" y="270" width="140" height="50" rx="8" fill="rgba(18,30,34,0.65)" stroke="rgba(94,116,130,0.55)" stroke-width="1.5"/>
+                        <text x="210" y="291" text-anchor="middle" font-size="11.5" font-weight="700" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Atlas</text>
+                        <text x="210" y="307" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.65)" font-family="IBM Plex Sans, sans-serif">job search &amp; apps</text>
+
+                        <rect x="295" y="270" width="140" height="50" rx="8" fill="rgba(18,30,34,0.65)" stroke="rgba(94,116,130,0.55)" stroke-width="1.5"/>
+                        <text x="365" y="291" text-anchor="middle" font-size="11.5" font-weight="700" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Muse</text>
+                        <text x="365" y="307" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.65)" font-family="IBM Plex Sans, sans-serif">creative &amp; content</text>
+
+                        <rect x="450" y="270" width="140" height="50" rx="8" fill="rgba(18,30,34,0.65)" stroke="rgba(94,116,130,0.55)" stroke-width="1.5"/>
+                        <text x="520" y="291" text-anchor="middle" font-size="11.5" font-weight="700" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Hermes</text>
+                        <text x="520" y="307" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.65)" font-family="IBM Plex Sans, sans-serif">LA events scout</text>
+
+                        <rect x="605" y="270" width="140" height="50" rx="8" fill="rgba(18,30,34,0.65)" stroke="rgba(94,116,130,0.55)" stroke-width="1.5"/>
+                        <text x="675" y="291" text-anchor="middle" font-size="11.5" font-weight="700" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Hephaestus</text>
+                        <text x="675" y="307" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.65)" font-family="IBM Plex Sans, sans-serif">build &amp; dev</text>
+
+                        <rect x="760" y="270" width="140" height="50" rx="8" fill="rgba(18,30,34,0.65)" stroke="rgba(94,116,130,0.55)" stroke-width="1.5"/>
+                        <text x="830" y="291" text-anchor="middle" font-size="11.5" font-weight="700" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Plutus</text>
+                        <text x="830" y="307" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.65)" font-family="IBM Plex Sans, sans-serif">markets &amp; investing</text>
 
                         <!-- Down lines to MCP bar -->
-                        <line x1="146" y1="68" x2="146" y2="105" stroke="rgba(126,142,155,0.3)" stroke-width="1.5" stroke-dasharray="3 3"/>
-                        <line x1="350" y1="68" x2="350" y2="105" stroke="rgba(126,142,155,0.3)" stroke-width="1.5" stroke-dasharray="3 3"/>
-                        <line x1="554" y1="68" x2="554" y2="105" stroke="rgba(126,142,155,0.3)" stroke-width="1.5" stroke-dasharray="3 3"/>
+                        <line x1="210" y1="320" x2="210" y2="360" stroke="rgba(126,142,155,0.3)" stroke-width="1.3" stroke-dasharray="3 3"/>
+                        <line x1="365" y1="320" x2="365" y2="360" stroke="rgba(126,142,155,0.3)" stroke-width="1.3" stroke-dasharray="3 3"/>
+                        <line x1="520" y1="320" x2="520" y2="360" stroke="rgba(126,142,155,0.3)" stroke-width="1.3" stroke-dasharray="3 3"/>
+                        <line x1="675" y1="320" x2="675" y2="360" stroke="rgba(126,142,155,0.3)" stroke-width="1.3" stroke-dasharray="3 3"/>
+                        <line x1="830" y1="320" x2="830" y2="360" stroke="rgba(126,142,155,0.3)" stroke-width="1.3" stroke-dasharray="3 3"/>
 
-                        <!-- MCP Client protocol bar -->
-                        <rect x="72" y="105" width="556" height="38" rx="8" fill="rgba(30,60,120,0.35)" stroke="rgba(126,142,155,0.35)" stroke-width="1.5"/>
-                        <text x="350" y="120" text-anchor="middle" font-size="10" font-weight="700" fill="rgba(142,160,173,0.8)" font-family="IBM Plex Sans, sans-serif" letter-spacing="1">MODEL CONTEXT PROTOCOL (MCP)</text>
-                        <text x="350" y="135" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.45)" font-family="IBM Plex Sans, sans-serif">Standardized client/server bridge. Agents call tools without custom integration code.</text>
+                        <!-- MCP bar -->
+                        <rect x="140" y="360" width="760" height="50" rx="8" fill="rgba(30,60,120,0.35)" stroke="rgba(126,142,155,0.35)" stroke-width="1.5"/>
+                        <text x="520" y="381" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(142,160,173,0.85)" font-family="IBM Plex Sans, sans-serif" letter-spacing="1">MODEL CONTEXT PROTOCOL (MCP)</text>
+                        <text x="520" y="398" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.5)" font-family="IBM Plex Sans, sans-serif">Standardized client/server bridge: agents call tools without custom integration code.</text>
 
-                        <!-- Down lines to tool servers -->
-                        <line x1="111" y1="143" x2="111" y2="170" stroke="rgba(126,142,155,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
-                        <line x1="220" y1="143" x2="220" y2="170" stroke="rgba(126,142,155,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
-                        <line x1="329" y1="143" x2="329" y2="170" stroke="rgba(126,142,155,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
-                        <line x1="436" y1="143" x2="436" y2="170" stroke="rgba(126,142,155,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
-                        <line x1="543" y1="143" x2="543" y2="170" stroke="rgba(126,142,155,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
-                        <line x1="627" y1="143" x2="627" y2="170" stroke="rgba(126,142,155,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
+                        <!-- Down arrows to tools -->
+                        <line x1="190" y1="410" x2="190" y2="438" stroke="rgba(126,142,155,0.4)" stroke-width="1.2" marker-end="url(#hub-arrow)"/>
+                        <line x1="322" y1="410" x2="322" y2="438" stroke="rgba(126,142,155,0.4)" stroke-width="1.2" marker-end="url(#hub-arrow)"/>
+                        <line x1="454" y1="410" x2="454" y2="438" stroke="rgba(126,142,155,0.4)" stroke-width="1.2" marker-end="url(#hub-arrow)"/>
+                        <line x1="586" y1="410" x2="586" y2="438" stroke="rgba(126,142,155,0.4)" stroke-width="1.2" marker-end="url(#hub-arrow)"/>
+                        <line x1="718" y1="410" x2="718" y2="438" stroke="rgba(126,142,155,0.4)" stroke-width="1.2" marker-end="url(#hub-arrow)"/>
+                        <line x1="850" y1="410" x2="850" y2="438" stroke="rgba(126,142,155,0.4)" stroke-width="1.2" marker-end="url(#hub-arrow)"/>
 
-                        <!-- Tool server boxes -->
-                        <rect x="72" y="170" width="78" height="55" rx="7" fill="rgba(160,176,162,0.045)" stroke="rgba(160,176,162,0.12)" stroke-width="1"/>
-                        <text x="111" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="IBM Plex Sans, sans-serif">&#128193;</text>
-                        <text x="111" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="IBM Plex Sans, sans-serif">File System</text>
-                        <text x="111" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="IBM Plex Sans, sans-serif">read/write</text>
+                        <!-- Tools row -->
+                        <rect x="130" y="440" width="120" height="55" rx="7" fill="rgba(160,176,162,0.045)" stroke="rgba(160,176,162,0.12)" stroke-width="1"/>
+                        <text x="190" y="463" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="IBM Plex Sans, sans-serif">File System</text>
+                        <text x="190" y="477" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="IBM Plex Sans, sans-serif">read/write</text>
 
-                        <rect x="181" y="170" width="78" height="55" rx="7" fill="rgba(160,176,162,0.045)" stroke="rgba(160,176,162,0.12)" stroke-width="1"/>
-                        <text x="220" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="IBM Plex Sans, sans-serif">&#x1F5A5;</text>
-                        <text x="220" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="IBM Plex Sans, sans-serif">Shell / Bash</text>
-                        <text x="220" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="IBM Plex Sans, sans-serif">sandboxed</text>
+                        <rect x="262" y="440" width="120" height="55" rx="7" fill="rgba(160,176,162,0.045)" stroke="rgba(160,176,162,0.12)" stroke-width="1"/>
+                        <text x="322" y="463" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="IBM Plex Sans, sans-serif">Shell / Bash</text>
+                        <text x="322" y="477" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="IBM Plex Sans, sans-serif">sandboxed</text>
 
-                        <rect x="290" y="170" width="78" height="55" rx="7" fill="rgba(160,176,162,0.045)" stroke="rgba(160,176,162,0.12)" stroke-width="1"/>
-                        <text x="329" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="IBM Plex Sans, sans-serif">&#x1F9E0;</text>
-                        <text x="329" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="IBM Plex Sans, sans-serif">Memory</text>
-                        <text x="329" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="IBM Plex Sans, sans-serif">Prometheus store</text>
+                        <rect x="394" y="440" width="120" height="55" rx="7" fill="rgba(160,176,162,0.045)" stroke="rgba(160,176,162,0.12)" stroke-width="1"/>
+                        <text x="454" y="463" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="IBM Plex Sans, sans-serif">Memory</text>
+                        <text x="454" y="477" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="IBM Plex Sans, sans-serif">Prometheus store</text>
 
-                        <rect x="397" y="170" width="78" height="55" rx="7" fill="rgba(88,101,242,0.08)" stroke="rgba(88,101,242,0.3)" stroke-width="1"/>
-                        <text x="436" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(180,185,255,0.8)" font-family="IBM Plex Sans, sans-serif">&#x1F4AC;</text>
-                        <text x="436" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(160,168,255,0.75)" font-family="IBM Plex Sans, sans-serif">Discord</text>
-                        <text x="436" y="219" text-anchor="middle" font-size="7.5" fill="rgba(160,168,255,0.4)" font-family="IBM Plex Sans, sans-serif">in/out channel</text>
+                        <rect x="526" y="440" width="120" height="55" rx="7" fill="rgba(88,101,242,0.08)" stroke="rgba(88,101,242,0.3)" stroke-width="1"/>
+                        <text x="586" y="463" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(160,168,255,0.75)" font-family="IBM Plex Sans, sans-serif">Discord</text>
+                        <text x="586" y="477" text-anchor="middle" font-size="7.5" fill="rgba(160,168,255,0.4)" font-family="IBM Plex Sans, sans-serif">in/out channel</text>
 
-                        <rect x="504" y="170" width="78" height="55" rx="7" fill="rgba(160,176,162,0.045)" stroke="rgba(160,176,162,0.12)" stroke-width="1"/>
-                        <text x="543" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="IBM Plex Sans, sans-serif">&#x1F50D;</text>
-                        <text x="543" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="IBM Plex Sans, sans-serif">Web Search</text>
-                        <text x="543" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="IBM Plex Sans, sans-serif">Hermes tool</text>
+                        <rect x="658" y="440" width="120" height="55" rx="7" fill="rgba(160,176,162,0.045)" stroke="rgba(160,176,162,0.12)" stroke-width="1"/>
+                        <text x="718" y="463" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="IBM Plex Sans, sans-serif">Web Search</text>
+                        <text x="718" y="477" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="IBM Plex Sans, sans-serif">Hermes tool</text>
 
-                        <rect x="588" y="170" width="78" height="55" rx="7" fill="rgba(160,176,162,0.045)" stroke="rgba(160,176,162,0.12)" stroke-width="1"/>
-                        <text x="627" y="193" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="IBM Plex Sans, sans-serif">&#x2601;&#xFE0F;</text>
-                        <text x="627" y="207" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="IBM Plex Sans, sans-serif">External APIs</text>
-                        <text x="627" y="219" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="IBM Plex Sans, sans-serif">jobs, markets</text>
+                        <rect x="790" y="440" width="120" height="55" rx="7" fill="rgba(160,176,162,0.045)" stroke="rgba(160,176,162,0.12)" stroke-width="1"/>
+                        <text x="850" y="463" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="IBM Plex Sans, sans-serif">External APIs</text>
+                        <text x="850" y="477" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)" font-family="IBM Plex Sans, sans-serif">jobs, markets</text>
 
                         <!-- Bottom note -->
-                        <text x="350" y="277" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.22)" font-family="IBM Plex Sans, sans-serif" letter-spacing="0.5">Each MCP server is a sandboxed process. Agents call tools via protocol, never via direct import or shell injection.</text>
+                        <text x="520" y="520" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.22)" font-family="IBM Plex Sans, sans-serif" letter-spacing="0.5">Each MCP server is a sandboxed process. Agents call tools via protocol, never via direct import or shell injection.</text>
+
+                        <!-- Legend -->
+                        <line x1="330" y1="552" x2="360" y2="552" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#hub-arrow)"/>
+                        <text x="370" y="556" font-size="9.5" fill="rgba(255,255,255,0.45)" font-family="IBM Plex Sans, sans-serif">command flow</text>
+                        <line x1="560" y1="552" x2="590" y2="552" stroke="rgba(0,200,150,0.5)" stroke-width="1.3" stroke-dasharray="3 4"/>
+                        <text x="600" y="556" font-size="9.5" fill="rgba(255,255,255,0.45)" font-family="IBM Plex Sans, sans-serif">advisory consultation</text>
                     </svg>
-                    <p class="ai-council-diagram-caption">MCP replaces custom integrations. Every tool is a standardized server the agent calls the same way.</p>
+                    <p class="ai-council-diagram-caption">Zeus is the only node with full system state. Advisors inform, execution agents receive one task each, and every agent reaches its tools through the same MCP bridge.</p>
                 </div>
 
-                <!-- Discord Section -->
-                <div class="ai-council-section-title">Discord as the Control Surface</div>
-                <div class="discord-flow">
-                    <div class="discord-flow-step">
-                        <div class="discord-flow-icon" style="background:rgba(88,101,242,0.15);border:1px solid rgba(88,101,242,0.35);font-size:1.3rem;">&#x1F4AC;</div>
-                        <div class="discord-flow-label">Tyler sends message</div>
-                        <div class="discord-flow-sub">Discord channel<br>natural language</div>
-                    </div>
-                    <div class="discord-flow-arrow">&#8594;</div>
-                    <div class="discord-flow-step">
-                        <div class="discord-flow-icon" style="background:rgba(88,101,242,0.12);border:1px solid rgba(88,101,242,0.25);">&#x1F50C;</div>
-                        <div class="discord-flow-label">Discord MCP Server</div>
-                        <div class="discord-flow-sub">routes to Zeus<br>via MCP bridge</div>
-                    </div>
-                    <div class="discord-flow-arrow">&#8594;</div>
-                    <div class="discord-flow-step">
-                        <div class="discord-flow-icon" style="background:rgba(110,60,10,0.35);border:1px solid rgba(176,106,62,0.45);">&#x26A1;</div>
-                        <div class="discord-flow-label">Zeus parses intent</div>
-                        <div class="discord-flow-sub">classifies task<br>consults advisors</div>
-                    </div>
-                    <div class="discord-flow-arrow">&#8594;</div>
-                    <div class="discord-flow-step">
-                        <div class="discord-flow-icon" style="background:rgba(18,30,34,0.5);border:1px solid rgba(94,116,130,0.4);">&#x1F916;</div>
-                        <div class="discord-flow-label">Agent executes</div>
-                        <div class="discord-flow-sub">Hermes, Muse,<br>Hephaestus, etc.</div>
-                    </div>
-                    <div class="discord-flow-arrow">&#8594;</div>
-                    <div class="discord-flow-step">
-                        <div class="discord-flow-icon" style="background:rgba(110,60,10,0.35);border:1px solid rgba(176,106,62,0.45);">&#x26A1;</div>
-                        <div class="discord-flow-label">Zeus formats reply</div>
-                        <div class="discord-flow-sub">approval gate<br>if needed</div>
-                    </div>
-                    <div class="discord-flow-arrow">&#8594;</div>
-                    <div class="discord-flow-step">
-                        <div class="discord-flow-icon" style="background:rgba(88,101,242,0.15);border:1px solid rgba(88,101,242,0.35);font-size:1.3rem;">&#x1F4AC;</div>
-                        <div class="discord-flow-label">Reply in Discord</div>
-                        <div class="discord-flow-sub">focused thread<br>keeps context</div>
-                    </div>
-                </div>
-                <p style="font-size:0.82rem;color:var(--text-muted);margin:10px 0 0;line-height:1.65;">Discord channels act as named conversation scopes. Each channel maps to a domain (research, jobs, creative), so Zeus knows which execution agent to prioritize. Threads keep long-running tasks in context without polluting other channels.</p>
+                <!-- Tool-Calling Sequence Diagram -->
+                <div class="ai-council-section-title" style="margin-top:32px;">Under The Hood: How A Request Becomes A Tool Call</div>
+                <p style="font-size:0.79rem;color:var(--text-muted);line-height:1.7;margin:0 0 18px;">Every execution agent runs its own MCP tool server. Zeus never talks to another agent directly: it talks to the model, and the model talks to that agent's tools through the MCP client/server exchange below. This is the same request/response pattern for every agent in the roster, whether the task is a file write, a browser action, or an API call.</p>
+                <div class="ai-council-diagram-wrap" style="padding:28px 14px 20px;">
+                    <svg viewBox="0 0 1040 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sequence diagram: Tyler sends a request in Discord to Zeus. Zeus asks its MCP client for the target agent's tool list, which the MCP client requests from that agent's MCP server via ListToolsRequest and gets back via ListToolsResult. Zeus sends the task plus tools to the model, which replies with ToolUse. Zeus tells the MCP client to run the tool with those arguments, the client sends CallToolRequest to the MCP server, the MCP server executes against a file, shell, web, or API tool and gets a response, then returns CallToolResult back up through the client to Zeus. Zeus sends the tool result to the model, gets a final answer back, and replies to Tyler in Discord.">
+                        <defs>
+                            <marker id="seq-arrow" markerWidth="9" markerHeight="7" refX="8.5" refY="3.5" orient="auto">
+                                <polygon points="0 0, 9 3.5, 0 7" fill="rgba(126,142,155,0.55)"/>
+                            </marker>
+                        </defs>
 
-                <!-- Agent Roster (Clickable Cards) -->
-                <div class="ai-council-section-title">Agent Roster <span style="font-size:0.7rem;color:var(--text-muted);letter-spacing:0;text-transform:none;font-weight:400;margin-left:8px;">click any agent for details</span></div>
-                <div class="agent-cards-grid">
+                        <!-- Lane headers -->
+                        <rect x="15" y="14" width="150" height="54" rx="9" fill="rgba(80,50,170,0.3)" stroke="rgba(150,120,220,0.5)" stroke-width="1.5"/>
+                        <text x="90" y="37" text-anchor="middle" font-size="14" font-weight="800" fill="#B9A6E8" font-family="IBM Plex Sans, sans-serif">Tyler</text>
+                        <text x="90" y="55" text-anchor="middle" font-size="9" fill="rgba(185,166,232,0.65)" font-family="IBM Plex Sans, sans-serif">sends the request</text>
 
-                    <div class="agent-card hub-card" onclick="toggleAgent(this)">
-                        <div class="agent-card-header">
-                            <span class="agent-dot" style="background:#C79A4F;box-shadow:0 0 5px rgba(199,154,79,0.4);flex-shrink:0;"></span>
-                            <span class="agent-card-name">Zeus</span>
-                            <span class="agent-type-badge type-hub">Hub</span>
-                            <span class="agent-card-summary">Routes all tasks, owns the queue, holds approval gates</span>
-                            <i class="fas fa-chevron-down agent-card-chevron"></i>
-                        </div>
-                        <div class="agent-card-detail">
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Role</span>
-                                <span class="agent-detail-val">Central orchestrator. Receives every task request, consults Argus and Prometheus, then dispatches to the appropriate execution agent. No agent acts without Zeus dispatching it. Owns the approval gates for high-risk actions and escalates to Tyler when scope is ambiguous.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">When It Runs</span>
-                                <span class="agent-detail-val">Always-on persistent daemon with an event queue. Wakes on Discord message, scheduled cron trigger, or direct API call.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Model</span>
-                                <span class="agent-detail-val">Claude API (Sonnet or Opus depending on task complexity). Zeus is the highest-model tier in the system.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Skills</span>
-                                <div class="agent-skill-tags">
-                                    <span class="agent-skill-tag">Orchestration</span><span class="agent-skill-tag">Queue Management</span><span class="agent-skill-tag">Approval Gates</span><span class="agent-skill-tag">Escalation Logic</span><span class="agent-skill-tag">Task Classification</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <rect x="185" y="14" width="150" height="54" rx="9" fill="rgba(110,60,10,0.5)" stroke="rgba(176,106,62,0.7)" stroke-width="1.5"/>
+                        <text x="260" y="37" text-anchor="middle" font-size="14" font-weight="800" fill="#C79A4F" font-family="IBM Plex Sans, sans-serif">Zeus &#x26A1;</text>
+                        <text x="260" y="55" text-anchor="middle" font-size="9" fill="rgba(199,154,79,0.7)" font-family="IBM Plex Sans, sans-serif">orchestrator (Claude API)</text>
 
-                    <div class="agent-card advisor-card" onclick="toggleAgent(this)">
-                        <div class="agent-card-header">
-                            <span class="agent-dot" style="background:#00c896;box-shadow:0 0 5px rgba(0,200,150,0.4);flex-shrink:0;"></span>
-                            <span class="agent-card-name">Prometheus</span>
-                            <span class="agent-type-badge type-advisor">Advisor</span>
-                            <span class="agent-card-summary">Memory and strategy. Surfaces past context before Zeus acts.</span>
-                            <i class="fas fa-chevron-down agent-card-chevron"></i>
-                        </div>
-                        <div class="agent-card-detail">
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Role</span>
-                                <span class="agent-detail-val">Persistent memory and strategic context. Reads prior session state, surfaces relevant history, and flags pattern-level concerns before Zeus dispatches a task. Writes summaries back to the memory store after each session.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">When It Runs</span>
-                                <span class="agent-detail-val">Consulted by Zeus before high-stakes or repeated task types. Also runs a nightly summary pass to prune stale memory entries.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Model</span>
-                                <span class="agent-detail-val">Local Ollama or Deepseek (free, private, fast). Memory retrieval and pattern-matching do not need frontier-model reasoning.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Skills</span>
-                                <div class="agent-skill-tags">
-                                    <span class="agent-skill-tag">Memory Architecture</span><span class="agent-skill-tag">Context Retrieval</span><span class="agent-skill-tag">TTL Management</span><span class="agent-skill-tag">Pattern Recognition</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <rect x="355" y="14" width="150" height="54" rx="9" fill="rgba(30,60,120,0.32)" stroke="rgba(0,153,255,0.45)" stroke-width="1.5"/>
+                        <text x="430" y="37" text-anchor="middle" font-size="13.5" font-weight="800" fill="#7EB6E8" font-family="IBM Plex Sans, sans-serif">MCP Client</text>
+                        <text x="430" y="55" text-anchor="middle" font-size="9" fill="rgba(126,182,232,0.65)" font-family="IBM Plex Sans, sans-serif">Zeus's client</text>
 
-                    <div class="agent-card advisor-card" onclick="toggleAgent(this)">
-                        <div class="agent-card-header">
-                            <span class="agent-dot" style="background:#00c896;box-shadow:0 0 5px rgba(0,200,150,0.4);flex-shrink:0;"></span>
-                            <span class="agent-card-name">Argus</span>
-                            <span class="agent-type-badge type-advisor">Advisor</span>
-                            <span class="agent-card-summary">Security and audit. Reviews every action before execution.</span>
-                            <i class="fas fa-chevron-down agent-card-chevron"></i>
-                        </div>
-                        <div class="agent-card-detail">
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Role</span>
-                                <span class="agent-detail-val">Security review and audit layer. Evaluates proposed actions for risk (file writes, outbound calls, shell commands), maintains the structured audit log, and raises a flag to Zeus when a task crosses a governance threshold. Argus never blocks directly: it advises Zeus, and Zeus holds the gate.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">When It Runs</span>
-                                <span class="agent-detail-val">Consulted on any action touching external systems, credentials, file writes, or outbound communication.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Model</span>
-                                <span class="agent-detail-val">Local Ollama or Deepseek for fast, free risk classification. Escalates to Claude API only when a decision is genuinely ambiguous.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Skills</span>
-                                <div class="agent-skill-tags">
-                                    <span class="agent-skill-tag">Security Review</span><span class="agent-skill-tag">Audit Logging</span><span class="agent-skill-tag">Risk Classification</span><span class="agent-skill-tag">Governance Enforcement</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <rect x="525" y="14" width="150" height="54" rx="9" fill="rgba(30,60,120,0.32)" stroke="rgba(0,153,255,0.45)" stroke-width="1.5"/>
+                        <text x="600" y="37" text-anchor="middle" font-size="13.5" font-weight="800" fill="#7EB6E8" font-family="IBM Plex Sans, sans-serif">MCP Server</text>
+                        <text x="600" y="55" text-anchor="middle" font-size="9" fill="rgba(126,182,232,0.65)" font-family="IBM Plex Sans, sans-serif">agent's tool server</text>
 
-                    <div class="agent-card advisor-card" onclick="toggleAgent(this)">
-                        <div class="agent-card-header">
-                            <span class="agent-dot" style="background:#00c896;box-shadow:0 0 5px rgba(0,200,150,0.4);flex-shrink:0;"></span>
-                            <span class="agent-card-name">Hestia</span>
-                            <span class="agent-type-badge type-advisor">Advisor</span>
-                            <span class="agent-card-summary">System health. Reports memory pressure and hardware limits to Zeus.</span>
-                            <i class="fas fa-chevron-down agent-card-chevron"></i>
-                        </div>
-                        <div class="agent-card-detail">
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Role</span>
-                                <span class="agent-detail-val">System health monitor. Tracks wired memory usage, process state, Ollama model load times, and Openclaw daemon health. Reports to Zeus before resource-intensive tasks so Zeus can decide whether to use a local model or route to the API instead.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">When It Runs</span>
-                                <span class="agent-detail-val">Background health checks every few minutes. Also queried by Zeus immediately before any task that would load a local model.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Model</span>
-                                <span class="agent-detail-val">No LLM. Pure scripted health checks via shell and system APIs.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Skills</span>
-                                <div class="agent-skill-tags">
-                                    <span class="agent-skill-tag">Resource Monitoring</span><span class="agent-skill-tag">Hardware-Aware Scheduling</span><span class="agent-skill-tag">Failure Prediction</span><span class="agent-skill-tag">Daemon Health</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <rect x="695" y="14" width="150" height="54" rx="9" fill="rgba(12,65,52,0.5)" stroke="rgba(0,175,125,0.55)" stroke-width="1.5"/>
+                        <text x="770" y="37" text-anchor="middle" font-size="14" font-weight="800" fill="#00c896" font-family="IBM Plex Sans, sans-serif">Model</text>
+                        <text x="770" y="55" text-anchor="middle" font-size="9" fill="rgba(0,195,145,0.65)" font-family="IBM Plex Sans, sans-serif">Claude &middot; DeepSeek &middot; Ollama</text>
 
-                    <div class="agent-card" onclick="toggleAgent(this)">
-                        <div class="agent-card-header">
-                            <span class="agent-dot dot-blue" style="flex-shrink:0;"></span>
-                            <span class="agent-card-name">Atlas</span>
-                            <span class="agent-type-badge type-exec">Execution</span>
-                            <span class="agent-card-summary">Job search and career intelligence. Queries boards, tracks pipeline.</span>
-                            <i class="fas fa-chevron-down agent-card-chevron"></i>
-                        </div>
-                        <div class="agent-card-detail">
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Role</span>
-                                <span class="agent-detail-val">Job search and career intelligence. Queries job boards via MCP API tools, filters by set criteria, compiles structured briefs, and tracks application pipeline state back to Prometheus memory. Returns results to Zeus only.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">When It Runs</span>
-                                <span class="agent-detail-val">On Zeus command via scheduled sweeps or on-demand Discord request.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Model</span>
-                                <span class="agent-detail-val">Deepseek R1 for filtering logic and reasoning over job criteria. Haiku for lightweight summarization. Sonnet for complex brief synthesis when quality matters.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Skills</span>
-                                <div class="agent-skill-tags">
-                                    <span class="agent-skill-tag">Structured Retrieval</span><span class="agent-skill-tag">Filtering Logic</span><span class="agent-skill-tag">Pipeline State</span><span class="agent-skill-tag">API Tool Use</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <rect x="865" y="14" width="150" height="54" rx="9" fill="rgba(18,30,34,0.7)" stroke="rgba(94,116,130,0.6)" stroke-width="1.5"/>
+                        <text x="940" y="37" text-anchor="middle" font-size="14" font-weight="800" fill="#8EA0AD" font-family="IBM Plex Sans, sans-serif">Tool / API</text>
+                        <text x="940" y="55" text-anchor="middle" font-size="9" fill="rgba(142,160,173,0.6)" font-family="IBM Plex Sans, sans-serif">file &middot; shell &middot; web &middot; API</text>
 
-                    <div class="agent-card" onclick="toggleAgent(this)">
-                        <div class="agent-card-header">
-                            <span class="agent-dot dot-blue" style="flex-shrink:0;"></span>
-                            <span class="agent-card-name">Muse</span>
-                            <span class="agent-type-badge type-exec">Execution</span>
-                            <span class="agent-card-summary">Creative output. Drafts content on Zeus instruction, always approval-gated.</span>
-                            <i class="fas fa-chevron-down agent-card-chevron"></i>
-                        </div>
-                        <div class="agent-card-detail">
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Role</span>
-                                <span class="agent-detail-val">Creative output agent. Drafts, refines, and structures written content: cover letters, project descriptions, narrative summaries. All output routes back through Zeus and requires explicit approval before any delivery or publication.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">When It Runs</span>
-                                <span class="agent-detail-val">On Zeus command only. Output is never sent directly anywhere.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Model</span>
-                                <span class="agent-detail-val">Claude API (Sonnet). Creative quality warrants API routing over local model.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Skills</span>
-                                <div class="agent-skill-tags">
-                                    <span class="agent-skill-tag">Controlled Generation</span><span class="agent-skill-tag">Tone Matching</span><span class="agent-skill-tag">Iterative Refinement</span><span class="agent-skill-tag">Human-in-Loop Output</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <!-- Lane guide lines -->
+                        <line x1="90" y1="68" x2="90" y2="660" stroke="rgba(126,142,155,0.2)" stroke-width="1" stroke-dasharray="3 4"/>
+                        <line x1="260" y1="68" x2="260" y2="660" stroke="rgba(126,142,155,0.2)" stroke-width="1" stroke-dasharray="3 4"/>
+                        <line x1="430" y1="68" x2="430" y2="660" stroke="rgba(126,142,155,0.2)" stroke-width="1" stroke-dasharray="3 4"/>
+                        <line x1="600" y1="68" x2="600" y2="660" stroke="rgba(126,142,155,0.2)" stroke-width="1" stroke-dasharray="3 4"/>
+                        <line x1="770" y1="68" x2="770" y2="660" stroke="rgba(126,142,155,0.2)" stroke-width="1" stroke-dasharray="3 4"/>
+                        <line x1="940" y1="68" x2="940" y2="660" stroke="rgba(126,142,155,0.2)" stroke-width="1" stroke-dasharray="3 4"/>
 
-                    <div class="agent-card" onclick="toggleAgent(this)">
-                        <div class="agent-card-header">
-                            <span class="agent-dot dot-blue" style="flex-shrink:0;"></span>
-                            <span class="agent-card-name">Hermes</span>
-                            <span class="agent-type-badge type-exec">Execution</span>
-                            <span class="agent-card-summary">Research and intelligence. Fetches, synthesizes, returns briefs to Zeus.</span>
-                            <i class="fas fa-chevron-down agent-card-chevron"></i>
-                        </div>
-                        <div class="agent-card-detail">
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Role</span>
-                                <span class="agent-detail-val">Research and intelligence agent. Uses the Web Search MCP server to fetch content, synthesizes findings into structured briefs, and returns them to Zeus. Never takes action on findings directly. Results are cached to Prometheus for future context.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">When It Runs</span>
-                                <span class="agent-detail-val">On Zeus command. Often triggered via a Discord research request routed through Zeus.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Model</span>
-                                <span class="agent-detail-val">Haiku for web search retrieval. Deepseek R1 for reasoning over findings. Sonnet for high-quality synthesis when research quality is critical.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Skills</span>
-                                <div class="agent-skill-tags">
-                                    <span class="agent-skill-tag">Information Retrieval</span><span class="agent-skill-tag">Source Validation</span><span class="agent-skill-tag">Structured Summarization</span><span class="agent-skill-tag">MCP Web Search</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <!-- Row 1: Tyler -> Zeus -->
+                        <line x1="90" y1="110" x2="255" y2="110" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#seq-arrow)"/>
+                        <text x="175" y="100" text-anchor="middle" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.55)" font-family="IBM Plex Sans, sans-serif">Task arrives via Discord</text>
 
-                    <div class="agent-card" onclick="toggleAgent(this)">
-                        <div class="agent-card-header">
-                            <span class="agent-dot dot-blue" style="flex-shrink:0;"></span>
-                            <span class="agent-card-name">Hephaestus</span>
-                            <span class="agent-type-badge type-exec">Execution</span>
-                            <span class="agent-card-summary">Automation. Executes code, runs shell, writes files. Tightly scoped per task.</span>
-                            <i class="fas fa-chevron-down agent-card-chevron"></i>
-                        </div>
-                        <div class="agent-card-detail">
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Role</span>
-                                <span class="agent-detail-val">Automation and tooling agent. The hands of the system. Executes code, manages files, runs shell commands, builds scripts. Every task is narrowly scoped by Zeus. All file writes and shell commands require an Argus pre-check before Hephaestus is dispatched.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">When It Runs</span>
-                                <span class="agent-detail-val">On Zeus command after Argus security review. Runs as a standard macOS user profile with no sudo rights.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Model</span>
-                                <span class="agent-detail-val">Claude Code (Claude API). Hephaestus is the highest-privilege agent, so it gets the highest-capability model.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Skills</span>
-                                <div class="agent-skill-tags">
-                                    <span class="agent-skill-tag">Code Execution</span><span class="agent-skill-tag">File Ops</span><span class="agent-skill-tag">Shell Automation</span><span class="agent-skill-tag">Tool Use</span><span class="agent-skill-tag">Sandboxed Execution</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <!-- Row 2: Zeus -> MCP Client -> MCP Server -->
+                        <line x1="260" y1="165" x2="425" y2="165" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#seq-arrow)"/>
+                        <text x="345" y="155" text-anchor="middle" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.55)" font-family="IBM Plex Sans, sans-serif">Needs this agent's tools</text>
+                        <line x1="430" y1="165" x2="595" y2="165" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#seq-arrow)"/>
+                        <rect x="445" y="153" width="140" height="24" rx="5" fill="rgba(0,153,255,0.14)" stroke="rgba(0,153,255,0.5)" stroke-width="1"/>
+                        <text x="515" y="169" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4DA6FF" font-family="IBM Plex Sans, sans-serif">ListToolsRequest</text>
 
-                    <div class="agent-card" onclick="toggleAgent(this)">
-                        <div class="agent-card-header">
-                            <span class="agent-dot dot-blue" style="flex-shrink:0;"></span>
-                            <span class="agent-card-name">Plutus</span>
-                            <span class="agent-type-badge type-exec">Execution</span>
-                            <span class="agent-card-summary">Markets and financial intelligence. Read-only by default.</span>
-                            <i class="fas fa-chevron-down agent-card-chevron"></i>
-                        </div>
-                        <div class="agent-card-detail">
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Role</span>
-                                <span class="agent-detail-val">Markets and financial intelligence. Tracks market data via API MCP servers, summarizes financial signals, and surfaces insights. Read-only by default. No trade execution without explicit Tyler approval routed through Zeus.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">When It Runs</span>
-                                <span class="agent-detail-val">Scheduled market sweeps and on-demand queries. All outputs are advisory only and return to Zeus first.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Model</span>
-                                <span class="agent-detail-val">Haiku for market data retrieval. Deepseek R1 for financial reasoning and signal pattern-matching. Sonnet only for high-stakes market decisions.</span>
-                            </div>
-                            <div class="agent-detail-row">
-                                <span class="agent-detail-label">Skills</span>
-                                <div class="agent-skill-tags">
-                                    <span class="agent-skill-tag">Data Ingestion</span><span class="agent-skill-tag">Signal Analysis</span><span class="agent-skill-tag">Risk-Aware Reporting</span><span class="agent-skill-tag">Hard Execution Guardrails</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <!-- Row 3: MCP Server -> MCP Client -> Zeus (reverse) -->
+                        <line x1="600" y1="215" x2="435" y2="215" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#seq-arrow)"/>
+                        <rect x="445" y="203" width="140" height="24" rx="5" fill="rgba(0,153,255,0.14)" stroke="rgba(0,153,255,0.5)" stroke-width="1"/>
+                        <text x="515" y="219" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4DA6FF" font-family="IBM Plex Sans, sans-serif">ListToolsResult</text>
+                        <line x1="430" y1="215" x2="265" y2="215" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#seq-arrow)"/>
+                        <text x="345" y="205" text-anchor="middle" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.55)" font-family="IBM Plex Sans, sans-serif">Tools returned</text>
 
+                        <!-- Row 4: Zeus -> Model -->
+                        <line x1="260" y1="270" x2="765" y2="270" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#seq-arrow)"/>
+                        <rect x="275" y="258" width="140" height="24" rx="5" fill="rgba(0,200,150,0.14)" stroke="rgba(0,200,150,0.5)" stroke-width="1"/>
+                        <text x="345" y="274" text-anchor="middle" font-size="10.5" font-weight="700" fill="#00c896" font-family="IBM Plex Sans, sans-serif">Query + Tools</text>
+
+                        <!-- Row 5: Model -> Zeus (reverse) -->
+                        <line x1="770" y1="325" x2="265" y2="325" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#seq-arrow)"/>
+                        <rect x="615" y="313" width="140" height="24" rx="5" fill="rgba(0,200,150,0.14)" stroke="rgba(0,200,150,0.5)" stroke-width="1"/>
+                        <text x="685" y="329" text-anchor="middle" font-size="10.5" font-weight="700" fill="#00c896" font-family="IBM Plex Sans, sans-serif">ToolUse</text>
+
+                        <!-- Row 6: Zeus -> MCP Client -> MCP Server -> Tool -->
+                        <line x1="260" y1="385" x2="425" y2="385" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#seq-arrow)"/>
+                        <text x="345" y="375" text-anchor="middle" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.55)" font-family="IBM Plex Sans, sans-serif">Run tool with these args</text>
+                        <line x1="430" y1="385" x2="595" y2="385" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#seq-arrow)"/>
+                        <rect x="445" y="373" width="140" height="24" rx="5" fill="rgba(0,153,255,0.14)" stroke="rgba(0,153,255,0.5)" stroke-width="1"/>
+                        <text x="515" y="389" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4DA6FF" font-family="IBM Plex Sans, sans-serif">CallToolRequest</text>
+                        <line x1="600" y1="385" x2="935" y2="385" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#seq-arrow)"/>
+                        <text x="770" y="375" text-anchor="middle" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.55)" font-family="IBM Plex Sans, sans-serif">Executes: file / shell / web / API</text>
+
+                        <!-- Row 7: Tool -> MCP Server -> MCP Client -> Zeus (reverse) -->
+                        <line x1="940" y1="445" x2="605" y2="445" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#seq-arrow)"/>
+                        <text x="770" y="435" text-anchor="middle" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.55)" font-family="IBM Plex Sans, sans-serif">Result</text>
+                        <line x1="600" y1="445" x2="435" y2="445" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#seq-arrow)"/>
+                        <rect x="445" y="433" width="140" height="24" rx="5" fill="rgba(0,153,255,0.14)" stroke="rgba(0,153,255,0.5)" stroke-width="1"/>
+                        <text x="515" y="449" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4DA6FF" font-family="IBM Plex Sans, sans-serif">CallToolResult</text>
+                        <line x1="430" y1="445" x2="265" y2="445" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#seq-arrow)"/>
+                        <text x="345" y="435" text-anchor="middle" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.55)" font-family="IBM Plex Sans, sans-serif">Tool result</text>
+
+                        <!-- Row 8: Zeus -> Model -->
+                        <line x1="260" y1="500" x2="765" y2="500" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#seq-arrow)"/>
+                        <rect x="275" y="488" width="140" height="24" rx="5" fill="rgba(0,200,150,0.14)" stroke="rgba(0,200,150,0.5)" stroke-width="1"/>
+                        <text x="345" y="504" text-anchor="middle" font-size="10.5" font-weight="700" fill="#00c896" font-family="IBM Plex Sans, sans-serif">toolResult</text>
+
+                        <!-- Row 9: Model -> Zeus (reverse) -->
+                        <line x1="770" y1="555" x2="265" y2="555" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#seq-arrow)"/>
+                        <text x="515" y="545" text-anchor="middle" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.55)" font-family="IBM Plex Sans, sans-serif">Final answer</text>
+
+                        <!-- Row 10: Zeus -> Tyler (reverse) -->
+                        <line x1="260" y1="615" x2="95" y2="615" stroke="rgba(126,142,155,0.55)" stroke-width="1.5" marker-end="url(#seq-arrow)"/>
+                        <text x="175" y="605" text-anchor="middle" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.55)" font-family="IBM Plex Sans, sans-serif">Reply posted in Discord</text>
+
+                        <!-- Legend -->
+                        <rect x="330" y="655" width="16" height="14" rx="3" fill="rgba(0,153,255,0.14)" stroke="rgba(0,153,255,0.5)" stroke-width="1"/>
+                        <text x="354" y="666" font-size="9.5" fill="rgba(255,255,255,0.45)" font-family="IBM Plex Sans, sans-serif">MCP protocol exchange</text>
+                        <rect x="560" y="655" width="16" height="14" rx="3" fill="rgba(0,200,150,0.14)" stroke="rgba(0,200,150,0.5)" stroke-width="1"/>
+                        <text x="584" y="666" font-size="9.5" fill="rgba(255,255,255,0.45)" font-family="IBM Plex Sans, sans-serif">Model exchange</text>
+                    </svg>
+                    <p class="ai-council-diagram-caption">Same request/response pattern for every agent in the roster &mdash; whether the task is a file write, a browser action, or an API call</p>
                 </div>
 
-                <!-- Security -->
-                <div class="ai-council-section-title">Security Design</div>
+                <!-- Lessons Learned -->
+                <div class="ai-council-section-title">Lessons Learned</div>
                 <div class="security-grid">
                     <div class="security-block">
-                        <div class="security-block-title">&#x1F512; Standard Profile, No Sudo</div>
-                        <p>The entire agent system runs on a dedicated standard macOS user profile with no administrator rights. Even if an agent is compromised or produces a malicious shell command, it cannot escalate privileges, install software system-wide, or touch system files. Sudo is physically unavailable to this profile.</p>
+                        <div class="security-block-title">Model Stratification: Mixed Model Approach</div>
+                        <p>Every task routes to the minimum-capable model that solves it reliably: ChatGPT 5.4 for Zeus's orchestration, DeepSeek and Ollama/Mistral/Qwen for cheap local reasoning, and API models reserved for work that actually needs them. This stretches budget and keeps latency low.</p>
                     </div>
                     <div class="security-block">
-                        <div class="security-block-title">&#x1F9F1; Memory Partition</div>
-                        <p>Agent memory is sandboxed to a dedicated directory within the standard profile's home folder. No agent has a path reference to any other user's home directory, system keychain, or sensitive config files. Prometheus reads and writes only within this bounded store. Cross-user reads are structurally impossible.</p>
+                        <div class="security-block-title">Why Logging Matters</div>
+                        <p>Without an audit trail, reconstructing why Zeus dispatched a specific agent with a specific payload is guesswork. Argus writes a structured log entry for every task (timestamp, agent, task type, risk classification, outcome), turning debugging from guesswork into forensics.</p>
                     </div>
                     <div class="security-block">
-                        <div class="security-block-title">&#x1F6AB; No Sideways Communication</div>
-                        <p>Execution agents have no knowledge of each other's existence. They receive a task payload from Zeus, operate within their MCP tool scope, and return a result. There is no shared message bus, no direct agent-to-agent API, and no shared writable state outside Prometheus's memory store, which only Zeus can write to.</p>
+                        <div class="security-block-title">Memory Partition</div>
+                        <p>Agent memory is sandboxed to a dedicated directory within a standard profile's home folder. No agent has a path reference to another user's home directory, system keychain, or sensitive config files. Cross-user reads are structurally impossible.</p>
                     </div>
                     <div class="security-block">
-                        <div class="security-block-title">&#x2705; Argus Reviews Every Action</div>
-                        <p>Before Zeus dispatches any execution agent task involving files, shell, external calls, or outbound messages, Argus classifies the risk. High-risk or ambiguous actions are escalated to Tyler via Discord rather than proceeding. The audit log is append-only and written to a path that execution agents cannot access.</p>
+                        <div class="security-block-title">No Sideways Communication</div>
+                        <p>Execution agents have no knowledge of each other's existence. Each receives a task payload from Zeus, operates within its own MCP tool scope, and returns a result. No shared message bus, no agent-to-agent API, no shared writable state.</p>
+                    </div>
+                    <div class="security-block">
+                        <div class="security-block-title">Standard Profile, No Sudo</div>
+                        <p>The entire agent system runs on a dedicated standard user profile with no administrator rights. Even a compromised agent or a malicious shell command can't escalate privileges, install software system-wide, or touch system files.</p>
                     </div>
                 </div>
-
-                <!-- Technical Decisions -->
-                <div class="ai-council-section-title">Technical Decisions</div>
-                <div class="ai-council-2col">
-                    <div>
-                        <div class="council-block">
-                            <div class="council-block-title">Model Stratification: Mixed Model Approach</div>
-                            <p>Every task routes to the minimum-capable model that solves it reliably. The system uses a strategic mix: ChatGPT 5.4 for Zeus (orchestration), DeepSeek v4 Flash and v2.5 for cost-efficient reasoning, Ollama/Mistral/Qwen for local processing (private, fast, free), and specialized models for each execution agent. Advisors run on local models for classification and auditing. Execution agents scale up to ChatGPT or DeepSeek for reasoning-heavy or creative work. This stretches budget and keeps latency low.</p>
-                        </div>
-                        <div class="council-code">
-<span class="c"># Zeus task routing with model selection</span>
-<span class="g">zeus</span>.route(task):
-  <span class="p">argus</span>.review(task)     <span class="c"># Ollama/Deepseek local</span>
-  hestia.check()             <span class="c"># no model needed</span>
-  if memory_budget &lt; 4GB:
-    use_local = true
-  select_model(task):
-    if task.needs_reasoning:
-      return <span class="b">deepseek_r1</span>  <span class="c"># cost-efficient thinking</span>
-    elif task.is_retrieval:
-      return <span class="b">haiku</span>       <span class="c"># fast API call</span>
-    elif task.is_creative:
-      return <span class="b">sonnet</span>      <span class="c"># quality matters</span>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="council-block">
-                            <div class="council-block-title">The 16GB Constraint</div>
-                            <p>Running multiple model processes on 16GB of unified memory means memory pressure is a first-class design constraint. Baseline wired memory sits around 1GB. Loading Ollama alongside a Claude Code session and the Openclaw daemon pushes toward swap. Agents run serially through Zeus, not in parallel. This turns out to be the correct governance pattern regardless of hardware.</p>
-                        </div>
-                        <div class="council-block" style="margin-top:14px;">
-                            <div class="council-block-title">Why Logging Matters</div>
-                            <p>Without an audit trail, reconstructing why Zeus dispatched a specific agent with a specific payload is guesswork. Argus writes a structured log entry for every task: timestamp, agent, task type, risk classification, and outcome. This turned debugging from guesswork into forensics.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <p style="margin-top:32px;font-size:0.78rem;color:var(--text-muted);">Private repo, available on request. <a href="https://github.com/tylerv11/" target="_blank" style="color:var(--accent-blue);text-decoration:none;">github.com/tylerv11</a></p>
 
             </div>
         </div>
@@ -4483,7 +4131,7 @@
                             <!-- Architecture diagram -->
                             <div class="ai-council-section-title" style="margin-top:28px;">Architecture: How Plutus + FinWave Connect</div>
                             <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
-                            <svg viewBox="0 0 860 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plutus and FinWave architecture: local OpenClaw machine runs market intel producers feeding DuckDB, a bridge pushes to Supabase, FinWave Python pipeline writes all tables to Supabase, and Vercel Next.js reads via API routes." style="width:100%;max-width:860px;display:block;font-family:var(--font-display);">
+                            <svg viewBox="0 0 860 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plutus and FinWave architecture: local Hermes harness machine runs market intel producers feeding DuckDB, a bridge pushes to Supabase, FinWave Python pipeline writes all tables to Supabase, and Vercel Next.js reads via API routes." style="width:100%;max-width:860px;display:block;font-family:var(--font-display);">
                               <defs>
                                 <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#7E8E9B" opacity="0.7"/></marker>
                                 <marker id="arr-purple" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#a78bfa" opacity="0.8"/></marker>
@@ -4492,7 +4140,7 @@
 
                               <!-- LOCAL MACHINE box -->
                               <rect x="12" y="12" width="310" height="370" rx="10" fill="rgba(30,35,50,0.7)" stroke="rgba(126,142,155,0.25)" stroke-width="1.5"/>
-                              <text x="167" y="34" text-anchor="middle" font-size="9" font-weight="700" fill="#7E8E9B" letter-spacing="2" opacity="0.8">LOCAL MACHINE (OpenClaw)</text>
+                              <text x="167" y="34" text-anchor="middle" font-size="9" font-weight="700" fill="#7E8E9B" letter-spacing="2" opacity="0.8">LOCAL MACHINE (Hermes Harness)</text>
 
                               <!-- Market Intel Platform sub-box -->
                               <rect x="24" y="44" width="194" height="215" rx="7" fill="rgba(126,142,155,0.06)" stroke="rgba(126,142,155,0.18)" stroke-width="1"/>
@@ -4608,6 +4256,202 @@
                 </div>
             </div>
 
+            <!-- Homelab / NAS -->
+            <div class="exp-tile reveal" id="exp-tile-homelab">
+                <div class="exp-tile-header" onclick="toggleExpTile('homelab')" role="button" aria-expanded="false" aria-controls="exp-body-homelab">
+                    <div class="exp-tile-icon-wrap">
+                        <i class="fas fa-server" style="color:#5ec9a8"></i>
+                    </div>
+                    <div class="exp-tile-meta">
+                        <div class="exp-tile-name">Homelab: Self-Hosted Infrastructure &amp; Network Segmentation</div>
+                        <div class="exp-tile-tagline">Docker containerization &middot; Tailscale-only admin access &middot; local LLM serving</div>
+                        <div class="exp-tile-tags">
+                            <span class="exp-tag">Docker</span>
+                            <span class="exp-tag">Tailscale</span>
+                            <span class="exp-tag">Self-Hosted</span>
+                            <span class="exp-tag green">In Progress</span>
+                        </div>
+                    </div>
+                    <div class="exp-tile-arrow"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="exp-tile-body" id="exp-body-homelab">
+                    <div class="exp-tile-body-inner">
+                        <div class="exp-tile-content">
+                            <p class="exp-tile-desc-text" style="padding-top:0;">I'm building a home server to own more of my own stack: self-hosting the local models I use for agent work, holding my own documents and media instead of renting them from someone else's cloud, and getting real hands-on practice with the networking and containerization concepts I'd otherwise only read about. The build runs headless Linux with everything containerized in Docker, remote access locked to a private mesh VPN, and SSH out to my other personal machines for day-to-day administration. The point isn't just "it works" — it's designing it so the parts that should never see the public internet, don't.</p>
+
+                            <div class="exp-sat-stats">
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">0</span>
+                                    <span class="exp-sat-stat-label">Ports Exposed Publicly*</span>
+                                </div>
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">1</span>
+                                    <span class="exp-sat-stat-label">Mesh VPN For All Admin Access</span>
+                                </div>
+                                <div class="exp-sat-stat">
+                                    <span class="exp-sat-stat-val">6+</span>
+                                    <span class="exp-sat-stat-label">Isolated Docker Services</span>
+                                </div>
+                            </div>
+                            <p style="font-size:0.7rem;color:var(--text-muted);margin-top:-6px;">*Aside from a reverse-proxied public website container, when one exists — everything else is Tailscale-only.</p>
+
+                            <!-- Network diagram -->
+                            <div class="ai-council-section-title" style="margin-top:28px;">Network Segmentation Diagram</div>
+                            <div class="ai-council-diagram-wrap">
+                                <svg viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Network segmentation diagram: personal devices connect through a Tailscale mesh VPN for SSH and admin access, while public website visitors reach the server only through Cloudflare and a reverse proxy into a single isolated container. The Docker host runs SSH/admin, core services, agent stack, local LLM serving, the public website container, and utilities, each on its own isolated Docker network, with attached encrypted storage below." style="width:100%;max-width:900px;display:block;font-family:var(--font-display);">
+                                    <defs>
+                                        <marker id="nas-arr-green" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#34d399" opacity="0.85"/></marker>
+                                        <marker id="nas-arr-warm" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#e0ac52" opacity="0.85"/></marker>
+                                        <marker id="nas-arr-gray" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#7E8E9B" opacity="0.7"/></marker>
+                                    </defs>
+
+                                    <!-- Personal devices -->
+                                    <rect x="60" y="36" width="220" height="54" rx="10" fill="rgba(52,211,153,0.08)" stroke="rgba(52,211,153,0.4)" stroke-width="1.5"/>
+                                    <text x="170" y="58" text-anchor="middle" font-size="13" font-weight="700" fill="#34d399">My Other Devices</text>
+                                    <text x="170" y="75" text-anchor="middle" font-size="9.5" fill="rgba(52,211,153,0.65)">laptop &middot; phone &middot; other PCs</text>
+
+                                    <!-- Public visitors -->
+                                    <rect x="620" y="36" width="220" height="54" rx="10" fill="rgba(224,172,82,0.08)" stroke="rgba(224,172,82,0.4)" stroke-width="1.5"/>
+                                    <text x="730" y="58" text-anchor="middle" font-size="13" font-weight="700" fill="#e0ac52">Public Website Visitors</text>
+                                    <text x="730" y="75" text-anchor="middle" font-size="9.5" fill="rgba(224,172,82,0.65)">anyone on the open internet</text>
+
+                                    <!-- Arrows down to tailscale / cloudflare -->
+                                    <line x1="170" y1="90" x2="170" y2="126" stroke="#34d399" stroke-width="1.5" marker-end="url(#nas-arr-green)"/>
+                                    <line x1="730" y1="90" x2="730" y2="126" stroke="#e0ac52" stroke-width="1.5" marker-end="url(#nas-arr-warm)"/>
+
+                                    <!-- Tailscale mesh -->
+                                    <rect x="60" y="128" width="220" height="62" rx="10" fill="rgba(52,211,153,0.1)" stroke="rgba(52,211,153,0.5)" stroke-width="1.5"/>
+                                    <text x="170" y="153" text-anchor="middle" font-size="13" font-weight="700" fill="#34d399">Tailscale Mesh VPN</text>
+                                    <text x="170" y="170" text-anchor="middle" font-size="9.5" fill="rgba(52,211,153,0.7)">encrypted &middot; zero open inbound ports</text>
+                                    <text x="170" y="184" text-anchor="middle" font-size="9.5" fill="rgba(52,211,153,0.7)">only path in for SSH and admin</text>
+
+                                    <!-- Cloudflare edge -->
+                                    <rect x="620" y="128" width="220" height="50" rx="10" fill="rgba(224,172,82,0.1)" stroke="rgba(224,172,82,0.5)" stroke-width="1.5"/>
+                                    <text x="730" y="150" text-anchor="middle" font-size="13" font-weight="700" fill="#e0ac52">Cloudflare Edge</text>
+                                    <text x="730" y="166" text-anchor="middle" font-size="9.5" fill="rgba(224,172,82,0.7)">public website traffic only</text>
+
+                                    <line x1="730" y1="178" x2="730" y2="212" stroke="#e0ac52" stroke-width="1.5" marker-end="url(#nas-arr-warm)"/>
+
+                                    <!-- Reverse proxy -->
+                                    <rect x="620" y="214" width="220" height="48" rx="10" fill="rgba(224,172,82,0.08)" stroke="rgba(224,172,82,0.4)" stroke-width="1.5"/>
+                                    <text x="730" y="235" text-anchor="middle" font-size="12.5" font-weight="700" fill="#e0ac52">Reverse Proxy</text>
+                                    <text x="730" y="251" text-anchor="middle" font-size="9.5" fill="rgba(224,172,82,0.65)">Caddy / Traefik</text>
+
+                                    <!-- lines into docker host -->
+                                    <path d="M170,190 L170,300 L262,300" fill="none" stroke="#34d399" stroke-width="1.5" marker-end="url(#nas-arr-green)"/>
+                                    <path d="M730,262 L730,320 L636,320" fill="none" stroke="#e0ac52" stroke-width="1.5" marker-end="url(#nas-arr-warm)"/>
+
+                                    <!-- Docker host box -->
+                                    <rect x="210" y="290" width="480" height="270" rx="12" fill="rgba(30,35,50,0.55)" stroke="rgba(126,142,155,0.25)" stroke-width="1.5"/>
+                                    <text x="450" y="314" text-anchor="middle" font-size="11" font-weight="700" fill="#7E8E9B" letter-spacing="1.5">DOCKER HOST &mdash; ISOLATED NETWORKS PER SERVICE</text>
+
+                                    <!-- SSH/Admin -->
+                                    <rect x="230" y="330" width="140" height="58" rx="8" fill="rgba(52,211,153,0.08)" stroke="rgba(52,211,153,0.4)" stroke-width="1.2"/>
+                                    <text x="300" y="353" text-anchor="middle" font-size="11.5" font-weight="700" fill="#34d399">SSH + Admin</text>
+                                    <text x="300" y="369" text-anchor="middle" font-size="8.5" fill="rgba(52,211,153,0.65)">Tailscale-only access</text>
+
+                                    <!-- Core services -->
+                                    <rect x="230" y="398" width="140" height="58" rx="8" fill="rgba(126,142,155,0.06)" stroke="rgba(126,142,155,0.28)" stroke-width="1.2"/>
+                                    <text x="300" y="420" text-anchor="middle" font-size="11.5" font-weight="700" fill="#8EA0AD">Core Services</text>
+                                    <text x="300" y="435" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.65)">Postgres &middot; Redis</text>
+                                    <text x="300" y="447" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.65)">uptime monitoring</text>
+
+                                    <!-- Agent stack -->
+                                    <rect x="380" y="330" width="140" height="58" rx="8" fill="rgba(126,142,155,0.06)" stroke="rgba(126,142,155,0.28)" stroke-width="1.2"/>
+                                    <text x="450" y="353" text-anchor="middle" font-size="11.5" font-weight="700" fill="#8EA0AD">Agent Stack</text>
+                                    <text x="450" y="369" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.65)">Hermes harness orchestration</text>
+
+                                    <!-- Local LLM -->
+                                    <rect x="380" y="398" width="140" height="58" rx="8" fill="rgba(126,142,155,0.06)" stroke="rgba(126,142,155,0.28)" stroke-width="1.2"/>
+                                    <text x="450" y="420" text-anchor="middle" font-size="11.5" font-weight="700" fill="#8EA0AD">Local LLM Serving</text>
+                                    <text x="450" y="435" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.65)">Ollama &middot; Open WebUI</text>
+                                    <text x="450" y="447" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.65)">(planned)</text>
+
+                                    <!-- Public website container -->
+                                    <rect x="530" y="330" width="150" height="58" rx="8" fill="rgba(224,172,82,0.08)" stroke="rgba(224,172,82,0.4)" stroke-width="1.2"/>
+                                    <text x="605" y="350" text-anchor="middle" font-size="11" font-weight="700" fill="#e0ac52">Public Website</text>
+                                    <text x="605" y="364" text-anchor="middle" font-size="8.5" fill="rgba(224,172,82,0.65)">only container reachable</text>
+                                    <text x="605" y="376" text-anchor="middle" font-size="8.5" fill="rgba(224,172,82,0.65)">from the reverse proxy</text>
+
+                                    <!-- Utilities -->
+                                    <rect x="530" y="398" width="150" height="58" rx="8" fill="rgba(126,142,155,0.06)" stroke="rgba(126,142,155,0.28)" stroke-width="1.2"/>
+                                    <text x="605" y="420" text-anchor="middle" font-size="11.5" font-weight="700" fill="#8EA0AD">Utilities</text>
+                                    <text x="605" y="435" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.65)">password manager</text>
+                                    <text x="605" y="447" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.65)">RSS reader</text>
+
+                                    <text x="450" y="480" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.35)" font-style="italic">Every box above is its own Docker network &mdash; no service can reach another except through Zeus-style explicit rules</text>
+
+                                    <!-- connector to storage -->
+                                    <line x1="450" y1="560" x2="450" y2="596" stroke="#7E8E9B" stroke-width="1.5" marker-end="url(#nas-arr-gray)"/>
+
+                                    <!-- Storage -->
+                                    <rect x="210" y="598" width="480" height="74" rx="12" fill="rgba(126,142,155,0.06)" stroke="rgba(126,142,155,0.28)" stroke-width="1.5"/>
+                                    <text x="450" y="622" text-anchor="middle" font-size="11.5" font-weight="700" fill="#8EA0AD">Attached Storage</text>
+                                    <text x="450" y="640" text-anchor="middle" font-size="9" fill="rgba(142,160,173,0.65)">encrypted document vault &middot; photo library</text>
+                                    <text x="450" y="654" text-anchor="middle" font-size="9" fill="rgba(142,160,173,0.65)">ripped media archive (planned)</text>
+
+                                    <!-- Legend -->
+                                    <line x1="230" y1="686" x2="256" y2="686" stroke="#34d399" stroke-width="1.5" marker-end="url(#nas-arr-green)"/>
+                                    <text x="262" y="690" font-size="9.5" fill="rgba(255,255,255,0.5)">Private (Tailscale only)</text>
+                                    <line x1="430" y1="686" x2="456" y2="686" stroke="#e0ac52" stroke-width="1.5" marker-end="url(#nas-arr-warm)"/>
+                                    <text x="462" y="690" font-size="9.5" fill="rgba(255,255,255,0.5)">Public (proxied website only)</text>
+                                    <line x1="670" y1="686" x2="696" y2="686" stroke="#7E8E9B" stroke-width="1.5" marker-end="url(#nas-arr-gray)"/>
+                                    <text x="702" y="690" font-size="9.5" fill="rgba(255,255,255,0.5)">Internal mount</text>
+                                </svg>
+                            </div>
+
+                            <div class="ai-council-section-title" style="margin-top:28px;">The Big Takeaway: Segmentation First</div>
+                            <div class="council-block">
+                                <p>The single most important decision in this build wasn't which service to run — it was deciding almost nothing should be reachable from the public internet at all. Admin access, databases, and the agent stack sit entirely behind a private mesh VPN, so there's no open SSH port, no exposed database port, and no admin panel sitting on the open internet waiting to get scanned. The only thing that ever touches the public internet is a single reverse-proxied container for a public website, and even that's isolated on its own Docker network from everything else on the box. If a container gets compromised, the blast radius stops at that container's network, not the whole server. That's the practical, hands-on version of "least privilege" and "defense in depth" that's easy to say in an interview and much more informative to actually build.</p>
+                            </div>
+
+                            <div class="ai-council-2col" style="margin-top:22px;">
+                                <div class="council-block">
+                                    <div class="council-block-title">What's Running Today</div>
+                                    <p>Headless Linux server, fully containerized with Docker and Docker Compose. Core data services (Postgres, Redis) and uptime monitoring are live. Remote access — including SSH into this box and SSH out to my other personal machines — goes exclusively over Tailscale, so there's nothing to find by port-scanning my home connection.</p>
+                                </div>
+                                <div class="council-block">
+                                    <div class="council-block-title">Why Self-Host At All</div>
+                                    <p>I wanted to stop renting things I could run myself: the local models backing my agent work, my own documents and photos, and eventually my own media library. It's also the fastest way to actually learn networking and containerization by doing it, instead of just reading about VLANs and reverse proxies.</p>
+                                </div>
+                            </div>
+
+                            <div class="ai-council-section-title" style="margin-top:28px;">Planned Stages</div>
+                            <div class="security-grid">
+                                <div class="security-block">
+                                    <div class="security-block-title">Agent Stack Migration</div>
+                                    <p>Move the Hermes harness and its agents onto the server full-time, so orchestration runs on dedicated hardware instead of a laptop.</p>
+                                </div>
+                                <div class="security-block">
+                                    <div class="security-block-title">Local LLM Serving</div>
+                                    <p>Stand up Ollama and Open WebUI for private, local-only inference — no data leaving the network for the tasks that don't need a frontier model.</p>
+                                </div>
+                                <div class="security-block">
+                                    <div class="security-block-title">Encrypted Document Vault</div>
+                                    <p>Digitize and store sensitive documents on an encrypted volume, mirrored to an off-box backup so a single point of failure can't mean total loss.</p>
+                                </div>
+                                <div class="security-block">
+                                    <div class="security-block-title">Photo &amp; Media Library</div>
+                                    <p>Migrate my personal photo library first; a self-hosted media server for movies and a ripped CD collection is a lower-priority stretch goal after that.</p>
+                                </div>
+                                <div class="security-block">
+                                    <div class="security-block-title">Backup &amp; Snapshots</div>
+                                    <p>Local snapshot rotation to separate physical storage, plus an off-box copy, so a drive failure or a bad update isn't a data-loss event.</p>
+                                </div>
+                                <div class="security-block">
+                                    <div class="security-block-title">Public Reverse Proxy</div>
+                                    <p>Put a reverse proxy behind Cloudflare for any public-facing site, while every administrative surface stays Tailscale-only, permanently.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="exp-tile-close-row">
+                            <button class="exp-tile-close-btn" onclick="toggleExpTile('homelab')"><i class="fas fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Hermes Events -->
             <div class="exp-tile reveal" id="exp-tile-hermes">
                 <div class="exp-tile-header" onclick="toggleExpTile('hermes')" role="button" aria-expanded="false" aria-controls="exp-body-hermes">
@@ -4708,7 +4552,7 @@
             </div>
 
             <!-- MedPulse Health Network -->
-            <div class="exp-tile reveal" id="exp-tile-medpulse" style="grid-column: 1 / -1;">
+            <div class="exp-tile reveal" id="exp-tile-medpulse">
                 <div class="exp-tile-header" onclick="toggleExpTile('medpulse')" role="button" aria-expanded="false" aria-controls="exp-body-medpulse">
                     <div class="exp-tile-icon-wrap">
                         <i class="fas fa-heart-pulse" style="color:#f87171"></i>
@@ -4798,7 +4642,7 @@ flowchart LR
             </div>
 
             <!-- Sentinel Defense Systems -->
-            <div class="exp-tile reveal" id="exp-tile-sentinel" style="grid-column: 1 / -1;">
+            <div class="exp-tile reveal" id="exp-tile-sentinel">
                 <div class="exp-tile-header" onclick="toggleExpTile('sentinel')" role="button" aria-expanded="false" aria-controls="exp-body-sentinel">
                     <div class="exp-tile-icon-wrap">
                         <i class="fas fa-shield-halved" style="color:#4a9eff"></i>
@@ -4882,7 +4726,7 @@ flowchart TB
             </div>
 
             <!-- RetailPulse Commerce -->
-            <div class="exp-tile reveal" id="exp-tile-retailpulse" style="grid-column: 1 / -1;">
+            <div class="exp-tile reveal" id="exp-tile-retailpulse">
                 <div class="exp-tile-header" onclick="toggleExpTile('retailpulse')" role="button" aria-expanded="false" aria-controls="exp-body-retailpulse">
                     <div class="exp-tile-icon-wrap">
                         <i class="fas fa-store" style="color:#c4b5fd"></i>
@@ -5181,7 +5025,7 @@ flowchart LR
             </div>
 
             <!-- Catapult Optimization Lab -->
-            <div class="exp-tile reveal reveal-delay-3" id="exp-tile-catapult" style="grid-column: 1 / -1;">
+            <div class="exp-tile reveal reveal-delay-3" id="exp-tile-catapult">
                 <div class="exp-tile-header" onclick="toggleExpTile('catapult')" role="button" aria-expanded="false" aria-controls="exp-body-catapult">
                     <div class="exp-tile-icon-wrap">
                         <i class="fas fa-flask" style="color:var(--accent)"></i>
@@ -5311,13 +5155,15 @@ flowchart LR
         <div class="project-drawer-header">
             <div>
                 <h3 id="project-drawer-title">Takeda: Architecture &amp; Diagrams</h3>
-                <p>Three governed pipelines, each with a live diagram rendered directly on GitHub.</p>
+                <p id="project-drawer-subtitle">Three governed pipelines, each with a live diagram rendered directly on GitHub.</p>
             </div>
             <button class="project-drawer-close" onclick="closeProjectDrawer()" aria-label="Close">
                 <i class="fas fa-times"></i>
             </button>
         </div>
         <div class="project-drawer-body">
+
+            <div class="project-drawer-content active" data-drawer-content="takeda">
 
             <div class="drawer-section">
                 <h4>Workforce Qualification Intelligence</h4>
@@ -5348,6 +5194,224 @@ flowchart LR
                     <a class="drawer-link" href="https://github.com/tylerv11/data-engineering-pipelines/tree/main/manufacturing-process-event-modeling" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repo Folder</a>
                 </div>
                 <div class="diagram-preview" id="diagram-preview-manufacturing"></div>
+            </div>
+
+            </div>
+
+            <div class="project-drawer-content" data-drawer-content="plutus">
+                <div class="drawer-section">
+                    <h4>Data Pipeline: Bronze → Silver → Gold</h4>
+                    <p class="drawer-pipeline-intro">Four source families on independent cadences land in bronze Postgres tables, get aggregated by silver-stage analysis scripts into regime classification and composite intelligence signals, and finish in a gold five-signal stock score plus AI-written briefs, served to the webapp API and posted to Discord.</p>
+                    <div class="diagram-rotate-outer" id="diagram-rotate-plutus">
+                        <div class="diagram-rotate-inner">
+                            <svg viewBox="0 0 1360 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plutus pipeline: four categories of financial data sources, each on its own schedule, land in bronze Postgres tables, get aggregated by silver-stage analysis scripts into regime classification and composite intelligence signals, and finish in a gold five-signal stock_picks table plus AI-written briefs, served to the webapp API and posted to Discord.">
+                                <defs>
+                                    <marker id="pd-p-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                                        <path d="M0,0 L10,5 L0,10 z" fill="#7E8E9B" />
+                                    </marker>
+                                </defs>
+                                <g fill="#7E8E9B">
+                                    <text x="30" y="34" font-family="IBM Plex Sans, sans-serif" font-size="11" letter-spacing="1">SOURCES + CADENCE</text>
+                                    <text x="330" y="34" font-family="IBM Plex Sans, sans-serif" font-size="11" letter-spacing="1">BRONZE · RAW</text>
+                                    <text x="580" y="34" font-family="IBM Plex Sans, sans-serif" font-size="11" letter-spacing="1">SILVER · ANALYSIS</text>
+                                    <text x="880" y="34" font-family="IBM Plex Sans, sans-serif" font-size="11" letter-spacing="1">GOLD</text>
+                                    <text x="1150" y="34" font-family="IBM Plex Sans, sans-serif" font-size="11" letter-spacing="1">SERVED</text>
+                                </g>
+
+                                <rect x="20" y="55" width="270" height="80" rx="10" fill="none" stroke="#7E8E9B" stroke-width="1.2"/>
+                                <text x="34" y="80" fill="#E6EFE6" font-family="IBM Plex Sans, sans-serif" font-weight="600" font-size="13">Market data</text>
+                                <text x="34" y="98" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">yfinance: prices, fundamentals</text>
+                                <text x="34" y="120" fill="#00ff87" font-family="IBM Plex Mono, monospace" font-size="10.5">daily 7:00am PT · wkdays</text>
+
+                                <rect x="20" y="160" width="270" height="80" rx="10" fill="none" stroke="#7E8E9B" stroke-width="1.2"/>
+                                <text x="34" y="185" fill="#E6EFE6" font-family="IBM Plex Sans, sans-serif" font-weight="600" font-size="13">Macro &amp; regime</text>
+                                <text x="34" y="203" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">FRED (rates, CPI, GDP) · VIX/DXY</text>
+                                <text x="34" y="225" fill="#00ff87" font-family="IBM Plex Mono, monospace" font-size="10.5">weekly · Sun 10:00am PT</text>
+
+                                <rect x="20" y="265" width="270" height="90" rx="10" fill="none" stroke="#7E8E9B" stroke-width="1.2"/>
+                                <text x="34" y="290" fill="#E6EFE6" font-family="IBM Plex Sans, sans-serif" font-weight="600" font-size="13">SEC &amp; institutional</text>
+                                <text x="34" y="308" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">EDGAR filings, Form 4, 13-F</text>
+                                <text x="34" y="325" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">top institutional holders</text>
+                                <text x="34" y="342" fill="#00ff87" font-family="IBM Plex Mono, monospace" font-size="10.5">daily 6:30am PT + weekly 13-F</text>
+
+                                <rect x="20" y="390" width="270" height="90" rx="10" fill="none" stroke="#7E8E9B" stroke-width="1.2"/>
+                                <text x="34" y="415" fill="#E6EFE6" font-family="IBM Plex Sans, sans-serif" font-weight="600" font-size="13">Political &amp; alt-data</text>
+                                <text x="34" y="433" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">Senate STOCK Act, Truth Social,</text>
+                                <text x="34" y="448" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">RSS, Polygon options flow</text>
+                                <text x="34" y="466" fill="#00ff87" font-family="IBM Plex Mono, monospace" font-size="10.5">every 4h + weekly options</text>
+
+                                <rect x="330" y="55" width="220" height="80" rx="10" fill="#2e2116" stroke="#d1904f" stroke-width="1.4"/>
+                                <text x="344" y="82" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12">price_history</text>
+                                <text x="344" y="99" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12">fundamentals</text>
+
+                                <rect x="330" y="160" width="220" height="80" rx="10" fill="#2e2116" stroke="#d1904f" stroke-width="1.4"/>
+                                <text x="344" y="187" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12">macro_indicators</text>
+
+                                <rect x="330" y="265" width="220" height="90" rx="10" fill="#2e2116" stroke="#d1904f" stroke-width="1.4"/>
+                                <text x="344" y="292" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12">sec_filings</text>
+                                <text x="344" y="308" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12">insider_trades</text>
+                                <text x="344" y="324" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12">institutional_holdings</text>
+
+                                <rect x="330" y="390" width="220" height="90" rx="10" fill="#2e2116" stroke="#d1904f" stroke-width="1.4"/>
+                                <text x="344" y="417" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12">political_signals</text>
+                                <text x="344" y="433" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12">options_flow*</text>
+                                <text x="344" y="450" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="10">*table unverified in migrations</text>
+
+                                <rect x="590" y="130" width="230" height="80" rx="10" fill="#232a33" stroke="#a7b1bd" stroke-width="1.4"/>
+                                <text x="604" y="157" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12.5">regime_classifier</text>
+                                <text x="604" y="175" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="10.5">rule-based + k-means</text>
+                                <text x="604" y="190" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="10.5">→ macro_regime</text>
+
+                                <rect x="590" y="230" width="230" height="90" rx="10" fill="#232a33" stroke="#a7b1bd" stroke-width="1.4"/>
+                                <text x="604" y="257" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12.5">market_intel_writer</text>
+                                <text x="604" y="275" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="10.5">6-signal aggregate:</text>
+                                <text x="604" y="290" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="10.5">insider · institutional ·</text>
+                                <text x="604" y="305" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="10.5">momentum · trend · macro</text>
+
+                                <rect x="590" y="340" width="230" height="80" rx="10" fill="#232a33" stroke="#a7b1bd" stroke-width="1.4"/>
+                                <text x="604" y="367" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12.5">technical_scorer</text>
+                                <text x="604" y="385" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12.5">portfolio_snapshots</text>
+                                <text x="604" y="403" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="10.5">Sharpe · Sortino · alpha/beta</text>
+
+                                <rect x="880" y="150" width="220" height="100" rx="10" fill="#2f2913" stroke="#e0bc4f" stroke-width="1.6"/>
+                                <text x="894" y="177" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="13">stock_picks</text>
+                                <text x="894" y="196" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="10.5">5-signal composite score</text>
+                                <text x="894" y="211" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="10.5">fund .30 · momentum .25</text>
+                                <text x="894" y="226" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="10.5">macro .20 · tech .15 · pol .10</text>
+                                <text x="894" y="241" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="10.5">× 3 risk tiers</text>
+
+                                <rect x="880" y="270" width="220" height="70" rx="10" fill="#2f2913" stroke="#e0bc4f" stroke-width="1.6"/>
+                                <text x="894" y="297" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12.5">market_briefs</text>
+                                <text x="894" y="315" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="10.5">daily + weekly, LLM-written</text>
+
+                                <rect x="880" y="360" width="220" height="70" rx="10" fill="#2f2913" stroke="#e0bc4f" stroke-width="1.6"/>
+                                <text x="894" y="387" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12.5">backtest_results</text>
+                                <text x="894" y="405" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="10.5">weekly · 3 tiers × 3 horizons</text>
+
+                                <rect x="1150" y="170" width="180" height="90" rx="10" fill="none" stroke="#7E8E9B" stroke-width="1.2"/>
+                                <text x="1164" y="197" fill="#E6EFE6" font-family="IBM Plex Sans, sans-serif" font-weight="600" font-size="12.5">Webapp API</text>
+                                <text x="1164" y="215" fill="#7E8E9B" font-family="IBM Plex Mono, monospace" font-size="10">/stocks /portfolio</text>
+                                <text x="1164" y="230" fill="#7E8E9B" font-family="IBM Plex Mono, monospace" font-size="10">/market-intel /briefs</text>
+
+                                <rect x="1150" y="290" width="180" height="70" rx="10" fill="none" stroke="#7E8E9B" stroke-width="1.2"/>
+                                <text x="1164" y="317" fill="#E6EFE6" font-family="IBM Plex Sans, sans-serif" font-weight="600" font-size="12.5">Discord brief</text>
+                                <text x="1164" y="335" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="10.5">daily + weekly AI post</text>
+
+                                <line x1="290" y1="95" x2="328" y2="95" stroke="#7E8E9B" stroke-width="1.3" marker-end="url(#pd-p-arrow)"/>
+                                <line x1="290" y1="200" x2="328" y2="200" stroke="#7E8E9B" stroke-width="1.3" marker-end="url(#pd-p-arrow)"/>
+                                <line x1="290" y1="310" x2="328" y2="310" stroke="#7E8E9B" stroke-width="1.3" marker-end="url(#pd-p-arrow)"/>
+                                <line x1="290" y1="435" x2="328" y2="435" stroke="#7E8E9B" stroke-width="1.3" marker-end="url(#pd-p-arrow)"/>
+
+                                <path d="M550,95 C575,95 575,155 588,163" fill="none" stroke="#7E8E9B" stroke-width="1.2" marker-end="url(#pd-p-arrow)"/>
+                                <path d="M550,95 C575,95 575,265 588,272" fill="none" stroke="#7E8E9B" stroke-width="1.2" marker-end="url(#pd-p-arrow)"/>
+                                <path d="M550,200 C575,200 575,170 588,170" fill="none" stroke="#7E8E9B" stroke-width="1.2" marker-end="url(#pd-p-arrow)"/>
+                                <path d="M550,310 C575,310 575,280 588,280" fill="none" stroke="#7E8E9B" stroke-width="1.2" marker-end="url(#pd-p-arrow)"/>
+                                <path d="M550,310 C575,310 575,380 588,380" fill="none" stroke="#7E8E9B" stroke-width="1.2" marker-end="url(#pd-p-arrow)"/>
+                                <path d="M550,435 C575,435 575,290 588,290" fill="none" stroke="#7E8E9B" stroke-width="1.2" marker-end="url(#pd-p-arrow)"/>
+
+                                <path d="M820,170 C850,170 850,195 878,197" fill="none" stroke="#7E8E9B" stroke-width="1.2" marker-end="url(#pd-p-arrow)"/>
+                                <path d="M820,275 C850,275 850,225 878,220" fill="none" stroke="#7E8E9B" stroke-width="1.2" marker-end="url(#pd-p-arrow)"/>
+                                <path d="M820,275 C850,275 850,300 878,300" fill="none" stroke="#7E8E9B" stroke-width="1.2" marker-end="url(#pd-p-arrow)"/>
+                                <path d="M820,380 C850,380 850,390 878,392" fill="none" stroke="#7E8E9B" stroke-width="1.2" marker-end="url(#pd-p-arrow)"/>
+
+                                <path d="M1100,200 C1125,200 1125,210 1148,212" fill="none" stroke="#7E8E9B" stroke-width="1.3" marker-end="url(#pd-p-arrow)"/>
+                                <path d="M1100,305 C1125,305 1125,320 1148,322" fill="none" stroke="#7E8E9B" stroke-width="1.3" marker-end="url(#pd-p-arrow)"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="drawer-link-row">
+                        <a class="drawer-link" href="https://github.com/tylerv11/plutus-markets/blob/main/pipeline-diagram.html" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repo Folder</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-drawer-content" data-drawer-content="hermes">
+                <div class="drawer-section">
+                    <h4>Data Pipeline: Bronze → Silver → Gold</h4>
+                    <p class="drawer-pipeline-intro">Two independent intake paths, web scrapers/event feeds running daily and newsletter aggregators running a few times a week, land in bronze candidate tables, pass through silver enrichment and scoring, and converge into one gold events table that serves the public webapp and a weekly digest.</p>
+                    <div class="diagram-rotate-outer" id="diagram-rotate-hermes">
+                        <div class="diagram-rotate-inner">
+                            <svg viewBox="0 0 1360 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hermes pipeline: web scrapers and event feeds running daily, plus newsletter aggregators from many vendors running a few times a week, both land in bronze candidate tables, pass through silver enrichment and scoring, and converge into one gold events table that serves the public webapp and a weekly digest.">
+                                <defs>
+                                    <marker id="pd-h-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                                        <path d="M0,0 L10,5 L0,10 z" fill="#7E8E9B" />
+                                    </marker>
+                                </defs>
+                                <g fill="#7E8E9B">
+                                    <text x="30" y="34" font-family="IBM Plex Sans, sans-serif" font-size="11" letter-spacing="1">INTAKE</text>
+                                    <text x="330" y="34" font-family="IBM Plex Sans, sans-serif" font-size="11" letter-spacing="1">BRONZE · RAW</text>
+                                    <text x="590" y="34" font-family="IBM Plex Sans, sans-serif" font-size="11" letter-spacing="1">SILVER · STAGING</text>
+                                    <text x="850" y="34" font-family="IBM Plex Sans, sans-serif" font-size="11" letter-spacing="1">GOLD</text>
+                                    <text x="1080" y="34" font-family="IBM Plex Sans, sans-serif" font-size="11" letter-spacing="1">SERVED</text>
+                                </g>
+
+                                <rect x="20" y="55" width="240" height="90" rx="10" fill="none" stroke="#7E8E9B" stroke-width="1.2"/>
+                                <text x="34" y="82" fill="#E6EFE6" font-family="IBM Plex Sans, sans-serif" font-weight="600" font-size="13.5">Web scrapers &amp; event feeds</text>
+                                <text x="34" y="101" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">APIs, HTML, ICS, structured</text>
+                                <text x="34" y="116" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">feed formats — 35+ sources</text>
+                                <text x="34" y="134" fill="#00ff87" font-family="IBM Plex Mono, monospace" font-size="11">Daily</text>
+
+                                <rect x="330" y="55" width="200" height="90" rx="10" fill="#2e2116" stroke="#d1904f" stroke-width="1.4"/>
+                                <text x="344" y="82" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12.5">source_event</text>
+                                <text x="344" y="97" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12.5">_candidates</text>
+                                <text x="344" y="118" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">raw_payload jsonb</text>
+                                <text x="344" y="133" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">review_status: new</text>
+
+                                <rect x="590" y="55" width="220" height="90" rx="10" fill="#232a33" stroke="#a7b1bd" stroke-width="1.4"/>
+                                <text x="604" y="82" fill="#E6EFE6" font-family="IBM Plex Sans, sans-serif" font-weight="600" font-size="13">Enrich + score</text>
+                                <text x="604" y="101" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">geocode · region tag</text>
+                                <text x="604" y="116" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">dedupe fingerprint</text>
+                                <text x="604" y="131" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">verification_score</text>
+
+                                <rect x="20" y="295" width="240" height="90" rx="10" fill="none" stroke="#7E8E9B" stroke-width="1.2"/>
+                                <text x="34" y="322" fill="#E6EFE6" font-family="IBM Plex Sans, sans-serif" font-weight="600" font-size="13.5">Newsletter aggregators</text>
+                                <text x="34" y="341" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">curated across many</text>
+                                <text x="34" y="356" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">different vendors</text>
+                                <text x="34" y="374" fill="#00ff87" font-family="IBM Plex Mono, monospace" font-size="11">A few times a week</text>
+
+                                <rect x="330" y="295" width="200" height="90" rx="10" fill="#2e2116" stroke="#d1904f" stroke-width="1.4"/>
+                                <text x="344" y="322" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12.5">newsletter_event</text>
+                                <text x="344" y="337" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12.5">_candidates</text>
+                                <text x="344" y="358" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">+ message audit log</text>
+
+                                <rect x="590" y="295" width="220" height="90" rx="10" fill="#232a33" stroke="#a7b1bd" stroke-width="1.4"/>
+                                <text x="604" y="322" fill="#E6EFE6" font-family="IBM Plex Sans, sans-serif" font-weight="600" font-size="13">Verify + score</text>
+                                <text x="604" y="341" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">cross-check extracted</text>
+                                <text x="604" y="356" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">fields vs source URL</text>
+
+                                <rect x="845" y="135" width="170" height="130" rx="10" fill="#2f2913" stroke="#e0bc4f" stroke-width="1.6"/>
+                                <text x="859" y="168" fill="#E6EFE6" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="14">events</text>
+                                <text x="859" y="189" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">sole public source</text>
+                                <text x="859" y="204" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">of truth</text>
+                                <text x="859" y="223" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">tier + taste_score</text>
+                                <text x="859" y="238" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="11">(auto-triage gated)</text>
+
+                                <rect x="1070" y="70" width="170" height="80" rx="10" fill="none" stroke="#7E8E9B" stroke-width="1.2"/>
+                                <text x="1084" y="98" fill="#E6EFE6" font-family="IBM Plex Sans, sans-serif" font-weight="600" font-size="12.5">Public webapp</text>
+                                <text x="1084" y="116" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="10.5">ranked homepage feed</text>
+
+                                <rect x="1070" y="250" width="170" height="80" rx="10" fill="none" stroke="#7E8E9B" stroke-width="1.2"/>
+                                <text x="1084" y="278" fill="#E6EFE6" font-family="IBM Plex Sans, sans-serif" font-weight="600" font-size="12.5">Newsletter digest</text>
+                                <text x="1084" y="296" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="10.5">weekly, auto-drafted</text>
+                                <text x="1084" y="311" fill="#7E8E9B" font-family="IBM Plex Sans, sans-serif" font-size="10.5">human approval gate</text>
+
+                                <line x1="260" y1="100" x2="328" y2="100" stroke="#7E8E9B" stroke-width="1.3" marker-end="url(#pd-h-arrow)"/>
+                                <line x1="530" y1="100" x2="588" y2="100" stroke="#7E8E9B" stroke-width="1.3" marker-end="url(#pd-h-arrow)"/>
+                                <path d="M810,100 C830,100 830,200 843,200" fill="none" stroke="#7E8E9B" stroke-width="1.3" marker-end="url(#pd-h-arrow)"/>
+
+                                <line x1="260" y1="340" x2="328" y2="340" stroke="#7E8E9B" stroke-width="1.3" marker-end="url(#pd-h-arrow)"/>
+                                <line x1="530" y1="340" x2="588" y2="340" stroke="#7E8E9B" stroke-width="1.3" marker-end="url(#pd-h-arrow)"/>
+                                <path d="M810,340 C830,340 830,200 843,200" fill="none" stroke="#7E8E9B" stroke-width="1.3" marker-end="url(#pd-h-arrow)"/>
+
+                                <path d="M1015,175 C1040,175 1040,110 1068,110" fill="none" stroke="#7E8E9B" stroke-width="1.3" marker-end="url(#pd-h-arrow)"/>
+                                <path d="M1015,225 C1040,225 1040,290 1068,290" fill="none" stroke="#7E8E9B" stroke-width="1.3" marker-end="url(#pd-h-arrow)"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="drawer-link-row">
+                        <a class="drawer-link" href="https://github.com/tylerv11/hermes-events/blob/main/pipeline-diagram.html" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repo Folder</a>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -5384,21 +5448,6 @@ flowchart LR
             </div>
         </div>
     </div>
-
-    <script>
-        function toggleAgent(el) {
-            var detail = el.querySelector('.agent-card-detail');
-            var isOpen = el.classList.contains('open');
-            document.querySelectorAll('.agent-card.open').forEach(function(card) {
-                card.classList.remove('open');
-                card.querySelector('.agent-card-detail').style.display = 'none';
-            });
-            if (!isOpen) {
-                el.classList.add('open');
-                detail.style.display = 'block';
-            }
-        }
-    </script>
 
     <script>
         // Premium initial loader: short, deterministic, and removable for performance.
@@ -5600,15 +5649,31 @@ flowchart LR
 
         // ===== PROJECT ARCHITECTURE DRAWER =====
         var projectDrawerPrevFocus = null;
+        var projectDrawerMeta = {
+            takeda: { title: 'Takeda: Architecture &amp; Diagrams', sub: 'Three governed pipelines, each with a live diagram rendered directly on GitHub.' },
+            plutus: { title: 'Plutus Markets: Architecture &amp; Diagrams', sub: 'Bronze/silver/gold data pipeline, from source ingestion to the served 5-signal score.' },
+            hermes: { title: 'Hermes: Architecture &amp; Diagrams', sub: 'Bronze/silver/gold data pipeline, from scraped &amp; curated intake to the served events feed.' }
+        };
         function openProjectDrawer(id) {
             var overlay = document.getElementById('project-drawer-overlay');
             var drawer = document.getElementById('project-drawer');
+            var title = document.getElementById('project-drawer-title');
+            var subtitle = document.getElementById('project-drawer-subtitle');
+            var meta = projectDrawerMeta[id];
+            if (meta && title) title.innerHTML = meta.title;
+            if (meta && subtitle) subtitle.innerHTML = meta.sub;
+            drawer.querySelectorAll('.project-drawer-content').forEach(function(c) {
+                c.classList.toggle('active', c.getAttribute('data-drawer-content') === id);
+            });
             projectDrawerPrevFocus = document.activeElement;
             overlay.classList.add('open');
             drawer.classList.add('open');
             document.body.style.overflow = 'hidden';
             var closeBtn = drawer.querySelector('.project-drawer-close');
             if (closeBtn) closeBtn.focus();
+            if (id === 'plutus' || id === 'hermes') {
+                window.setTimeout(function() { fitRotatedDiagram(id); }, 350);
+            }
         }
         function closeProjectDrawer() {
             var overlay = document.getElementById('project-drawer-overlay');
@@ -5620,6 +5685,35 @@ flowchart LR
         }
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeProjectDrawer();
+        });
+
+        // Rotates a landscape pipeline SVG 90deg to fit the narrow drawer, scaled to the
+        // outer container's current width so it works at any viewport size.
+        function fitRotatedDiagram(id) {
+            var outer = document.getElementById('diagram-rotate-' + id);
+            if (!outer) return;
+            var inner = outer.querySelector('.diagram-rotate-inner');
+            var svg = outer.querySelector('svg');
+            if (!inner || !svg) return;
+            var vb = svg.viewBox.baseVal;
+            var viewW = vb && vb.width ? vb.width : svg.width.baseVal.value;
+            var viewH = vb && vb.height ? vb.height : svg.height.baseVal.value;
+            var availW = outer.clientWidth;
+            if (!availW) return;
+            var renderedH = availW;
+            var renderedW = availW * (viewW / viewH);
+            svg.style.width = renderedW + 'px';
+            svg.style.height = renderedH + 'px';
+            inner.style.transform = 'rotate(90deg) translateY(-100%)';
+            outer.style.height = renderedW + 'px';
+        }
+        window.addEventListener('resize', function() {
+            var drawer = document.getElementById('project-drawer');
+            if (!drawer || !drawer.classList.contains('open')) return;
+            var active = drawer.querySelector('.project-drawer-content.active');
+            if (!active) return;
+            var id = active.getAttribute('data-drawer-content');
+            if (id === 'plutus' || id === 'hermes') fitRotatedDiagram(id);
         });
 
         // Fetch a diagram file from GitHub (raw) and render its Mermaid blocks
