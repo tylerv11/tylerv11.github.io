@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="stretchy-footer.css">
     <link rel="stylesheet" href="shimmer-button.css">
     <script src="analytics.js" defer></script>
     <script src="contact-info.js" defer></script>
@@ -722,6 +721,40 @@
 
     </div>
 
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">Tyler Vincent<span>.</span></div>
+                <p class="footer-desc">Data and Analytics Engineer with a passion for technology, building things, teaching others, solving complex problems, and developing solutions across industries from submarines to satellites.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navigate</h4>
+                <a href="index.html">Work</a>
+                <a href="about.html">About</a>
+                <a href="education.html">Education</a>
+                <a href="index.html#projects">Projects</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a data-contact="email" href="#"></a>
+                <a data-contact="phone" href="#"></a>
+                <a>Los Angeles, California</a>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank">LinkedIn</a>
+                <a href="https://github.com/tylerv11/" target="_blank">GitHub</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span class="footer-copyright">&copy; Tyler Vincent. All rights reserved.</span>
+            <div class="footer-socials">
+                <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/tylerv11/" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
 
     </div>
 
@@ -981,7 +1014,6 @@
         })();
     </script>
 
-    <script src="stretchy-footer.js" defer></script>
     <script src="ascii-logo.js" defer></script>
     <script src="text-animate.js" defer></script>
     <script>
@@ -991,15 +1023,6 @@
                 var value = themeStyles.getPropertyValue(name).trim();
                 return value || fallback;
             }
-            StretchyFooter.init({
-                colors: [
-                    themeColor('--accent-blue', '#4a9eff'),
-                    themeColor('--accent-purple', '#c4b5fd'),
-                    themeColor('--accent', '#00ff87'),
-                    themeColor('--accent-warm', '#f6ad55')
-                ],
-                maxStretch: 220
-            });
 
             var asciiLogoRoot = document.getElementById('about-ascii-message');
             if (asciiLogoRoot) {
