@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apple Cards Carousel: Mockup</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+    :root {
+        --bg-primary: #08090a;
+        --bg-secondary: #0f1115;
+        --bg-card: #14171c;
+        --bg-card-hover: #181c22;
+        --text-primary: #ffffff;
+        --text-secondary: #a7adb7;
+        --text-muted: #68707c;
+        --accent: #00ff87;
+        --accent-blue: #4a9eff;
+        --accent-purple: #c4b5fd;
+        --accent-warm: #f6ad55;
+        --border-subtle: rgba(255,255,255,0.06);
+        --border-hover: rgba(255,255,255,0.12);
+        --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .mock-banner {
+        background: rgba(0,255,135,0.08);
+        border-bottom: 1px solid rgba(0,255,135,0.25);
+        color: var(--accent);
+        text-align: center;
+        font-size: 0.78rem;
+        letter-spacing: 0.03em;
+        padding: 8px 16px;
+    }
+
+    header.navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 48px;
+        border-bottom: 1px solid var(--border-subtle);
+    }
+    .navbar-brand { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.15rem; }
+    .navbar-brand span { color: var(--accent); }
+
+    .carousel-intro {
+        padding: 64px 48px 32px;
+        max-width: 900px;
+    }
+    .carousel-label {
+        color: var(--accent);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+    }
+    .carousel-heading {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        font-weight: 700;
+        line-height: 1.15;
+        margin: 0 0 12px;
+    }
+    .carousel-heading .muted { color: var(--text-muted); }
+    .carousel-sub {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    /* ===== CAROUSEL ===== */
+    .carousel-wrap {
+        padding: 8px 0 80px;
+    }
+    .carousel-track {
+        display: flex;
+        gap: 20px;
+        overflow-x: auto;
+        padding: 12px 48px 24px;
+        scroll-snap-type: x proximity;
+        -webkit-overflow-scrolling: touch;
+    }
+    .carousel-track::-webkit-scrollbar { height: 12px; }
+    .carousel-track::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); border-radius: 6px; }
+    .carousel-track::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 6px; border: 2px solid var(--bg-primary); }
+    .carousel-track { scrollbar-width: auto; }
+
+    .apple-card {
+        position: relative;
+        flex: 0 0 auto;
+        width: 320px;
+        height: 430px;
+        border-radius: 24px;
+        overflow: hidden;
+        cursor: pointer;
+        scroll-snap-align: start;
+        border: 1px solid var(--border-subtle);
+        background: var(--bg-card);
+        transition: transform 0.4s var(--transition-smooth), border-color 0.4s;
+    }
+    .apple-card:hover { transform: translateY(-6px); border-color: var(--border-hover); }
+
+    .apple-card-bg {
+        position: absolute;
+        inset: 0;
+        opacity: 0.9;
+    }
+    .apple-card-scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(8,9,10,0.15) 0%, rgba(8,9,10,0.35) 45%, rgba(8,9,10,0.92) 100%);
+    }
+    .apple-card-content {
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        padding: 28px 26px;
+        z-index: 2;
+    }
+    .apple-card-category {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--card-accent, var(--accent));
+        margin-bottom: 8px;
+    }
+    .apple-card-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.45rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 0;
+        line-height: 1.25;
+        max-width: 250px;
+    }
+
+    /* per-card accent + gradient */
+    .card-education .apple-card-bg { background: linear-gradient(160deg, rgba(10,13,18,0.35) 0%, rgba(10,13,18,0.8) 100%), url('images/carousel-mock/education-usc-nus.jpg') center 35% / cover no-repeat; }
+    .card-education { --card-accent: #4a9eff; }
+
+    .card-analytics .apple-card-bg { background: linear-gradient(160deg, rgba(10,13,18,0.55) 0%, rgba(10,13,18,0.88) 100%), url('images/carousel-mock/analytics-dashboard.jpg') center / cover no-repeat; }
+    .card-analytics { --card-accent: #00ff87; }
+
+    .card-pipelines .apple-card-bg { background: linear-gradient(160deg, rgba(10,13,18,0.15) 0%, rgba(10,13,18,0.6) 100%), url('images/carousel-mock/pipelines-flow.jpg') center / cover no-repeat; }
+    .card-pipelines { --card-accent: #ff6b35; }
+
+    .card-lss .apple-card-bg { background: linear-gradient(160deg, rgba(10,13,18,0.15) 0%, rgba(10,13,18,0.65) 100%), url('images/carousel-mock/lss-sigma.jpg') center / cover no-repeat; }
+    .card-lss { --card-accent: #c4b5fd; }
+
+    .card-roles .apple-card-bg { background: radial-gradient(circle at 30% 15%, rgba(246,173,85,0.30), transparent 60%), linear-gradient(160deg, #191410 0%, #0a0d12 100%); }
+    .card-roles { --card-accent: #f6ad55; }
+
+    /* expanded hero uses the same gradients directly */
+    .expand-hero.card-education { background: linear-gradient(160deg, rgba(10,13,18,0.35) 0%, rgba(10,13,18,0.8) 100%), url('images/carousel-mock/education-usc-nus.jpg') center 35% / cover no-repeat; }
+    .expand-hero.card-analytics { background: linear-gradient(160deg, rgba(10,13,18,0.55) 0%, rgba(10,13,18,0.88) 100%), url('images/carousel-mock/analytics-dashboard.jpg') center / cover no-repeat; }
+    .expand-hero.card-pipelines { background: linear-gradient(160deg, rgba(10,13,18,0.15) 0%, rgba(10,13,18,0.6) 100%), url('images/carousel-mock/pipelines-flow.jpg') center / cover no-repeat; }
+    .expand-hero.card-lss { background: linear-gradient(160deg, rgba(10,13,18,0.15) 0%, rgba(10,13,18,0.65) 100%), url('images/carousel-mock/lss-sigma.jpg') center / cover no-repeat; }
+    .expand-hero.card-roles { background: radial-gradient(circle at 30% 15%, rgba(246,173,85,0.30), transparent 60%), linear-gradient(160deg, #191410 0%, #0a0d12 100%); }
+
+    /* roles card: company logo conglomerate */
+    .logo-mosaic {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 24px;
+        z-index: 1;
+    }
+    .logo-tile {
+        background: #f5f5f5;
+        border-radius: 12px;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+    .logo-tile.dark {
+        background: #12151a;
+        border: 1px solid rgba(74,158,255,0.35);
+    }
+    .logo-tile img {
+        display: block;
+        max-width: 92px;
+        max-height: 34px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+    }
+    .expand-hero .logo-tile img { max-width: 120px; max-height: 44px; }
+
+    /* ===== EXPANDED OVERLAY ===== */
+    .expand-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(4,5,6,0.75);
+        backdrop-filter: blur(6px);
+        z-index: 999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s var(--transition-smooth);
+    }
+    .expand-overlay.active { opacity: 1; pointer-events: auto; }
+
+    .expand-panel {
+        position: fixed;
+        top: 4vh;
+        left: 50%;
+        transform: translateX(-50%) translateY(24px);
+        width: min(880px, 92vw);
+        max-height: 92vh;
+        overflow-y: auto;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-subtle);
+        border-radius: 28px;
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s var(--transition-smooth), transform 0.35s var(--transition-smooth);
+    }
+    .expand-panel.active { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+
+    .expand-hero {
+        position: relative;
+        height: 220px;
+        border-radius: 28px 28px 0 0;
+        overflow: hidden;
+    }
+    .expand-hero-scrim {
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(8,9,10,0.1) 0%, var(--bg-secondary) 100%);
+    }
+    .expand-close {
+        position: absolute;
+        top: 20px; right: 20px;
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        background: rgba(8,9,10,0.6);
+        border: 1px solid rgba(255,255,255,0.15);
+        color: #fff;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer;
+        z-index: 3;
+        font-size: 0.9rem;
+    }
+    .expand-hero-label {
+        position: absolute;
+        left: 32px; bottom: 24px;
+        z-index: 2;
+    }
+    .expand-hero-category {
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--card-accent, var(--accent));
+        margin-bottom: 8px;
+    }
+    .expand-hero-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0;
+    }
+    .expand-hero-subtitle {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        margin-top: 8px;
+        max-width: 560px;
+    }
+
+    .expand-body { padding: 32px 40px 48px; }
+
+    /* reused timeline styling (Education / Roles cards) */
+    .mock-entry {
+        border-left: 2px solid var(--border-subtle);
+        padding: 0 0 28px 24px;
+        margin-left: 6px;
+        position: relative;
+    }
+    .mock-entry::before {
+        content: '';
+        position: absolute;
+        left: -7px; top: 2px;
+        width: 12px; height: 12px;
+        border-radius: 50%;
+        background: var(--card-accent, var(--accent));
+        border: 2px solid var(--bg-secondary);
+    }
+    .mock-entry .yr { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .mock-entry h3 { margin: 4px 0 2px; font-size: 1.1rem; }
+    .mock-entry h4 { margin: 0 0 8px; font-size: 0.88rem; color: var(--text-secondary); font-weight: 500; }
+    .mock-entry p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.65; margin: 0 0 10px; }
+    .mock-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .mock-tag {
+        font-size: 0.72rem;
+        padding: 4px 10px;
+        border-radius: 20px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--border-subtle);
+        color: var(--text-secondary);
+    }
+
+    /* reused stage-grid styling (Analytics / Pipeline framework cards) */
+    .mock-stage-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+        margin: 20px 0 8px;
+    }
+    .mock-stage-card {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid var(--border-subtle);
+        border-radius: 14px;
+        padding: 16px 18px;
+    }
+    .mock-stage-num { font-size: 0.68rem; color: var(--card-accent, var(--accent)); font-weight: 700; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .mock-stage-card h4 { font-size: 0.92rem; margin: 0 0 8px; }
+    .mock-stage-card p { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+
+    .mock-callout {
+        background: rgba(255,255,255,0.03);
+        border-left: 3px solid var(--card-accent, var(--accent));
+        border-radius: 8px;
+        padding: 14px 18px;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        line-height: 1.65;
+        margin-top: 16px;
+    }
+    .mock-callout strong { color: var(--text-primary); }
+
+    .mock-mermaid-card {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid var(--border-subtle);
+        border-radius: 14px;
+        padding: 22px;
+        margin-top: 20px;
+        overflow-x: auto;
+    }
+    .mock-mermaid-card .mermaid { display: flex; justify-content: center; min-width: 480px; }
+
+    .mock-tree-block { margin-top: 36px; }
+    .mock-tree-block h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; margin: 0; }
+    .mock-tree-note { margin-top: 10px; color: var(--text-secondary); font-size: 0.86rem; line-height: 1.65; max-width: 700px; }
+
+    .mock-intro-text { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; margin-bottom: 4px; }
+
+    /* placeholder card */
+    .mock-placeholder {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-muted);
+    }
+    .mock-placeholder i { font-size: 2rem; color: var(--card-accent, var(--accent)); margin-bottom: 16px; display: block; }
+    .mock-placeholder p { font-size: 0.92rem; max-width: 420px; margin: 8px auto 0; line-height: 1.6; }
+
+    @media (max-width: 640px) {
+        header.navbar { padding: 16px 20px; }
+        .carousel-intro { padding: 40px 20px 24px; }
+        .carousel-track { padding: 12px 20px 24px; }
+        .apple-card { width: 260px; height: 380px; }
+        .expand-body { padding: 24px 22px 36px; }
+        .expand-hero-label { left: 22px; }
+    }
+</style>
+</head>
+<body>
+
+<div class="mock-banner">MOCKUP PREVIEW, not linked from the live site. Apple Cards Carousel concept for the Education page.</div>
+
+<header class="navbar">
+    <div class="navbar-brand">Tyler Vincent<span>.</span></div>
+</header>
+
+<div class="carousel-intro">
+    <div class="carousel-label">My Learning Journey</div>
+    <h2 class="carousel-heading">One milestone at a time, <span class="muted">smarter every day.</span></h2>
+    <p class="carousel-sub">Click any card to expand.</p>
+</div>
+
+<div class="carousel-wrap">
+    <div class="carousel-track" id="carousel-track">
+
+        <div class="apple-card card-education" data-card="education">
+            <div class="apple-card-bg"></div>
+            <div class="apple-card-scrim"></div>
+            <div class="apple-card-content">
+                <span class="apple-card-category">Education</span>
+                <h3 class="apple-card-title">Learning milestones in my career.</h3>
+            </div>
+        </div>
+
+        <div class="apple-card card-analytics" data-card="analytics">
+            <div class="apple-card-bg"></div>
+            <div class="apple-card-scrim"></div>
+            <div class="apple-card-content">
+                <span class="apple-card-category">Analytics</span>
+                <h3 class="apple-card-title">How I build insights that drive strategic action.</h3>
+            </div>
+        </div>
+
+        <div class="apple-card card-pipelines" data-card="pipelines">
+            <div class="apple-card-bg"></div>
+            <div class="apple-card-scrim"></div>
+            <div class="apple-card-content">
+                <span class="apple-card-category">Data Engineering</span>
+                <h3 class="apple-card-title">How I deliver trusted data pipelines for reliable reuse.</h3>
+            </div>
+        </div>
+
+        <div class="apple-card card-lss" data-card="lss">
+            <div class="apple-card-bg"></div>
+            <div class="apple-card-scrim"></div>
+            <div class="apple-card-content">
+                <span class="apple-card-category">Lean Six Sigma</span>
+                <h3 class="apple-card-title">How I engineer the cure through statistics and human behavior.</h3>
+            </div>
+        </div>
+
+        <div class="apple-card card-roles" data-card="roles">
+            <div class="apple-card-bg"></div>
+            <div class="logo-mosaic">
+                <div class="logo-tile"><img src="assets/logos/takeda-logo.svg" alt="Takeda"></div>
+                <div class="logo-tile"><img src="assets/logos/chewy-logo.svg" alt="Chewy"></div>
+                <div class="logo-tile dark"><img src="assets/logos/gd-electric-boat-logo.svg" alt="General Dynamics Electric Boat"></div>
+                <div class="logo-tile"><img src="assets/logos/aerospace-logo.svg" alt="The Aerospace Corporation"></div>
+                <div class="logo-tile"><img src="assets/logos/graymatics-logo.svg" alt="Graymatics"></div>
+            </div>
+            <div class="apple-card-scrim"></div>
+            <div class="apple-card-content">
+                <span class="apple-card-category">Roles</span>
+                <h3 class="apple-card-title">Takeaways from each of my roles.</h3>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="expand-overlay" id="expand-overlay" onclick="closeCard()"></div>
+
+<div class="expand-panel" id="expand-panel">
+    <div class="expand-hero" id="expand-hero">
+        <div class="logo-mosaic" id="expand-hero-mosaic" style="display:none;">
+            <div class="logo-tile"><img src="assets/logos/takeda-logo.svg" alt="Takeda"></div>
+            <div class="logo-tile"><img src="assets/logos/chewy-logo.svg" alt="Chewy"></div>
+            <div class="logo-tile dark"><img src="assets/logos/gd-electric-boat-logo.svg" alt="General Dynamics Electric Boat"></div>
+            <div class="logo-tile"><img src="assets/logos/aerospace-logo.svg" alt="The Aerospace Corporation"></div>
+            <div class="logo-tile"><img src="assets/logos/graymatics-logo.svg" alt="Graymatics"></div>
+        </div>
+        <div class="expand-hero-scrim"></div>
+        <button class="expand-close" onclick="closeCard()"><i class="fas fa-times"></i></button>
+        <div class="expand-hero-label">
+            <span class="expand-hero-category" id="expand-category"></span>
+            <h2 class="expand-hero-title" id="expand-title"></h2>
+            <p class="expand-hero-subtitle" id="expand-subtitle"></p>
+        </div>
+    </div>
+    <div class="expand-body" id="expand-body"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script>
+if (typeof mermaid !== 'undefined') {
+    mermaid.initialize({
+        startOnLoad: false,
+        theme: 'base',
+        themeVariables: {
+            darkMode: true,
+            background: '#08090a',
+            mainBkg: '#181c22',
+            primaryColor: '#181c22',
+            primaryTextColor: '#e7e9ec',
+            primaryBorderColor: '#00ff87',
+            secondaryColor: '#0f1115',
+            tertiaryColor: '#0f1115',
+            lineColor: '#4a525c',
+            textColor: '#a7adb7',
+            nodeTextColor: '#e7e9ec',
+            edgeLabelBackground: '#0f1115',
+            clusterBkg: '#0f1115',
+            clusterBorder: 'rgba(255,255,255,0.16)',
+            fontFamily: 'Inter, sans-serif',
+            fontSize: '13px'
+        },
+        flowchart: { curve: 'basis', htmlLabels: true, padding: 14 },
+        securityLevel: 'loose'
+    });
+}
+
+const CARD_DATA = {
+    education: {
+        category: 'Education',
+        title: 'Learning milestones in my career.',
+        subtitle: 'Certifications and coursework, most recent first.',
+        accent: '#4a9eff',
+        bgClass: 'card-education',
+        body: `
+            <p class="mock-intro-text">Certifications and coursework, most recent first.</p>
+            <div class="mock-entry">
+                <span class="yr">2026</span>
+                <h3>Model Context Protocol Certification</h3>
+                <h4>Anthropic</h4>
+                <p>Comprehensive foundation in modern AI systems, prompt engineering, agentic AI, and production deployments. Covers practical patterns for building reliable, governed multi-agent systems on constrained hardware.</p>
+                <div class="mock-tags">
+                    <span class="mock-tag">Prompt Engineering</span><span class="mock-tag">Agentic AI</span><span class="mock-tag">Model Context Protocol</span><span class="mock-tag">Production Thinking</span><span class="mock-tag">Governance &amp; Safety</span>
+                </div>
+            </div>
+            <div class="mock-entry">
+                <span class="yr">2024</span>
+                <h3>Data Ingestion Certification</h3>
+                <h4>Databricks</h4>
+                <p>Mastery of Databricks data ingestion patterns, Delta Lake fundamentals, and modern ETL/ELT architecture for building scalable, governed data pipelines.</p>
+                <div class="mock-tags">
+                    <span class="mock-tag">Delta Lake</span><span class="mock-tag">Data Ingestion</span><span class="mock-tag">ETL/ELT Design</span><span class="mock-tag">Data Governance</span>
+                </div>
+            </div>
+            <div class="mock-entry">
+                <span class="yr">2023</span>
+                <h3>Data Science: Machine Learning</h3>
+                <h4>Harvard University (HarvardX)</h4>
+                <div class="mock-tags">
+                    <span class="mock-tag">Classification</span><span class="mock-tag">Cross-Validation</span><span class="mock-tag">Regularization</span><span class="mock-tag">Ensemble Methods</span>
+                </div>
+            </div>
+            <div class="mock-entry">
+                <span class="yr">2020</span>
+                <h3>Lean Six Sigma Black Belt</h3>
+                <h4>General Dynamics Electric Boat</h4>
+                <div class="mock-tags">
+                    <span class="mock-tag">DMAIC</span><span class="mock-tag">Statistical Process Control</span><span class="mock-tag">Hypothesis Testing</span><span class="mock-tag">Root Cause Analysis</span>
+                </div>
+            </div>
+            <div class="mock-entry">
+                <span class="yr">Los Angeles, CA</span>
+                <h3>B.S. Industrial &amp; Systems Engineering</h3>
+                <h4>University of Southern California</h4>
+                <div class="mock-tags">
+                    <span class="mock-tag">Six Sigma &amp; Lean Ops</span><span class="mock-tag">Database Systems</span><span class="mock-tag">Engineering Statistics</span><span class="mock-tag">Operations Research</span>
+                </div>
+            </div>
+        `
+    },
+    analytics: {
+        category: 'Analytics',
+        title: 'How I build insights that drive strategic action.',
+        subtitle: 'The framework I run before any pipeline gets designed.',
+        accent: '#00ff87',
+        bgClass: 'card-analytics',
+        body: `
+            <p class="mock-intro-text">Before any pipeline gets designed, someone has to decide what's actually worth building. This is the process I run to get there.</p>
+            <div class="mock-stage-grid">
+                <div class="mock-stage-card"><div class="mock-stage-num">01 / INTAKE</div><h4>Understand the ask before touching data</h4><p>Who's actually sponsoring this, what resources and budget exist, and does it tie back to a real company initiative or North Star. I present alternatives up front so whatever we commit to is something the team has agreed to.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">02 / EVALUATION</div><h4>Measure the impact before committing to a build</h4><p>A small gap closes with a lightweight fix. A bigger effort gets weighed against true business impact, cost avoidance, and FTE hours before committing.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">03 / MOCKUP &amp; ITERATE</div><h4>Build small, put it in front of real users</h4><p>Small mockups or MVPs in front of stakeholders first, to make sure we're nudging in the right direction before building further.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">04 / DEPLOY &amp; HYPERCARE</div><h4>Launch isn't the finish line</h4><p>Staying embedded with users for the first couple of weeks after launch, sometimes on their shift schedule, because that's when the real gaps show up.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">05 / BEHAVIOR OVER FLASH</div><h4>Did this change what someone does?</h4><p>Checking back on a regular cadence: is engagement still there, did behavior stick or fade. Follows a DMAIC rhythm out of Six Sigma, applied continuously.</p></div>
+            </div>
+
+            <div class="mock-mermaid-card">
+                <pre class="mermaid">
+flowchart LR
+    A["1. Intake&lt;br/&gt;business case, sponsor,&lt;br/&gt;budget, North Star fit"] --> B["2. Evaluation&lt;br/&gt;measure impact,&lt;br/&gt;weigh real alternatives"]
+    B --> F{"Decide on solution,&lt;br/&gt;build task list"}
+    F --> C["3. Mockup &amp; Iterate&lt;br/&gt;build small,&lt;br/&gt;get it in front of users"]
+    C --> D["4. Deploy &amp; Hypercare&lt;br/&gt;embed with users,&lt;br/&gt;close the real gaps"]
+    D --> E["5. Behavior Over Flash&lt;br/&gt;did this change&lt;br/&gt;what someone does"]
+    E -.->|"behavior gap found"| A
+                </pre>
+            </div>
+
+            <div class="mock-callout"><strong>Deciding whether to actually deploy:</strong> is this a long-standing initiative or a flavor-of-the-month thing? Is there quality data and real user behavior behind it, or is it an ad hoc research project?</div>
+            <div class="mock-callout"><strong>In practice:</strong> this is the same loop behind the manufacturing performance board and the global training compliance dashboard: mockups before full builds, weeks embedded with users, and buy-in earned by showing the validation behind the numbers.</div>
+        `
+    },
+    pipelines: {
+        category: 'Data Engineering',
+        title: 'How I deliver trusted data pipelines for reliable reuse.',
+        subtitle: 'What runs before I write a line of code or pick a product.',
+        accent: '#ff6b35',
+        bgClass: 'card-pipelines',
+        body: `
+            <p class="mock-intro-text">Once the Analytics Framework has settled what's worth building, this is what runs before I write a line of code or pick a product.</p>
+            <div class="mock-stage-grid">
+                <div class="mock-stage-card"><div class="mock-stage-num">01 / RESTATE</div><h4>Say it back in my own words</h4><p>Most requirements describe a report someone wants, not the decision that report is supposed to change.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">02 / DISCOVER</div><h4>Interrogate the constraints, not the wishlist</h4><p>Volume, latency tolerance, who consumes it and how often, what "correct" means to an auditor versus an operator.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">03 / SKELETON</div><h4>Boxes and arrows, no vendor names</h4><p>Sources, a landing zone, a conformance layer, serving layers, consumers, only then Databricks, Snowflake, or CSVs.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">04 / TRADE-OFFS</div><h4>Name the fork, argue both sides out loud</h4><p>Batch vs. streaming, one gold model vs. two, centralized vs. federated, and the specific reason it fits this system.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">05 / FAILURE MODES</div><h4>Design the seams, not just the happy path</h4><p>What happens at 10x volume, or when a source system changes its schema without warning.</p></div>
+            </div>
+
+            <div class="mock-mermaid-card">
+                <pre class="mermaid">
+flowchart LR
+    A["1. Restate&lt;br/&gt;Name the real decision&lt;br/&gt;this system serves"] --> B["2. Discover&lt;br/&gt;Volume, latency,&lt;br/&gt;consumers, constraints"]
+    B --> C["3. Skeleton&lt;br/&gt;Boxes and arrows,&lt;br/&gt;no vendor names yet"]
+    C --> D["4. Trade-offs&lt;br/&gt;Name each fork,&lt;br/&gt;argue both sides"]
+    D --> E["5. Failure Modes&lt;br/&gt;What breaks this at&lt;br/&gt;10x, or a schema change"]
+    E -.->|"requirements shift"| A
+                </pre>
+            </div>
+
+            <div class="mock-tree-block">
+                <h3>Batch vs. Streaming</h3>
+                <p class="mock-tree-note">The real question is what the consumer does differently if data arrives five minutes fresher, not some abstract "how fresh should this be." Most of the time nothing changes, which means batch is correct and streaming is over-engineering with an ongoing operational tax attached to it.</p>
+                <div class="mock-mermaid-card">
+                    <pre class="mermaid">
+flowchart TD
+    Q1{"Can the consumer tolerate&lt;br/&gt;minutes-to-hours of staleness?"}
+    Q1 -->|"Yes"| Q2{"Is the source a high-write&lt;br/&gt;OLTP system you can't afford&lt;br/&gt;to hit with polling queries?"}
+    Q1 -->|"No, needs seconds"| STREAM["Streaming&lt;br/&gt;event bus + stream processor"]
+    Q2 -->|"Yes"| CDCB["Batch + CDC&lt;br/&gt;log-based capture, scheduled merge"]
+    Q2 -->|"No"| BATCH["Plain Batch&lt;br/&gt;scheduled extract or query"]
+    STREAM --> Q3{"Will you need to&lt;br/&gt;reprocess history later?"}
+    Q3 -->|"Yes"| HYBRID["Streaming + durable replay log&lt;br/&gt;(event store, not just a queue)"]
+    Q3 -->|"No"| STREAM
+                    </pre>
+                </div>
+            </div>
+
+            <div class="mock-tree-block">
+                <h3>CDC &amp; Schema Evolution</h3>
+                <p class="mock-tree-note">CDC earns its complexity when the source can't be polled without hurting it. Schema evolution is where I decide how much trust to extend automatically. Additive changes should be cheap to absorb by default. A type change or a dropped column is different: that gets a contract version, not a silent auto-merge.</p>
+                <div class="mock-mermaid-card">
+                    <pre class="mermaid">
+flowchart TD
+    S1{"Does the change only&lt;br/&gt;add a new nullable column?"}
+    S1 -->|"Yes"| PERMISSIVE["Auto-merge&lt;br/&gt;permissive schema evolution"]
+    S1 -->|"No, type change&lt;br/&gt;or column removed"| S2{"Do existing consumers&lt;br/&gt;depend on the old shape?"}
+    S2 -->|"Yes"| QUAR["Quarantine + version the contract&lt;br/&gt;(new versioned table/topic,&lt;br/&gt;deprecate the old one on a timeline)"]
+    S2 -->|"No"| CONTROLLED["Controlled replace&lt;br/&gt;single-owner migration script"]
+                    </pre>
+                </div>
+            </div>
+
+            <div class="mock-tree-block">
+                <h3>Serverless vs. Job Cluster (and the override hierarchy)</h3>
+                <p class="mock-tree-note">Ad hoc and bursty work defaults to serverless so nobody's waiting on cluster spin-up; sustained, tuned workloads get a dedicated job cluster. The part people skip is the hierarchy: a job-level override should always beat a workspace default, or someone's one-off notebook setting quietly becomes the production config.</p>
+                <div class="mock-mermaid-card">
+                    <pre class="mermaid">
+flowchart TD
+    C1{"Is the workload ad hoc,&lt;br/&gt;bursty, or exploratory?"}
+    C1 -->|"Yes"| SERVERLESS["Serverless SQL /&lt;br/&gt;Serverless Jobs"]
+    C1 -->|"No, sustained,&lt;br/&gt;predictable schedule"| C2{"Does it need a tuned&lt;br/&gt;cluster policy: custom libs,&lt;br/&gt;init scripts, GPU?"}
+    C2 -->|"Yes"| JOBCLUSTER["Dedicated Job Cluster"]
+    C2 -->|"No"| SERVERLESS
+    JOBCLUSTER -.->|"still governed by"| H1
+    SERVERLESS -.->|"still governed by"| H1
+    subgraph HIER["Override hierarchy: highest wins"]
+        direction LR
+        H1["Job-level compute override"] --> H2["Cluster policy default"] --> H3["Workspace default"] --> H4["Personal / interactive cluster"]
+    end
+                    </pre>
+                </div>
+            </div>
+        `
+    },
+    lss: {
+        category: 'Lean Six Sigma',
+        title: 'How I engineer the cure through statistics and human behavior.',
+        subtitle: 'Content coming soon.',
+        accent: '#c4b5fd',
+        bgClass: 'card-lss',
+        body: `
+            <div class="mock-placeholder">
+                <i class="fas fa-pen-ruler"></i>
+                <strong>Content coming soon</strong>
+                <p>This card is a placeholder. Tyler is providing the Lean Six Sigma Black Belt content (DMAIC case studies, process-improvement wins) to slot in here.</p>
+            </div>
+        `
+    },
+    roles: {
+        category: 'Roles',
+        title: 'Takeaways from each of my roles.',
+        subtitle: 'Every role, a new lesson learned.',
+        accent: '#f6ad55',
+        bgClass: 'card-roles',
+        body: `
+            <p class="mock-intro-text">Every role, a new lesson learned.</p>
+            <div class="mock-entry">
+                <span class="yr">2023 – Present</span>
+                <h3>Takeda Pharmaceuticals</h3>
+                <h4>Sr. Data and Analytics Engineer</h4>
+                <p>Built and owned full data products end-to-end. Developed a "North Star" mindset for scalable, governed data systems across enterprise manufacturing teams.</p>
+                <div class="mock-tags"><span class="mock-tag">Power BI</span><span class="mock-tag">Databricks</span><span class="mock-tag">SQL</span><span class="mock-tag">Enterprise Analytics</span><span class="mock-tag">Data Governance</span></div>
+            </div>
+            <div class="mock-entry">
+                <span class="yr">2021 – 2023</span>
+                <h3>Chewy, Inc</h3>
+                <h4>Systems Engineer II</h4>
+                <p>Fast-paced, data-driven environment focused on rapid deployment and iteration. Deepened skills in user behavior analysis, engagement metrics, and change management.</p>
+                <div class="mock-tags"><span class="mock-tag">Agile Execution</span><span class="mock-tag">Change Management</span><span class="mock-tag">User Behavior</span></div>
+            </div>
+            <div class="mock-entry">
+                <span class="yr">2020 – 2021</span>
+                <h3>Electric Boat, General Dynamics</h3>
+                <h4>Data and Process Engineer II</h4>
+                <p>Learned validation frameworks and structured system design in a classified manufacturing environment, alongside welders and machinists.</p>
+                <div class="mock-tags"><span class="mock-tag">Validation Frameworks</span><span class="mock-tag">System Design</span><span class="mock-tag">Six Sigma Black Belt</span></div>
+            </div>
+            <div class="mock-entry">
+                <span class="yr">2019 – 2020</span>
+                <h3>The Aerospace Corporation</h3>
+                <h4>Algorithm Development &amp; Early Career Engineering</h4>
+                <p>Built a foundation in Python and programming logic, satellite scheduling optimization on a Raspberry Pi.</p>
+                <div class="mock-tags"><span class="mock-tag">Python</span><span class="mock-tag">Algorithm Design</span><span class="mock-tag">Optimization</span></div>
+            </div>
+            <div class="mock-entry">
+                <span class="yr">2019, Singapore</span>
+                <h3>Singaporean SaaS Startup</h3>
+                <h4>AI Program Manager, Computer Vision</h4>
+                <p>Managed AI/data teams overseeing 8 international deployments for commercial and government clients.</p>
+                <div class="mock-tags"><span class="mock-tag">Computer Vision</span><span class="mock-tag">AI Systems</span><span class="mock-tag">International Deployments</span></div>
+            </div>
+        `
+    }
+};
+
+const overlay = document.getElementById('expand-overlay');
+const panel = document.getElementById('expand-panel');
+
+document.querySelectorAll('.apple-card').forEach(card => {
+    card.addEventListener('click', () => openCard(card.dataset.card));
+});
+
+function openCard(key) {
+    const data = CARD_DATA[key];
+    if (!data) return;
+    document.getElementById('expand-category').textContent = data.category;
+    document.getElementById('expand-title').textContent = data.title;
+    document.getElementById('expand-subtitle').textContent = data.subtitle;
+    document.getElementById('expand-body').innerHTML = data.body;
+    if (typeof mermaid !== 'undefined') {
+        const pending = document.querySelectorAll('#expand-body pre.mermaid');
+        if (pending.length) mermaid.run({ nodes: pending });
+    }
+
+    const hero = document.getElementById('expand-hero');
+    hero.className = 'expand-hero ' + data.bgClass;
+    hero.style.setProperty('--card-accent', data.accent);
+    panel.style.setProperty('--card-accent', data.accent);
+    document.getElementById('expand-hero-mosaic').style.display = (key === 'roles') ? 'flex' : 'none';
+
+    overlay.classList.add('active');
+    panel.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCard() {
+    overlay.classList.remove('active');
+    panel.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeCard();
+});
+</script>
+
+</body>
+</html>
