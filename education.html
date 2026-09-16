@@ -1,1003 +1,1349 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Education — Tyler Vincent</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
-    <link rel="stylesheet" href="shimmer-button.css">
-    <!-- Shared chatbot knowledge base (window.TYLER_KB) - not deferred, see
-         index.html for why: the inline chatbot script later in <body> reads
-         it synchronously as the parser reaches it. -->
-    <script src="portfolio-assistant.js" type="text/javascript"></script>
-    <script src="analytics.js" defer></script>
-    <script src="contact-info.js" defer></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Education - Tyler Vincent</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="shimmer-button.css">
+<script src="portfolio-assistant.js" type="text/javascript"></script>
+<script src="analytics.js" defer></script>
+<script src="contact-info.js" defer></script>
+<style>
+    :root {
+        --bg-primary: #08090a;
+        --bg-secondary: #0f1115;
+        --bg-card: #14171c;
+        --bg-card-hover: #181c22;
+        --text-primary: #ffffff;
+        --text-secondary: #a7adb7;
+        --text-muted: #68707c;
+        --accent: #00ff87;
+        --accent-blue: #4a9eff;
+        --accent-purple: #c4b5fd;
+        --accent-warm: #f6ad55;
+        --border-subtle: rgba(255,255,255,0.06);
+        --border-hover: rgba(255,255,255,0.12);
+        --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-        :root {
-            --bg-primary: #08090a;
-            --bg-secondary: #0f1115;
-            --bg-card: #14171c;
-            --bg-card-hover: #181c22;
-            --text-primary: #ffffff;
-            --text-secondary: #a7adb7;
-            --text-muted: #68707c;
-            --accent: #00ff87;
-            --accent-blue: #4a9eff;
-            --accent-purple: #c4b5fd;
-            --accent-warm: #f6ad55;
-            --border-subtle: rgba(255,255,255,0.06);
-            --border-hover: rgba(255,255,255,0.12);
-            --glass-border: rgba(255,255,255,0.08);
-            --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
-        }
+    * { box-sizing: border-box; }
 
-        html { scroll-behavior: smooth; }
+    body {
+        margin: 0;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        -webkit-font-smoothing: antialiased;
+    }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='2.2' fill='%2300ff87' fill-opacity='0.92'/%3E%3Cline x1='10' y1='1' x2='10' y2='7' stroke='%2300ff87' stroke-width='1.3' stroke-opacity='0.55'/%3E%3Cline x1='10' y1='13' x2='10' y2='19' stroke='%2300ff87' stroke-width='1.3' stroke-opacity='0.55'/%3E%3Cline x1='1' y1='10' x2='7' y2='10' stroke='%2300ff87' stroke-width='1.3' stroke-opacity='0.55'/%3E%3Cline x1='13' y1='10' x2='19' y2='10' stroke='%2300ff87' stroke-width='1.3' stroke-opacity='0.55'/%3E%3C/svg%3E") 10 10, crosshair;
-        }
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        height: 72px;
+        padding: 0 48px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(8,9,10,0.45);
+        backdrop-filter: blur(28px) saturate(1.8) brightness(1.06);
+        -webkit-backdrop-filter: blur(28px) saturate(1.8) brightness(1.06);
+        border-bottom: 1px solid rgba(0,255,135,0.07);
+        box-shadow: 0 1px 0 rgba(255,255,255,0.03), inset 0 1px 0 rgba(255,255,255,0.04);
+        transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+    .navbar.scrolled {
+        background: rgba(8,9,10,0.82);
+        border-bottom-color: rgba(0,255,135,0.14);
+        box-shadow: 0 1px 0 rgba(255,255,255,0.04), 0 8px 48px rgba(0,0,0,0.55);
+    }
+    .nav-brand {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-decoration: none;
+        letter-spacing: -0.5px;
+        position: relative;
+        display: inline-flex;
+        align-items: baseline;
+        background: linear-gradient(90deg, var(--text-primary), var(--accent), #8ca391, var(--text-primary));
+        background-size: 260% 100%;
+        background-position: 0% 50%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        transition: color 0.28s ease, background-position 0.55s var(--transition-smooth), text-shadow 0.28s ease, transform 0.28s var(--transition-smooth);
+    }
+    .nav-brand span { color: var(--accent); transition: color 0.28s ease, text-shadow 0.28s ease; }
+    .nav-brand::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -5px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        transform: scaleX(0);
+        transform-origin: left;
+        opacity: 0;
+        transition: transform 0.42s var(--transition-smooth), opacity 0.28s ease;
+    }
+    .nav-brand:hover,
+    .nav-brand:focus-visible {
+        color: transparent;
+        background-position: 100% 50%;
+        text-shadow: 0 0 18px rgba(0,255,135,0.22);
+        transform: translateY(-1px);
+        outline: none;
+    }
+    .nav-brand:hover span,
+    .nav-brand:focus-visible span {
+        color: #fff;
+        text-shadow: 0 0 16px rgba(0,255,135,0.5);
+    }
+    .nav-brand:hover::after,
+    .nav-brand:focus-visible::after {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+    .nav-menu { display: flex; align-items: center; gap: 8px; }
+    .nav-link {
+        padding: 8px 20px;
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        border-radius: 100px;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        bottom: 4px;
+        height: 1px;
+        background: var(--accent);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.28s var(--transition-smooth);
+    }
+    .nav-link:hover, .nav-link.active { color: var(--text-primary); background: rgba(255,255,255,0.06); }
+    .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+    .nav-cta {
+        padding: 10px 24px;
+        background: var(--text-primary);
+        color: var(--bg-primary);
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+        border-radius: 100px;
+        transition: all 0.3s var(--transition-smooth);
+        margin-left: 12px;
+    }
+    .nav-cta:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(255,255,255,0.15); }
+    .nav-toggle {
+        display: none;
+        background: none;
+        border: 0;
+        color: var(--text-primary);
+        font-size: 1.25rem;
+        padding: 10px;
+        cursor: pointer;
+    }
+    .nav-overlay {
+        display: none;
+        position: fixed;
+        inset: 72px 0 0;
+        background: rgba(0,0,0,0.55);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 998;
+    }
+    .nav-overlay.visible { display: block; }
+    .scroll-progress-track {
+        position: fixed;
+        top: 72px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: rgba(160,176,162,0.08);
+        z-index: 8000;
+        pointer-events: none;
+    }
+    .scroll-progress-bar {
+        height: 100%;
+        width: 0%;
+        background: var(--accent);
+        box-shadow: 0 0 8px rgba(0,255,135,0.55);
+    }
 
-        a, button, input, select, textarea, [role="button"], [onclick], label {
-            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='11' stroke='%2300ff87' stroke-width='1.5' fill='none' stroke-opacity='0.85'/%3E%3Ccircle cx='14' cy='14' r='2' fill='%2300ff87' fill-opacity='0.9'/%3E%3C/svg%3E") 14 14, pointer;
-        }
+    .carousel-intro {
+        padding: 136px 48px 32px;
+        max-width: 900px;
+    }
+    .carousel-label {
+        color: var(--accent);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+    }
+    .carousel-heading {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        font-weight: 700;
+        line-height: 1.15;
+        margin: 0 0 12px;
+    }
+    .carousel-heading .muted { color: var(--text-muted); }
+    .carousel-sub {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
 
-        #matrix-cursor-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; }
-        @media (max-width: 768px) { #matrix-cursor-canvas { display: none; } }
+    /* ===== CAROUSEL ===== */
+    .carousel-wrap {
+        padding: 8px 0 80px;
+    }
+    .carousel-track {
+        display: flex;
+        gap: 20px;
+        overflow-x: auto;
+        padding: 12px 48px 24px;
+        scroll-snap-type: x proximity;
+        -webkit-overflow-scrolling: touch;
+    }
+    .carousel-track::-webkit-scrollbar { height: 12px; }
+    .carousel-track::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); border-radius: 6px; }
+    .carousel-track::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 6px; border: 2px solid var(--bg-primary); }
+    .carousel-track { scrollbar-width: auto; }
 
-        .heading-matrix-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
-        .section-header .section-label,
-        .section-header .section-heading { position: relative; z-index: 1; }
+    .apple-card {
+        position: relative;
+        flex: 0 0 auto;
+        width: 320px;
+        height: 430px;
+        border-radius: 24px;
+        overflow: hidden;
+        cursor: pointer;
+        scroll-snap-align: start;
+        border: 1px solid var(--border-subtle);
+        background: var(--bg-card);
+        transition: transform 0.4s var(--transition-smooth), border-color 0.4s;
+    }
+    .apple-card:hover { transform: translateY(-6px); border-color: var(--border-hover); }
 
-        /* Grain */
-        .grain {
-            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 9999; opacity: 0.5;
-        }
+    .apple-card-bg {
+        position: absolute;
+        inset: 0;
+        opacity: 0.9;
+    }
+    .apple-card-scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(8,9,10,0.92) 0%, rgba(8,9,10,0.35) 45%, rgba(8,9,10,0.15) 100%);
+    }
+    .apple-card-content {
+        position: absolute;
+        left: 0; right: 0; top: 0;
+        padding: 28px 26px;
+        z-index: 2;
+    }
+    .apple-card-category {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--card-accent, var(--accent));
+        margin-bottom: 8px;
+    }
+    .apple-card-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.45rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 0;
+        line-height: 1.25;
+        max-width: 250px;
+    }
 
-        /* Navbar */
-        .navbar {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            padding: 0 48px; height: 72px;
-            display: flex; align-items: center; justify-content: space-between;
-            background: rgba(8,9,10,0.45);
-            backdrop-filter: blur(28px) saturate(1.8) brightness(1.06);
-            -webkit-backdrop-filter: blur(28px) saturate(1.8) brightness(1.06);
-            border-bottom: 1px solid rgba(0,255,135,0.07);
-            box-shadow: 0 1px 0 rgba(255,255,255,0.03), inset 0 1px 0 rgba(255,255,255,0.04);
-            transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
-        }
+    /* per-card accent + gradient */
+    .card-education .apple-card-bg { background: linear-gradient(160deg, rgba(10,13,18,0.35) 0%, rgba(10,13,18,0.8) 100%), url('images/carousel-mock/education-usc-nus.jpg') center 35% / cover no-repeat; }
+    .card-education { --card-accent: #4a9eff; }
 
-        .scroll-progress-track {
-            position: fixed; top: 72px; left: 0; right: 0; height: 3px;
-            background: rgba(160,176,162,0.08); z-index: 999; pointer-events: none;
-        }
-        .scroll-progress-bar {
-            height: 100%; width: 0%; background: var(--accent);
-            box-shadow: 0 0 8px rgba(0,255,135,0.55);
-        }
-        .navbar.scrolled {
-            background: rgba(8,9,10,0.82);
-            backdrop-filter: blur(36px) saturate(2) brightness(1.0);
-            -webkit-backdrop-filter: blur(36px) saturate(2) brightness(1.0);
-            border-bottom-color: rgba(0,255,135,0.14);
-            box-shadow: 0 1px 0 rgba(255,255,255,0.04), 0 8px 48px rgba(0,0,0,0.55), 0 0 120px rgba(0,255,135,0.02);
-        }
+    .card-analytics .apple-card-bg { background: linear-gradient(160deg, rgba(10,13,18,0.55) 0%, rgba(10,13,18,0.88) 100%), url('images/carousel-mock/analytics-dashboard.jpg') center / cover no-repeat; }
+    .card-analytics { --card-accent: #00ff87; }
 
-        .nav-brand {
-            font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700;
-            color: var(--text-primary); text-decoration: none; letter-spacing: -0.5px;
-        }
-        .nav-brand span { color: var(--accent); }
+    .card-pipelines .apple-card-bg { background: linear-gradient(160deg, rgba(10,13,18,0.15) 0%, rgba(10,13,18,0.6) 100%), url('images/carousel-mock/pipelines-flow.jpg') center / cover no-repeat; }
+    .card-pipelines { --card-accent: #ff6b35; }
 
-        .nav-menu { display: flex; align-items: center; gap: 8px; }
+    .card-lss .apple-card-bg { background: linear-gradient(160deg, rgba(10,13,18,0.15) 0%, rgba(10,13,18,0.65) 100%), url('images/carousel-mock/lss-sigma.jpg') center / cover no-repeat; }
+    .card-lss { --card-accent: #c4b5fd; }
 
-        .nav-link {
-            padding: 8px 20px; color: var(--text-secondary); text-decoration: none;
-            font-size: 0.85rem; font-weight: 500; letter-spacing: 0.3px;
-            border-radius: 100px; transition: all 0.3s ease;
-            position: relative;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            left: 18px;
-            right: 18px;
-            bottom: 4px;
-            height: 1px;
-            background: var(--accent);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.28s var(--transition-smooth);
-        }
-        .nav-link:hover, .nav-link.active { color: var(--text-primary); background: rgba(255,255,255,0.06); }
-        .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+    .card-roles .apple-card-bg { background: linear-gradient(160deg, rgba(10,13,18,0.25) 0%, rgba(10,13,18,0.78) 100%), url('images/carousel-mock/roles-collage.jpg') center / cover no-repeat; }
+    .card-roles { --card-accent: #f6ad55; }
 
-        .nav-cta {
-            padding: 10px 24px; background: var(--text-primary); color: var(--bg-primary);
-            text-decoration: none; font-size: 0.85rem; font-weight: 600;
-            border-radius: 100px; transition: all 0.3s var(--transition-smooth); margin-left: 12px;
-        }
-        .nav-cta:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(255,255,255,0.15); }
-        .nav-cta i,
-        .footer-socials a i,
-        .footer-col a i,
-        .edu-card i,
-        .timeline-content i {
-            transition: transform 0.24s var(--transition-smooth);
-        }
-        .nav-cta:hover i,
-        .footer-col a:hover i { transform: translateX(3px); }
-        .edu-card:hover i,
-        .timeline-content:hover i { transform: translateY(-2px); }
+    /* expanded hero uses the same gradients directly */
+    .expand-hero.card-education { background: linear-gradient(160deg, rgba(10,13,18,0.35) 0%, rgba(10,13,18,0.8) 100%), url('images/carousel-mock/education-usc-nus.jpg') center 35% / cover no-repeat; }
+    .expand-hero.card-analytics { background: linear-gradient(160deg, rgba(10,13,18,0.55) 0%, rgba(10,13,18,0.88) 100%), url('images/carousel-mock/analytics-dashboard.jpg') center / cover no-repeat; }
+    .expand-hero.card-pipelines { background: linear-gradient(160deg, rgba(10,13,18,0.15) 0%, rgba(10,13,18,0.6) 100%), url('images/carousel-mock/pipelines-flow.jpg') center / cover no-repeat; }
+    .expand-hero.card-lss { background: linear-gradient(160deg, rgba(10,13,18,0.15) 0%, rgba(10,13,18,0.65) 100%), url('images/carousel-mock/lss-sigma.jpg') center / cover no-repeat; }
+    .expand-hero.card-roles { background: linear-gradient(160deg, rgba(10,13,18,0.25) 0%, rgba(10,13,18,0.7) 100%), url('images/carousel-mock/roles-collage.jpg') center / cover no-repeat; }
 
-        .nav-toggle { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.4rem; cursor: pointer; }
+    /* ===== EXPANDED OVERLAY ===== */
+    .expand-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(4,5,6,0.75);
+        backdrop-filter: blur(6px);
+        z-index: 999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s var(--transition-smooth);
+    }
+    .expand-overlay.active { opacity: 1; pointer-events: auto; }
 
-        /* Section */
-        .section { padding: 120px 48px; position: relative; }
+    .expand-panel {
+        position: fixed;
+        top: 4vh;
+        left: 50%;
+        transform: translateX(-50%) translateY(24px);
+        width: min(880px, 92vw);
+        max-height: 92vh;
+        overflow-y: auto;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-subtle);
+        border-radius: 28px;
+        z-index: 8001;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s var(--transition-smooth), transform 0.35s var(--transition-smooth);
+    }
+    .expand-panel.active { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
 
-        .section-label {
-            display: inline-flex; align-items: center; gap: 8px;
-            font-size: 0.75rem; font-weight: 700; letter-spacing: 3px;
-            text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
-        }
-        .section-label::before { content: ''; width: 32px; height: 1px; background: var(--accent); }
+    .expand-hero {
+        position: relative;
+        height: 220px;
+        border-radius: 28px 28px 0 0;
+        overflow: hidden;
+    }
+    .expand-hero-scrim {
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(8,9,10,0.1) 0%, var(--bg-secondary) 100%);
+    }
+    .expand-close {
+        position: absolute;
+        top: 20px; right: 20px;
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        background: rgba(8,9,10,0.6);
+        border: 1px solid rgba(255,255,255,0.15);
+        color: #fff;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer;
+        z-index: 3;
+        font-size: 0.9rem;
+    }
+    .expand-hero-label {
+        position: absolute;
+        left: 32px; bottom: 24px;
+        z-index: 2;
+    }
+    .expand-hero-category {
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--card-accent, var(--accent));
+        margin-bottom: 8px;
+    }
+    .expand-hero-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0;
+    }
+    .expand-hero-subtitle {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        margin-top: 8px;
+        max-width: 560px;
+    }
 
-        .section-heading {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 800;
-            letter-spacing: -2px; line-height: 1.1; max-width: 700px;
-        }
-        .section-heading .muted { color: var(--text-muted); }
+    .expand-body { padding: 32px 40px 48px; }
 
-        /* Timeline */
-        .timeline {
-            margin-top: 64px;
-            position: relative;
-            max-width: 800px;
-        }
+    /* reused timeline styling (Education / Roles cards) */
+    .mock-entry {
+        border-left: 2px solid var(--border-subtle);
+        padding: 0 0 28px 24px;
+        margin-left: 6px;
+        position: relative;
+    }
+    .mock-entry::before {
+        content: '';
+        position: absolute;
+        left: -7px; top: 2px;
+        width: 12px; height: 12px;
+        border-radius: 50%;
+        background: var(--card-accent, var(--accent));
+        border: 2px solid var(--bg-secondary);
+    }
+    .mock-entry .yr { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .mock-entry h3 { margin: 4px 0 2px; font-size: 1.1rem; }
+    .mock-entry h4 { margin: 0 0 8px; font-size: 0.88rem; color: var(--text-secondary); font-weight: 500; }
+    .mock-entry p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.65; margin: 0 0 10px; }
+    .mock-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .mock-tag {
+        font-size: 0.72rem;
+        padding: 4px 10px;
+        border-radius: 20px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--border-subtle);
+        color: var(--text-secondary);
+        transition: all 0.25s ease;
+        cursor: default;
+    }
+    .mock-tag.has-tip:hover {
+        background: rgba(0,255,135,0.08);
+        color: var(--accent);
+        border-color: rgba(0,255,135,0.35);
+        box-shadow: 0 0 12px rgba(0,255,135,0.15), 0 0 24px rgba(0,255,135,0.06);
+        transform: translateY(-1px);
+    }
+    .mock-skill-tooltip {
+        position: fixed;
+        top: 0; left: 0;
+        background: #111;
+        border: 1px solid rgba(0,255,135,0.25);
+        border-radius: 12px;
+        padding: 12px 16px;
+        width: 220px;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        line-height: 1.55;
+        box-shadow: 0 0 30px rgba(0,255,135,0.1), 0 8px 32px rgba(0,0,0,0.5);
+        pointer-events: none;
+        opacity: 0;
+        transform: translateY(-50%) scale(0.94);
+        transition: opacity 0.18s ease, transform 0.18s ease;
+        z-index: 9000;
+        white-space: normal;
+    }
+    .mock-skill-tooltip::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 12px; height: 12px;
+        background: #111;
+        transform: translateY(-50%) rotate(45deg);
+    }
+    .mock-skill-tooltip.pos-left::after { right: -7px; border-top: 1px solid rgba(0,255,135,0.25); border-right: 1px solid rgba(0,255,135,0.25); }
+    .mock-skill-tooltip.pos-right::after { left: -7px; border-bottom: 1px solid rgba(0,255,135,0.25); border-left: 1px solid rgba(0,255,135,0.25); }
+    .mock-skill-tooltip strong {
+        display: block;
+        color: var(--accent);
+        font-size: 0.7rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+    }
+    .mock-skill-tooltip.visible { opacity: 1; transform: translateY(-50%) scale(1); }
 
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 28px;
-            top: 0;
+    .mock-cred-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-decoration: none;
+        border: 1px solid;
+        margin-top: 4px;
+        transition: all 0.25s ease;
+        letter-spacing: 0.2px;
+    }
+    .mock-cred-btn.blue { color: rgba(74,158,255,0.9); border-color: rgba(74,158,255,0.25); background: rgba(74,158,255,0.06); }
+    .mock-cred-btn.blue:hover { background: rgba(74,158,255,0.13); border-color: rgba(74,158,255,0.45); transform: translateY(-1px); }
+    .mock-cred-btn.warm { color: rgba(246,173,85,0.9); border-color: rgba(246,173,85,0.25); background: rgba(246,173,85,0.06); }
+    .mock-cred-btn.warm:hover { background: rgba(246,173,85,0.13); border-color: rgba(246,173,85,0.45); transform: translateY(-1px); }
+    .mock-cred-btn i { font-size: 0.7rem; }
+
+    /* reused stage-grid styling (Analytics / Pipeline framework cards) */
+    .mock-stage-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+        margin: 20px 0 8px;
+    }
+    .mock-stage-card {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid var(--border-subtle);
+        border-radius: 14px;
+        padding: 16px 18px;
+    }
+    .mock-stage-num { font-size: 0.68rem; color: var(--card-accent, var(--accent)); font-weight: 700; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .mock-stage-card h4 { font-size: 0.92rem; margin: 0 0 8px; }
+    .mock-stage-card p { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+
+    .mock-callout {
+        background: rgba(255,255,255,0.03);
+        border-left: 3px solid var(--card-accent, var(--accent));
+        border-radius: 8px;
+        padding: 14px 18px;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        line-height: 1.65;
+        margin-top: 16px;
+    }
+    .mock-callout strong { color: var(--text-primary); }
+
+    .mock-mermaid-card {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid var(--border-subtle);
+        border-radius: 14px;
+        padding: 22px;
+        margin-top: 20px;
+        overflow-x: auto;
+    }
+    .mock-mermaid-card .mermaid { display: flex; justify-content: center; min-width: 480px; }
+
+    .mock-tree-block { margin-top: 36px; }
+    .mock-tree-block h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; margin: 0; }
+    .mock-tree-note { margin-top: 10px; color: var(--text-secondary); font-size: 0.86rem; line-height: 1.65; max-width: 700px; }
+
+    .mock-intro-text { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; margin-bottom: 4px; }
+
+    /* Lean Six Sigma comparison visual */
+    .sigma-chart {
+        display: grid;
+        gap: 16px;
+        margin-top: 18px;
+    }
+    .sigma-chart-row { display: grid; grid-template-columns: 92px 1fr 86px; gap: 12px; align-items: center; }
+    .sigma-chart-label { color: var(--text-secondary); font-size: 0.76rem; font-weight: 600; }
+    .sigma-chart-track { height: 12px; border-radius: 999px; background: rgba(255,255,255,0.06); overflow: hidden; }
+    .sigma-chart-bar { height: 100%; border-radius: inherit; background: linear-gradient(90deg, #c4b5fd, #8b5cf6); }
+    .sigma-chart-bar.three { width: 86%; background: linear-gradient(90deg, #f6ad55, #ef6c4d); }
+    .sigma-chart-bar.six { width: 4%; min-width: 8px; }
+    .sigma-chart-value { text-align: right; color: var(--text-primary); font-size: 0.78rem; font-variant-numeric: tabular-nums; }
+    .sigma-chart-note { margin: 14px 0 0; color: var(--text-muted); font-size: 0.75rem; line-height: 1.55; }
+
+    .loss-compare {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 18px;
+    }
+    .loss-panel {
+        position: relative;
+        min-height: 230px;
+        border: 1px solid var(--border-subtle);
+        border-radius: 14px;
+        background: rgba(255,255,255,0.03);
+        padding: 18px;
+        overflow: hidden;
+    }
+    .loss-panel h4 {
+        margin: 0 0 10px;
+        color: var(--card-accent, var(--accent));
+        font-size: 0.9rem;
+    }
+    .loss-caption {
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        bottom: 16px;
+        color: var(--text-secondary);
+        font-size: 0.78rem;
+        line-height: 1.45;
+    }
+    .loss-axis {
+        position: absolute;
+        left: 15%;
+        right: 15%;
+        bottom: 72px;
+        height: 2px;
+        background: rgba(246,173,85,0.78);
+    }
+    .loss-limit {
+        position: absolute;
+        bottom: 72px;
+        width: 3px;
+        height: 122px;
+        background: #f6ad55;
+        border-radius: 999px;
+    }
+    .loss-limit.left { left: 28%; }
+    .loss-limit.right { right: 28%; }
+    .loss-limit span {
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #f6d365;
+        font-size: 0.7rem;
+        font-weight: 700;
+    }
+    .loss-ok {
+        position: absolute;
+        left: 38%;
+        right: 38%;
+        bottom: 74px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        font-size: 0.82rem;
+        font-weight: 700;
+        border-top: 1px solid rgba(255,255,255,0.22);
+    }
+    .loss-block {
+        position: absolute;
+        bottom: 74px;
+        width: 26%;
+        height: 98px;
+        background: rgba(196,181,253,0.16);
+        border: 1px solid rgba(196,181,253,0.28);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        font-weight: 700;
+    }
+    .loss-block.left { left: 2%; }
+    .loss-block.right { right: 2%; }
+    .loss-curve-svg {
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        bottom: 72px;
+        width: 76%;
+        height: 132px;
+        overflow: visible;
+    }
+    .loss-target {
+        position: absolute;
+        left: 50%;
+        bottom: 62px;
+        transform: translateX(-50%);
+        color: #f6d365;
+        font-size: 0.72rem;
+        font-weight: 700;
+    }
+    .loss-example {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 12px;
+        font-size: 0.72rem;
+        color: var(--text-secondary);
+    }
+    .loss-example div {
+        border: 1px solid var(--border-subtle);
+        border-radius: 10px;
+        padding: 9px 10px;
+        background: rgba(255,255,255,0.025);
+    }
+    .loss-example strong {
+        display: block;
+        color: var(--text-primary);
+        font-size: 0.75rem;
+        margin-bottom: 3px;
+    }
+    .loss-scale {
+        position: absolute;
+        left: 16%;
+        right: 16%;
+        bottom: 92px;
+        height: 76px;
+    }
+    .loss-scale-line {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 2px;
+        background: rgba(246,173,85,0.72);
+    }
+    .loss-scale::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        width: 3px;
+        height: 76px;
+        transform: translateX(-50%);
+        background: rgba(196,181,253,0.9);
+        border-radius: 999px;
+    }
+    .loss-scale-label {
+        position: absolute;
+        bottom: -21px;
+        transform: translateX(-50%);
+        color: #f6d365;
+        font-size: 0.68rem;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+    .loss-scale-label.lsl { left: 0; }
+    .loss-scale-label.target { left: 50%; color: #c4b5fd; }
+    .loss-scale-label.usl { left: 100%; }
+    .loss-dot {
+        position: absolute;
+        bottom: 2px;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        transform: translate(-50%, 50%);
+        border: 2px solid var(--bg-secondary);
+        box-shadow: 0 0 0 1px rgba(255,255,255,0.25);
+    }
+    .loss-dot.target { left: 50%; background: #c4b5fd; }
+    .loss-dot.edge { left: 86%; background: #f6ad55; }
+    .loss-dot-label {
+        position: absolute;
+        transform: translateX(-50%);
+        text-align: center;
+        width: 112px;
+        color: var(--text-secondary);
+        font-size: 0.68rem;
+        line-height: 1.25;
+    }
+    .loss-dot-label.target { left: 50%; top: -5px; color: #c4b5fd; }
+    .loss-dot-label.edge { left: 86%; top: 18px; color: #f6ad55; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border-subtle); padding: 72px 48px 36px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; }
+    .footer-brand span { color: var(--accent); }
+    .footer-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; max-width: 360px; }
+    .footer-col h4 { font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-primary); margin: 0 0 16px; }
+    .footer-col a { display: block; color: var(--text-muted); text-decoration: none; font-size: 0.9rem; padding: 4px 0; transition: color 0.2s ease; }
+    .footer-col a:hover { color: var(--text-primary); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--border-subtle); }
+    .footer-copyright { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-socials { display: flex; gap: 16px; }
+    .footer-socials a { color: var(--text-muted); font-size: 1.1rem; transition: all 0.3s ease; text-decoration: none; }
+    .footer-socials a:hover { color: var(--accent); transform: translateY(-2px); }
+
+    /* Site assistant */
+    #site-assistant { position: fixed; bottom: 90px; right: 24px; z-index: 7000; }
+    #sa-toggle {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: var(--accent);
+        border: none;
+        color: #000;
+        font-size: 1.2rem;
+        cursor: pointer;
+        box-shadow: 0 4px 24px rgba(0,255,135,0.35);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    #sa-toggle:hover { transform: scale(1.08); box-shadow: 0 6px 32px rgba(0,255,135,0.5); }
+    #sa-panel {
+        position: absolute;
+        bottom: 64px;
+        right: 0;
+        width: 320px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: 16px;
+        overflow: hidden;
+        display: none;
+        box-shadow: 0 16px 60px rgba(0,0,0,0.6);
+        animation: slideUp 0.25s var(--transition-smooth) both;
+    }
+    #sa-panel.open { display: flex; flex-direction: column; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    #sa-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 16px;
+        background: rgba(0,255,135,0.06);
+        border-bottom: 1px solid var(--border-subtle);
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--accent);
+    }
+    #sa-header button { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.85rem; }
+    #sa-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 14px;
+        max-height: 280px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .sa-msg { font-size: 0.76rem; line-height: 1.55; padding: 9px 12px; border-radius: 10px; max-width: 90%; }
+    .sa-msg.bot { background: rgba(255,255,255,0.05); border: 1px solid var(--border-subtle); color: var(--text-secondary); align-self: flex-start; }
+    .sa-msg.user { background: rgba(0,255,135,0.1); border: 1px solid rgba(0,255,135,0.2); color: var(--text-primary); align-self: flex-end; }
+    #sa-suggestions { display: flex; flex-wrap: wrap; gap: 5px; padding: 8px 14px; border-top: 1px solid var(--border-subtle); }
+    .sa-chip { padding: 4px 10px; border-radius: 100px; font-size: 0.63rem; background: rgba(255,255,255,0.04); border: 1px solid var(--border-subtle); color: var(--text-muted); cursor: pointer; transition: all 0.15s ease; }
+    .sa-chip:hover { background: rgba(0,255,135,0.08); border-color: rgba(0,255,135,0.25); color: var(--accent); }
+    #sa-input-row { display: flex; gap: 6px; padding: 10px 12px; border-top: 1px solid var(--border-subtle); }
+    #sa-input { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid var(--border-subtle); border-radius: 8px; color: var(--text-primary); padding: 7px 10px; font-size: 0.75rem; outline: none; min-width: 0; }
+    #sa-input:focus { border-color: rgba(0,255,135,0.3); }
+    #sa-send { background: var(--accent); border: none; border-radius: 8px; color: #000; width: 32px; height: 32px; cursor: pointer; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.15s ease; }
+    #sa-send:hover { transform: scale(1.08); }
+    #sa-send:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* placeholder card */
+    .mock-placeholder {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-muted);
+    }
+    .mock-placeholder i { font-size: 2rem; color: var(--card-accent, var(--accent)); margin-bottom: 16px; display: block; }
+    .mock-placeholder p { font-size: 0.92rem; max-width: 420px; margin: 8px auto 0; line-height: 1.6; }
+
+    @media (max-width: 640px) {
+        .carousel-intro { padding: 116px 20px 24px; }
+        .carousel-track { padding: 12px 20px 24px; }
+        .apple-card { width: 260px; height: 380px; }
+        .expand-body { padding: 24px 22px 36px; }
+        .expand-hero-label { left: 22px; }
+        .footer { padding: 44px 20px 24px; }
+        .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+        .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+        .loss-compare { grid-template-columns: 1fr; }
+        .loss-example { grid-template-columns: 1fr; }
+        .sigma-chart-row { grid-template-columns: 74px 1fr 78px; gap: 8px; }
+    }
+
+    @media (max-width: 768px) {
+        .navbar { padding: 0 20px; }
+        .nav-menu { display: none; }
+        .nav-menu.open {
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 72px;
+            left: 0;
+            right: 0;
             bottom: 0;
-            width: 1px;
-            background: linear-gradient(to bottom, var(--accent), var(--border-subtle), transparent);
+            background: rgba(10,10,10,0.97);
+            padding: 32px;
+            gap: 4px;
+            z-index: 999;
         }
-
-        .timeline-entry {
-            display: flex;
-            gap: 32px;
-            padding-bottom: 48px;
-            position: relative;
-        }
-
-        .timeline-entry:last-child { padding-bottom: 0; }
-
-        .timeline-icon {
-            width: 56px;
-            height: 56px;
-            min-width: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg-card);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            font-size: 1.2rem;
-            color: var(--accent);
-            z-index: 1;
-            transition: all 0.3s ease;
-        }
-
-        .timeline-icon.blue { color: var(--accent-blue); }
-        .timeline-icon.purple { color: var(--accent-purple); }
-        .timeline-icon.warm { color: var(--accent-warm); }
-        .timeline-icon.red { color: #ff5f57; }
-
-        .timeline-entry:hover .timeline-icon {
-            transform: scale(1.08);
-            border-color: rgba(0,255,135,0.5);
-            box-shadow: 0 0 0 4px rgba(0,255,135,0.07), 0 0 24px rgba(0,255,135,0.12);
-            transition: transform 0.3s var(--transition-smooth), border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        /* Credential pill CTA */
-        .cred-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            border-radius: 100px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-decoration: none;
-            border: 1px solid;
-            margin-top: 14px;
-            transition: all 0.25s ease;
-            letter-spacing: 0.2px;
-        }
-
-        .cred-btn.blue {
-            color: rgba(74,158,255,0.9);
-            border-color: rgba(74,158,255,0.25);
-            background: rgba(74,158,255,0.06);
-        }
-        .cred-btn.blue:hover {
-            background: rgba(74,158,255,0.13);
-            border-color: rgba(74,158,255,0.45);
-            transform: translateY(-1px);
-        }
-
-        .cred-btn.warm {
-            color: rgba(246,173,85,0.9);
-            border-color: rgba(246,173,85,0.25);
-            background: rgba(246,173,85,0.06);
-        }
-        .cred-btn.warm:hover {
-            background: rgba(246,173,85,0.13);
-            border-color: rgba(246,173,85,0.45);
-            transform: translateY(-1px);
-        }
-
-        .cred-btn i { font-size: 0.7rem; }
-
-        .timeline-content {
-            flex: 1;
-            padding-top: 8px;
-        }
-
-        .timeline-year {
-            display: inline-block;
-            padding: 4px 12px;
-            background: rgba(0,255,135,0.06);
-            border: 1px solid rgba(0,255,135,0.15);
-            border-radius: 100px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--accent);
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
-        .timeline-content h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 4px;
-        }
-
-        .timeline-content h4 {
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-        }
-
-        .course-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .course-tags { position: relative; }
-
-        .course-tag {
-            padding: 6px 14px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border-subtle);
-            border-radius: 100px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-            cursor: default;
-        }
-
-        .course-tag:hover {
-            background: rgba(0,255,135,0.08);
-            color: var(--accent);
-            border-color: rgba(0,255,135,0.35);
-            box-shadow: 0 0 12px rgba(0,255,135,0.15), 0 0 24px rgba(0,255,135,0.06);
-            transform: translateY(-1px);
-        }
-
-        .skill-tooltip {
-            position: absolute;
-            right: calc(100% + 14px);
-            top: 50%;
-            transform: translateY(-50%) scale(0.94);
-            background: #111;
-            border: 1px solid rgba(0,255,135,0.25);
-            border-radius: 12px;
-            padding: 12px 16px;
-            width: 220px;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            line-height: 1.55;
-            box-shadow: 0 0 30px rgba(0,255,135,0.1), 0 8px 32px rgba(0,0,0,0.5);
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.22s ease, transform 0.22s ease;
-            z-index: 100;
-            white-space: normal;
-        }
-
-        .skill-tooltip::after {
-            content: '';
-            position: absolute;
-            right: -7px;
-            top: 50%;
-            transform: translateY(-50%) rotate(45deg);
-            width: 12px;
-            height: 12px;
-            background: #111;
-            border-top: 1px solid rgba(0,255,135,0.25);
-            border-right: 1px solid rgba(0,255,135,0.25);
-        }
-
-        .skill-tooltip.right-position {
-            right: auto;
-            left: calc(100% + 14px);
-        }
-
-        .skill-tooltip.right-position::after {
-            right: auto;
-            left: -7px;
-            transform: translateY(-50%) rotate(-135deg);
-            border-top: none;
-            border-right: none;
-            border-bottom: 1px solid rgba(0,255,135,0.25);
-            border-left: 1px solid rgba(0,255,135,0.25);
-        }
-
-        .skill-tooltip strong {
-            display: block;
-            color: var(--accent);
-            font-size: 0.7rem;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-        }
-
-        .course-tag:hover .skill-tooltip {
-            opacity: 1;
-            transform: translateY(-50%) scale(1);
-        }
-
-        /* Mobile optimization */
-        @media (max-width: 768px) {
-            .skill-tooltip {
-                position: fixed;
-                right: 12px;
-                left: 12px;
-                top: 50%;
-                transform: translateY(-50%) scale(0.94);
-                width: auto;
-                max-height: 70vh;
-                max-width: calc(100vw - 24px);
-                overflow-y: auto;
-                z-index: 1001;
-            }
-
-            .skill-tooltip::after {
-                display: none;
-            }
-
-            .skill-tooltip.right-position {
-                left: 12px;
-                right: 12px;
-            }
-
-            .skill-tooltip.right-position::after {
-                display: none;
-            }
-
-            .course-tag:hover .skill-tooltip {
-                transform: translateY(-50%) scale(1);
-            }
-        }
-
-        /* Footer */
-        .footer {
-            border-top: 1px solid var(--border-subtle);
-            padding: 80px 48px 40px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 48px;
-            margin-bottom: 48px;
-        }
-
-        .footer-brand {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.5rem; font-weight: 700; margin-bottom: 12px;
-        }
-        .footer-brand span { color: var(--accent); }
-
-        .footer-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; max-width: 360px; }
-
-        .footer-col h4 {
-            font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
-            text-transform: uppercase; color: var(--text-primary); margin-bottom: 16px;
-        }
-
-        .footer-col a {
-            display: block; color: var(--text-muted); text-decoration: none;
-            font-size: 0.9rem; padding: 4px 0; transition: color 0.2s ease;
-        }
-        .footer-col a:hover { color: var(--text-primary); }
-
-        .footer-bottom {
-            display: flex; justify-content: space-between; align-items: center;
-            padding-top: 24px; border-top: 1px solid var(--border-subtle);
-        }
-
-        .footer-copyright { font-size: 0.8rem; color: var(--text-muted); }
-
-        .footer-socials { display: flex; gap: 16px; }
-        .footer-socials a {
-            color: var(--text-muted); font-size: 1.1rem;
-            transition: all 0.3s ease; text-decoration: none;
-        }
-        .footer-socials a:hover { color: var(--accent); transform: translateY(-2px); }
-
-        /* Reveal */
-        .reveal {
-            opacity: 0; transform: translateY(40px);
-            transition: all 0.8s var(--transition-smooth);
-        }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .section { padding: 80px 32px; }
-            .navbar { padding: 0 24px; }
-            .footer { padding: 60px 32px 30px; }
-            .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-        }
-
-        .nav-overlay { display: none; position: fixed; inset: 72px 0 0 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 998; }
-        .nav-overlay.visible { display: block; }
-
-        @media (max-width: 768px) {
-            .nav-menu { display: none; }
-            .nav-menu.open {
-                display: flex; flex-direction: column; position: fixed;
-                top: 72px; left: 0; right: 0; bottom: 0;
-                background: rgba(10,10,10,0.97); padding: 32px; gap: 4px; z-index: 999;
-            }
-            .nav-menu.open .nav-link { font-size: 1.2rem; padding: 16px; }
-            .nav-menu.open .nav-cta { margin-left: 0; margin-top: 16px; text-align: center; padding: 16px; }
-            .nav-toggle { display: block; }
-
-            .section { padding: 60px 20px; }
-            .navbar { padding: 0 20px; }
-            .timeline::before { left: 28px; }
-            .timeline-entry { gap: 20px; }
-            .footer { padding: 40px 20px 24px; }
-            .footer-grid { grid-template-columns: 1fr; gap: 24px; }
-            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
-        }
-
-        /* ===== SITE ASSISTANT ===== */
-        #site-assistant { position: fixed; bottom: 90px; right: 24px; z-index: 5000; }
-        #sa-toggle {
-            width: 52px; height: 52px; border-radius: 50%;
-            background: var(--accent); border: none; color: #000;
-            font-size: 1.2rem; cursor: pointer;
-            box-shadow: 0 4px 24px rgba(0,255,135,0.35);
-            display: flex; align-items: center; justify-content: center;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        #sa-toggle:hover { transform: scale(1.08); box-shadow: 0 6px 32px rgba(0,255,135,0.5); }
+        .nav-menu.open .nav-link { font-size: 1.2rem; padding: 16px; }
+        .nav-menu.open .nav-cta { margin-left: 0; margin-top: 16px; text-align: center; padding: 16px; }
+        .nav-toggle { display: block; }
+        #site-assistant { bottom: 0; right: 0; left: 0; z-index: 7000; }
+        #sa-toggle { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; z-index: 7001; }
         #sa-panel {
-            position: absolute; bottom: 64px; right: 0;
-            width: 320px; background: var(--bg-card);
-            border: 1px solid var(--border-subtle); border-radius: 16px;
-            overflow: hidden; display: none;
-            box-shadow: 0 16px 60px rgba(0,0,0,0.6);
-            animation: slideUp 0.25s var(--transition-smooth) both;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+            max-height: none;
+            animation: slideUpFull 0.25s var(--transition-smooth) both;
         }
-        #sa-panel.open { display: flex; flex-direction: column; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-        #sa-header {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 14px 16px; background: rgba(0,255,135,0.06);
-            border-bottom: 1px solid var(--border-subtle);
-            font-size: 0.75rem; font-weight: 700; color: var(--accent);
-        }
-        #sa-header button { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.85rem; }
-        #sa-messages {
-            flex: 1; overflow-y: auto; padding: 14px; max-height: 280px;
-            display: flex; flex-direction: column; gap: 10px;
-        }
-        .sa-msg { font-size: 0.76rem; line-height: 1.55; padding: 9px 12px; border-radius: 10px; max-width: 90%; }
-        .sa-msg.bot { background: rgba(255,255,255,0.05); border: 1px solid var(--border-subtle); color: var(--text-secondary); align-self: flex-start; }
-        .sa-msg.user { background: rgba(0,255,135,0.1); border: 1px solid rgba(0,255,135,0.2); color: var(--text-primary); align-self: flex-end; }
-        #sa-suggestions { display: flex; flex-wrap: wrap; gap: 5px; padding: 8px 14px; border-top: 1px solid var(--border-subtle); }
-        .sa-chip { padding: 4px 10px; border-radius: 100px; font-size: 0.63rem; background: rgba(255,255,255,0.04); border: 1px solid var(--border-subtle); color: var(--text-muted); cursor: pointer; transition: all 0.15s ease; }
-        .sa-chip:hover { background: rgba(0,255,135,0.08); border-color: rgba(0,255,135,0.25); color: var(--accent); }
-        #sa-input-row { display: flex; gap: 6px; padding: 10px 12px; border-top: 1px solid var(--border-subtle); }
-        #sa-input { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid var(--border-subtle); border-radius: 8px; color: var(--text-primary); padding: 7px 10px; font-size: 0.75rem; outline: none; }
-        #sa-input:focus { border-color: rgba(0,255,135,0.3); }
-        #sa-send { background: var(--accent); border: none; border-radius: 8px; color: #000; width: 32px; height: 32px; cursor: pointer; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.15s ease; }
-        #sa-send:hover { transform: scale(1.08); }
-        #sa-send:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        @media (max-width: 768px) {
-            #site-assistant { bottom: 0; right: 0; left: 0; z-index: 9999; }
-            #sa-toggle { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; z-index: 10000; }
-            #sa-panel {
-                position: fixed; bottom: 0; right: 0; left: 0; top: 0; width: 100%; height: 100%;
-                border-radius: 0; max-height: none; animation: slideUpFull 0.25s var(--transition-smooth) both;
-            }
-            @keyframes slideUpFull { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-            #sa-messages { max-height: calc(100vh - 200px); }
-            #sa-header { font-size: 1rem; padding: 16px 20px; }
-            #sa-suggestions { padding: 12px 16px; }
-            .sa-chip { font-size: 0.7rem; padding: 6px 12px; }
-            #sa-input { font-size: 0.9rem; padding: 10px 14px; }
-            #sa-send { width: 40px; height: 40px; font-size: 1rem; }
-        }
-
-        /* Education / Framework view toggle */
-        .view-toggle-wrap { margin: 28px 0 8px; }
-        .view-toggle {
-            display: inline-flex;
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 100px;
-            padding: 3px;
-        }
-        .view-btn {
-            padding: 8px 22px; border-radius: 100px;
-            font-size: 0.78rem; font-weight: 600; letter-spacing: 0.3px;
-            color: var(--text-muted); background: none; border: none;
-            cursor: pointer; transition: all 0.25s ease;
-            display: inline-flex; align-items: center; gap: 7px;
-        }
-        .view-btn.active { background: var(--text-primary); color: var(--bg-primary); box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
-        .view-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-        @media (max-width: 640px) {
-            .view-btn { padding: 8px 14px; font-size: 0.72rem; }
-        }
-
-        /* How I Approach Things (optional framework section) */
-        .framework-details {
-            margin-top: 8px; border: 1px solid var(--border-subtle); border-radius: 16px;
-            background: var(--bg-card); overflow: hidden;
-        }
-        .framework-details-body { padding: 24px 28px 32px; }
-        .framework-details-body > p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.8; max-width: 760px; margin-bottom: 28px; }
-
-        .sub-framework {
-            margin-top: 8px; border: 1px solid var(--border-subtle); border-radius: 14px;
-            background: var(--bg-secondary); overflow: hidden;
-        }
-        .sub-framework + .sub-framework { margin-top: 20px; }
-        .sub-framework > summary {
-            list-style: none; cursor: pointer; padding: 16px 20px; display: flex;
-            align-items: center; justify-content: space-between; gap: 12px;
-            font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 700;
-        }
-        .sub-framework > summary::-webkit-details-marker { display: none; }
-        .sub-framework > summary .fw-chevron { transition: transform 0.3s var(--transition-smooth); color: var(--accent); font-size: 0.85rem; }
-        .sub-framework[open] > summary .fw-chevron { transform: rotate(180deg); }
-        .sub-framework-body { padding: 4px 20px 24px; }
-
-        .stage-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 20px; }
-        .stage-card {
-            background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px;
-            padding: 18px 16px;
-        }
-        .stage-num { font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; font-weight: 700; color: var(--accent); letter-spacing: 1px; margin-bottom: 8px; }
-        .stage-card h4 { font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; margin-bottom: 8px; }
-        .stage-card p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.55; }
-
-        .mermaid-card {
-            background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px;
-            padding: 22px; margin-top: 20px; overflow-x: auto;
-        }
-        .mermaid-card .mermaid { display: flex; justify-content: center; min-width: 520px; }
-
-        .tree-block { margin-top: 40px; }
-        .tree-block h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; font-weight: 700; }
-        .tree-note { margin-top: 10px; color: var(--text-secondary); font-size: 0.88rem; line-height: 1.7; max-width: 700px; }
-
-        .fw-callout {
-            margin-top: 20px; padding: 16px 20px; border-radius: 12px;
-            background: rgba(0,255,135,0.04); border: 1px solid rgba(0,255,135,0.16);
-            font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7;
-        }
-        .fw-callout strong { color: var(--text-primary); }
-
-        @media (max-width: 1100px) {
-            .stage-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 640px) {
-            .stage-grid { grid-template-columns: 1fr; }
-            .framework-details-body { padding: 20px 20px 24px; }
-        }
-    </style>
+        @keyframes slideUpFull { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        #sa-messages { max-height: calc(100vh - 200px); }
+        #sa-header { font-size: 1rem; padding: 16px 20px; }
+        #sa-suggestions { padding: 12px 16px; }
+        .sa-chip { font-size: 0.7rem; padding: 6px 12px; }
+        #sa-input { font-size: 0.9rem; padding: 10px 14px; }
+        #sa-send { width: 40px; height: 40px; font-size: 1rem; }
+    }
+</style>
 </head>
 <body>
 
-    <div class="grain"></div>
-    <canvas id="matrix-cursor-canvas"></canvas>
+<nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-brand">Tyler Vincent<span>.</span></a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+        <i class="fas fa-bars" id="nav-toggle-icon"></i>
+    </button>
+    <div class="nav-menu" id="nav-menu">
+        <a href="index.html" class="nav-link">Work</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="education.html" class="nav-link active">Education</a>
+        <a href="index.html#projects" class="nav-link">Projects</a>
+        <a href="files/TylerVincent-Resume.pdf" class="nav-link" target="_blank" rel="noopener">Resume</a>
+        <a href="https://www.linkedin.com/in/tyler-vincent11/" class="nav-cta shimmer-btn" target="_blank" rel="noopener"><span class="shimmer-spark-wrap"><span class="shimmer-spark"></span></span>Let's Connect <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i><span class="shimmer-highlight"></span><span class="shimmer-backdrop"></span></a>
+    </div>
+</nav>
+<div class="scroll-progress-track"><div class="scroll-progress-bar" id="scroll-progress-bar"></div></div>
+<div class="nav-overlay" id="nav-overlay"></div>
 
-    <!-- Navbar -->
-    <nav class="navbar" id="navbar">
-        <a href="index.html" class="nav-brand">Tyler Vincent<span>.</span></a>
-        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
-            <i class="fas fa-bars" id="nav-toggle-icon"></i>
-        </button>
-        <div class="nav-menu" id="nav-menu">
-            <a href="index.html" class="nav-link">Work</a>
-            <a href="about.html" class="nav-link">About</a>
-            <a href="education.html" class="nav-link active">Education</a>
-            <a href="index.html#projects" class="nav-link">Projects</a>
-            <a href="files/TylerVincent-Resume.pdf" class="nav-link" target="_blank" rel="noopener">Resume</a>
-            <a href="https://www.linkedin.com/in/tyler-vincent11/" class="nav-cta shimmer-btn" target="_blank"><span class="shimmer-spark-wrap"><span class="shimmer-spark"></span></span>Let's Connect <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i><span class="shimmer-highlight"></span><span class="shimmer-backdrop"></span></a>
-        </div>
-    </nav>
-    <div class="scroll-progress-track"><div class="scroll-progress-bar" id="scroll-progress-bar"></div></div>
-    <div class="nav-overlay" id="nav-overlay"></div>
+<div class="carousel-intro">
+    <div class="carousel-label">My Learning Journey</div>
+    <h2 class="carousel-heading">One milestone at a time, <span class="muted">smarter every day.</span></h2>
+    <p class="carousel-sub">Click any card to expand.</p>
+</div>
 
-    <div data-stretchy-page>
+<div class="carousel-wrap">
+    <div class="carousel-track" id="carousel-track">
 
-    <!-- Education Section -->
-    <section class="section" style="padding-top: 140px; padding-bottom: 0;">
-        <div class="section-header" style="animation: fadeInUp 0.8s var(--transition-smooth) both; position: relative; overflow: hidden; background: var(--bg-primary);">
-            <canvas class="heading-matrix-bg"></canvas>
-            <div class="section-label">Education</div>
-            <h2 class="section-heading">Always learning, <br><span class="muted">always growing.</span></h2>
-        </div>
-
-        <div class="view-toggle-wrap">
-            <div class="view-toggle" role="group" aria-label="Page view">
-                <button class="view-btn active" id="btn-education-view" onclick="setEduView('education')" aria-pressed="true">
-                    <i class="fas fa-graduation-cap"></i> Education
-                </button>
-                <button class="view-btn" id="btn-framework-view" onclick="setEduView('framework')" aria-pressed="false">
-                    <i class="fas fa-route"></i> My Problem-Solving Framework
-                </button>
+        <div class="apple-card card-education" data-card="education">
+            <div class="apple-card-bg"></div>
+            <div class="apple-card-scrim"></div>
+            <div class="apple-card-content">
+                <span class="apple-card-category">Education</span>
+                <h3 class="apple-card-title">Learning milestones in my career.</h3>
             </div>
         </div>
-    </section>
 
-    <div id="education-view">
-    <section class="section" style="padding-top: 0;">
-        <div class="timeline">
-
-            <!-- Anthropic Model Context Protocol -->
-            <div class="timeline-entry reveal">
-                <div class="timeline-icon" style="background:rgba(74,158,255,0.2);border:1px solid rgba(74,158,255,0.35);color:#4a9eff;"><i class="fas fa-certificate"></i></div>
-                <div class="timeline-content">
-                    <span class="timeline-year">2026</span>
-                    <h3>Model Context Protocol Certification</h3>
-                    <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px;">Anthropic</p>
-                    <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.7;margin-bottom:16px;">Comprehensive foundation in modern AI systems, prompt engineering, agentic AI, and production deployments. Covers practical patterns for building reliable, governed multi-agent systems on constrained hardware.</p>
-                    <div class="course-tags">
-                        <span class="course-tag">Prompt Engineering<span class="skill-tooltip"><strong>Prompt Engineering</strong>Crafting effective prompts for Claude models, managing context windows, and structuring inputs for reliability and cost efficiency.</span></span>
-                        <span class="course-tag">Agentic AI<span class="skill-tooltip"><strong>Agentic AI</strong>Building multi-agent systems with tool use, orchestration patterns, and governance frameworks for autonomous decision-making.</span></span>
-                        <span class="course-tag">Model Context Protocol (MCP)<span class="skill-tooltip"><strong>Model Context Protocol</strong>Standardized client/server bridge for connecting AI agents to tools and data sources without custom integration code.</span></span>
-                        <span class="course-tag">Production Thinking<span class="skill-tooltip"><strong>Production Thinking</strong>Designing AI systems for reliability, observability, failure modes, and human oversight in real-world deployments.</span></span>
-                        <span class="course-tag">Constrained Hardware<span class="skill-tooltip"><strong>Constrained Hardware</strong>Strategies for running multi-agent systems on limited resources through model stratification, caching, and intelligent routing.</span></span>
-                        <span class="course-tag">Governance &amp; Safety<span class="skill-tooltip"><strong>Governance & Safety</strong>Approval gates, audit logging, sandboxing, and escalation protocols for AI systems that operate autonomously.</span></span>
-                    </div>
-                    <a href="https://verify.skilljar.com/c/amt8t2mxxkje" target="_blank" class="cred-btn blue"><i class="fas fa-external-link-alt"></i> Verify credential</a>
-                </div>
+        <div class="apple-card card-analytics" data-card="analytics">
+            <div class="apple-card-bg"></div>
+            <div class="apple-card-scrim"></div>
+            <div class="apple-card-content">
+                <span class="apple-card-category">Analytics</span>
+                <h3 class="apple-card-title">How I build insights that drive strategic action.</h3>
             </div>
-
-            <!-- Databricks Data Ingestion -->
-            <div class="timeline-entry reveal">
-                <div class="timeline-icon" style="background:rgba(255,107,53,0.2);border:1px solid rgba(255,107,53,0.35);color:#ff6b35;"><i class="fas fa-certificate"></i></div>
-                <div class="timeline-content">
-                    <span class="timeline-year">2024</span>
-                    <h3>Data Ingestion Certification</h3>
-                    <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px;">Databricks</p>
-                    <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.7;margin-bottom:16px;">Mastery of Databricks data ingestion patterns, Delta Lake fundamentals, and modern ETL/ELT architecture for building scalable, governed data pipelines.</p>
-                    <div class="course-tags">
-                        <span class="course-tag">Delta Lake<span class="skill-tooltip"><strong>Delta Lake</strong>ACID transactions, time travel, and unified batch/streaming — building reliable data foundations at scale.</span></span>
-                        <span class="course-tag">Data Ingestion<span class="skill-tooltip"><strong>Data Ingestion</strong>Designing patterns for reliable, incremental data movement from diverse sources into unified analytical platforms.</span></span>
-                        <span class="course-tag">ETL/ELT Design<span class="skill-tooltip"><strong>ETL/ELT Design</strong>Modern extract-load-transform strategies for building maintainable, scalable data pipelines that evolve with business needs.</span></span>
-                        <span class="course-tag">Data Governance<span class="skill-tooltip"><strong>Data Governance</strong>Unity Catalog, access control, and lineage tracking for compliant, auditable data platforms.</span></span>
-                    </div>
-                    <a href="files/DatabricksDataIngestionCert.pdf" target="_blank" class="cred-btn warm"><i class="fas fa-file-pdf"></i> View Certificate</a>
-                </div>
-            </div>
-
-            <!-- Harvard -->
-            <div class="timeline-entry reveal">
-                <div class="timeline-icon red"><i class="fas fa-brain"></i></div>
-                <div class="timeline-content">
-                    <span class="timeline-year">2023</span>
-                    <h3>Data Science: Machine Learning</h3>
-                    <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px;">Harvard University (HarvardX)</p>
-                    <div class="course-tags">
-                        <span class="course-tag">Classification<span class="skill-tooltip"><strong>Classification</strong>Trained models to predict categorical outcomes using decision trees, random forests, and SVMs — foundational for fraud detection, churn prediction, and labeling pipelines.</span></span>
-                        <span class="course-tag">Cross-Validation<span class="skill-tooltip"><strong>Cross-Validation</strong>K-fold and LOOCV techniques to reliably estimate model performance and prevent overfitting — critical for shipping trustworthy ML products.</span></span>
-                        <span class="course-tag">Regularization<span class="skill-tooltip"><strong>Regularization</strong>Ridge, Lasso, and Elastic Net methods to reduce model complexity and improve generalization on unseen data.</span></span>
-                        <span class="course-tag">Matrix Factorization<span class="skill-tooltip"><strong>Matrix Factorization</strong>Collaborative filtering and SVD for recommendation systems — the same techniques powering Netflix, Spotify, and Amazon suggestions.</span></span>
-                        <span class="course-tag">Ensemble Methods<span class="skill-tooltip"><strong>Ensemble Methods</strong>Boosting and bagging approaches (Random Forests, XGBoost-style) that combine weak learners into highly accurate predictors.</span></span>
-                        <span class="course-tag">Recommendation Systems<span class="skill-tooltip"><strong>Recommendation Systems</strong>Built end-to-end pipelines using user-item interaction data to surface personalized content at scale.</span></span>
-                        <span class="course-tag">Naive Bayes<span class="skill-tooltip"><strong>Naive Bayes</strong>Probabilistic classifier used for text classification, spam detection, and rapid baseline modeling with high interpretability.</span></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Chewy -->
-            <div class="timeline-entry reveal reveal-delay-1">
-                <div class="timeline-icon warm"><i class="fas fa-people-arrows"></i></div>
-                <div class="timeline-content">
-                    <span class="timeline-year">2022</span>
-                    <h3>Organizational Change Management</h3>
-                    <h4>Chewy, Inc</h4>
-                    <div class="course-tags">
-                        <span class="course-tag">ADKAR Model<span class="skill-tooltip"><strong>ADKAR Model</strong>Prosci's Awareness → Desire → Knowledge → Ability → Reinforcement framework — the industry standard for structuring any large-scale organizational transition.</span></span>
-                        <span class="course-tag">Stakeholder Mapping<span class="skill-tooltip"><strong>Stakeholder Mapping</strong>Identifying and categorizing impacted groups by influence and resistance level to tailor communication and reduce friction during rollouts.</span></span>
-                        <span class="course-tag">Change Readiness<span class="skill-tooltip"><strong>Change Readiness</strong>Assessing organizational capacity and culture fit before deploying change — reduces failure rates by surfacing blockers early.</span></span>
-                        <span class="course-tag">Resistance Management<span class="skill-tooltip"><strong>Resistance Management</strong>Structured techniques to diagnose root causes of resistance and convert skeptics into advocates — essential in enterprise tech adoption.</span></span>
-                        <span class="course-tag">Communication Planning<span class="skill-tooltip"><strong>Communication Planning</strong>Designing targeted messaging cadences across stakeholder tiers to ensure no group is left behind during transformation.</span></span>
-                        <span class="course-tag">Training Design<span class="skill-tooltip"><strong>Training Design</strong>Building role-based training programs that close skill gaps and accelerate adoption of new tools, processes, or systems.</span></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Electric Boat -->
-            <div class="timeline-entry reveal reveal-delay-2">
-                <div class="timeline-icon"><i class="fas fa-award"></i></div>
-                <div class="timeline-content">
-                    <span class="timeline-year">2020</span>
-                    <h3>Lean Six Sigma Black Belt</h3>
-                    <h4>General Dynamics Electric Boat</h4>
-                    <div class="course-tags">
-                        <span class="course-tag">DMAIC<span class="skill-tooltip"><strong>DMAIC</strong>Define → Measure → Analyze → Improve → Control. The Six Sigma backbone for eliminating defects and reducing variation in any process.</span></span>
-                        <span class="course-tag">Statistical Process Control<span class="skill-tooltip"><strong>Statistical Process Control</strong>Using control charts (X-bar, R, P-charts) to monitor process stability and catch out-of-control signals before they become defects.</span></span>
-                        <span class="course-tag">Hypothesis Testing<span class="skill-tooltip"><strong>Hypothesis Testing</strong>T-tests, ANOVA, and chi-square methods to make data-driven decisions with statistical confidence — separating signal from noise.</span></span>
-                        <span class="course-tag">Value Stream Mapping<span class="skill-tooltip"><strong>Value Stream Mapping</strong>Visualizing end-to-end process flow to identify waste, bottlenecks, and non-value-add steps — the entry point to every Lean transformation.</span></span>
-                        <span class="course-tag">Root Cause Analysis<span class="skill-tooltip"><strong>Root Cause Analysis</strong>Fishbone diagrams and 5-Why methodology to drill past symptoms and permanently resolve the source of recurring problems.</span></span>
-                        <span class="course-tag">Kaizen<span class="skill-tooltip"><strong>Kaizen</strong>Continuous improvement philosophy applied in rapid-improvement events — delivering measurable gains in days, not quarters.</span></span>
-                        <span class="course-tag">Process Capability<span class="skill-tooltip"><strong>Process Capability</strong>Cp and Cpk analysis to quantify how well a process meets specification limits and where tolerance headroom exists.</span></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- USC -->
-            <div class="timeline-entry reveal">
-                <div class="timeline-icon blue"><i class="fas fa-graduation-cap"></i></div>
-                <div class="timeline-content">
-                    <span class="timeline-year">Los Angeles, CA</span>
-                    <h3>B.S. Industrial &amp; Systems Engineering</h3>
-                    <h4>University of Southern California</h4>
-                    <div class="course-tags">
-                        <span class="course-tag">Six Sigma &amp; Lean Ops<span class="skill-tooltip"><strong>Six Sigma & Lean Ops</strong>Reduction of process variation and waste elimination — the foundation of every engineering improvement project in manufacturing and beyond.</span></span>
-                        <span class="course-tag">Database Systems<span class="skill-tooltip"><strong>Database Systems</strong>Relational modeling, SQL, normalization, and query optimization — the backbone of every data pipeline and analytics platform.</span></span>
-                        <span class="course-tag">Engineering Statistics<span class="skill-tooltip"><strong>Engineering Statistics</strong>Regression, ANOVA, and reliability analysis applied to real engineering problems — turns raw data into decisions.</span></span>
-                        <span class="course-tag">Probability Concepts<span class="skill-tooltip"><strong>Probability Concepts</strong>Stochastic modeling and probabilistic reasoning — prerequisite for machine learning, simulation, and risk analysis.</span></span>
-                        <span class="course-tag">Discrete Simulation<span class="skill-tooltip"><strong>Discrete Simulation</strong>Modeling complex systems with randomness (queues, factories, networks) to predict behavior before committing resources.</span></span>
-                        <span class="course-tag">Operations Research<span class="skill-tooltip"><strong>Operations Research</strong>Linear programming and optimization models to allocate resources, minimize cost, and maximize throughput in constrained systems.</span></span>
-                        <span class="course-tag">HCI Design<span class="skill-tooltip"><strong>HCI Design</strong>Human-Computer Interaction — designing interfaces around user mental models, reducing friction and cognitive load in products.</span></span>
-                        <span class="course-tag">Facilities Design<span class="skill-tooltip"><strong>Facilities Design</strong>Layout optimization, flow analysis, and ergonomics for physical workspaces — applies directly to supply chain and manufacturing ops.</span></span>
-                        <span class="course-tag">Project Management<span class="skill-tooltip"><strong>Project Management</strong>Scheduling, risk management, and stakeholder coordination across complex multi-phase engineering projects.</span></span>
-                        <span class="course-tag">Statics<span class="skill-tooltip"><strong>Statics</strong>Force analysis and structural equilibrium — builds the engineering intuition for physical system constraints and load paths.</span></span>
-                        <span class="course-tag">Multimedia Production<span class="skill-tooltip"><strong>Multimedia Production</strong>Technical storytelling through video, audio, and visual media — sharpens the ability to communicate complex ideas simply.</span></span>
-                        <span class="course-tag">Materials Science<span class="skill-tooltip"><strong>Materials Science</strong>Properties, failure modes, and selection criteria of metals, polymers, and composites — critical context for manufacturing and defense work.</span></span>
-                        <span class="course-tag">MATLAB<span class="skill-tooltip"><strong>MATLAB</strong>Numerical computing, signal processing, and algorithm prototyping — bridging engineering math to executable code.</span></span>
-                        <span class="course-tag">Calculus III<span class="skill-tooltip"><strong>Calculus III</strong>Multivariable calculus, gradients, and vector fields — the mathematical foundation behind optimization algorithms in ML and engineering.</span></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- NUS -->
-            <div class="timeline-entry reveal reveal-delay-1">
-                <div class="timeline-icon purple"><i class="fas fa-globe-asia"></i></div>
-                <div class="timeline-content">
-                    <span class="timeline-year">Singapore</span>
-                    <h3>Industrial Engineering Management Exchange Program</h3>
-                    <h4>National University of Singapore</h4>
-                    <div class="course-tags">
-                        <span class="course-tag">IE2100 - Probability Models<span class="skill-tooltip"><strong>IE2100 – Probability Models</strong>Markov chains, queuing theory, and stochastic processes — modeling real-world uncertainty in manufacturing, logistics, and tech systems.</span></span>
-                        <span class="course-tag">IE2140 - Engineering Economy<span class="skill-tooltip"><strong>IE2140 – Engineering Economy</strong>NPV, IRR, and cost-benefit analysis for engineering decisions — translates technical trade-offs into business value.</span></span>
-                        <span class="course-tag">GES1031 - Culture &amp; Communication<span class="skill-tooltip"><strong>GES1031 – Culture & Communication</strong>Cross-cultural communication in international business settings — directly applied during 8 global AI deployments in Singapore.</span></span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Learning Journey Section -->
-    <section class="section" style="padding-top: 0;">
-        <div class="section-header" style="animation: fadeInUp 0.8s var(--transition-smooth) both; position: relative; overflow: hidden; background: var(--bg-primary);">
-            <canvas class="heading-matrix-bg"></canvas>
-            <div class="section-label">Learning Journey</div>
-            <h2 class="section-heading">Every role, <br><span class="muted">a new lesson learned.</span></h2>
         </div>
 
-        <div class="timeline">
-
-            <!-- Takeda -->
-            <div class="timeline-entry reveal">
-                <div class="timeline-icon"><i class="fas fa-chart-line"></i></div>
-                <div class="timeline-content">
-                    <span class="timeline-year">2023 – Present</span>
-                    <h3>Takeda Pharmaceuticals</h3>
-                    <h4>Sr. Data and Analytics Engineer</h4>
-                    <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.7;margin-bottom:16px;">Built and owned full data products end-to-end. Developed a "North Star" mindset for scalable, governed data systems — designing, deploying, and iterating on analytics solutions across enterprise manufacturing teams.</p>
-                    <div class="course-tags">
-                        <span class="course-tag">Power BI<span class="skill-tooltip"><strong>Power BI</strong>End-to-end report and dashboard development with DAX, data modeling, and Row-Level Security — serving decision-makers across enterprise manufacturing.</span></span>
-                        <span class="course-tag">Databricks<span class="skill-tooltip"><strong>Databricks</strong>Unified lakehouse platform for large-scale data engineering and ML — processing and transforming data at a scale traditional BI tools can't handle.</span></span>
-                        <span class="course-tag">SQL<span class="skill-tooltip"><strong>SQL</strong>Complex query writing, window functions, CTEs, and query optimization across cloud data warehouses — the universal language of data.</span></span>
-                        <span class="course-tag">Enterprise Analytics<span class="skill-tooltip"><strong>Enterprise Analytics</strong>Designing analytics products that serve thousands of users across business units, with governance, documentation, and reliability built in.</span></span>
-                        <span class="course-tag">Data Governance<span class="skill-tooltip"><strong>Data Governance</strong>Defining ownership, access controls, and data quality standards that make analytics trustworthy at scale in regulated industries like pharma.</span></span>
-                        <span class="course-tag">Cross-functional Stakeholders<span class="skill-tooltip"><strong>Cross-functional Stakeholders</strong>Translating requirements from scientists, engineers, and executives into analytics products — bridging technical and business fluency.</span></span>
-                        <span class="course-tag">Compute Cost Reduction<span class="skill-tooltip"><strong>Compute Cost Reduction</strong>Evaluated and reduced Databricks compute spending by right-sizing cluster configurations, eliminating redundant job runs, and converting eager materializations to incremental loads — cutting unnecessary DBU burn without sacrificing refresh cadence.</span></span>
-                        <span class="course-tag">Auto-Scaling Workloads<span class="skill-tooltip"><strong>Auto-Scaling Workloads</strong>Managed Databricks workloads with autoscaling clusters that spin up workers based on demand and terminate idle capacity — balancing throughput for 15M+ row pipelines against cost by tuning min/max node counts and auto-termination windows.</span></span>
-                        <span class="course-tag">Performance Optimization<span class="skill-tooltip"><strong>Performance Optimization</strong>Optimized pipeline and dashboard performance by reducing column cardinality in fact tables, replacing high-cardinality string keys with integer surrogates, partitioning Delta tables by date, and pushing filters upstream — cutting Power BI load times and Databricks job durations significantly.</span></span>
-                        <span class="course-tag">Workload Cost Efficiency<span class="skill-tooltip"><strong>Workload Cost Efficiency</strong>Optimized workloads to reduce costs by converting full-refresh pipelines to incremental merge patterns, consolidating overlapping scheduled jobs, and leveraging Z-ordering on high-query columns to minimize data scanned per read — lowering both compute time and storage I/O costs.</span></span>
-                        <span class="course-tag">Alerts &amp; Notifications<span class="skill-tooltip"><strong>Alerts & Notifications</strong>Configured pipeline failure alerts and data quality threshold notifications in Databricks — ensuring broken jobs and anomalous row counts surface immediately rather than silently failing downstream.</span></span>
-                        <span class="course-tag">Monitoring Dashboards<span class="skill-tooltip"><strong>Monitoring Dashboards</strong>Built and maintained monitoring dashboards tracking pipeline health, job run durations, cluster utilization, and data freshness — giving the team real-time visibility into system performance.</span></span>
-                        <span class="course-tag">Observability Tools<span class="skill-tooltip"><strong>Observability Tools</strong>Used centralized monitoring and observability tooling across Databricks and Power BI to trace data lineage, identify bottlenecks, and validate end-to-end pipeline integrity from source to report.</span></span>
-                        <span class="course-tag">Workspace Monitoring<span class="skill-tooltip"><strong>Workspace Monitoring</strong>Managed workspace-level and workload-level monitoring across Databricks environments — tracking compute usage per team, identifying runaway jobs, and enforcing resource governance across shared clusters.</span></span>
-                    </div>
-                </div>
+        <div class="apple-card card-pipelines" data-card="pipelines">
+            <div class="apple-card-bg"></div>
+            <div class="apple-card-scrim"></div>
+            <div class="apple-card-content">
+                <span class="apple-card-category">Data Engineering</span>
+                <h3 class="apple-card-title">How I deliver trusted data pipelines for reliable reuse.</h3>
             </div>
-
-            <!-- Chewy -->
-            <div class="timeline-entry reveal reveal-delay-1">
-                <div class="timeline-icon warm"><i class="fas fa-rocket"></i></div>
-                <div class="timeline-content">
-                    <span class="timeline-year">2021 – 2023</span>
-                    <h3>Chewy, Inc</h3>
-                    <h4>Systems Engineer II</h4>
-                    <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.7;margin-bottom:16px;">Operated in a fast-paced, data-driven environment focused on rapid deployment and iteration. Deepened skills in user behavior analysis, engagement metrics, and agile execution — with a strong focus on change management.</p>
-                    <div class="course-tags">
-                        <span class="course-tag">Agile Execution<span class="skill-tooltip"><strong>Agile Execution</strong>Sprint-based delivery, backlog prioritization, and retrospective-driven improvement — shipping value faster with less waste.</span></span>
-                        <span class="course-tag">Change Management<span class="skill-tooltip"><strong>Change Management</strong>Leading adoption of new systems and processes across resistant teams — combining data on behavior with structured communication plans.</span></span>
-                        <span class="course-tag">User Behavior<span class="skill-tooltip"><strong>User Behavior</strong>Analyzing clickstream, funnel, and cohort data to understand how customers actually use a product — not how we assume they do.</span></span>
-                        <span class="course-tag">Rapid Iteration<span class="skill-tooltip"><strong>Rapid Iteration</strong>Build → measure → learn loops in fast-paced e-commerce — shipping experiments quickly and using data to decide what sticks.</span></span>
-                        <span class="course-tag">E-commerce Analytics<span class="skill-tooltip"><strong>E-commerce Analytics</strong>Revenue attribution, conversion optimization, and customer lifetime value modeling across a high-volume direct-to-consumer platform.</span></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Department of Defense / Electric Boat -->
-            <div class="timeline-entry reveal reveal-delay-2">
-                <div class="timeline-icon blue"><i class="fas fa-shield-halved"></i></div>
-                <div class="timeline-content">
-                    <span class="timeline-year">2020 – 2021</span>
-                    <h3>Department of Defense</h3>
-                    <h4>Data and Process Engineer II</h4>
-                    <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.7;margin-bottom:16px;">Learned validation frameworks and structured system design in a classified manufacturing environment. Gained hands-on shop-floor experience and practical deployment constraints working alongside welders and machinists.</p>
-                    <div class="course-tags">
-                        <span class="course-tag">Validation Frameworks<span class="skill-tooltip"><strong>Validation Frameworks</strong>IQ/OQ/PQ and structured qualification protocols used in defense and regulated manufacturing to prove systems meet requirements before deployment.</span></span>
-                        <span class="course-tag">System Design<span class="skill-tooltip"><strong>System Design</strong>Defining functional requirements, interfaces, and failure modes for complex engineered systems in a classified manufacturing environment.</span></span>
-                        <span class="course-tag">Manufacturing Ops<span class="skill-tooltip"><strong>Manufacturing Ops</strong>Hands-on shop-floor experience alongside welders and machinists — bridging the gap between engineering specs and physical production reality.</span></span>
-                        <span class="course-tag">Six Sigma Black Belt<span class="skill-tooltip"><strong>Six Sigma Black Belt</strong>Leading cross-functional improvement projects using full DMAIC methodology — reducing defects and process variation at the highest certification level.</span></span>
-                        <span class="course-tag">Security Clearance<span class="skill-tooltip"><strong>Security Clearance</strong>Experience operating within classified environments with strict access controls, documentation standards, and information security protocols.</span></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Aerospace Corporation -->
-            <div class="timeline-entry reveal">
-                <div class="timeline-icon blue"><i class="fas fa-satellite"></i></div>
-                <div class="timeline-content">
-                    <span class="timeline-year">2019 – 2020</span>
-                    <h3>The Aerospace Corporation</h3>
-                    <h4>Algorithm Development &amp; Early Career Engineering</h4>
-                    <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.7;margin-bottom:16px;">Built a foundation in Python and programming logic through real-world algorithm development. Developed structured problem-solving and algorithmic thinking applied to satellite scheduling optimization on a Raspberry Pi.</p>
-                    <div class="course-tags">
-                        <span class="course-tag">Python<span class="skill-tooltip"><strong>Python</strong>First production Python experience — writing clean, functional code for real scheduling algorithms, not just tutorials. The foundation for all ML and data work that followed.</span></span>
-                        <span class="course-tag">Algorithm Design<span class="skill-tooltip"><strong>Algorithm Design</strong>Structuring computational problems into efficient, scalable solutions — heuristics, search strategies, and constraint handling applied to satellite scheduling.</span></span>
-                        <span class="course-tag">Optimization<span class="skill-tooltip"><strong>Optimization</strong>Combinatorial and scheduling optimization under real-world constraints — maximizing satellite pass coverage with limited ground station windows.</span></span>
-                        <span class="course-tag">Problem-Solving<span class="skill-tooltip"><strong>Problem-Solving</strong>Decomposing ambiguous aerospace engineering challenges into tractable computational problems with measurable outcomes.</span></span>
-                        <span class="course-tag">Raspberry Pi<span class="skill-tooltip"><strong>Raspberry Pi</strong>Deployed production algorithm on embedded hardware — learning resource-constrained computing, edge deployment, and low-level system integration.</span></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Computer Vision / Singapore -->
-            <div class="timeline-entry reveal reveal-delay-1">
-                <div class="timeline-icon purple"><i class="fas fa-eye"></i></div>
-                <div class="timeline-content">
-                    <span class="timeline-year">2019 — Singapore</span>
-                    <h3>Singaporean SaaS Startup</h3>
-                    <h4>AI Program Manager — Computer Vision</h4>
-                    <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.7;margin-bottom:16px;">Managed and collaborated with AI/data teams in a high-growth, innovation-focused environment. Learned the real-world limitations and capabilities of AI systems while overseeing 8 international deployments for commercial and government clients.</p>
-                    <div class="course-tags">
-                        <span class="course-tag">Computer Vision<span class="skill-tooltip"><strong>Computer Vision</strong>Object detection, image classification, and real-time video inference — managing the full deployment lifecycle of CV systems for commercial and government clients.</span></span>
-                        <span class="course-tag">AI Systems<span class="skill-tooltip"><strong>AI Systems</strong>Understanding real-world limitations of AI — model drift, edge cases, and the gap between demo performance and production reliability.</span></span>
-                        <span class="course-tag">International Deployments<span class="skill-tooltip"><strong>International Deployments</strong>Overseeing 8 cross-border AI rollouts — navigating regulatory, cultural, and infrastructure differences across Asia-Pacific markets.</span></span>
-                        <span class="course-tag">Team Management<span class="skill-tooltip"><strong>Team Management</strong>Leading distributed AI and data teams across time zones — aligning engineers, clients, and stakeholders toward shared delivery milestones.</span></span>
-                        <span class="course-tag">Government Clients<span class="skill-tooltip"><strong>Government Clients</strong>Delivering AI products under strict compliance requirements, long procurement cycles, and mission-critical reliability standards.</span></span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-    </div><!-- /education-view -->
-
-    <div id="framework-view" style="display:none;">
-    <!-- How I Approach Things (optional framework section) -->
-    <section class="section" style="padding-top: 0;">
-        <div class="section-header reveal" style="position: relative; overflow: hidden;">
-            <canvas class="heading-matrix-bg"></canvas>
-            <div class="section-label">How I Approach Things</div>
-            <h2 class="section-heading">The approach I take <br><span class="muted">for nearly every problem.</span></h2>
         </div>
 
-        <div class="framework-details reveal">
-            <div class="framework-details-body">
-                <p>In order to decide what's worth building, I usually think through a couple of points detailed below.</p>
+        <div class="apple-card card-lss" data-card="lss">
+            <div class="apple-card-bg"></div>
+            <div class="apple-card-scrim"></div>
+            <div class="apple-card-content">
+                <span class="apple-card-category">Lean Six Sigma</span>
+                <h3 class="apple-card-title">How I engineer the cure through statistics and human behavior.</h3>
+            </div>
+        </div>
 
-                <!-- Analytics Framework -->
-                <details class="sub-framework">
-                    <summary>
-                        <span>Analytics Framework</span>
-                        <span class="fw-chevron"><i class="fas fa-chevron-down"></i></span>
-                    </summary>
-                    <div class="sub-framework-body">
-                        <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.75;max-width:720px;">Before any pipeline gets designed, someone has to decide what's actually worth building. This is the process I run to get there.</p>
+        <div class="apple-card card-roles" data-card="roles">
+            <div class="apple-card-bg"></div>
+            <div class="apple-card-scrim"></div>
+            <div class="apple-card-content">
+                <span class="apple-card-category">Roles</span>
+                <h3 class="apple-card-title">Takeaways from each of my roles.</h3>
+            </div>
+        </div>
 
-                        <div class="stage-grid">
-                            <div class="stage-card">
-                                <div class="stage-num">01 / INTAKE</div>
-                                <h4>Understand the ask before touching data</h4>
-                                <p>Who's actually sponsoring this, what resources and budget exist, and does it tie back to a real company initiative or North Star, or is it just someone's pet request? I also check what already exists, decide who owns what once this ships, and set expectations for the sustainment lifecycle. I present alternatives up front, so whatever we commit to is something the team has actually agreed to and will support, not something I picked alone.</p>
-                            </div>
-                            <div class="stage-card">
-                                <div class="stage-num">02 / EVALUATION</div>
-                                <h4>Measure the impact before committing to a build</h4>
-                                <p>Sometimes a small gap closes with a lightweight fix, so I just do it. A bigger effort is a different story: it usually takes real time and resources, so before committing I weigh the trade-offs and look at the true business impact, cost avoidance, immediate benefit, FTE hours, against what it will actually cost to get there.</p>
-                            </div>
-                            <div class="stage-card">
-                                <div class="stage-num">03 / MOCKUP & ITERATE</div>
-                                <h4>Build small, put it in front of real users</h4>
-                                <p>I start with small mockups or MVPs and put them in front of stakeholders, to make sure we're nudging in the right direction before I build anything further. Their reaction shapes the next version.</p>
-                            </div>
-                            <div class="stage-card">
-                                <div class="stage-num">04 / DEPLOY & HYPERCARE</div>
-                                <h4>Launch isn't the finish line</h4>
-                                <p>I stay embedded with the people using it for the first couple of weeks after launch, sometimes on their shift schedule instead of mine, because that's when the real gaps between the tool and how people actually work show up.</p>
-                            </div>
-                            <div class="stage-card">
-                                <div class="stage-num">05 / BEHAVIOR OVER FLASH</div>
-                                <h4>Did this change what someone does?</h4>
-                                <p>I check back on my solutions on a regular cadence. Is engagement still there? Are people running into issues? What does customer satisfaction actually look like? Is the behavior following through, or did it fade after the initial launch excitement wore off? Most abandonment gets caught in these early check-ins, before it becomes a bigger problem. This tends to follow a DMAIC rhythm out of Six Sigma, define, measure, analyze, improve, control, just applied continuously instead of once.</p>
-                            </div>
-                        </div>
+    </div>
+</div>
 
-                        <div class="mermaid-card">
-                            <pre class="mermaid">
+<div class="expand-overlay" id="expand-overlay" onclick="closeCard()"></div>
+
+<div class="expand-panel" id="expand-panel">
+    <div class="expand-hero" id="expand-hero">
+        <div class="expand-hero-scrim"></div>
+        <button class="expand-close" onclick="closeCard()"><i class="fas fa-times"></i></button>
+        <div class="expand-hero-label">
+            <span class="expand-hero-category" id="expand-category"></span>
+            <h2 class="expand-hero-title" id="expand-title"></h2>
+            <p class="expand-hero-subtitle" id="expand-subtitle"></p>
+        </div>
+    </div>
+    <div class="expand-body" id="expand-body"></div>
+</div>
+<div class="mock-skill-tooltip" id="mock-skill-tooltip"><strong id="mock-tt-title"></strong><span id="mock-tt-desc"></span></div>
+
+<footer class="footer">
+    <div class="footer-grid">
+        <div>
+            <div class="footer-brand">Tyler Vincent<span>.</span></div>
+            <p class="footer-desc">Data and Analytics Engineer with a passion for technology, building things, teaching others, solving complex problems, and developing solutions across industries from submarines to satellites.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Navigate</h4>
+            <a href="index.html">Work</a>
+            <a href="about.html">About</a>
+            <a href="education.html">Education</a>
+            <a href="index.html#projects">Projects</a>
+        </div>
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <a data-contact="email" href="#"></a>
+            <a data-contact="phone" href="#"></a>
+            <a>Los Angeles, California</a>
+        </div>
+        <div class="footer-col">
+            <h4>Connect</h4>
+            <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="https://github.com/tylerv11/" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span class="footer-copyright">&copy; Tyler Vincent. All rights reserved.</span>
+        <div class="footer-socials">
+            <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank" rel="noreferrer" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://github.com/tylerv11/" target="_blank" rel="noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
+        </div>
+    </div>
+</footer>
+
+<div id="site-assistant">
+    <button id="sa-toggle" onclick="toggleAssistant()" aria-label="Ask about Tyler's portfolio">
+        <i class="fas fa-robot"></i>
+    </button>
+    <div id="sa-panel">
+        <div id="sa-header">
+            <span><i class="fas fa-robot"></i>&nbsp; Tyler's Portfolio Assistant</span>
+            <button onclick="toggleAssistant()" aria-label="Close"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="sa-messages">
+            <div class="sa-msg bot">Hi! I'm Tyler's Portfolio Assistant. I can tell you about his projects, skills, experience, and what makes him unique. Ask me anything about his background.</div>
+        </div>
+        <div id="sa-suggestions">
+            <button class="sa-chip" onclick="saAsk('Why hire him?')">Why hire him?</button>
+            <button class="sa-chip" onclick="saAsk('What are Tyler\'s biggest strengths?')">Strengths?</button>
+            <button class="sa-chip" onclick="saAsk('What\'s Tyler been up to recently?')">Recent work?</button>
+            <button class="sa-chip" onclick="saAsk('Tell me about his data engineering work')">Data engineering?</button>
+            <button class="sa-chip" onclick="saAsk('What makes Tyler unique?')">What's Unique?</button>
+            <button class="sa-chip" onclick="saAsk('What\'s Tyler\'s tech stack?')">Tyler's Tech Stack?</button>
+            <button class="sa-chip" onclick="saAsk('What\'s Tyler learning now?')">Learning now?</button>
+        </div>
+        <div id="sa-input-row">
+            <input id="sa-input" type="text" placeholder="Ask something..." onkeydown="if(event.key==='Enter')saSubmit()">
+            <button id="sa-send" onclick="saSubmit()" aria-label="Send"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script>
+if (typeof mermaid !== 'undefined') {
+    mermaid.initialize({
+        startOnLoad: false,
+        theme: 'base',
+        themeVariables: {
+            darkMode: true,
+            background: '#08090a',
+            mainBkg: '#181c22',
+            primaryColor: '#181c22',
+            primaryTextColor: '#e7e9ec',
+            primaryBorderColor: '#00ff87',
+            secondaryColor: '#0f1115',
+            tertiaryColor: '#0f1115',
+            lineColor: '#4a525c',
+            textColor: '#a7adb7',
+            nodeTextColor: '#e7e9ec',
+            edgeLabelBackground: '#0f1115',
+            clusterBkg: '#0f1115',
+            clusterBorder: 'rgba(255,255,255,0.16)',
+            fontFamily: 'Inter, sans-serif',
+            fontSize: '13px'
+        },
+        flowchart: { curve: 'basis', htmlLabels: true, padding: 14 },
+        securityLevel: 'loose'
+    });
+}
+
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+    if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+(function() {
+    const bar = document.getElementById('scroll-progress-bar');
+    if (!bar) return;
+    function update() {
+        const doc = document.documentElement;
+        const scrollTop = doc.scrollTop || document.body.scrollTop;
+        const scrollable = (doc.scrollHeight || document.body.scrollHeight) - doc.clientHeight;
+        const pct = scrollable > 0 ? (scrollTop / scrollable) * 100 : 0;
+        bar.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+})();
+
+const navToggle = document.getElementById('nav-toggle');
+const navMenu = document.getElementById('nav-menu');
+const navIcon = document.getElementById('nav-toggle-icon');
+const navOverlay = document.getElementById('nav-overlay');
+
+function setActiveNav() {
+    if (!navMenu) return;
+    const path = window.location.pathname.split('/').pop() || 'index.html';
+    const hash = window.location.hash;
+    navMenu.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+
+    let target = 'index.html';
+    if (path === 'about.html') target = 'about.html';
+    else if (path === 'education.html') target = 'education.html';
+    else if (hash === '#projects') target = 'index.html#projects';
+
+    const active = navMenu.querySelector(`.nav-link[href="${target}"]`);
+    if (active) active.classList.add('active');
+}
+
+function closeMenu() {
+    if (!navMenu || !navIcon) return;
+    navMenu.classList.remove('open');
+    navIcon.className = 'fas fa-bars';
+    if (navOverlay) navOverlay.classList.remove('visible');
+}
+
+setActiveNav();
+window.addEventListener('hashchange', setActiveNav);
+
+if (navToggle && navMenu && navIcon) {
+    navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('open');
+        const isOpen = navMenu.classList.contains('open');
+        navIcon.className = isOpen ? 'fas fa-times' : 'fas fa-bars';
+        if (navOverlay) navOverlay.classList.toggle('visible', isOpen);
+    });
+}
+
+if (navOverlay) navOverlay.addEventListener('click', closeMenu);
+if (navMenu) {
+    navMenu.querySelectorAll('.nav-link, .nav-cta').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+}
+
+(function() {
+    let isOpen = false;
+    const KB = Array.isArray(window.TYLER_KB) ? window.TYLER_KB : [];
+
+    window.toggleAssistant = function() {
+        const panel = document.getElementById('sa-panel');
+        isOpen = !isOpen;
+        if (panel) panel.classList.toggle('open', isOpen);
+    };
+
+    window.saAsk = function(question) {
+        const input = document.getElementById('sa-input');
+        if (input) input.value = question;
+        window.saSubmit();
+    };
+
+    window.saSubmit = function() {
+        const input = document.getElementById('sa-input');
+        if (!input) return;
+        const question = input.value.trim();
+        if (!question) return;
+
+        saAddMsg(question, 'user');
+        input.value = '';
+
+        const answer = saResolveContact(saAnswer(question));
+        setTimeout(() => saAddMsg(answer, 'bot'), 200);
+    };
+
+    function saResolveContact(text) {
+        if (!window.TVContact) return text;
+        return text.replace(/\{\{EMAIL\}\}/g, window.TVContact.getEmail())
+            .replace(/\{\{PHONE\}\}/g, window.TVContact.getPhone());
+    }
+
+    function saAddMsg(text, cls) {
+        const msgs = document.getElementById('sa-messages');
+        if (!msgs) return;
+        const div = document.createElement('div');
+        div.className = 'sa-msg ' + cls;
+        div.innerHTML = text;
+        msgs.appendChild(div);
+        msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function saAnswer(q) {
+        const lower = q.toLowerCase();
+        let bestScore = 0;
+        let bestAnswer = null;
+        for (let i = 0; i < KB.length; i++) {
+            let score = 0;
+            for (let j = 0; j < KB[i].keys.length; j++) {
+                if (lower.indexOf(KB[i].keys[j]) !== -1) score++;
+            }
+            if (score > bestScore) {
+                bestScore = score;
+                bestAnswer = KB[i].answer;
+            }
+        }
+        if (bestScore > 0) return bestAnswer;
+
+        const words = lower.split(/\s+/);
+        for (let i = 0; i < KB.length; i++) {
+            for (let j = 0; j < KB[i].keys.length; j++) {
+                const key = KB[i].keys[j];
+                for (let k = 0; k < words.length; k++) {
+                    if (words[k].length > 3 && key.indexOf(words[k]) !== -1) return KB[i].answer;
+                }
+            }
+        }
+        return "Great question - I am not sure I have a canned answer for that one. Try asking about Tyler's projects, KPIs, skills, industries, or working style. Or reach out directly at {{EMAIL}}.";
+    }
+})();
+
+const TAG_INFO = {
+    'Prompt Engineering': 'Crafting effective prompts for Claude models, managing context windows, and structuring inputs for reliability and cost efficiency.',
+    'Agentic AI': 'Building multi-agent systems with tool use, orchestration patterns, and governance frameworks for autonomous decision-making.',
+    'Model Context Protocol': 'Standardized client/server bridge for connecting AI agents to tools and data sources without custom integration code.',
+    'Production Thinking': 'Designing AI systems for reliability, observability, failure modes, and human oversight in real-world deployments.',
+    'Governance & Safety': 'Approval gates, audit logging, sandboxing, and escalation protocols for AI systems that operate autonomously.',
+    'Delta Lake': 'ACID transactions, time travel, and unified batch/streaming — building reliable data foundations at scale.',
+    'Data Ingestion': 'Designing patterns for reliable, incremental data movement from diverse sources into unified analytical platforms.',
+    'ETL/ELT Design': 'Modern extract-load-transform strategies for building maintainable, scalable data pipelines that evolve with business needs.',
+    'Data Governance': 'Unity Catalog, access control, and lineage tracking for compliant, auditable data platforms.',
+    'Classification': 'Trained models to predict categorical outcomes using decision trees, random forests, and SVMs — foundational for fraud detection, churn prediction, and labeling pipelines.',
+    'Cross-Validation': 'K-fold and LOOCV techniques to reliably estimate model performance and prevent overfitting — critical for shipping trustworthy ML products.',
+    'Regularization': 'Ridge, Lasso, and Elastic Net methods to reduce model complexity and improve generalization on unseen data.',
+    'Ensemble Methods': 'Boosting and bagging approaches (Random Forests, XGBoost-style) that combine weak learners into highly accurate predictors.',
+    'DMAIC': 'Define → Measure → Analyze → Improve → Control. The Six Sigma backbone for eliminating defects and reducing variation in any process.',
+    'Project Charter': 'A shared agreement on the problem, goal, scope, stakeholders, timeline, and expected business impact.',
+    'SIPOC': 'A high-level Suppliers, Inputs, Process, Outputs, Customers view that aligns the team before detailed process mapping.',
+    'Value Stream Mapping': 'A Lean view of material and information flow that makes waiting, handoffs, rework, and lead time visible.',
+    'Measurement System Analysis': 'A check that the measurement process is precise and reproducible enough to support decisions.',
+    'Statistical Process Control': 'Using control charts (X-bar, R, P-charts) to monitor process stability and catch out-of-control signals before they become defects.',
+    'Hypothesis Testing': 'T-tests, ANOVA, and chi-square methods to make data-driven decisions with statistical confidence — separating signal from noise.',
+    'Root Cause Analysis': 'Fishbone diagrams and 5-Why methodology to drill past symptoms and permanently resolve the source of recurring problems.',
+    'Cause Mapping': 'A visual root-cause method that connects contributing factors to the final effect and helps identify where an intervention can break the chain.',
+    'Pareto Analysis': 'Ranking defect categories so the team can focus on the few causes responsible for most of the observed impact.',
+    'Failure Modes & Effects Analysis': 'A structured risk review that prioritizes possible failures by severity, occurrence, and detectability.',
+    'Process Capability': 'Comparing a stable process distribution with customer or engineering specifications to quantify capability.',
+    'Design of Experiments': 'Planning controlled experiments to learn which factors and interactions materially change an outcome.',
+    '5S & Visual Management': 'Organizing the workplace and making normal versus abnormal conditions obvious at a glance.',
+    'Six Sigma & Lean Ops': 'Reduction of process variation and waste elimination — the foundation of every engineering improvement project in manufacturing and beyond.',
+    'Database Systems': 'Relational modeling, SQL, normalization, and query optimization — the backbone of every data pipeline and analytics platform.',
+    'Engineering Statistics': 'Regression, ANOVA, and reliability analysis applied to real engineering problems — turns raw data into decisions.',
+    'Operations Research': 'Linear programming and optimization models to allocate resources, minimize cost, and maximize throughput in constrained systems.',
+    'Power BI': 'End-to-end report and dashboard development with DAX, data modeling, and Row-Level Security — serving decision-makers across enterprise manufacturing.',
+    'SQL': 'Complex query writing, window functions, CTEs, and query optimization across cloud data warehouses — the universal language of data.',
+    'Enterprise Analytics': 'Designing analytics products that serve thousands of users across business units, with governance, documentation, and reliability built in.',
+    'Databricks': "Unified lakehouse platform for large-scale data engineering and ML — processing and transforming data at a scale traditional BI tools can't handle.",
+    'Agile Execution': 'Sprint-based delivery with tight feedback loops — shipping incremental value instead of waiting on a big-bang release.',
+    'Change Management': 'Structured approach to guiding teams through new tools and processes while minimizing disruption to daily operations.',
+    'User Behavior': 'Analyzing engagement and usage patterns to understand how people actually interact with a product, not just how they say they do.',
+    'Validation Frameworks': "Structured test-and-verify protocols for confirming a system meets spec before it's trusted with production data.",
+    'System Design': 'Architecting components and interfaces up front so the pieces fit together predictably as a system scales.',
+    'Six Sigma Black Belt': 'Advanced DMAIC leadership certification for driving cross-functional process improvement projects from data to root cause to fix.',
+    'Python': 'General-purpose scripting and automation — the backbone language for early algorithm and tooling work.',
+    'Algorithm Design': 'Breaking a problem into a correct, efficient sequence of steps before writing a single line of implementation code.',
+    'Optimization': 'Finding the best feasible solution under real-world constraints like time, cost, or scheduling capacity.',
+    'Computer Vision': 'Teaching systems to interpret and act on visual data — images, video, and sensor feeds.',
+    'AI Systems': 'Designing end-to-end intelligent systems, not just individual models — data flow, inference, and feedback loops together.',
+    'International Deployments': 'Rolling out systems across regions with different infrastructure, regulatory, and language constraints.'
+};
+
+function wireTagTooltips() {
+    const tooltip = document.getElementById('mock-skill-tooltip');
+    const titleEl = document.getElementById('mock-tt-title');
+    const descEl = document.getElementById('mock-tt-desc');
+    document.querySelectorAll('#expand-body .mock-tag').forEach(tag => {
+        const info = TAG_INFO[tag.textContent.trim()];
+        if (!info) return;
+        tag.classList.add('has-tip');
+        tag.addEventListener('mouseenter', () => {
+            const rect = tag.getBoundingClientRect();
+            titleEl.textContent = tag.textContent.trim();
+            descEl.textContent = info;
+            const showLeft = rect.left > 250;
+            tooltip.classList.toggle('pos-left', showLeft);
+            tooltip.classList.toggle('pos-right', !showLeft);
+            tooltip.style.top = (rect.top + rect.height / 2) + 'px';
+            tooltip.style.left = showLeft ? (rect.left - 14 - 220) + 'px' : (rect.right + 14) + 'px';
+            tooltip.classList.add('visible');
+        });
+        tag.addEventListener('mouseleave', () => {
+            tooltip.classList.remove('visible');
+        });
+    });
+}
+
+const CARD_DATA = {
+    education: {
+        category: 'Education',
+        title: 'Learning milestones in my career.',
+        subtitle: 'Certifications and coursework, most recent first.',
+        accent: '#4a9eff',
+        bgClass: 'card-education',
+        body: `
+            <div class="mock-entry">
+                <span class="yr">2026</span>
+                <h3>Model Context Protocol Certification</h3>
+                <h4>Anthropic</h4>
+                <p>Comprehensive foundation in modern AI systems, prompt engineering, agentic AI, and production deployments. Covers practical patterns for building reliable, governed multi-agent systems on constrained hardware.</p>
+                <div class="mock-tags">
+                    <span class="mock-tag">Prompt Engineering</span><span class="mock-tag">Agentic AI</span><span class="mock-tag">Model Context Protocol</span><span class="mock-tag">Production Thinking</span><span class="mock-tag">Governance &amp; Safety</span>
+                </div>
+                <a href="https://verify.skilljar.com/c/amt8t2mxxkje" target="_blank" class="mock-cred-btn blue"><i class="fas fa-external-link-alt"></i> Verify credential</a>
+            </div>
+            <div class="mock-entry">
+                <span class="yr">2024</span>
+                <h3>Data Ingestion Certification</h3>
+                <h4>Databricks</h4>
+                <p>Mastery of Databricks data ingestion patterns, Delta Lake fundamentals, and modern ETL/ELT architecture for building scalable, governed data pipelines.</p>
+                <div class="mock-tags">
+                    <span class="mock-tag">Delta Lake</span><span class="mock-tag">Data Ingestion</span><span class="mock-tag">ETL/ELT Design</span><span class="mock-tag">Data Governance</span>
+                </div>
+                <a href="files/DatabricksDataIngestionCert.pdf" target="_blank" class="mock-cred-btn warm"><i class="fas fa-file-pdf"></i> View Certificate</a>
+            </div>
+            <div class="mock-entry">
+                <span class="yr">2023</span>
+                <h3>Data Science: Machine Learning</h3>
+                <h4>Harvard University (HarvardX)</h4>
+                <div class="mock-tags">
+                    <span class="mock-tag">Classification</span><span class="mock-tag">Cross-Validation</span><span class="mock-tag">Regularization</span><span class="mock-tag">Ensemble Methods</span>
+                </div>
+            </div>
+            <div class="mock-entry">
+                <span class="yr">2020</span>
+                <h3>Lean Six Sigma Black Belt</h3>
+                <h4>General Dynamics Electric Boat</h4>
+                <div class="mock-tags">
+                    <span class="mock-tag">DMAIC</span><span class="mock-tag">Statistical Process Control</span><span class="mock-tag">Hypothesis Testing</span><span class="mock-tag">Root Cause Analysis</span>
+                </div>
+            </div>
+            <div class="mock-entry">
+                <span class="yr">Los Angeles, CA</span>
+                <h3>B.S. Industrial &amp; Systems Engineering</h3>
+                <h4>University of Southern California</h4>
+                <div class="mock-tags">
+                    <span class="mock-tag">Six Sigma &amp; Lean Ops</span><span class="mock-tag">Database Systems</span><span class="mock-tag">Engineering Statistics</span><span class="mock-tag">Operations Research</span>
+                </div>
+            </div>
+        `
+    },
+    analytics: {
+        category: 'Analytics',
+        title: 'How I build insights that drive strategic action.',
+        subtitle: '',
+        accent: '#00ff87',
+        bgClass: 'card-analytics',
+        body: `
+            <p class="mock-intro-text">Before I design any reports, KPIs, or apps, we first need to decide what's actually worth building, here's how I get there:</p>
+            <div class="mock-stage-grid">
+                <div class="mock-stage-card"><div class="mock-stage-num">01 / INTAKE</div><h4>Understand the ask before touching data</h4><p>Who's actually sponsoring this, what resources and budget exist, and does it tie back to a real company initiative or North Star. I present alternatives up front so whatever we commit to is something the team has agreed to.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">02 / EVALUATION</div><h4>Measure the impact before committing to a build</h4><p>A small gap closes with a lightweight fix. A bigger effort gets weighed against true business impact, cost avoidance, and FTE hours before committing.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">03 / MOCKUP &amp; ITERATE</div><h4>Build small, put it in front of real users</h4><p>Small mockups or MVPs in front of stakeholders first, to make sure we're nudging in the right direction before building further.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">04 / DEPLOY &amp; HYPERCARE</div><h4>Launch isn't the finish line</h4><p>Staying embedded with users for the first couple of weeks after launch, sometimes on their shift schedule, because that's when the real gaps show up.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">05 / BEHAVIOR OVER FLASH</div><h4>Did this change what someone does?</h4><p>Checking back on a regular cadence: is engagement still there, did behavior stick or fade. Follows a DMAIC rhythm out of Six Sigma, applied continuously.</p></div>
+            </div>
+
+            <div class="mock-mermaid-card">
+                <pre class="mermaid">
 flowchart LR
     A["1. Intake&lt;br/&gt;business case, sponsor,&lt;br/&gt;budget, North Star fit"] --> B["2. Evaluation&lt;br/&gt;measure impact,&lt;br/&gt;weigh real alternatives"]
     B --> F{"Decide on solution,&lt;br/&gt;build task list"}
@@ -1005,72 +1351,45 @@ flowchart LR
     C --> D["4. Deploy &amp; Hypercare&lt;br/&gt;embed with users,&lt;br/&gt;close the real gaps"]
     D --> E["5. Behavior Over Flash&lt;br/&gt;did this change&lt;br/&gt;what someone does"]
     E -.->|"behavior gap found"| A
-                            </pre>
-                        </div>
+                </pre>
+            </div>
 
-                        <div class="fw-callout">
-                            <strong>Deciding whether to actually deploy:</strong> this is the step people skip. Before committing further, I ask a few blunt questions: is this a long-standing initiative, or a flavor-of-the-month, flashy thing someone's excited about this quarter? Do we actually have quality data behind it? Is there real user behavior that says this will make a difference, or is it really an ad hoc research project for one person, or a tool that ends up used to police people instead of help them?
-                        </div>
+            <div class="mock-callout"><strong>Deciding whether to actually deploy:</strong> is this a long-standing initiative or a flavor-of-the-month thing? Is there quality data and real user behavior behind it, or is it an ad hoc research project?</div>
+            <div class="mock-callout"><strong>In practice:</strong> this is the same loop behind the manufacturing performance board and the global training compliance dashboard: mockups before full builds, weeks embedded with users, and buy-in earned by showing the validation behind the numbers.</div>
+        `
+    },
+    pipelines: {
+        category: 'Data Engineering',
+        title: 'How I deliver trusted data pipelines for reliable reuse.',
+        subtitle: '',
+        accent: '#ff6b35',
+        bgClass: 'card-pipelines',
+        body: `
+            <p class="mock-intro-text">Once you've decided on KPIs and a method, the next step is deciding how we are going to get there.</p>
+            <div class="mock-stage-grid">
+                <div class="mock-stage-card"><div class="mock-stage-num">01 / RESTATE</div><h4>Say it back in my own words</h4><p>Most requirements describe a report someone wants, not the decision that report is supposed to change.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">02 / DISCOVER</div><h4>Interrogate the constraints, not the wishlist</h4><p>Volume, latency tolerance, who consumes it and how often, what "correct" means to an auditor versus an operator.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">03 / SKELETON</div><h4>Boxes and arrows, no vendor names</h4><p>Sources, a landing zone, a conformance layer, serving layers, consumers, only then Databricks, Snowflake, or CSVs.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">04 / TRADE-OFFS</div><h4>Name the fork, argue both sides out loud</h4><p>Batch vs. streaming, one gold model vs. two, centralized vs. federated, and the specific reason it fits this system.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">05 / FAILURE MODES</div><h4>Design the seams, not just the happy path</h4><p>What happens at 10x volume, or when a source system changes its schema without warning.</p></div>
+            </div>
 
-                        <div class="fw-callout">
-                            <strong>In practice:</strong> this is the same loop behind the manufacturing performance board and the global training compliance dashboard described in the timeline above. Mockups before full builds, a couple of weeks embedded with users right after launch, and buy-in earned by showing people the validation behind the numbers instead of asking them to trust a new tool on faith.
-                        </div>
-                    </div>
-                </details>
-
-                <!-- Data Pipeline Framework -->
-                <details class="sub-framework">
-                    <summary>
-                        <span>Data Pipeline Framework: how I design the system</span>
-                        <span class="fw-chevron"><i class="fas fa-chevron-down"></i></span>
-                    </summary>
-                    <div class="sub-framework-body">
-                        <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.75;max-width:720px;">Once the Analytics Framework has settled what's worth building, this is what runs before I write a line of code or pick a product.</p>
-
-                        <div class="stage-grid">
-                            <div class="stage-card">
-                                <div class="stage-num">01 / RESTATE</div>
-                                <h4>Say it back in my own words</h4>
-                                <p>I repeat the ask back and name the actual decision it's supposed to support. Most requirements describe a report someone wants, not the decision that report is supposed to change.</p>
-                            </div>
-                            <div class="stage-card">
-                                <div class="stage-num">02 / DISCOVER</div>
-                                <h4>Interrogate the constraints, not the wishlist</h4>
-                                <p>Volume, latency tolerance, who consumes it and how often, what "correct" means to an auditor versus an operator. I'm hunting for the one constraint that eliminates half the design space early.</p>
-                            </div>
-                            <div class="stage-card">
-                                <div class="stage-num">03 / SKELETON</div>
-                                <h4>Boxes and arrows, no vendor names</h4>
-                                <p>I sketch the shape of the system first: sources, a landing zone, a conformance layer, one or more serving layers, consumers. Only then do I decide whether that's Databricks, Snowflake, or a folder of CSVs.</p>
-                            </div>
-                            <div class="stage-card">
-                                <div class="stage-num">04 / TRADE-OFFS</div>
-                                <h4>Name the fork, argue both sides out loud</h4>
-                                <p>Every skeleton has a handful of real forks in it: batch vs. streaming, one gold model vs. two, centralized vs. federated. I say which way I'd go and why. Not "best practice," the specific reason it fits this system.</p>
-                            </div>
-                            <div class="stage-card">
-                                <div class="stage-num">05 / FAILURE MODES</div>
-                                <h4>Design the seams, not just the happy path</h4>
-                                <p>What happens at 10x volume? What happens when a source system changes its schema without warning? I want the answer to be "this seam absorbs it," not "we rebuild."</p>
-                            </div>
-                        </div>
-
-                        <div class="mermaid-card">
-                            <pre class="mermaid">
+            <div class="mock-mermaid-card">
+                <pre class="mermaid">
 flowchart LR
     A["1. Restate&lt;br/&gt;Name the real decision&lt;br/&gt;this system serves"] --> B["2. Discover&lt;br/&gt;Volume, latency,&lt;br/&gt;consumers, constraints"]
     B --> C["3. Skeleton&lt;br/&gt;Boxes and arrows,&lt;br/&gt;no vendor names yet"]
     C --> D["4. Trade-offs&lt;br/&gt;Name each fork,&lt;br/&gt;argue both sides"]
     D --> E["5. Failure Modes&lt;br/&gt;What breaks this at&lt;br/&gt;10x, or a schema change"]
     E -.->|"requirements shift"| A
-                            </pre>
-                        </div>
+                </pre>
+            </div>
 
-                        <div class="tree-block">
-                            <h3>Batch vs. Streaming</h3>
-                            <p class="tree-note">The question I actually ask first is what the consumer does differently if the data arrives five minutes fresher, not some abstract "how fresh should this be." Most of the time the honest answer is nothing changes, which means batch is correct and streaming is over-engineering with an ongoing operational tax attached to it.</p>
-                            <div class="mermaid-card">
-                                <pre class="mermaid">
+            <div class="mock-tree-block">
+                <h3>Batch vs. Streaming</h3>
+                <p class="mock-tree-note">The real question is what the consumer does differently if data arrives five minutes fresher, not some abstract "how fresh should this be." Most of the time nothing changes, which means batch is correct and streaming is over-engineering with an ongoing operational tax attached to it.</p>
+                <div class="mock-mermaid-card">
+                    <pre class="mermaid">
 flowchart TD
     Q1{"Can the consumer tolerate&lt;br/&gt;minutes-to-hours of staleness?"}
     Q1 -->|"Yes"| Q2{"Is the source a high-write&lt;br/&gt;OLTP system you can't afford&lt;br/&gt;to hit with polling queries?"}
@@ -1080,31 +1399,30 @@ flowchart TD
     STREAM --> Q3{"Will you need to&lt;br/&gt;reprocess history later?"}
     Q3 -->|"Yes"| HYBRID["Streaming + durable replay log&lt;br/&gt;(event store, not just a queue)"]
     Q3 -->|"No"| STREAM
-                                </pre>
-                            </div>
-                        </div>
+                    </pre>
+                </div>
+            </div>
 
-                        <div class="tree-block">
-                            <h3>CDC &amp; Schema Evolution</h3>
-                            <p class="tree-note">CDC earns its complexity when the source can't be polled without hurting it. Schema evolution is where I decide how much trust to extend automatically. In my experience, schemas move more than most teams plan for, a new product line adds a field, a reorg renames a department code, a source system you don't own ships an update on its own schedule. That's exactly why additive changes should be cheap to absorb by default. A type change or a dropped column is different: that gets a contract version, not a silent auto-merge, because I've watched a "helpful" auto-merge quietly corrupt three months of a dependent report before anyone noticed.</p>
-                            <div class="mermaid-card">
-                                <pre class="mermaid">
+            <div class="mock-tree-block">
+                <h3>CDC &amp; Schema Evolution</h3>
+                <p class="mock-tree-note">CDC earns its complexity when the source can't be polled without hurting it. Schema evolution is where I decide how much trust to extend automatically. Additive changes should be cheap to absorb by default. A type change or a dropped column is different: that gets a contract version, not a silent auto-merge.</p>
+                <div class="mock-mermaid-card">
+                    <pre class="mermaid">
 flowchart TD
     S1{"Does the change only&lt;br/&gt;add a new nullable column?"}
     S1 -->|"Yes"| PERMISSIVE["Auto-merge&lt;br/&gt;permissive schema evolution"]
     S1 -->|"No, type change&lt;br/&gt;or column removed"| S2{"Do existing consumers&lt;br/&gt;depend on the old shape?"}
     S2 -->|"Yes"| QUAR["Quarantine + version the contract&lt;br/&gt;(new versioned table/topic,&lt;br/&gt;deprecate the old one on a timeline)"]
     S2 -->|"No"| CONTROLLED["Controlled replace&lt;br/&gt;single-owner migration script"]
-                                </pre>
-                            </div>
-                        </div>
+                    </pre>
+                </div>
+            </div>
 
-                        <div class="tree-block">
-                            <h3>Serverless vs. Job Cluster (and the override hierarchy)</h3>
-                            <p class="tree-note">The real question here is who gets to override the default, and in what order, more than which option runs faster. Ad hoc and bursty work defaults to serverless so nobody's waiting on cluster spin-up; sustained, tuned workloads get a dedicated job cluster. The part people skip is the hierarchy: a job-level override should always beat a workspace default, or someone's one-off notebook setting quietly becomes the production config.</p>
-                            <p class="tree-note">In my own work, I default to serverless most of the time. It removes a whole category of babysitting: no cluster sizing, no idle spend, no waiting on a spin-up before a query runs. But job clusters earn their keep fast once an organization actually wants predictable, per-department budgets, or once there's real audit risk or GDPR-style compliance pressure that calls for a fixed, reviewable environment instead of elastic infrastructure nobody can fully account for after the fact.</p>
-                            <div class="mermaid-card">
-                                <pre class="mermaid">
+            <div class="mock-tree-block">
+                <h3>Serverless vs. Job Cluster (and the override hierarchy)</h3>
+                <p class="mock-tree-note">Ad hoc and bursty work defaults to serverless so nobody's waiting on cluster spin-up; sustained, tuned workloads get a dedicated job cluster. The part people skip is the hierarchy: a job-level override should always beat a workspace default, or someone's one-off notebook setting quietly becomes the production config.</p>
+                <div class="mock-mermaid-card">
+                    <pre class="mermaid">
 flowchart TD
     C1{"Is the workload ad hoc,&lt;br/&gt;bursty, or exploratory?"}
     C1 -->|"Yes"| SERVERLESS["Serverless SQL /&lt;br/&gt;Serverless Jobs"]
@@ -1117,395 +1435,180 @@ flowchart TD
         direction LR
         H1["Job-level compute override"] --> H2["Cluster policy default"] --> H3["Workspace default"] --> H4["Personal / interactive cluster"]
     end
-                                </pre>
-                            </div>
-                        </div>
+                    </pre>
+                </div>
+            </div>
+        `
+    },
+    lss: {
+        category: 'Lean Six Sigma',
+        title: 'How I engineer the cure through statistics and human behavior.',
+        subtitle: '',
+        accent: '#c4b5fd',
+        bgClass: 'card-lss',
+        body: `
+            <p class="mock-intro-text">The way I think about Lean Six Sigma is pretty simple: start with the real problem people are feeling, prove what is actually happening, then build a fix that survives outside the project room.</p>
+            <div class="mock-tree-block">
+                <h3>The working toolbox</h3>
+                <p class="mock-tree-note">I do not treat the method like a checklist. Different problems need different tools: sometimes it is statistics, sometimes it is process design, and a lot of the time it is facilitation and getting people aligned around a new way of working.</p>
+                <div class="mock-tags">
+                    <span class="mock-tag">Project Charter</span><span class="mock-tag">SIPOC</span><span class="mock-tag">Value Stream Mapping</span><span class="mock-tag">Measurement System Analysis</span><span class="mock-tag">Cause Mapping</span><span class="mock-tag">Pareto Analysis</span><span class="mock-tag">Failure Modes &amp; Effects Analysis</span><span class="mock-tag">Hypothesis Testing</span><span class="mock-tag">Process Capability</span><span class="mock-tag">Design of Experiments</span><span class="mock-tag">Statistical Process Control</span><span class="mock-tag">5S &amp; Visual Management</span>
+                </div>
+            </div>
+            <div class="mock-stage-grid">
+                <div class="mock-stage-card"><div class="mock-stage-num">01 / DEFINE + MEASURE</div><h4>Frame the practical problem</h4><p>This is where I frame the problem, scope the project, define the customers, build the project charter, and understand where we are starting from. Then I measure the problem with tools like value stream maps, measurement system analysis, defect definitions, and baseline impact.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">02 / ANALYZE</div><h4>Dig into what the signals mean</h4><p>This is where I go deeper and ask: why are these signals showing up, what are they actually telling us, and what cause is worth acting on? That can mean cause maps, 5 Whys, fishbones, Pareto analysis, contingency tables, regression, ANOVA, or hypothesis testing.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">03 / IMPROVE</div><h4>Design the change and get people behind it</h4><p>Improve is where I design the solution, test it, and get approval with the right stakeholders before it becomes the new way of working. Sometimes that is a statistical fix, sometimes it is a process redesign, and sometimes it is a very practical countermeasure.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">04 / CONTROL</div><h4>Turn the solution into the normal process</h4><p>Control is where I make the change real. Some fixes are concrete, like sorting tools in a box, changing an SOP, or correcting a data stream. Others are less obvious and depend on workshops, teaching, coaching, and working through resistance or slow adoption.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">05 / SUSTAIN</div><h4>Make sure the work actually holds</h4><p>Sustain is often the most overlooked step, but it is the one I care about most. I want to check two weeks out, two months out, and six months out to see if the process is still meeting the goal or if the old behavior is creeping back in.</p></div>
+            </div>
+
+            <div class="mock-callout"><strong>Why Lean Six Sigma?</strong> For me, it is one toolset inside a bigger improvement toolbox. Lean is great for reducing waste and lead time. Six Sigma is built for reducing defects and variation. Innovation is what I reach for when the answer is a new product, process, or solution entirely.</div>
+
+            <div class="mock-tree-block">
+                <h3>Why the target matters</h3>
+                <p class="mock-tree-note">One big reason I like Six Sigma is that it changes the quality philosophy. The old goalpost view says anything inside the lower and upper spec limits is fine. Taguchi's view is more honest: the farther you drift from the target, the more quality loss you create, even if you are technically still inside spec.</p>
+                <div class="loss-compare" role="img" aria-label="Traditional goalpost quality compared with Taguchi quality loss curve">
+                    <div class="loss-panel">
+                        <h4>Goalpost philosophy</h4>
+                        <div class="loss-axis"></div>
+                        <div class="loss-block left">Loss</div>
+                        <div class="loss-limit left"><span>LSL</span></div>
+                        <div class="loss-ok">OK</div>
+                        <div class="loss-limit right"><span>USL</span></div>
+                        <div class="loss-block right">Loss</div>
+                        <p class="loss-caption">Inside the limits looks acceptable, so the process can drift toward the edge without feeling urgent.</p>
                     </div>
-                </details>
+                    <div class="loss-panel">
+                        <h4>Taguchi philosophy</h4>
+                        <div class="loss-axis"></div>
+                        <svg class="loss-curve-svg" viewBox="0 0 240 132" aria-hidden="true" focusable="false">
+                            <path d="M12 118 Q120 178 228 118 L228 18 Q120 122 12 18 Z" fill="rgba(196,181,253,0.16)" />
+                            <path d="M12 18 Q120 122 228 18" fill="none" stroke="rgba(196,181,253,0.9)" stroke-width="4" />
+                        </svg>
+                        <div class="loss-scale">
+                            <div class="loss-scale-line"></div>
+                            <span class="loss-scale-label lsl">LSL</span>
+                            <span class="loss-scale-label target">Target</span>
+                            <span class="loss-scale-label usl">USL</span>
+                            <span class="loss-dot target"></span>
+                            <span class="loss-dot edge"></span>
+                            <span class="loss-dot-label target">best quality, lowest loss</span>
+                            <span class="loss-dot-label edge">still passes, but loss grows</span>
+                        </div>
+                        <p class="loss-caption">Example: if a vial fill, machined part, or data field drifts away from target, it may still pass inspection, but the business starts paying for rework, scrap, risk, or customer pain.</p>
+                    </div>
+                </div>
+                <div class="loss-example">
+                    <div><strong>Goalpost thinking</strong> "It passed, ship it."</div>
+                    <div><strong>Target thinking</strong> "It passed, but how far from ideal are we and what is that drift costing?"</div>
+                </div>
             </div>
-        </div>
-    </section>
-    </div><!-- /framework-view -->
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-grid">
-            <div>
-                <div class="footer-brand">Tyler Vincent<span>.</span></div>
-                <p class="footer-desc">Data and Analytics Engineer with a passion for technology, building things, teaching others, solving complex problems, and developing solutions across industries from submarines to satellites.</p>
+            <div class="mock-tree-block">
+                <h3>Three Sigma vs. Six Sigma</h3>
+                <p class="mock-tree-note">Sigma level is a way to express process performance. For a simple illustrative comparison, three-sigma performance is about 2,700 defects per million opportunities, while the conventional Six Sigma benchmark is 3.4 defects per million opportunities. That gap is why this matters in industries like pharmaceuticals, defense, aerospace, surgery, mail delivery, or flight operations: tiny defect rates become very real when the volume is massive or the consequence is high.</p>
+                <div class="mock-mermaid-card">
+                    <div class="sigma-chart" role="img" aria-label="Comparison of approximately 2700 versus 3.4 defects per million opportunities">
+                        <div class="sigma-chart-row"><span class="sigma-chart-label">3 Sigma</span><div class="sigma-chart-track"><div class="sigma-chart-bar three"></div></div><span class="sigma-chart-value">~2,700 DPMO</span></div>
+                        <div class="sigma-chart-row"><span class="sigma-chart-label">6 Sigma</span><div class="sigma-chart-track"><div class="sigma-chart-bar six"></div></div><span class="sigma-chart-value">3.4 DPMO</span></div>
+                    </div>
+                    <p class="sigma-chart-note">DPMO = defects per million opportunities. If the opportunity is a surgical procedure, a batch record field, a flight-critical part, or a customer address, the difference between thousands of misses and a handful of misses is not academic. The Six Sigma benchmark assumes the conventional 1.5-sigma long-term shift; real-world performance depends on the process, measurement system, and definition of a defect.</p>
+                </div>
             </div>
-            <div class="footer-col">
-                <h4>Navigate</h4>
-                <a href="index.html">Work</a>
-                <a href="about.html">About</a>
-                <a href="education.html">Education</a>
-                <a href="index.html#projects">Projects</a>
+
+            <div class="mock-callout"><strong>The point is not perfection theater.</strong> The point is making the cost of variation visible, choosing the right tool for the failure mode, and bringing the people closest to the work along so the improvement keeps working after the project is closed.</div>
+        `
+    },
+    roles: {
+        category: 'Roles',
+        title: 'Takeaways from each of my roles.',
+        subtitle: '',
+        accent: '#f6ad55',
+        bgClass: 'card-roles',
+        body: `
+            <div class="mock-entry">
+                <span class="yr">2023 – Present</span>
+                <h3>Takeda Pharmaceuticals</h3>
+                <h4>Sr. Data and Analytics Engineer</h4>
+                <p>Built and owned full data products end-to-end. Developed a "North Star" mindset for scalable, governed data systems across enterprise manufacturing teams.</p>
+                <div class="mock-tags"><span class="mock-tag">Power BI</span><span class="mock-tag">Databricks</span><span class="mock-tag">SQL</span><span class="mock-tag">Enterprise Analytics</span><span class="mock-tag">Data Governance</span></div>
             </div>
-            <div class="footer-col">
-                <h4>Contact</h4>
-                <a data-contact="email" href="#"></a>
-                <a data-contact="phone" href="#"></a>
-                <a>Los Angeles, California</a>
+            <div class="mock-entry">
+                <span class="yr">2021 – 2023</span>
+                <h3>Chewy, Inc</h3>
+                <h4>Systems Engineer II</h4>
+                <p>Fast-paced, data-driven environment focused on rapid deployment and iteration. Deepened skills in user behavior analysis, engagement metrics, and change management.</p>
+                <div class="mock-tags"><span class="mock-tag">Agile Execution</span><span class="mock-tag">Change Management</span><span class="mock-tag">User Behavior</span></div>
             </div>
-            <div class="footer-col">
-                <h4>Connect</h4>
-                <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank">LinkedIn</a>
-                <a href="https://github.com/tylerv11/" target="_blank">GitHub</a>
+            <div class="mock-entry">
+                <span class="yr">2020 – 2021</span>
+                <h3>Electric Boat, General Dynamics</h3>
+                <h4>Data and Process Engineer II</h4>
+                <p>Learned validation frameworks and structured system design in a classified manufacturing environment, alongside welders and machinists.</p>
+                <div class="mock-tags"><span class="mock-tag">Validation Frameworks</span><span class="mock-tag">System Design</span><span class="mock-tag">Six Sigma Black Belt</span></div>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <span class="footer-copyright">&copy; Tyler Vincent. All rights reserved.</span>
-            <div class="footer-socials">
-                <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://github.com/tylerv11/" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            <div class="mock-entry">
+                <span class="yr">2019 – 2020</span>
+                <h3>The Aerospace Corporation</h3>
+                <h4>Algorithm Development &amp; Early Career Engineering</h4>
+                <p>Built a foundation in Python and programming logic, satellite scheduling optimization on a Raspberry Pi.</p>
+                <div class="mock-tags"><span class="mock-tag">Python</span><span class="mock-tag">Algorithm Design</span><span class="mock-tag">Optimization</span></div>
             </div>
-        </div>
-    </footer>
-
-    <!-- ===== SITE ASSISTANT ===== -->
-    <div id="site-assistant">
-        <button id="sa-toggle" onclick="toggleAssistant()" aria-label="Ask about Tyler's portfolio">
-            <i class="fas fa-robot"></i>
-        </button>
-        <div id="sa-panel">
-            <div id="sa-header">
-                <span><i class="fas fa-robot"></i>&nbsp; Tyler's Portfolio Assistant</span>
-                <button onclick="toggleAssistant()" aria-label="Close"><i class="fas fa-times"></i></button>
+            <div class="mock-entry">
+                <span class="yr">2019, Singapore</span>
+                <h3>Singaporean SaaS Startup</h3>
+                <h4>AI Program Manager, Computer Vision</h4>
+                <p>Managed AI/data teams overseeing 8 international deployments for commercial and government clients.</p>
+                <div class="mock-tags"><span class="mock-tag">Computer Vision</span><span class="mock-tag">AI Systems</span><span class="mock-tag">International Deployments</span></div>
             </div>
-            <div id="sa-messages">
-                <div class="sa-msg bot">Hi! I'm Tyler's Portfolio Assistant. I can tell you about his projects, skills, experience, and what makes him unique. Ask me anything about his background.</div>
-            </div>
-            <div id="sa-suggestions">
-                <button class="sa-chip" onclick="saAsk('Why hire him?')">Why hire him?</button>
-                <button class="sa-chip" onclick="saAsk('What are Tyler\'s biggest strengths?')">Strengths?</button>
-                <button class="sa-chip" onclick="saAsk('What\'s Tyler been up to recently?')">Recent work?</button>
-                <button class="sa-chip" onclick="saAsk('Tell me about his data engineering work')">Data engineering?</button>
-                <button class="sa-chip" onclick="saAsk('What makes Tyler unique?')">What's Unique?</button>
-                <button class="sa-chip" onclick="saAsk('What\'s Tyler\'s tech stack?')">Tyler's Tech Stack?</button>
-                <button class="sa-chip" onclick="saAsk('What\'s Tyler learning now?')">Learning now?</button>
-            </div>
-            <div id="sa-input-row">
-                <input id="sa-input" type="text" placeholder="Ask something..." onkeydown="if(event.key==='Enter')saSubmit()">
-                <button id="sa-send" onclick="saSubmit()" aria-label="Send"><i class="fas fa-paper-plane"></i></button>
-            </div>
-        </div>
-    </div>
+        `
+    }
+};
 
+const overlay = document.getElementById('expand-overlay');
+const panel = document.getElementById('expand-panel');
 
-    </div>
+document.querySelectorAll('.apple-card').forEach(card => {
+    card.addEventListener('click', () => openCard(card.dataset.card));
+});
 
-    <script>
-        if (typeof mermaid !== 'undefined') {
-            mermaid.initialize({
-                startOnLoad: false,
-                theme: 'base',
-                themeVariables: {
-                    darkMode: true,
-                    background: '#08090a',
-                    mainBkg: '#181c22',
-                    primaryColor: '#181c22',
-                    primaryTextColor: '#e7e9ec',
-                    primaryBorderColor: '#00ff87',
-                    secondaryColor: '#0f1115',
-                    tertiaryColor: '#0f1115',
-                    lineColor: '#4a525c',
-                    textColor: '#a7adb7',
-                    nodeTextColor: '#e7e9ec',
-                    edgeLabelBackground: '#0f1115',
-                    clusterBkg: '#0f1115',
-                    clusterBorder: 'rgba(255,255,255,0.16)',
-                    fontFamily: 'Inter, sans-serif',
-                    fontSize: '13px'
-                },
-                flowchart: { curve: 'basis', htmlLabels: true, padding: 14 },
-                securityLevel: 'loose'
-            });
-        }
+function openCard(key) {
+    const data = CARD_DATA[key];
+    if (!data) return;
+    document.getElementById('expand-category').textContent = data.category;
+    document.getElementById('expand-title').textContent = data.title;
+    const subtitleEl = document.getElementById('expand-subtitle');
+    subtitleEl.textContent = data.subtitle;
+    subtitleEl.style.display = data.subtitle ? '' : 'none';
+    document.getElementById('expand-body').innerHTML = data.body;
+    wireTagTooltips();
+    if (typeof mermaid !== 'undefined') {
+        const pending = document.querySelectorAll('#expand-body pre.mermaid');
+        if (pending.length) mermaid.run({ nodes: pending });
+    }
 
-        // Education / Framework view toggle
-        function setEduView(view) {
-            var eduView = document.getElementById('education-view');
-            var fwView = document.getElementById('framework-view');
-            var eduBtn = document.getElementById('btn-education-view');
-            var fwBtn = document.getElementById('btn-framework-view');
-            var showFramework = view === 'framework';
+    const hero = document.getElementById('expand-hero');
+    hero.className = 'expand-hero ' + data.bgClass;
+    hero.style.setProperty('--card-accent', data.accent);
+    panel.style.setProperty('--card-accent', data.accent);
 
-            eduView.style.display = showFramework ? 'none' : '';
-            fwView.style.display = showFramework ? '' : 'none';
-            eduBtn.classList.toggle('active', !showFramework);
-            fwBtn.classList.toggle('active', showFramework);
-            eduBtn.setAttribute('aria-pressed', String(!showFramework));
-            fwBtn.setAttribute('aria-pressed', String(showFramework));
+    overlay.classList.add('active');
+    panel.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
 
-            if (showFramework) {
-                // Elements hidden behind display:none never intersected, so the
-                // reveal observer never fired for them. Show them immediately now.
-                fwView.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
-            }
+function closeCard() {
+    overlay.classList.remove('active');
+    panel.classList.remove('active');
+    document.body.style.overflow = '';
+    document.getElementById('mock-skill-tooltip').classList.remove('visible');
+}
 
-            var toggleWrap = document.querySelector('.view-toggle-wrap');
-            if (toggleWrap) toggleWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        // Render mermaid diagrams the first time a <details> containing them is opened.
-        // startOnLoad is off because closed <details> content is display:none, so mermaid
-        // can't measure it correctly until the section is actually visible.
-        document.querySelectorAll('details').forEach(function(d) {
-            d.addEventListener('toggle', function() {
-                if (d.open && typeof mermaid !== 'undefined') {
-                    var pending = d.querySelectorAll('pre.mermaid:not([data-processed="true"])');
-                    if (pending.length) {
-                        mermaid.run({ nodes: pending }).then(function() {
-                            pending.forEach(function(el) { el.setAttribute('data-processed', 'true'); });
-                        }).catch(function() {});
-                    }
-                }
-            });
-        });
-
-        // Navbar scroll
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            navbar.classList.toggle('scrolled', window.scrollY > 50);
-        });
-
-        // Scroll progress bar
-        (function() {
-            var bar = document.getElementById('scroll-progress-bar');
-            if (!bar) return;
-            function update() {
-                var doc = document.documentElement;
-                var scrollTop = doc.scrollTop || document.body.scrollTop;
-                var scrollable = (doc.scrollHeight || document.body.scrollHeight) - doc.clientHeight;
-                var pct = scrollable > 0 ? (scrollTop / scrollable) * 100 : 0;
-                bar.style.width = pct + '%';
-            }
-            window.addEventListener('scroll', update, { passive: true });
-            window.addEventListener('resize', update);
-            update();
-        })();
-
-        // Mobile menu
-        const navToggle = document.getElementById('nav-toggle');
-        const navMenu = document.getElementById('nav-menu');
-        const navIcon = document.getElementById('nav-toggle-icon');
-        const navOverlay = document.getElementById('nav-overlay');
-
-        function setActiveNav() {
-            const path = window.location.pathname.split('/').pop() || 'index.html';
-            const hash = window.location.hash;
-            navMenu.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-
-            let target = 'index.html';
-            if (path === 'about.html') target = 'about.html';
-            else if (path === 'education.html') target = 'education.html';
-            else if (hash === '#projects') target = 'index.html#projects';
-
-            const active = navMenu.querySelector(`.nav-link[href="${target}"]`);
-            if (active) active.classList.add('active');
-        }
-
-        setActiveNav();
-        window.addEventListener('hashchange', setActiveNav);
-
-        function closeMenu() {
-            navMenu.classList.remove('open');
-            navIcon.className = 'fas fa-bars';
-            if (navOverlay) navOverlay.classList.remove('visible');
-        }
-
-        navToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('open');
-            const isOpen = navMenu.classList.contains('open');
-            navIcon.className = isOpen ? 'fas fa-times' : 'fas fa-bars';
-            if (navOverlay) navOverlay.classList.toggle('visible', isOpen);
-        });
-
-        if (navOverlay) navOverlay.addEventListener('click', closeMenu);
-
-        navMenu.querySelectorAll('.nav-link, .nav-cta').forEach(link => {
-            link.addEventListener('click', closeMenu);
-        });
-
-        // Scroll reveal
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // ===== MATRIX CURSOR TRAIL =====
-        (function() {
-            const mc = document.getElementById('matrix-cursor-canvas');
-            if (!mc) return;
-            const ctx = mc.getContext('2d');
-            const chars = '01';
-            let trails = [];
-            function resize() { mc.width = window.innerWidth; mc.height = window.innerHeight; }
-            resize();
-            window.addEventListener('resize', resize);
-            document.addEventListener('mousemove', function(e) {
-                if (Math.random() > 0.45) {
-                    trails.push({
-                        x: e.clientX + (Math.random() - 0.5) * 18,
-                        y: e.clientY,
-                        ch: chars[Math.floor(Math.random() * chars.length)],
-                        op: 0.9 + Math.random() * 0.1,
-                        vy: 0.8 + Math.random() * 1.8,
-                        sz: 9 + Math.floor(Math.random() * 5)
-                    });
-                }
-                if (trails.length > 50) trails.shift();
-            });
-            function draw() {
-                ctx.clearRect(0, 0, mc.width, mc.height);
-                ctx.textBaseline = 'top';
-                trails = trails.filter(function(t) { return t.op > 0.02; });
-                trails.forEach(function(t) {
-                    ctx.globalAlpha = t.op;
-                    ctx.fillStyle = '#00ff87';
-                    ctx.font = t.sz + 'px monospace';
-                    ctx.fillText(t.ch, t.x, t.y);
-                    t.y += t.vy;
-                    t.op *= 0.92;
-                });
-                ctx.globalAlpha = 1;
-                requestAnimationFrame(draw);
-            }
-            draw();
-        })();
-
-        // ===== HEADING MATRIX BACKGROUNDS =====
-        (function() {
-            const chars = '01';
-            document.querySelectorAll('.heading-matrix-bg').forEach(function(canvas) {
-                if (!canvas || !canvas.parentElement) return;
-                var ctx = canvas.getContext('2d');
-                var cols, drops;
-                function resize() {
-                    canvas.width = canvas.parentElement.offsetWidth || 400;
-                    canvas.height = canvas.parentElement.offsetHeight || 120;
-                    cols = Math.floor(canvas.width / 14);
-                    drops = Array(cols).fill(0).map(function() { return Math.floor(Math.random() * canvas.height / 14); });
-                }
-                function draw() {
-                    ctx.fillStyle = 'rgba(10,10,10,0.2)';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    ctx.font = '11px monospace';
-                    for (var i = 0; i < drops.length; i++) {
-                        var ch = chars[Math.floor(Math.random() * chars.length)];
-                        ctx.fillStyle = 'rgba(0,255,135,' + (0.05 + Math.random() * 0.09) + ')';
-                        ctx.fillText(ch, i * 14, drops[i] * 14);
-                        if (drops[i] * 14 > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                        drops[i]++;
-                    }
-                }
-                resize();
-                window.addEventListener('resize', resize);
-                setInterval(draw, 140);
-            });
-        })();
-
-        // ===== TOOLTIP POSITION DETECTOR =====
-        (function() {
-            document.querySelectorAll('.course-tag').forEach(function(tag) {
-                tag.addEventListener('mouseenter', function() {
-                    var tooltip = this.querySelector('.skill-tooltip');
-                    if (!tooltip) return;
-
-                    // Check if we're on mobile
-                    if (window.innerWidth <= 768) return;
-
-                    // Get positions
-                    var rect = this.getBoundingClientRect();
-                    var tooltipWidth = 220;
-                    var padding = 14;
-                    var leftPos = rect.left - tooltipWidth - padding;
-
-                    // If left position would be off-screen, position right instead
-                    if (leftPos < 12) {
-                        tooltip.classList.add('right-position');
-                    } else {
-                        tooltip.classList.remove('right-position');
-                    }
-                });
-            });
-        })();
-
-        // ===== SITE ASSISTANT =====
-        (function() {
-            var isOpen = false;
-
-            // Shared knowledge base, single source of truth: portfolio-assistant.js
-            var KB = window.TYLER_KB;
-
-            window.toggleAssistant = function() {
-                var panel = document.getElementById('sa-panel');
-                isOpen = !isOpen;
-                if (panel) panel.classList.toggle('open', isOpen);
-            };
-
-            window.saAsk = function(question) {
-                var input = document.getElementById('sa-input');
-                if (input) input.value = question;
-                saSubmit();
-            };
-
-            window.saSubmit = function() {
-                var input = document.getElementById('sa-input');
-                if (!input) return;
-                var question = input.value.trim();
-                if (!question) return;
-
-                saAddMsg(question, 'user');
-                input.value = '';
-
-                var answer = saResolveContact(saAnswer(question));
-                setTimeout(function() { saAddMsg(answer, 'bot'); }, 200);
-            };
-
-            function saResolveContact(text) {
-                if (!window.TVContact) return text;
-                return text.replace(/\{\{EMAIL\}\}/g, window.TVContact.getEmail())
-                            .replace(/\{\{PHONE\}\}/g, window.TVContact.getPhone());
-            }
-
-            function saAddMsg(text, cls) {
-                var msgs = document.getElementById('sa-messages');
-                if (!msgs) return;
-                var div = document.createElement('div');
-                div.className = 'sa-msg ' + cls;
-                div.innerHTML = text;
-                msgs.appendChild(div);
-                msgs.scrollTop = msgs.scrollHeight;
-            }
-
-            function saAnswer(q) {
-                var lower = q.toLowerCase();
-                var bestScore = 0, bestAnswer = null;
-                for (var i = 0; i < KB.length; i++) {
-                    var score = 0;
-                    for (var j = 0; j < KB[i].keys.length; j++) {
-                        if (lower.indexOf(KB[i].keys[j]) !== -1) score++;
-                    }
-                    if (score > bestScore) { bestScore = score; bestAnswer = KB[i].answer; }
-                }
-                if (bestScore > 0) return bestAnswer;
-                var words = lower.split(/\s+/);
-                for (var i = 0; i < KB.length; i++) {
-                    for (var j = 0; j < KB[i].keys.length; j++) {
-                        var key = KB[i].keys[j];
-                        for (var k = 0; k < words.length; k++) {
-                            if (words[k].length > 3 && key.indexOf(words[k]) !== -1) return KB[i].answer;
-                        }
-                    }
-                }
-                return 'Great question - I\'m not sure I have a canned answer for that one. Try asking about Tyler\'s projects, KPIs, skills, industries, or working style. Or better yet, reach out directly at {{EMAIL}}.';
-            }
-        })();
-    </script>
-
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeCard();
+});
+</script>
 
 </body>
 </html>

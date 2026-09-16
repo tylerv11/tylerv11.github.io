@@ -92,8 +92,29 @@
         .nav-brand {
             font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700;
             color: var(--text-primary); text-decoration: none; letter-spacing: -0.5px;
+            position: relative; display: inline-flex; align-items: baseline;
+            background: linear-gradient(90deg, var(--text-primary), var(--accent), #8ca391, var(--text-primary));
+            background-size: 260% 100%; background-position: 0% 50%;
+            -webkit-background-clip: text; background-clip: text;
+            transition: color 0.28s ease, background-position 0.55s var(--transition-smooth), text-shadow 0.28s ease, transform 0.28s var(--transition-smooth);
         }
-        .nav-brand span { color: var(--accent); }
+        .nav-brand span { color: var(--accent); transition: color 0.28s ease, text-shadow 0.28s ease; }
+        .nav-brand::after {
+            content: ''; position: absolute; left: 0; right: 0; bottom: -5px; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            transform: scaleX(0); transform-origin: left; opacity: 0;
+            transition: transform 0.42s var(--transition-smooth), opacity 0.28s ease;
+        }
+        .nav-brand:hover,
+        .nav-brand:focus-visible {
+            color: transparent; background-position: 100% 50%;
+            text-shadow: 0 0 18px rgba(0,255,135,0.22);
+            transform: translateY(-1px); outline: none;
+        }
+        .nav-brand:hover span,
+        .nav-brand:focus-visible span { color: #fff; text-shadow: 0 0 16px rgba(0,255,135,0.5); }
+        .nav-brand:hover::after,
+        .nav-brand:focus-visible::after { opacity: 1; transform: scaleX(1); }
 
         .nav-menu { display: flex; align-items: center; gap: 8px; }
 

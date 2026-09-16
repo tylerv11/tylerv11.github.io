@@ -3,9 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Apple Cards Carousel: Mockup</title>
+<title>Education - Tyler Vincent</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="shimmer-button.css">
+<script src="portfolio-assistant.js" type="text/javascript"></script>
+<script src="analytics.js" defer></script>
+<script src="contact-info.js" defer></script>
 <style>
     :root {
         --bg-primary: #08090a;
@@ -32,16 +37,6 @@
         background: var(--bg-primary);
         color: var(--text-primary);
         -webkit-font-smoothing: antialiased;
-    }
-
-    .mock-banner {
-        background: rgba(0,255,135,0.08);
-        border-bottom: 1px solid rgba(0,255,135,0.25);
-        color: var(--accent);
-        text-align: center;
-        font-size: 0.78rem;
-        letter-spacing: 0.03em;
-        padding: 8px 16px;
     }
 
     header.navbar {
@@ -395,6 +390,140 @@
 
     .mock-intro-text { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; margin-bottom: 4px; }
 
+    /* Lean Six Sigma comparison visual */
+    .sigma-chart {
+        display: grid;
+        gap: 16px;
+        margin-top: 18px;
+    }
+    .sigma-chart-row { display: grid; grid-template-columns: 92px 1fr 86px; gap: 12px; align-items: center; }
+    .sigma-chart-label { color: var(--text-secondary); font-size: 0.76rem; font-weight: 600; }
+    .sigma-chart-track { height: 12px; border-radius: 999px; background: rgba(255,255,255,0.06); overflow: hidden; }
+    .sigma-chart-bar { height: 100%; border-radius: inherit; background: linear-gradient(90deg, #c4b5fd, #8b5cf6); }
+    .sigma-chart-bar.three { width: 86%; background: linear-gradient(90deg, #f6ad55, #ef6c4d); }
+    .sigma-chart-bar.six { width: 4%; min-width: 8px; }
+    .sigma-chart-value { text-align: right; color: var(--text-primary); font-size: 0.78rem; font-variant-numeric: tabular-nums; }
+    .sigma-chart-note { margin: 14px 0 0; color: var(--text-muted); font-size: 0.75rem; line-height: 1.55; }
+
+    .loss-compare {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 18px;
+    }
+    .loss-panel {
+        position: relative;
+        min-height: 230px;
+        border: 1px solid var(--border-subtle);
+        border-radius: 14px;
+        background: rgba(255,255,255,0.03);
+        padding: 18px;
+        overflow: hidden;
+    }
+    .loss-panel h4 {
+        margin: 0 0 10px;
+        color: var(--card-accent, var(--accent));
+        font-size: 0.9rem;
+    }
+    .loss-caption {
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        bottom: 16px;
+        color: var(--text-secondary);
+        font-size: 0.78rem;
+        line-height: 1.45;
+    }
+    .loss-axis {
+        position: absolute;
+        left: 15%;
+        right: 15%;
+        bottom: 72px;
+        height: 2px;
+        background: rgba(246,173,85,0.78);
+    }
+    .loss-limit {
+        position: absolute;
+        bottom: 72px;
+        width: 3px;
+        height: 122px;
+        background: #f6ad55;
+        border-radius: 999px;
+    }
+    .loss-limit.left { left: 28%; }
+    .loss-limit.right { right: 28%; }
+    .loss-limit span {
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #f6d365;
+        font-size: 0.7rem;
+        font-weight: 700;
+    }
+    .loss-ok {
+        position: absolute;
+        left: 38%;
+        right: 38%;
+        bottom: 74px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        font-size: 0.82rem;
+        font-weight: 700;
+        border-top: 1px solid rgba(255,255,255,0.22);
+    }
+    .loss-block {
+        position: absolute;
+        bottom: 74px;
+        width: 26%;
+        height: 98px;
+        background: rgba(196,181,253,0.16);
+        border: 1px solid rgba(196,181,253,0.28);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        font-weight: 700;
+    }
+    .loss-block.left { left: 2%; }
+    .loss-block.right { right: 2%; }
+    .loss-curve-svg {
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        bottom: 72px;
+        width: 76%;
+        height: 132px;
+        overflow: visible;
+    }
+    .loss-target {
+        position: absolute;
+        left: 50%;
+        bottom: 62px;
+        transform: translateX(-50%);
+        color: #f6d365;
+        font-size: 0.72rem;
+        font-weight: 700;
+    }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border-subtle); padding: 72px 48px 36px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; }
+    .footer-brand span { color: var(--accent); }
+    .footer-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; max-width: 360px; }
+    .footer-col h4 { font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-primary); margin: 0 0 16px; }
+    .footer-col a { display: block; color: var(--text-muted); text-decoration: none; font-size: 0.9rem; padding: 4px 0; transition: color 0.2s ease; }
+    .footer-col a:hover { color: var(--text-primary); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--border-subtle); }
+    .footer-copyright { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-socials { display: flex; gap: 16px; }
+    .footer-socials a { color: var(--text-muted); font-size: 1.1rem; transition: all 0.3s ease; text-decoration: none; }
+    .footer-socials a:hover { color: var(--accent); transform: translateY(-2px); }
+
     /* placeholder card */
     .mock-placeholder {
         text-align: center;
@@ -411,12 +540,15 @@
         .apple-card { width: 260px; height: 380px; }
         .expand-body { padding: 24px 22px 36px; }
         .expand-hero-label { left: 22px; }
+        .footer { padding: 44px 20px 24px; }
+        .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+        .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+        .loss-compare { grid-template-columns: 1fr; }
+        .sigma-chart-row { grid-template-columns: 74px 1fr 78px; gap: 8px; }
     }
 </style>
 </head>
 <body>
-
-<div class="mock-banner">MOCKUP PREVIEW, not linked from the live site. Apple Cards Carousel concept for the Education page.</div>
 
 <header class="navbar">
     <div class="navbar-brand">Tyler Vincent<span>.</span></div>
@@ -495,6 +627,40 @@
 </div>
 <div class="mock-skill-tooltip" id="mock-skill-tooltip"><strong id="mock-tt-title"></strong><span id="mock-tt-desc"></span></div>
 
+<footer class="footer">
+    <div class="footer-grid">
+        <div>
+            <div class="footer-brand">Tyler Vincent<span>.</span></div>
+            <p class="footer-desc">Data and Analytics Engineer with a passion for technology, building things, teaching others, solving complex problems, and developing solutions across industries from submarines to satellites.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Navigate</h4>
+            <a href="index.html">Work</a>
+            <a href="about.html">About</a>
+            <a href="education.html">Education</a>
+            <a href="index.html#projects">Projects</a>
+        </div>
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <a data-contact="email" href="#"></a>
+            <a data-contact="phone" href="#"></a>
+            <a>Los Angeles, California</a>
+        </div>
+        <div class="footer-col">
+            <h4>Connect</h4>
+            <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="https://github.com/tylerv11/" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span class="footer-copyright">&copy; Tyler Vincent. All rights reserved.</span>
+        <div class="footer-socials">
+            <a href="https://www.linkedin.com/in/tyler-vincent11/" target="_blank" rel="noreferrer" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://github.com/tylerv11/" target="_blank" rel="noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
+        </div>
+    </div>
+</footer>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
 <script>
 if (typeof mermaid !== 'undefined') {
@@ -539,9 +705,19 @@ const TAG_INFO = {
     'Regularization': 'Ridge, Lasso, and Elastic Net methods to reduce model complexity and improve generalization on unseen data.',
     'Ensemble Methods': 'Boosting and bagging approaches (Random Forests, XGBoost-style) that combine weak learners into highly accurate predictors.',
     'DMAIC': 'Define → Measure → Analyze → Improve → Control. The Six Sigma backbone for eliminating defects and reducing variation in any process.',
+    'Project Charter': 'A shared agreement on the problem, goal, scope, stakeholders, timeline, and expected business impact.',
+    'SIPOC': 'A high-level Suppliers, Inputs, Process, Outputs, Customers view that aligns the team before detailed process mapping.',
+    'Value Stream Mapping': 'A Lean view of material and information flow that makes waiting, handoffs, rework, and lead time visible.',
+    'Measurement System Analysis': 'A check that the measurement process is precise and reproducible enough to support decisions.',
     'Statistical Process Control': 'Using control charts (X-bar, R, P-charts) to monitor process stability and catch out-of-control signals before they become defects.',
     'Hypothesis Testing': 'T-tests, ANOVA, and chi-square methods to make data-driven decisions with statistical confidence — separating signal from noise.',
     'Root Cause Analysis': 'Fishbone diagrams and 5-Why methodology to drill past symptoms and permanently resolve the source of recurring problems.',
+    'Cause Mapping': 'A visual root-cause method that connects contributing factors to the final effect and helps identify where an intervention can break the chain.',
+    'Pareto Analysis': 'Ranking defect categories so the team can focus on the few causes responsible for most of the observed impact.',
+    'Failure Modes & Effects Analysis': 'A structured risk review that prioritizes possible failures by severity, occurrence, and detectability.',
+    'Process Capability': 'Comparing a stable process distribution with customer or engineering specifications to quantify capability.',
+    'Design of Experiments': 'Planning controlled experiments to learn which factors and interactions materially change an outcome.',
+    '5S & Visual Management': 'Organizing the workplace and making normal versus abnormal conditions obvious at a glance.',
     'Six Sigma & Lean Ops': 'Reduction of process variation and waste elimination — the foundation of every engineering improvement project in manufacturing and beyond.',
     'Database Systems': 'Relational modeling, SQL, normalization, and query optimization — the backbone of every data pipeline and analytics platform.',
     'Engineering Statistics': 'Regression, ANOVA, and reliability analysis applied to real engineering problems — turns raw data into decisions.',
@@ -760,15 +936,71 @@ flowchart TD
     lss: {
         category: 'Lean Six Sigma',
         title: 'How I engineer the cure through statistics and human behavior.',
-        subtitle: 'Content coming soon.',
+        subtitle: '',
         accent: '#c4b5fd',
         bgClass: 'card-lss',
         body: `
-            <div class="mock-placeholder">
-                <i class="fas fa-pen-ruler"></i>
-                <strong>Content coming soon</strong>
-                <p>This card is a placeholder. Tyler is providing the Lean Six Sigma Black Belt content (DMAIC case studies, process-improvement wins) to slot in here.</p>
+            <p class="mock-intro-text">The way I think about Lean Six Sigma is pretty simple: start with the real problem people are feeling, prove what is actually happening, then build a fix that survives outside the project room.</p>
+            <div class="mock-tree-block">
+                <h3>The working toolbox</h3>
+                <p class="mock-tree-note">I do not treat the method like a checklist. Different problems need different tools: sometimes it is statistics, sometimes it is process design, and a lot of the time it is facilitation and getting people aligned around a new way of working.</p>
+                <div class="mock-tags">
+                    <span class="mock-tag">Project Charter</span><span class="mock-tag">SIPOC</span><span class="mock-tag">Value Stream Mapping</span><span class="mock-tag">Measurement System Analysis</span><span class="mock-tag">Cause Mapping</span><span class="mock-tag">Pareto Analysis</span><span class="mock-tag">Failure Modes &amp; Effects Analysis</span><span class="mock-tag">Hypothesis Testing</span><span class="mock-tag">Process Capability</span><span class="mock-tag">Design of Experiments</span><span class="mock-tag">Statistical Process Control</span><span class="mock-tag">5S &amp; Visual Management</span>
+                </div>
             </div>
+            <div class="mock-stage-grid">
+                <div class="mock-stage-card"><div class="mock-stage-num">01 / DEFINE + MEASURE</div><h4>Frame the practical problem</h4><p>This is where I frame the problem, scope the project, define the customers, build the project charter, and understand where we are starting from. Then I measure the problem with tools like value stream maps, measurement system analysis, defect definitions, and baseline impact.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">02 / ANALYZE</div><h4>Dig into what the signals mean</h4><p>This is where I go deeper and ask: why are these signals showing up, what are they actually telling us, and what cause is worth acting on? That can mean cause maps, 5 Whys, fishbones, Pareto analysis, contingency tables, regression, ANOVA, or hypothesis testing.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">03 / IMPROVE</div><h4>Design the change and get people behind it</h4><p>Improve is where I design the solution, test it, and get approval with the right stakeholders before it becomes the new way of working. Sometimes that is a statistical fix, sometimes it is a process redesign, and sometimes it is a very practical countermeasure.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">04 / CONTROL</div><h4>Turn the solution into the normal process</h4><p>Control is where I make the change real. Some fixes are concrete, like sorting tools in a box, changing an SOP, or correcting a data stream. Others are less obvious and depend on workshops, teaching, coaching, and working through resistance or slow adoption.</p></div>
+                <div class="mock-stage-card"><div class="mock-stage-num">05 / SUSTAIN</div><h4>Make sure the work actually holds</h4><p>Sustain is often the most overlooked step, but it is the one I care about most. I want to check two weeks out, two months out, and six months out to see if the process is still meeting the goal or if the old behavior is creeping back in.</p></div>
+            </div>
+
+            <div class="mock-callout"><strong>Why Lean Six Sigma?</strong> For me, it is one toolset inside a bigger improvement toolbox. Lean is great for reducing waste and lead time. Six Sigma is built for reducing defects and variation. Innovation is what I reach for when the answer is a new product, process, or solution entirely.</div>
+
+            <div class="mock-tree-block">
+                <h3>Why the target matters</h3>
+                <p class="mock-tree-note">One big reason I like Six Sigma is that it changes the quality philosophy. The old goalpost view says anything inside the lower and upper spec limits is fine. Taguchi's view is more honest: the farther you drift from the target, the more quality loss you create, even if you are technically still inside spec.</p>
+                <div class="loss-compare" role="img" aria-label="Traditional goalpost quality compared with Taguchi quality loss curve">
+                    <div class="loss-panel">
+                        <h4>Goalpost philosophy</h4>
+                        <div class="loss-axis"></div>
+                        <div class="loss-block left">Loss</div>
+                        <div class="loss-limit left"><span>LSL</span></div>
+                        <div class="loss-ok">OK</div>
+                        <div class="loss-limit right"><span>USL</span></div>
+                        <div class="loss-block right">Loss</div>
+                        <p class="loss-caption">Inside the limits looks acceptable, so the process can drift toward the edge without feeling urgent.</p>
+                    </div>
+                    <div class="loss-panel">
+                        <h4>Taguchi philosophy</h4>
+                        <div class="loss-axis"></div>
+                        <svg class="loss-curve-svg" viewBox="0 0 240 132" aria-hidden="true" focusable="false">
+                            <path d="M12 16 Q120 228 228 16" fill="rgba(196,181,253,0.18)" stroke="rgba(196,181,253,0.9)" stroke-width="4" />
+                            <circle cx="184" cy="68" r="9" fill="#f6ad55" />
+                            <path d="M150 82 L176 70" stroke="rgba(255,255,255,0.75)" stroke-width="3" />
+                        </svg>
+                        <div class="loss-limit left"><span>LSL</span></div>
+                        <div class="loss-limit right"><span>USL</span></div>
+                        <div class="loss-target">Target</div>
+                        <p class="loss-caption">The target is the best point. Any deviation creates loss, so the work becomes reducing variation, not just staying inside the lines.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mock-tree-block">
+                <h3>Three Sigma vs. Six Sigma</h3>
+                <p class="mock-tree-note">Sigma level is a way to express process performance. For a simple illustrative comparison, three-sigma performance is about 2,700 defects per million opportunities, while the conventional Six Sigma benchmark is 3.4 defects per million opportunities.</p>
+                <div class="mock-mermaid-card">
+                    <div class="sigma-chart" role="img" aria-label="Comparison of approximately 2700 versus 3.4 defects per million opportunities">
+                        <div class="sigma-chart-row"><span class="sigma-chart-label">3 Sigma</span><div class="sigma-chart-track"><div class="sigma-chart-bar three"></div></div><span class="sigma-chart-value">~2,700 DPMO</span></div>
+                        <div class="sigma-chart-row"><span class="sigma-chart-label">6 Sigma</span><div class="sigma-chart-track"><div class="sigma-chart-bar six"></div></div><span class="sigma-chart-value">3.4 DPMO</span></div>
+                    </div>
+                    <p class="sigma-chart-note">DPMO = defects per million opportunities. The Six Sigma benchmark assumes the conventional 1.5-sigma long-term shift; real-world performance depends on the process, measurement system, and definition of a defect.</p>
+                </div>
+            </div>
+
+            <div class="mock-callout"><strong>The point is not perfection theater.</strong> The point is making the cost of variation visible, choosing the right tool for the failure mode, and bringing the people closest to the work along so the improvement keeps working after the project is closed.</div>
         `
     },
     roles: {

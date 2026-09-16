@@ -264,10 +264,55 @@
             color: var(--text-primary);
             text-decoration: none;
             letter-spacing: -0.5px;
+            position: relative;
+            display: inline-flex;
+            align-items: baseline;
+            background: linear-gradient(90deg, var(--text-primary), var(--accent), var(--green-sage), var(--text-primary));
+            background-size: 260% 100%;
+            background-position: 0% 50%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            transition: color 0.28s ease, background-position 0.55s var(--transition-smooth), text-shadow 0.28s ease, transform 0.28s var(--transition-smooth);
         }
 
         .nav-brand span {
             color: var(--accent);
+            transition: color 0.28s ease, text-shadow 0.28s ease;
+        }
+
+        .nav-brand::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -5px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            opacity: 0;
+            transition: transform 0.42s var(--transition-smooth), opacity 0.28s ease;
+        }
+
+        .nav-brand:hover,
+        .nav-brand:focus-visible {
+            color: transparent;
+            background-position: 100% 50%;
+            text-shadow: 0 0 18px rgba(0,255,135,0.22);
+            transform: translateY(-1px);
+            outline: none;
+        }
+
+        .nav-brand:hover span,
+        .nav-brand:focus-visible span {
+            color: #fff;
+            text-shadow: 0 0 16px rgba(0,255,135,0.5);
+        }
+
+        .nav-brand:hover::after,
+        .nav-brand:focus-visible::after {
+            opacity: 1;
+            transform: scaleX(1);
         }
 
         .nav-menu {
@@ -3320,7 +3365,7 @@
                     </div>
                     <div class="hero-proof-item">
                         <div class="hero-proof-num">6</div>
-                        <div class="hero-proof-label">Regions</div>
+                        <div class="hero-proof-label">Major sectors</div>
                     </div>
                 </div>
             </div>
@@ -4293,7 +4338,7 @@
                 <div class="exp-tile-body" id="exp-body-homelab">
                     <div class="exp-tile-body-inner">
                         <div class="exp-tile-content">
-                            <p class="exp-tile-desc-text" style="padding-top:0;">I'm building a home server to own more of my own stack: self-hosting the local models I use for agent work, holding my own documents and media instead of renting them from someone else's cloud, and getting real hands-on practice with the networking and containerization concepts I'd otherwise only read about. The build runs headless Linux with everything containerized in Docker, remote access locked to a private mesh VPN, and SSH out to my other personal machines for day-to-day administration. The point isn't just "it works" — it's designing it so the parts that should never see the public internet, don't.</p>
+                            <p class="exp-tile-desc-text" style="padding-top:0;">I'm building a home server to own more of my own stack: self-hosting the local models I use for agent work, holding my own documents and media instead of renting them from someone else's cloud, and getting real hands-on practice with the networking and containerization concepts I'd otherwise only read about. The build runs headless Linux with everything containerized in Docker, remote access locked to a private mesh VPN, and SSH out to my other personal machines for day-to-day administration. The point isn't just "it works." It's designing it so the parts that should never see the public internet, don't.</p>
 
                             <div class="exp-sat-stats">
                                 <div class="exp-sat-stat">
@@ -4309,7 +4354,7 @@
                                     <span class="exp-sat-stat-label">Isolated Docker Services</span>
                                 </div>
                             </div>
-                            <p style="font-size:0.7rem;color:var(--text-muted);margin-top:-6px;">*Aside from a reverse-proxied public website container, when one exists — everything else is Tailscale-only.</p>
+                            <p style="font-size:0.7rem;color:var(--text-muted);margin-top:-6px;">*Aside from a reverse-proxied public website container, everything else is Tailscale-only.</p>
 
                             <!-- Network diagram -->
                             <div class="ai-council-section-title" style="margin-top:28px;">Network Segmentation Diagram</div>
@@ -4381,7 +4426,7 @@
                                     <rect x="380" y="398" width="140" height="58" rx="8" fill="rgba(126,142,155,0.06)" stroke="rgba(126,142,155,0.28)" stroke-width="1.2"/>
                                     <text x="450" y="420" text-anchor="middle" font-size="11.5" font-weight="700" fill="#8EA0AD">Local LLM Serving</text>
                                     <text x="450" y="435" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.65)">Ollama &middot; Open WebUI</text>
-                                    <text x="450" y="447" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.65)">(planned)</text>
+                                    <text x="450" y="447" text-anchor="middle" font-size="8.5" fill="rgba(142,160,173,0.65)">live locally</text>
 
                                     <!-- Public website container -->
                                     <rect x="530" y="330" width="150" height="58" rx="8" fill="rgba(224,172,82,0.08)" stroke="rgba(224,172,82,0.4)" stroke-width="1.2"/>
@@ -4404,7 +4449,7 @@
                                     <rect x="210" y="598" width="480" height="74" rx="12" fill="rgba(126,142,155,0.06)" stroke="rgba(126,142,155,0.28)" stroke-width="1.5"/>
                                     <text x="450" y="622" text-anchor="middle" font-size="11.5" font-weight="700" fill="#8EA0AD">Attached Storage</text>
                                     <text x="450" y="640" text-anchor="middle" font-size="9" fill="rgba(142,160,173,0.65)">encrypted document vault &middot; photo library</text>
-                                    <text x="450" y="654" text-anchor="middle" font-size="9" fill="rgba(142,160,173,0.65)">ripped media archive (planned)</text>
+                                    <text x="450" y="654" text-anchor="middle" font-size="9" fill="rgba(142,160,173,0.65)">photo and media library live</text>
 
                                     <!-- Legend -->
                                     <line x1="230" y1="686" x2="256" y2="686" stroke="#34d399" stroke-width="1.5" marker-end="url(#nas-arr-green)"/>
@@ -4418,13 +4463,13 @@
 
                             <div class="ai-council-section-title" style="margin-top:28px;">The Big Takeaway: Segmentation First</div>
                             <div class="council-block">
-                                <p>The single most important decision in this build wasn't which service to run — it was deciding almost nothing should be reachable from the public internet at all. Admin access, databases, and the agent stack sit entirely behind a private mesh VPN, so there's no open SSH port, no exposed database port, and no admin panel sitting on the open internet waiting to get scanned. The only thing that ever touches the public internet is a single reverse-proxied container for a public website, and even that's isolated on its own Docker network from everything else on the box. If a container gets compromised, the blast radius stops at that container's network, not the whole server. That's the practical, hands-on version of "least privilege" and "defense in depth" that's easy to say in an interview and much more informative to actually build.</p>
+                                <p>The single most important decision in this build wasn't which service to run. It was deciding almost nothing should be reachable from the public internet at all. Admin access, databases, and the agent stack sit entirely behind a private mesh VPN, so there's no open SSH port, no exposed database port, and no admin panel sitting on the open internet waiting to get scanned. The only thing that ever touches the public internet is a single reverse-proxied container for a public website, and even that's isolated on its own Docker network from everything else on the box. If a container gets compromised, the blast radius stops at that container's network, not the whole server. That's the practical, hands-on version of "least privilege" and "defense in depth" that's easy to say in an interview and much more informative to actually build.</p>
                             </div>
 
                             <div class="ai-council-2col" style="margin-top:22px;">
                                 <div class="council-block">
                                     <div class="council-block-title">What's Running Today</div>
-                                    <p>Headless Linux server, fully containerized with Docker and Docker Compose. Core data services (Postgres, Redis) and uptime monitoring are live. Remote access — including SSH into this box and SSH out to my other personal machines — goes exclusively over Tailscale, so there's nothing to find by port-scanning my home connection.</p>
+                                    <p>Headless Linux server, fully containerized with Docker and Docker Compose. Core data services, local model serving, the agent stack, photo/media storage, and uptime monitoring are live. Remote access, including SSH into this box and SSH out to my other personal machines, goes exclusively over Tailscale, so there's nothing to find by port-scanning my home connection.</p>
                                 </div>
                                 <div class="council-block">
                                     <div class="council-block-title">Why Self-Host At All</div>
@@ -4432,23 +4477,23 @@
                                 </div>
                             </div>
 
-                            <div class="ai-council-section-title" style="margin-top:28px;">Planned Stages</div>
+                            <div class="ai-council-section-title" style="margin-top:28px;">Build Stages</div>
                             <div class="security-grid">
                                 <div class="security-block">
-                                    <div class="security-block-title">Agent Stack Migration</div>
-                                    <p>Move the Hermes harness and its agents onto the server full-time, so orchestration runs on dedicated hardware instead of a laptop.</p>
+                                    <div class="security-block-title">Agent Stack Migration, Done</div>
+                                    <p>The Hermes harness and its agents now run on the server full-time, so orchestration has dedicated hardware instead of depending on a laptop.</p>
                                 </div>
                                 <div class="security-block">
-                                    <div class="security-block-title">Local LLM Serving</div>
-                                    <p>Stand up Ollama and Open WebUI for private, local-only inference — no data leaving the network for the tasks that don't need a frontier model.</p>
+                                    <div class="security-block-title">Local LLM Serving, Done</div>
+                                    <p>Ollama and Open WebUI are up for private, local-only inference. For tasks that do not need a frontier model, the data stays on my network.</p>
                                 </div>
                                 <div class="security-block">
                                     <div class="security-block-title">Encrypted Document Vault</div>
                                     <p>Digitize and store sensitive documents on an encrypted volume, mirrored to an off-box backup so a single point of failure can't mean total loss.</p>
                                 </div>
                                 <div class="security-block">
-                                    <div class="security-block-title">Photo &amp; Media Library</div>
-                                    <p>Migrate my personal photo library first; a self-hosted media server for movies and a ripped CD collection is a lower-priority stretch goal after that.</p>
+                                    <div class="security-block-title">Photo &amp; Media Library, Done</div>
+                                    <p>My personal photo and media library is migrated onto the server, so the same self-hosting pattern now covers documents, models, agents, and media.</p>
                                 </div>
                                 <div class="security-block">
                                     <div class="security-block-title">Backup &amp; Snapshots</div>
@@ -7198,9 +7243,9 @@ flowchart LR
                     exclusions: 'Downstream realized value pending implementation; commercially sensitive figures outside direct analytical scope.',
                 },
                 {
-                    value: '65+', label: 'Data Products Shipped Across 6 Regions',
+                    value: '65+', label: 'Data Products Shipped',
                     how: 'Combined: 40+ governed datasets, 25+ reports, 17 reusable modular pipelines, 10 apps, 3 AI agents (training compliance, manufacturing process drift, manpower resource leveling for facility people flow), 7 Computer Vision custom deployments with trained algorithms. Deployed across USA (Los Angeles + Groton CT), Singapore, Malaysia, Vietnam, Canada, and Japan — including site visits, manufacturing evaluations, key stakeholder presentations, and international relations.',
-                    context: 'Shipped to production across pharma, defense, e-commerce, SaaS, aerospace, and education - each product delivered to real stakeholders with measurable adoption. Work spans in-person deployments and embedded international partnerships across 6 regions.',
+                    context: 'Shipped to production across pharma, defense, e-commerce, SaaS, aerospace, and education - each product delivered to real stakeholders with measurable adoption. Work spans governed datasets, dashboards, apps, AI agents, reusable pipelines, and computer vision deployments.',
                     inclusions: 'Takeda Power BI dashboards and semantic models (Los Angeles), Chewy research deliverables (Los Angeles), Electric Boat knowledge base (Groton CT), satellite algorithm output (aerospace), SPOT wireframes, AI agent deployments, CV system rollouts (Singapore + Malaysia + Vietnam), wilderness leadership programs (Canada), manufacturing site work (Japan).',
                     exclusions: 'Draft or internal working documents not formally delivered; proof-of-concept prototypes not taken to production; countries interfaced with through international partner teams only.',
                 },
