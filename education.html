@@ -216,12 +216,10 @@
         padding: 8px 0 80px;
     }
     .carousel-track {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(240px, 1fr));
         gap: 20px;
-        overflow-x: auto;
         padding: 12px 48px 24px;
-        scroll-snap-type: x proximity;
-        -webkit-overflow-scrolling: touch;
     }
     .carousel-track::-webkit-scrollbar { height: 12px; }
     .carousel-track::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); border-radius: 6px; }
@@ -230,8 +228,6 @@
 
     .apple-card {
         position: relative;
-        flex: 0 0 auto;
-        width: 320px;
         height: 430px;
         border-radius: 24px;
         overflow: hidden;
@@ -279,7 +275,7 @@
     }
 
     /* per-card accent + gradient */
-    .card-education .apple-card-bg { background: linear-gradient(160deg, rgba(10,13,18,0.35) 0%, rgba(10,13,18,0.8) 100%), url('images/carousel-mock/education-usc-nus.jpg') center 35% / cover no-repeat; }
+    .card-education .apple-card-bg { background: linear-gradient(160deg, rgba(10,13,18,0.08) 0%, rgba(10,13,18,0.56) 100%), url('images/carousel-mock/education-usc-nus-courses.png') center top / cover no-repeat; }
     .card-education { --card-accent: #4a9eff; }
 
     .card-analytics .apple-card-bg { background: linear-gradient(160deg, rgba(10,13,18,0.55) 0%, rgba(10,13,18,0.88) 100%), url('images/carousel-mock/analytics-dashboard.jpg') center / cover no-repeat; }
@@ -294,12 +290,24 @@
     .card-roles .apple-card-bg { background: linear-gradient(160deg, rgba(10,13,18,0.25) 0%, rgba(10,13,18,0.78) 100%), url('images/carousel-mock/roles-collage.jpg') center / cover no-repeat; }
     .card-roles { --card-accent: #f6ad55; }
 
+    .card-ai .apple-card-bg { background: linear-gradient(160deg, rgba(8,9,10,0.15) 0%, rgba(8,9,10,0.55) 100%), url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20400%20600%27%3E%0A%3Crect%20width%3D%27400%27%20height%3D%27600%27%20fill%3D%27%230a0d12%27%2F%3E%0A%3Cdefs%3E%3Cfilter%20id%3D%27g%27%20x%3D%27-50%25%27%20y%3D%27-50%25%27%20width%3D%27200%25%27%20height%3D%27200%25%27%3E%3CfeGaussianBlur%20stdDeviation%3D%2710%27%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%0A%3Cg%20stroke%3D%27%237dd3fc%27%20stroke-width%3D%271.2%27%20opacity%3D%270.35%27%20fill%3D%27none%27%3E%0A%3Cline%20x1%3D%2764%27%20y1%3D%27128%27%20x2%3D%27188%27%20y2%3D%27206%27%2F%3E%0A%3Cline%20x1%3D%27188%27%20y1%3D%27206%27%20x2%3D%27322%27%20y2%3D%27150%27%2F%3E%0A%3Cline%20x1%3D%27188%27%20y1%3D%27206%27%20x2%3D%27146%27%20y2%3D%27344%27%2F%3E%0A%3Cline%20x1%3D%27188%27%20y1%3D%27206%27%20x2%3D%27302%27%20y2%3D%27322%27%2F%3E%0A%3Cline%20x1%3D%27146%27%20y1%3D%27344%27%20x2%3D%27262%27%20y2%3D%27432%27%2F%3E%0A%3Cline%20x1%3D%27302%27%20y1%3D%27322%27%20x2%3D%27262%27%20y2%3D%27432%27%2F%3E%0A%3Cline%20x1%3D%27262%27%20y1%3D%27432%27%20x2%3D%27188%27%20y2%3D%27540%27%2F%3E%0A%3Cline%20x1%3D%2764%27%20y1%3D%27128%27%20x2%3D%27146%27%20y2%3D%27344%27%2F%3E%0A%3Cline%20x1%3D%27322%27%20y1%3D%27150%27%20x2%3D%27302%27%20y2%3D%27322%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20fill%3D%27%237dd3fc%27%20filter%3D%27url%28%23g%29%27%20opacity%3D%270.55%27%3E%0A%3Ccircle%20cx%3D%27188%27%20cy%3D%27206%27%20r%3D%2722%27%2F%3E%0A%3Ccircle%20cx%3D%27262%27%20cy%3D%27432%27%20r%3D%2718%27%2F%3E%0A%3Ccircle%20cx%3D%27146%27%20cy%3D%27344%27%20r%3D%2714%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20fill%3D%27%237dd3fc%27%3E%0A%3Ccircle%20cx%3D%2764%27%20cy%3D%27128%27%20r%3D%274%27%20opacity%3D%270.85%27%2F%3E%0A%3Ccircle%20cx%3D%27322%27%20cy%3D%27150%27%20r%3D%273.5%27%20opacity%3D%270.7%27%2F%3E%0A%3Ccircle%20cx%3D%27188%27%20cy%3D%27206%27%20r%3D%276%27%20opacity%3D%271%27%2F%3E%0A%3Ccircle%20cx%3D%27146%27%20cy%3D%27344%27%20r%3D%274.5%27%20opacity%3D%270.8%27%2F%3E%0A%3Ccircle%20cx%3D%27302%27%20cy%3D%27322%27%20r%3D%274.5%27%20opacity%3D%270.8%27%2F%3E%0A%3Ccircle%20cx%3D%27262%27%20cy%3D%27432%27%20r%3D%275.5%27%20opacity%3D%270.9%27%2F%3E%0A%3Ccircle%20cx%3D%27188%27%20cy%3D%27540%27%20r%3D%273.5%27%20opacity%3D%270.6%27%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E") center / cover no-repeat; }
+    .card-ai { --card-accent: #7dd3fc; }
+
+    .card-change .apple-card-bg { background: linear-gradient(160deg, rgba(8,9,10,0.15) 0%, rgba(8,9,10,0.55) 100%), url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20400%20600%27%3E%0A%3Crect%20width%3D%27400%27%20height%3D%27600%27%20fill%3D%27%230a0d12%27%2F%3E%0A%3Cdefs%3E%3Cfilter%20id%3D%27g%27%20x%3D%27-50%25%27%20y%3D%27-50%25%27%20width%3D%27200%25%27%20height%3D%27200%25%27%3E%3CfeGaussianBlur%20stdDeviation%3D%2714%27%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%0A%3Cg%20stroke%3D%27%23f6ad55%27%20stroke-width%3D%271%27%20fill%3D%27none%27%20opacity%3D%270.28%27%3E%0A%3Cpath%20d%3D%27M%20-20%20470%20Q%20200%20380%20420%20300%27%2F%3E%0A%3Cpath%20d%3D%27M%20-20%20520%20Q%20200%20440%20420%20370%27%2F%3E%0A%3Cpath%20d%3D%27M%20-20%20420%20Q%20200%20320%20420%20230%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20fill%3D%27%23f6ad55%27%20opacity%3D%270.6%27%3E%0A%3Ccircle%20cx%3D%2760%27%20cy%3D%27452%27%20r%3D%275%27%2F%3E%0A%3Ccircle%20cx%3D%2760%27%20cy%3D%27498%27%20r%3D%274%27%2F%3E%0A%3Ccircle%20cx%3D%2760%27%20cy%3D%27406%27%20r%3D%274.5%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20fill%3D%27%23f6ad55%27%20filter%3D%27url%28%23g%29%27%20opacity%3D%270.5%27%3E%0A%3Ccircle%20cx%3D%27352%27%20cy%3D%27262%27%20r%3D%2724%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20fill%3D%27%23f6ad55%27%3E%0A%3Ccircle%20cx%3D%27352%27%20cy%3D%27262%27%20r%3D%277%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20stroke%3D%27%23f6ad55%27%20stroke-width%3D%272%27%20opacity%3D%270.6%27%20fill%3D%27none%27%3E%0A%3Crect%20x%3D%2756%27%20y%3D%27160%27%20width%3D%2734%27%20height%3D%2790%27%20rx%3D%274%27%2F%3E%0A%3Crect%20x%3D%27120%27%20y%3D%27120%27%20width%3D%2734%27%20height%3D%27130%27%20rx%3D%274%27%2F%3E%0A%3Crect%20x%3D%27184%27%20y%3D%2790%27%20width%3D%2734%27%20height%3D%27160%27%20rx%3D%274%27%2F%3E%0A%3Crect%20x%3D%27248%27%20y%3D%2760%27%20width%3D%2734%27%20height%3D%27190%27%20rx%3D%274%27%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E") center / cover no-repeat; }
+    .card-change { --card-accent: #f6ad55; }
+
+    .card-design .apple-card-bg { background: linear-gradient(160deg, rgba(8,9,10,0.15) 0%, rgba(8,9,10,0.55) 100%), url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20400%20600%27%3E%0A%3Crect%20width%3D%27400%27%20height%3D%27600%27%20fill%3D%27%230a0d12%27%2F%3E%0A%3Cdefs%3E%3Cfilter%20id%3D%27g%27%20x%3D%27-50%25%27%20y%3D%27-50%25%27%20width%3D%27200%25%27%20height%3D%27200%25%27%3E%3CfeGaussianBlur%20stdDeviation%3D%2716%27%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%0A%3Cg%20fill%3D%27%23a3e635%27%20filter%3D%27url%28%23g%29%27%20opacity%3D%270.35%27%3E%0A%3Crect%20x%3D%2760%27%20y%3D%2790%27%20width%3D%27280%27%20height%3D%27150%27%20rx%3D%276%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20stroke%3D%27%23a3e635%27%20stroke-width%3D%271.4%27%20fill%3D%27none%27%20opacity%3D%270.55%27%3E%0A%3Crect%20x%3D%2760%27%20y%3D%2790%27%20width%3D%27280%27%20height%3D%27150%27%20rx%3D%276%27%2F%3E%0A%3Cline%20x1%3D%2760%27%20y1%3D%27140%27%20x2%3D%27340%27%20y2%3D%27140%27%2F%3E%0A%3Cline%20x1%3D%27180%27%20y1%3D%27140%27%20x2%3D%27180%27%20y2%3D%27240%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20stroke%3D%27%23a3e635%27%20stroke-width%3D%271%27%20fill%3D%27none%27%20opacity%3D%270.3%27%3E%0A%3Crect%20x%3D%2760%27%20y%3D%27300%27%20width%3D%27130%27%20height%3D%2790%27%20rx%3D%274%27%2F%3E%0A%3Crect%20x%3D%27210%27%20y%3D%27300%27%20width%3D%27130%27%20height%3D%2790%27%20rx%3D%274%27%2F%3E%0A%3Crect%20x%3D%2760%27%20y%3D%27410%27%20width%3D%27280%27%20height%3D%2760%27%20rx%3D%274%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20fill%3D%27%23a3e635%27%20opacity%3D%270.7%27%3E%0A%3Ccircle%20cx%3D%2780%27%20cy%3D%27114%27%20r%3D%273%27%2F%3E%0A%3Ccircle%20cx%3D%2796%27%20cy%3D%27114%27%20r%3D%273%27%2F%3E%0A%3Ccircle%20cx%3D%27112%27%20cy%3D%27114%27%20r%3D%273%27%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E") center / cover no-repeat; }
+    .card-design { --card-accent: #a3e635; }
+
     /* expanded hero uses the same gradients directly */
-    .expand-hero.card-education { background: linear-gradient(160deg, rgba(10,13,18,0.35) 0%, rgba(10,13,18,0.8) 100%), url('images/carousel-mock/education-usc-nus.jpg') center 35% / cover no-repeat; }
+    .expand-hero.card-education { background: linear-gradient(160deg, rgba(10,13,18,0.08) 0%, rgba(10,13,18,0.62) 100%), url('images/carousel-mock/education-usc-nus-courses.png') center top / cover no-repeat; }
     .expand-hero.card-analytics { background: linear-gradient(160deg, rgba(10,13,18,0.55) 0%, rgba(10,13,18,0.88) 100%), url('images/carousel-mock/analytics-dashboard.jpg') center / cover no-repeat; }
     .expand-hero.card-pipelines { background: linear-gradient(160deg, rgba(10,13,18,0.15) 0%, rgba(10,13,18,0.6) 100%), url('images/carousel-mock/pipelines-flow.jpg') center / cover no-repeat; }
     .expand-hero.card-lss { background: linear-gradient(160deg, rgba(10,13,18,0.15) 0%, rgba(10,13,18,0.65) 100%), url('images/carousel-mock/lss-sigma.jpg') center / cover no-repeat; }
     .expand-hero.card-roles { background: linear-gradient(160deg, rgba(10,13,18,0.25) 0%, rgba(10,13,18,0.7) 100%), url('images/carousel-mock/roles-collage.jpg') center / cover no-repeat; }
+    .expand-hero.card-ai { background: linear-gradient(160deg, rgba(8,9,10,0.15) 0%, rgba(8,9,10,0.6) 100%), url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20400%20600%27%3E%0A%3Crect%20width%3D%27400%27%20height%3D%27600%27%20fill%3D%27%230a0d12%27%2F%3E%0A%3Cdefs%3E%3Cfilter%20id%3D%27g%27%20x%3D%27-50%25%27%20y%3D%27-50%25%27%20width%3D%27200%25%27%20height%3D%27200%25%27%3E%3CfeGaussianBlur%20stdDeviation%3D%2710%27%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%0A%3Cg%20stroke%3D%27%237dd3fc%27%20stroke-width%3D%271.2%27%20opacity%3D%270.35%27%20fill%3D%27none%27%3E%0A%3Cline%20x1%3D%2764%27%20y1%3D%27128%27%20x2%3D%27188%27%20y2%3D%27206%27%2F%3E%0A%3Cline%20x1%3D%27188%27%20y1%3D%27206%27%20x2%3D%27322%27%20y2%3D%27150%27%2F%3E%0A%3Cline%20x1%3D%27188%27%20y1%3D%27206%27%20x2%3D%27146%27%20y2%3D%27344%27%2F%3E%0A%3Cline%20x1%3D%27188%27%20y1%3D%27206%27%20x2%3D%27302%27%20y2%3D%27322%27%2F%3E%0A%3Cline%20x1%3D%27146%27%20y1%3D%27344%27%20x2%3D%27262%27%20y2%3D%27432%27%2F%3E%0A%3Cline%20x1%3D%27302%27%20y1%3D%27322%27%20x2%3D%27262%27%20y2%3D%27432%27%2F%3E%0A%3Cline%20x1%3D%27262%27%20y1%3D%27432%27%20x2%3D%27188%27%20y2%3D%27540%27%2F%3E%0A%3Cline%20x1%3D%2764%27%20y1%3D%27128%27%20x2%3D%27146%27%20y2%3D%27344%27%2F%3E%0A%3Cline%20x1%3D%27322%27%20y1%3D%27150%27%20x2%3D%27302%27%20y2%3D%27322%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20fill%3D%27%237dd3fc%27%20filter%3D%27url%28%23g%29%27%20opacity%3D%270.55%27%3E%0A%3Ccircle%20cx%3D%27188%27%20cy%3D%27206%27%20r%3D%2722%27%2F%3E%0A%3Ccircle%20cx%3D%27262%27%20cy%3D%27432%27%20r%3D%2718%27%2F%3E%0A%3Ccircle%20cx%3D%27146%27%20cy%3D%27344%27%20r%3D%2714%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20fill%3D%27%237dd3fc%27%3E%0A%3Ccircle%20cx%3D%2764%27%20cy%3D%27128%27%20r%3D%274%27%20opacity%3D%270.85%27%2F%3E%0A%3Ccircle%20cx%3D%27322%27%20cy%3D%27150%27%20r%3D%273.5%27%20opacity%3D%270.7%27%2F%3E%0A%3Ccircle%20cx%3D%27188%27%20cy%3D%27206%27%20r%3D%276%27%20opacity%3D%271%27%2F%3E%0A%3Ccircle%20cx%3D%27146%27%20cy%3D%27344%27%20r%3D%274.5%27%20opacity%3D%270.8%27%2F%3E%0A%3Ccircle%20cx%3D%27302%27%20cy%3D%27322%27%20r%3D%274.5%27%20opacity%3D%270.8%27%2F%3E%0A%3Ccircle%20cx%3D%27262%27%20cy%3D%27432%27%20r%3D%275.5%27%20opacity%3D%270.9%27%2F%3E%0A%3Ccircle%20cx%3D%27188%27%20cy%3D%27540%27%20r%3D%273.5%27%20opacity%3D%270.6%27%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E") center / cover no-repeat; }
+    .expand-hero.card-change { background: linear-gradient(160deg, rgba(8,9,10,0.15) 0%, rgba(8,9,10,0.6) 100%), url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20400%20600%27%3E%0A%3Crect%20width%3D%27400%27%20height%3D%27600%27%20fill%3D%27%230a0d12%27%2F%3E%0A%3Cdefs%3E%3Cfilter%20id%3D%27g%27%20x%3D%27-50%25%27%20y%3D%27-50%25%27%20width%3D%27200%25%27%20height%3D%27200%25%27%3E%3CfeGaussianBlur%20stdDeviation%3D%2714%27%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%0A%3Cg%20stroke%3D%27%23f6ad55%27%20stroke-width%3D%271%27%20fill%3D%27none%27%20opacity%3D%270.28%27%3E%0A%3Cpath%20d%3D%27M%20-20%20470%20Q%20200%20380%20420%20300%27%2F%3E%0A%3Cpath%20d%3D%27M%20-20%20520%20Q%20200%20440%20420%20370%27%2F%3E%0A%3Cpath%20d%3D%27M%20-20%20420%20Q%20200%20320%20420%20230%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20fill%3D%27%23f6ad55%27%20opacity%3D%270.6%27%3E%0A%3Ccircle%20cx%3D%2760%27%20cy%3D%27452%27%20r%3D%275%27%2F%3E%0A%3Ccircle%20cx%3D%2760%27%20cy%3D%27498%27%20r%3D%274%27%2F%3E%0A%3Ccircle%20cx%3D%2760%27%20cy%3D%27406%27%20r%3D%274.5%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20fill%3D%27%23f6ad55%27%20filter%3D%27url%28%23g%29%27%20opacity%3D%270.5%27%3E%0A%3Ccircle%20cx%3D%27352%27%20cy%3D%27262%27%20r%3D%2724%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20fill%3D%27%23f6ad55%27%3E%0A%3Ccircle%20cx%3D%27352%27%20cy%3D%27262%27%20r%3D%277%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20stroke%3D%27%23f6ad55%27%20stroke-width%3D%272%27%20opacity%3D%270.6%27%20fill%3D%27none%27%3E%0A%3Crect%20x%3D%2756%27%20y%3D%27160%27%20width%3D%2734%27%20height%3D%2790%27%20rx%3D%274%27%2F%3E%0A%3Crect%20x%3D%27120%27%20y%3D%27120%27%20width%3D%2734%27%20height%3D%27130%27%20rx%3D%274%27%2F%3E%0A%3Crect%20x%3D%27184%27%20y%3D%2790%27%20width%3D%2734%27%20height%3D%27160%27%20rx%3D%274%27%2F%3E%0A%3Crect%20x%3D%27248%27%20y%3D%2760%27%20width%3D%2734%27%20height%3D%27190%27%20rx%3D%274%27%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E") center / cover no-repeat; }
+    .expand-hero.card-design { background: linear-gradient(160deg, rgba(8,9,10,0.15) 0%, rgba(8,9,10,0.6) 100%), url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20400%20600%27%3E%0A%3Crect%20width%3D%27400%27%20height%3D%27600%27%20fill%3D%27%230a0d12%27%2F%3E%0A%3Cdefs%3E%3Cfilter%20id%3D%27g%27%20x%3D%27-50%25%27%20y%3D%27-50%25%27%20width%3D%27200%25%27%20height%3D%27200%25%27%3E%3CfeGaussianBlur%20stdDeviation%3D%2716%27%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%0A%3Cg%20fill%3D%27%23a3e635%27%20filter%3D%27url%28%23g%29%27%20opacity%3D%270.35%27%3E%0A%3Crect%20x%3D%2760%27%20y%3D%2790%27%20width%3D%27280%27%20height%3D%27150%27%20rx%3D%276%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20stroke%3D%27%23a3e635%27%20stroke-width%3D%271.4%27%20fill%3D%27none%27%20opacity%3D%270.55%27%3E%0A%3Crect%20x%3D%2760%27%20y%3D%2790%27%20width%3D%27280%27%20height%3D%27150%27%20rx%3D%276%27%2F%3E%0A%3Cline%20x1%3D%2760%27%20y1%3D%27140%27%20x2%3D%27340%27%20y2%3D%27140%27%2F%3E%0A%3Cline%20x1%3D%27180%27%20y1%3D%27140%27%20x2%3D%27180%27%20y2%3D%27240%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20stroke%3D%27%23a3e635%27%20stroke-width%3D%271%27%20fill%3D%27none%27%20opacity%3D%270.3%27%3E%0A%3Crect%20x%3D%2760%27%20y%3D%27300%27%20width%3D%27130%27%20height%3D%2790%27%20rx%3D%274%27%2F%3E%0A%3Crect%20x%3D%27210%27%20y%3D%27300%27%20width%3D%27130%27%20height%3D%2790%27%20rx%3D%274%27%2F%3E%0A%3Crect%20x%3D%2760%27%20y%3D%27410%27%20width%3D%27280%27%20height%3D%2760%27%20rx%3D%274%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20fill%3D%27%23a3e635%27%20opacity%3D%270.7%27%3E%0A%3Ccircle%20cx%3D%2780%27%20cy%3D%27114%27%20r%3D%273%27%2F%3E%0A%3Ccircle%20cx%3D%2796%27%20cy%3D%27114%27%20r%3D%273%27%2F%3E%0A%3Ccircle%20cx%3D%27112%27%20cy%3D%27114%27%20r%3D%273%27%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E") center / cover no-repeat; }
 
     /* ===== EXPANDED OVERLAY ===== */
     .expand-overlay {
@@ -498,6 +506,66 @@
     .mock-stage-card h4 { font-size: 0.92rem; margin: 0 0 8px; }
     .mock-stage-card p { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
 
+    /* Tracing-beam timeline (replaces the uniform box grid on process cards) */
+    .mock-timeline {
+        position: relative;
+        margin: 24px 0 8px;
+    }
+    .mock-timeline-track {
+        position: absolute;
+        left: 19px;
+        top: 6px;
+        bottom: 6px;
+        width: 2px;
+        background: var(--border-subtle);
+        border-radius: 2px;
+    }
+    .mock-timeline-beam {
+        position: absolute;
+        left: 19px;
+        top: 6px;
+        width: 2px;
+        height: 0%;
+        background: linear-gradient(180deg, transparent 0%, var(--card-accent, var(--accent)) 12%, var(--card-accent, var(--accent)) 88%, transparent 100%);
+        box-shadow: 0 0 10px var(--card-accent, var(--accent)), 0 0 2px var(--card-accent, var(--accent));
+        border-radius: 2px;
+        transition: height 0.12s linear;
+    }
+    .mock-timeline-step {
+        position: relative;
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        column-gap: 20px;
+        padding-bottom: 30px;
+    }
+    .mock-timeline-step:last-child { padding-bottom: 4px; }
+    .mock-timeline-dot {
+        position: relative;
+        z-index: 2;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--bg-secondary);
+        border: 2px solid var(--border-subtle);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.72rem;
+        font-weight: 800;
+        color: var(--text-secondary);
+        transition: border-color 0.3s, color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+    .mock-timeline-step.is-active .mock-timeline-dot {
+        border-color: var(--card-accent, var(--accent));
+        color: var(--card-accent, var(--accent));
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--card-accent, var(--accent)) 18%, transparent), 0 0 14px color-mix(in srgb, var(--card-accent, var(--accent)) 60%, transparent);
+        transform: scale(1.06);
+    }
+    .mock-timeline-body { padding-top: 4px; }
+    .mock-timeline-label { font-size: 0.68rem; color: var(--card-accent, var(--accent)); font-weight: 700; letter-spacing: 0.06em; margin-bottom: 6px; }
+    .mock-timeline-body h4 { font-size: 0.96rem; margin: 0 0 8px; }
+    .mock-timeline-body p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.65; margin: 0; max-width: 560px; }
+
     .mock-callout {
         background: rgba(255,255,255,0.03);
         border-left: 3px solid var(--card-accent, var(--accent));
@@ -509,6 +577,70 @@
         margin-top: 16px;
     }
     .mock-callout strong { color: var(--text-primary); }
+
+    .mock-compare-table {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        border: 1px solid var(--border-subtle);
+        border-radius: 14px;
+        overflow: hidden;
+        margin-top: 18px;
+        background: rgba(255,255,255,0.025);
+    }
+    .mock-compare-cell {
+        padding: 14px 16px;
+        border-right: 1px solid var(--border-subtle);
+        border-bottom: 1px solid var(--border-subtle);
+        color: var(--text-secondary);
+        font-size: 0.82rem;
+        line-height: 1.55;
+    }
+    .mock-compare-cell:nth-child(2n) { border-right: 0; }
+    .mock-compare-table .mock-compare-cell:nth-last-child(-n+2) { border-bottom: 0; }
+    .mock-compare-head {
+        color: var(--card-accent, var(--accent));
+        font-weight: 800;
+        background: rgba(255,255,255,0.04);
+    }
+    .mock-compare-cell strong {
+        display: block;
+        color: var(--card-accent, var(--accent));
+        margin-bottom: 4px;
+    }
+
+    /* Where-it-shows-up field notes: short, real, no tool-name pileups */
+    .mock-track-record { margin-top: 26px; }
+    .mock-track-label {
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--card-accent, var(--accent));
+        margin-bottom: 10px;
+    }
+    .mock-track-item {
+        display: flex;
+        gap: 18px;
+        padding: 12px 0;
+        border-top: 1px solid var(--border-subtle);
+    }
+    .mock-track-item:first-of-type { border-top: 0; padding-top: 0; }
+    .mock-track-company {
+        flex: 0 0 160px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+    .mock-track-item p {
+        margin: 0;
+        font-size: 0.83rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+    }
+    @media (max-width: 640px) {
+        .mock-track-item { flex-direction: column; gap: 4px; }
+        .mock-track-company { flex: none; }
+    }
 
     .mock-mermaid-card {
         background: rgba(255,255,255,0.03);
@@ -878,10 +1010,26 @@
     .mock-placeholder i { font-size: 2rem; color: var(--card-accent, var(--accent)); margin-bottom: 16px; display: block; }
     .mock-placeholder p { font-size: 0.92rem; max-width: 420px; margin: 8px auto 0; line-height: 1.6; }
 
+    @media (max-width: 1100px) {
+        .carousel-track { grid-template-columns: repeat(2, minmax(240px, 1fr)); }
+    }
+
     @media (max-width: 640px) {
         .carousel-intro { padding: 116px 20px 24px; }
-        .carousel-track { padding: 12px 20px 24px; }
-        .apple-card { width: 260px; height: 380px; }
+        .carousel-track {
+            grid-template-columns: 1fr;
+            overflow-x: visible;
+            padding: 12px 20px 24px;
+        }
+        .apple-card {
+            width: 100%;
+            height: 320px;
+            scroll-snap-align: none;
+        }
+        .apple-card-title {
+            max-width: none;
+            font-size: 1.28rem;
+        }
         .expand-body { padding: 24px 22px 36px; }
         .expand-hero-label { left: 22px; }
         .footer { padding: 44px 20px 24px; }
@@ -891,6 +1039,8 @@
         .loss-example { grid-template-columns: 1fr; }
         .loss-panel.clean { padding: 16px; }
         .loss-thinking-card { grid-template-columns: 1fr; }
+        .mock-compare-table { grid-template-columns: 1fr; }
+        .mock-compare-cell { border-right: 0; }
         .sigma-chart-row { grid-template-columns: 74px 1fr 78px; gap: 8px; }
     }
 
@@ -974,21 +1124,21 @@
             </div>
         </div>
 
-        <div class="apple-card card-analytics" data-card="analytics">
-            <div class="apple-card-bg"></div>
-            <div class="apple-card-scrim"></div>
-            <div class="apple-card-content">
-                <span class="apple-card-category">Analytics</span>
-                <h3 class="apple-card-title">How I build insights that drive strategic action.</h3>
-            </div>
-        </div>
-
         <div class="apple-card card-pipelines" data-card="pipelines">
             <div class="apple-card-bg"></div>
             <div class="apple-card-scrim"></div>
             <div class="apple-card-content">
                 <span class="apple-card-category">Data Engineering</span>
                 <h3 class="apple-card-title">How I deliver trusted data pipelines for reliable reuse.</h3>
+            </div>
+        </div>
+
+        <div class="apple-card card-ai" data-card="ai">
+            <div class="apple-card-bg"></div>
+            <div class="apple-card-scrim"></div>
+            <div class="apple-card-content">
+                <span class="apple-card-category">Artificial Intelligence</span>
+                <h3 class="apple-card-title">What I ask before I ever pick an AI tool.</h3>
             </div>
         </div>
 
@@ -1001,12 +1151,39 @@
             </div>
         </div>
 
+        <div class="apple-card card-analytics" data-card="analytics">
+            <div class="apple-card-bg"></div>
+            <div class="apple-card-scrim"></div>
+            <div class="apple-card-content">
+                <span class="apple-card-category">Analytics</span>
+                <h3 class="apple-card-title">How I build insights that drive strategic action.</h3>
+            </div>
+        </div>
+
         <div class="apple-card card-roles" data-card="roles">
             <div class="apple-card-bg"></div>
             <div class="apple-card-scrim"></div>
             <div class="apple-card-content">
                 <span class="apple-card-category">Roles</span>
                 <h3 class="apple-card-title">Takeaways from each of my roles.</h3>
+            </div>
+        </div>
+
+        <div class="apple-card card-change" data-card="change">
+            <div class="apple-card-bg"></div>
+            <div class="apple-card-scrim"></div>
+            <div class="apple-card-content">
+                <span class="apple-card-category">Change Management</span>
+                <h3 class="apple-card-title">Why numbers are not enough to make people change.</h3>
+            </div>
+        </div>
+
+        <div class="apple-card card-design" data-card="design">
+            <div class="apple-card-bg"></div>
+            <div class="apple-card-scrim"></div>
+            <div class="apple-card-content">
+                <span class="apple-card-category">Design Principles</span>
+                <h3 class="apple-card-title">How I keep data products simple, usable, and pointed.</h3>
             </div>
         </div>
 
@@ -1397,12 +1574,14 @@ const CARD_DATA = {
         bgClass: 'card-analytics',
         body: `
             <p class="mock-intro-text">Before I design any reports, KPIs, or apps, we first need to decide what's actually worth building, here's how I get there:</p>
-            <div class="mock-stage-grid">
-                <div class="mock-stage-card"><div class="mock-stage-num">01 / INTAKE</div><h4>Understand the ask before touching data</h4><p>Who's actually sponsoring this, what resources and budget exist, and does it tie back to a real company initiative or North Star. I present alternatives up front so whatever we commit to is something the team has agreed to.</p></div>
-                <div class="mock-stage-card"><div class="mock-stage-num">02 / EVALUATION</div><h4>Measure the impact before committing to a build</h4><p>A small gap closes with a lightweight fix. A bigger effort gets weighed against true business impact, cost avoidance, and FTE hours before committing.</p></div>
-                <div class="mock-stage-card"><div class="mock-stage-num">03 / MOCKUP &amp; ITERATE</div><h4>Build small, put it in front of real users</h4><p>Small mockups or MVPs in front of stakeholders first, to make sure we're nudging in the right direction before building further.</p></div>
-                <div class="mock-stage-card"><div class="mock-stage-num">04 / DEPLOY &amp; HYPERCARE</div><h4>Launch isn't the finish line</h4><p>Staying embedded with users for the first couple of weeks after launch, sometimes on their shift schedule, because that's when the real gaps show up.</p></div>
-                <div class="mock-stage-card"><div class="mock-stage-num">05 / BEHAVIOR OVER FLASH</div><h4>Did this change what someone does?</h4><p>Checking back on a regular cadence: is engagement still there, did behavior stick or fade. Follows a DMAIC rhythm out of Six Sigma, applied continuously.</p></div>
+            <div class="mock-timeline">
+                <div class="mock-timeline-track"></div>
+                <div class="mock-timeline-beam"></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">01</div><div class="mock-timeline-body"><div class="mock-timeline-label">01 / INTAKE</div><h4>Understand the ask before touching data</h4><p>Who's actually sponsoring this, what resources and budget exist, and does it tie back to a real company initiative or North Star. I present alternatives up front so whatever we commit to is something the team has agreed to.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">02</div><div class="mock-timeline-body"><div class="mock-timeline-label">02 / EVALUATION</div><h4>Measure the impact before committing to a build</h4><p>A small gap closes with a lightweight fix. A bigger effort gets weighed against true business impact, cost avoidance, and FTE hours before committing.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">03</div><div class="mock-timeline-body"><div class="mock-timeline-label">03 / MOCKUP &amp; ITERATE</div><h4>Build small, put it in front of real users</h4><p>Small mockups or MVPs in front of stakeholders first, to make sure we're nudging in the right direction before building further.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">04</div><div class="mock-timeline-body"><div class="mock-timeline-label">04 / DEPLOY &amp; HYPERCARE</div><h4>Launch isn't the finish line</h4><p>Staying embedded with users for the first couple of weeks after launch, sometimes on their shift schedule, because that's when the real gaps show up.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">05</div><div class="mock-timeline-body"><div class="mock-timeline-label">05 / BEHAVIOR OVER FLASH</div><h4>Did this change what someone does?</h4><p>Checking back on a regular cadence: is engagement still there, did behavior stick or fade. Follows a DMAIC rhythm out of Six Sigma, applied continuously.</p></div></div>
             </div>
 
             <div class="mock-mermaid-card">
@@ -1417,8 +1596,103 @@ flowchart LR
                 </pre>
             </div>
 
-            <div class="mock-callout"><strong>Deciding whether to actually deploy:</strong> is this a long-standing initiative or a flavor-of-the-month thing? Is there quality data and real user behavior behind it, or is it an ad hoc research project?</div>
+            <div class="mock-callout"><strong>Deciding whether to deploy:</strong> is this a long-standing initiative or a flavor-of-the-month thing? Is there quality data and real user behavior behind it, or is it an ad hoc research project?</div>
             <div class="mock-callout"><strong>In practice:</strong> this is the same loop behind the manufacturing performance board and the global training compliance dashboard: mockups before full builds, weeks embedded with users, and buy-in earned by showing the validation behind the numbers.</div>
+            <div class="mock-track-record">
+                <div class="mock-track-label">Where this shows up</div>
+                <div class="mock-track-item"><div class="mock-track-company">Takeda Pharmaceuticals</div><p>Got 5 departments to agree on one definition of cycle time instead of five competing versions. It's what the biweekly ops review runs on now.</p></div>
+                <div class="mock-track-item"><div class="mock-track-company">Takeda Pharmaceuticals</div><p>DAX measures on the Qualification Matrix model compute across filter context, not row-level columns, so the same question returns the same answer at all 23 sites.</p></div>
+                <div class="mock-track-item"><div class="mock-track-company">Chewy, Inc</div><p>Used Snowflake to validate the studies that CS leadership and product managers made real decisions from.</p></div>
+                <div class="mock-track-item"><div class="mock-track-company">HarvardX, Coursework</div><p>Data Science: Machine Learning, 2023. Classification, cross-validation, regularization, and ensemble methods.</p></div>
+            </div>
+        `
+    },
+    ai: {
+        category: 'Artificial Intelligence',
+        title: 'What I ask before I ever pick an AI tool.',
+        subtitle: '',
+        accent: '#7dd3fc',
+        bgClass: 'card-ai',
+        body: `
+            <p class="mock-intro-text">Before I touch a model, I ask a boring question first. What do we need AI for, what's the use case, and what gap is it closing. If I can't answer that in a sentence, I'm not ready to pick a tool yet.</p>
+            <div class="mock-timeline">
+                <div class="mock-timeline-track"></div>
+                <div class="mock-timeline-beam"></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">01</div><div class="mock-timeline-body"><div class="mock-timeline-label">01 / THE USE CASE</div><h4>Name the gap before the model</h4><p>What's missing right now, and what does AI cover that a simpler tool wouldn't. I want that answered in plain language before anything gets built.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">02</div><div class="mock-timeline-body"><div class="mock-timeline-label">02 / THE DATA</div><h4>Managed and labeled, now and later</h4><p>Is the data clean and labeled today, and who's still doing that labeling six months from now. A model is only as good as the discipline behind the data feeding it.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">03</div><div class="mock-timeline-body"><div class="mock-timeline-label">03 / PROBABILISTIC, NOT DETERMINISTIC</div><h4>Know what you're asking for</h4><p>An LLM generates a likely answer. That's a real problem for open-ended generation, but checking something against a rule, a board cut to spec, a spark plug's size, a solution's pH, how satisfied a customer sounds, is a narrower and more reliable job. I've built RAG systems, AI that checks its answer against real reference material instead of guessing, for exactly that kind of check.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">04</div><div class="mock-timeline-body"><div class="mock-timeline-label">04 / SQUINT-YOUR-EYE CHECKS</div><h4>Good for the rough cut</h4><p>Even when it works, it's a fast first pass. Squint at it, get a read, in scope or out. Getting that wrong on a spec check has a real cost, so knowing which checks are worth automating and which ones still need a real second look takes business acumen, not a working model alone.</p></div></div>
+            </div>
+
+            <div class="mock-compare-table" role="table" aria-label="How I read generative AI output">
+                <div class="mock-compare-cell mock-compare-head">Output</div>
+                <div class="mock-compare-cell">Creates a likely answer from context, useful for drafting, exploring, synthesizing, and finding a path. Most business systems need the same result every time, especially in finance, quality, compliance, and operations.</div>
+                <div class="mock-compare-cell mock-compare-head">Risk</div>
+                <div class="mock-compare-cell">Inference can sound confident even when the data or prompt is incomplete, so the system needs verification, audit trails, and a human who owns the decision.</div>
+                <div class="mock-compare-cell mock-compare-head">Best use</div>
+                <div class="mock-compare-cell">Augment the human. Compress the time between question and a useful first draft, while people stay responsible for judgment, approvals, and final action.</div>
+            </div>
+
+            <div class="mock-callout"><strong>My rule of thumb:</strong> the clearer the use case and the cleaner the data, the more I trust the answer. The fuzzier either one is, the more I treat the output as a starting point.</div>
+            <div class="mock-callout"><strong>The tradeoff:</strong> AI lowers the barrier to learn and build, which is a huge advantage. If people never practice thinking on their feet without it, they can lose the ability to reason through ambiguity when the tool is wrong, unavailable, or outside its depth.</div>
+            <div class="mock-track-record">
+                <div class="mock-track-label">Where this shows up</div>
+                <div class="mock-track-item"><div class="mock-track-company">Takeda Pharmaceuticals</div><p>Built a Copilot instruction layer with synonym mappings over the Qualification Matrix model, so answers stay consistent no matter who's asking.</p></div>
+                <div class="mock-track-item"><div class="mock-track-company">SaaS Startup, Singapore</div><p>Program Manager over CCTV-based computer vision deployments across Singapore, Malaysia, and Vietnam.</p></div>
+                <div class="mock-track-item"><div class="mock-track-company">Personal project, AI Council</div><p>Hub-and-spoke multi-agent system where a risk classifier gates every file, shell, or outbound action, and the cheapest capable model runs each task.</p></div>
+                <div class="mock-track-item"><div class="mock-track-company">Anthropic, Credential</div><p>Model Context Protocol Certification, 2026. Agentic AI, governed multi-agent systems, production deployment patterns.</p></div>
+            </div>
+        `
+    },
+    change: {
+        category: 'Change Management',
+        title: 'Why numbers are not enough to make people change.',
+        subtitle: '',
+        accent: '#f6ad55',
+        bgClass: 'card-change',
+        body: `
+            <p class="mock-intro-text">One of the most overlooked skills in data work is getting people to change what they do. A dashboard, KPI, or model can be right and still fail if the people across the table do not trust it, understand it, or feel like it was dropped onto them (it should have been built with them).</p>
+            <div class="mock-timeline">
+                <div class="mock-timeline-track"></div>
+                <div class="mock-timeline-beam"></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">01</div><div class="mock-timeline-body"><div class="mock-timeline-label">01 / FLOOR REALITY</div><h4>Start where the work happens</h4><p>On the floor, people know which process steps are annoying, fragile, or quietly worked around. If I ignore that, I am designing for the diagram instead of the job.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">02</div><div class="mock-timeline-body"><div class="mock-timeline-label">02 / RESISTANCE</div><h4>Treat pushback as data</h4><p>Resistance usually has a reason: fear of being measured, extra workload, bad past rollouts, or a tool that makes someone's day harder. I try to understand that before I try to persuade.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">03</div><div class="mock-timeline-body"><div class="mock-timeline-label">03 / BUY-IN</div><h4>Make the win local</h4><p>People adopt faster when the improvement helps their actual day. Less rework, fewer escalations, clearer ownership, less hunting for answers. The business case matters, but the local win is what makes it stick.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">04</div><div class="mock-timeline-body"><div class="mock-timeline-label">04 / SUSTAIN</div><h4>Stay after launch</h4><p>Launch is where the soft-skill part gets real. Training, workshops, office hours, follow-ups, and checking who is still not using the process often matter more than the last feature request.</p></div></div>
+            </div>
+            <div class="mock-callout"><strong>What a lot of data people miss:</strong> numbers are not enough. You still have to convince people across the table to come to your side, and that means listening, translating, and making the change feel like something they can own.</div>
+            <div class="mock-track-record">
+                <div class="mock-track-label">Where this shows up</div>
+                <div class="mock-track-item"><div class="mock-track-company">Electric Boat, GD</div><p>Convinced tradespeople across work centers to start trusting and using a new knowledge base instead of working around it.</p></div>
+                <div class="mock-track-item"><div class="mock-track-company">Chewy, Inc</div><p>Got customer service agents, and the customers on the other side of the platform, to adopt new features instead of ignoring the release notes.</p></div>
+                <div class="mock-track-item"><div class="mock-track-company">Takeda Pharmaceuticals</div><p>Techs didn't trust the performance data at first. Ran interviews with the actual operators and negotiated a shared definition of cycle time across 5 departments that couldn't agree on one.</p></div>
+            </div>
+        `
+    },
+    design: {
+        category: 'Design Principles',
+        title: 'How I keep data products simple, usable, and pointed.',
+        subtitle: '',
+        accent: '#a3e635',
+        bgClass: 'card-design',
+        body: `
+            <p class="mock-intro-text">My design bias is simple: know the customer, make the simplest useful thing, test it with real users, and keep the point obvious. Most data products do not fail because they need one more chart. They fail because nobody can tell what the takeaway is.</p>
+            <div class="mock-timeline">
+                <div class="mock-timeline-track"></div>
+                <div class="mock-timeline-beam"></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">01</div><div class="mock-timeline-body"><div class="mock-timeline-label">01 / KNOW THE CUSTOMER</div><h4>Design for the decision</h4><p>I want to know who is looking at this, what decision they need to make, and what they will do differently if the answer is clear.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">02</div><div class="mock-timeline-body"><div class="mock-timeline-label">02 / SIMPLE CASE FIRST</div><h4>Reduce maintenance by reducing cleverness</h4><p>The simplest design that solves the main use case is usually the one that survives. Complicated interactions and edge-case logic are expensive to maintain.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">03</div><div class="mock-timeline-body"><div class="mock-timeline-label">03 / USER TESTING</div><h4>Put the mockup in front of people early</h4><p>Before I build too much, I want users reacting to the shape of the thing. Where do they hesitate? What do they ignore? What do they misunderstand?</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">04</div><div class="mock-timeline-body"><div class="mock-timeline-label">04 / STORY</div><h4>Zoom out before zooming in</h4><p>A dashboard or analysis needs a cohesive point. Start with the overview and takeaway, then let people drill down. If everything is equally loud, nothing is clear.</p></div></div>
+            </div>
+            <div class="mock-callout"><strong>My biggest data-viz warning:</strong> technical people often build accurate pieces without creating a clear presentation. The work has to land as a story: what is happening, why it matters, and what action should follow.</div>
+            <div class="mock-track-record">
+                <div class="mock-track-label">Where this shows up</div>
+                <div class="mock-track-item"><div class="mock-track-company">Takeda Pharmaceuticals</div><p>Mockups and MVPs before the full build on the FRAC performance board, so the Flask app that shipped matched how operators closed out a delay reason in the real workflow.</p></div>
+                <div class="mock-track-item"><div class="mock-track-company">Personal project, Badge Telemetry</div><p>Turned an HR privacy objection into a design requirement: badge IDs hashed, analytics resolve at team level only, nobody can see an individual.</p></div>
+                <div class="mock-track-item"><div class="mock-track-company">Chewy, Inc</div><p>Designed the research deliverables and wireframes behind the Dual Monitor Study, built around what agents needed to decide, not what was technically possible to show.</p></div>
+                <div class="mock-track-item"><div class="mock-track-company">USC, Coursework</div><p>B.S. Industrial &amp; Systems Engineering. Operations research and human-centered systems thinking behind how I design a workflow end to end, screen included.</p></div>
+            </div>
         `
     },
     pipelines: {
@@ -1428,13 +1702,15 @@ flowchart LR
         accent: '#ff6b35',
         bgClass: 'card-pipelines',
         body: `
-            <p class="mock-intro-text">Once you've decided on KPIs and a method, the next step is deciding how we are going to get there.</p>
-            <div class="mock-stage-grid">
-                <div class="mock-stage-card"><div class="mock-stage-num">01 / RESTATE</div><h4>Say it back in my own words</h4><p>Most requirements describe a report someone wants, not the decision that report is supposed to change.</p></div>
-                <div class="mock-stage-card"><div class="mock-stage-num">02 / DISCOVER</div><h4>Interrogate the constraints, not the wishlist</h4><p>Volume, latency tolerance, who consumes it and how often, what "correct" means to an auditor versus an operator.</p></div>
-                <div class="mock-stage-card"><div class="mock-stage-num">03 / SKELETON</div><h4>Boxes and arrows, no vendor names</h4><p>Sources, a landing zone, a conformance layer, serving layers, consumers, only then Databricks, Snowflake, or CSVs.</p></div>
-                <div class="mock-stage-card"><div class="mock-stage-num">04 / TRADE-OFFS</div><h4>Name the fork, argue both sides out loud</h4><p>Batch vs. streaming, one gold model vs. two, centralized vs. federated, and the specific reason it fits this system.</p></div>
-                <div class="mock-stage-card"><div class="mock-stage-num">05 / FAILURE MODES</div><h4>Design the seams, not just the happy path</h4><p>What happens at 10x volume, or when a source system changes its schema without warning.</p></div>
+            <p class="mock-intro-text">A pipeline is a promise. Once I've decided on the KPIs and the method, I'm now telling someone downstream that the number they see tomorrow can be trusted the same way it was trusted today. That promise is what I'm actually building, the tables and jobs are just how I keep it.</p>
+            <div class="mock-timeline">
+                <div class="mock-timeline-track"></div>
+                <div class="mock-timeline-beam"></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">01</div><div class="mock-timeline-body"><div class="mock-timeline-label">01 / RESTATE</div><h4>Say it back in my own words</h4><p>Most requirements describe a report someone wants, not the decision that report is supposed to change. I want to hear "yes, that's it" before I write a single line.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">02</div><div class="mock-timeline-body"><div class="mock-timeline-label">02 / DISCOVER</div><h4>Interrogate the constraints, not the wishlist</h4><p>Volume, latency tolerance, who consumes it and how often, what "correct" means to an auditor versus an operator. Two people can want the same report and mean two different things by "accurate."</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">03</div><div class="mock-timeline-body"><div class="mock-timeline-label">03 / SKELETON</div><h4>Boxes and arrows, no vendor names</h4><p>Sources, a landing zone, a conformance layer, serving layers, consumers. Only then do I let Databricks, Snowflake, or CSVs into the conversation. The architecture has to make sense before the tools do.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">04</div><div class="mock-timeline-body"><div class="mock-timeline-label">04 / TRADE-OFFS</div><h4>Name the fork, argue both sides out loud</h4><p>Batch vs. streaming, one gold model vs. two, centralized vs. federated. I want the specific reason it fits this system on record, not just the decision.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">05</div><div class="mock-timeline-body"><div class="mock-timeline-label">05 / FAILURE MODES</div><h4>Design the seams, not just the happy path</h4><p>What happens at 10x volume, or when a source system changes its schema without warning. If I only design for the day everything works, I haven't actually designed anything yet.</p></div></div>
             </div>
 
             <div class="mock-mermaid-card">
@@ -1501,6 +1777,14 @@ flowchart TD
                     </pre>
                 </div>
             </div>
+
+            <div class="mock-track-record">
+                <div class="mock-track-label">Where this shows up</div>
+                <div class="mock-track-item"><div class="mock-track-company">Takeda Pharmaceuticals</div><p>Built the Qualification Matrix: a governed medallion pipeline across 23 sites and roughly 60,000 users, with renewal logic that's avoided about 40 deviations a year.</p></div>
+                <div class="mock-track-item"><div class="mock-track-company">Personal project, Hermes</div><p>Python scouting pipeline across RSS, newsletters, and direct APIs covering six LA/OC/SD regions, geocoded, deduped, and LLM-tiered before anything goes live.</p></div>
+                <div class="mock-track-item"><div class="mock-track-company">Personal project, Plutus Markets</div><p>Six producers feeding a DuckDB bronze, silver, gold layer, validated by backtest against Sharpe, Sortino, and max drawdown alongside raw returns.</p></div>
+                <div class="mock-track-item"><div class="mock-track-company">Databricks, Credential</div><p>Data Ingestion Certification, 2024. Delta Lake fundamentals, ETL/ELT architecture, governed pipeline design.</p></div>
+            </div>
         `
     },
     lss: {
@@ -1518,12 +1802,14 @@ flowchart TD
                     <span class="mock-tag">Project Charter</span><span class="mock-tag">SIPOC</span><span class="mock-tag">Value Stream Mapping</span><span class="mock-tag">Measurement System Analysis</span><span class="mock-tag">Cause Mapping</span><span class="mock-tag">Pareto Analysis</span><span class="mock-tag">Failure Modes &amp; Effects Analysis</span><span class="mock-tag">Hypothesis Testing</span><span class="mock-tag">Process Capability</span><span class="mock-tag">Design of Experiments</span><span class="mock-tag">Statistical Process Control</span><span class="mock-tag">5S &amp; Visual Management</span>
                 </div>
             </div>
-            <div class="mock-stage-grid">
-                <div class="mock-stage-card"><div class="mock-stage-num">01 / DEFINE + MEASURE</div><h4>Frame the practical problem</h4><p>This is where I frame the problem, scope the project, define the customers, build the project charter, and understand where we are starting from. Then I measure the problem with tools like value stream maps, measurement system analysis, defect definitions, and baseline impact.</p></div>
-                <div class="mock-stage-card"><div class="mock-stage-num">02 / ANALYZE</div><h4>Dig into what the signals mean</h4><p>This is where I go deeper and ask: why are these signals showing up, what are they actually telling us, and what cause is worth acting on? That can mean cause maps, 5 Whys, fishbones, Pareto analysis, contingency tables, regression, ANOVA, or hypothesis testing.</p></div>
-                <div class="mock-stage-card"><div class="mock-stage-num">03 / IMPROVE</div><h4>Design the change and get people behind it</h4><p>Improve is where I design the solution, test it, and get approval with the right stakeholders before it becomes the new way of working. Sometimes that is a statistical fix, sometimes it is a process redesign, and sometimes it is a very practical countermeasure.</p></div>
-                <div class="mock-stage-card"><div class="mock-stage-num">04 / CONTROL</div><h4>Turn the solution into the normal process</h4><p>Control is where I make the change real. Some fixes are concrete, like sorting tools in a box, changing an SOP, or correcting a data stream. Others are less obvious and depend on workshops, teaching, coaching, and working through resistance or slow adoption.</p></div>
-                <div class="mock-stage-card"><div class="mock-stage-num">05 / SUSTAIN</div><h4>Make sure the work actually holds</h4><p>Sustain is often the most overlooked step, but it is the one I care about most. I want to check two weeks out, two months out, and six months out to see if the process is still meeting the goal or if the old behavior is creeping back in.</p></div>
+            <div class="mock-timeline">
+                <div class="mock-timeline-track"></div>
+                <div class="mock-timeline-beam"></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">01</div><div class="mock-timeline-body"><div class="mock-timeline-label">01 / DEFINE + MEASURE</div><h4>Frame the practical problem</h4><p>This is where I frame the problem, scope the project, define the customers, build the project charter, and understand where we are starting from. Then I measure the problem with tools like value stream maps, measurement system analysis, defect definitions, and baseline impact.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">02</div><div class="mock-timeline-body"><div class="mock-timeline-label">02 / ANALYZE</div><h4>Dig into what the signals mean</h4><p>This is where I go deeper and ask: why are these signals showing up, what are they telling us, and what cause is worth acting on? That can mean cause maps, 5 Whys, fishbones, Pareto analysis, contingency tables, regression, ANOVA, or hypothesis testing.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">03</div><div class="mock-timeline-body"><div class="mock-timeline-label">03 / IMPROVE</div><h4>Design the change and get people behind it</h4><p>Improve is where I design the solution, test it, and get approval with the right stakeholders before it becomes the new way of working. Sometimes that is a statistical fix, sometimes it is a process redesign, and sometimes it is a very practical countermeasure.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">04</div><div class="mock-timeline-body"><div class="mock-timeline-label">04 / CONTROL</div><h4>Turn the solution into the normal process</h4><p>Control is where I make the change real. Some fixes are concrete, like sorting tools in a box, changing an SOP, or correcting a data stream. Others are less obvious and depend on workshops, teaching, coaching, and working through resistance or slow adoption.</p></div></div>
+                <div class="mock-timeline-step"><div class="mock-timeline-dot" aria-hidden="true">05</div><div class="mock-timeline-body"><div class="mock-timeline-label">05 / SUSTAIN</div><h4>Make sure the work holds</h4><p>Sustain is often the most overlooked step, but it is the one I care about most. I want to check two weeks out, two months out, and six months out to see if the process is still meeting the goal or if the old behavior is creeping back in.</p></div></div>
             </div>
 
             <div class="mock-callout"><strong>Why Lean Six Sigma?</strong> For me, it is one toolset inside a bigger improvement toolbox. Lean is great for reducing waste and lead time. Six Sigma is built for reducing defects and variation. Innovation is what I reach for when the answer is a new product, process, or solution entirely.</div>
@@ -1613,6 +1899,13 @@ flowchart TD
             </div>
 
             <div class="mock-callout"><strong>The point is not perfection theater.</strong> The point is making the cost of variation visible, choosing the right tool for the failure mode, and bringing the people closest to the work along so the improvement keeps working after the project is closed.</div>
+            <div class="mock-track-record">
+                <div class="mock-track-label">Where this shows up</div>
+                <div class="mock-track-item"><div class="mock-track-company">Electric Boat, GD</div><p>Earned my Black Belt on submarine-scale projects, modernizing legacy knowledge systems directly with the trades on the shipyard floor.</p></div>
+                <div class="mock-track-item"><div class="mock-track-company">Takeda Pharmaceuticals</div><p>Built the digital value stream map that found float, the real constraint, when leadership wanted max throughput.</p></div>
+                <div class="mock-track-item"><div class="mock-track-company">Takeda Pharmaceuticals</div><p>Pareto analysis on the FRAC delay data drove a 27% cycle-time reduction, 30 minutes down to 22.</p></div>
+                <div class="mock-track-item"><div class="mock-track-company">General Dynamics, Credential</div><p>Lean Six Sigma Black Belt, 2020. DMAIC, statistical process control, hypothesis testing, root cause analysis.</p></div>
+            </div>
         `
     },
     roles: {
@@ -1691,7 +1984,36 @@ function openCard(key) {
     overlay.classList.add('active');
     panel.classList.add('active');
     document.body.style.overflow = 'hidden';
+
+    requestAnimationFrame(updateTracingBeams);
 }
+
+function updateTracingBeams() {
+    const panelRect = panel.getBoundingClientRect();
+    document.querySelectorAll('#expand-body .mock-timeline').forEach(timeline => {
+        const beam = timeline.querySelector('.mock-timeline-beam');
+        const track = timeline.querySelector('.mock-timeline-track');
+        if (!beam || !track) return;
+        const trackRect = track.getBoundingClientRect();
+        const trackHeight = trackRect.height;
+        const visibleBottom = panelRect.bottom;
+        let filled = visibleBottom - trackRect.top;
+        filled = Math.max(0, Math.min(trackHeight, filled));
+        const pct = trackHeight > 0 ? (filled / trackHeight) * 100 : 0;
+        beam.style.height = pct + '%';
+
+        const steps = timeline.querySelectorAll('.mock-timeline-step');
+        steps.forEach(step => {
+            const dot = step.querySelector('.mock-timeline-dot');
+            const dotRect = dot.getBoundingClientRect();
+            const dotCenter = dotRect.top + dotRect.height / 2;
+            step.classList.toggle('is-active', dotCenter <= visibleBottom);
+        });
+    });
+}
+
+panel.addEventListener('scroll', () => requestAnimationFrame(updateTracingBeams));
+window.addEventListener('resize', () => requestAnimationFrame(updateTracingBeams));
 
 function closeCard() {
     overlay.classList.remove('active');
