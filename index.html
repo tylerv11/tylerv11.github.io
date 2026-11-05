@@ -1715,6 +1715,8 @@
         }
         .drawer-trigger-btn:hover { background: rgba(0,255,135,0.16); transform: translateY(-1px); }
 
+        .takeda-case-note { margin-top: 10px; font-size: 0.76rem; color: var(--text-muted); }
+
         .project-drawer-overlay {
             position: fixed; inset: 0; z-index: 2000;
             background: rgba(0,0,0,0.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
@@ -3521,7 +3523,7 @@
                 <div class="card-media">
                     <img src="images/thumbnails/takeda-thumbnail.png" alt="Takeda Pharmaceuticals" loading="lazy" />
                     <div class="card-overlay">
-                        <a href="https://github.com/tylerv11/data-engineering-pipelines" class="card-cta" target="_blank">View SQL &amp; Pipeline Work <i class="fas fa-arrow-right"></i></a>
+                        <a href="takeda-case-study.html" class="card-cta">View Manufacturing Case Study <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <div class="card-info">
@@ -3531,12 +3533,16 @@
                     <h3>Sr. Data and Analytics Engineer</h3>
                     <div class="card-company">Takeda Pharmaceuticals - Los Angeles, CA</div>
                     <p>Building governed operational intelligence platforms for manufacturing: source-system transformation, gold-layer SQL, semantic models, and reporting products that turn process and workforce data into trusted decisions.</p>
+                    <p class="takeda-case-note">Case study is an anonymized, illustrative example based on my Takeda work.</p>
                     <div class="project-meta" aria-label="Project metadata">
                         <span><strong>Grain</strong>Assignment, session, batch, and process-step outputs</span>
                         <span><strong>Stack</strong>SQL, Databricks, Delta, Power BI, DAX</span>
                         <span><strong>Impact</strong>15M+ modeled rows and 100M+ source records processed daily</span>
                     </div>
                     <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(160,176,162,0.075);display:flex;flex-wrap:wrap;gap:10px;">
+                        <a href="takeda-case-study.html" class="drawer-trigger-btn" style="text-decoration:none;">
+                            <i class="fas fa-file-lines"></i> View Case Study
+                        </a>
                         <button type="button" class="drawer-trigger-btn" onclick="openProjectDrawer('takeda')">
                             <i class="fas fa-diagram-project"></i> View Architecture &amp; Diagrams
                         </button>
